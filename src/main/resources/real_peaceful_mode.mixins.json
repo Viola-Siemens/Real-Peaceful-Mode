@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "package": "com.hexagram2021.real_peaceful_mode.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "real_peaceful_mode.refmap.json",
+  "mixins": [
+	
+  ],
+  "minVersion": "0.8"
+}

@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+license="All rights reserved"
+[[mods]]
+modId="real_peaceful_mode"
+version="${file.jarVersion}"
+displayName="Real Peaceful Mode"
+logoFile="logo.png"
+credits="Liu Dongyu"
+authors="Hexagram"
+description='''
+Why monsters are always chasing you?
+
+Is it possible to treat each other with respect and peace?
+
+With this mod, you'll find the answer.
+'''
+[[dependencies.real_peaceful_mode]]
+    modId="forge"
+    mandatory=true
+    versionRange="[40,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.real_peaceful_mode]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.2,1.19)"
+    ordering="NONE"
+    side="BOTH"

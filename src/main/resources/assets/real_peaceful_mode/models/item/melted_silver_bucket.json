@@ -1,0 +1,6 @@
+{
+  "parent":"item/generated",
+  "textures": {
+    "layer0":"real_peaceful_mode:item/melted_silver_bucket"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "real_peaceful_mode:block/manganese_block"
+  }
+}
