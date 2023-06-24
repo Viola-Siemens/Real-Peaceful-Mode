@@ -1,13 +1,13 @@
 modLoader="javafml"
-loaderVersion="[40,)"
+loaderVersion="[47,)"
 license="Creative Commons Attribution-NonCommercial-NoDerivatives 4.0"
 [[mods]]
 modId="real_peaceful_mode"
 version="${file.jarVersion}"
 displayName="Real Peaceful Mode"
 logoFile="logo.png"
-credits="Liu Dongyu"
-authors="Hexagram"
+credits="Liu Dongyu, foliet, Mon3yr1"
+authors="Liu Dongyu, foliet, Mon3yr1"
 description='''
 Why monsters are always chasing you?
 
@@ -18,12 +18,12 @@ With this mod, you'll find the answer.
 [[dependencies.real_peaceful_mode]]
     modId="forge"
     mandatory=true
-    versionRange="[40,)"
+    versionRange="[47,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.real_peaceful_mode]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.2,1.19)"
+    versionRange="[1.20.1,1.21)"
     ordering="NONE"
     side="BOTH"
