@@ -4,6 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "real_peaceful_mode.refmap.json",
   "mixins": [
+    "NearestAttackableTargetGoalMixin",
+    "ServerPlayerMixin"
   ],
   "minVersion": "0.8"
 }
