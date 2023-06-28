@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "real_peaceful_mode:block/inferno_debris_top",
-    "side": "real_peaceful_mode:block/inferno_debris_side"
-  }
-}
