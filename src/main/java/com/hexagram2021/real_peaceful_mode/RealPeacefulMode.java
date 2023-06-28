@@ -4,6 +4,7 @@ import com.hexagram2021.real_peaceful_mode.client.ClientProxy;
 import com.hexagram2021.real_peaceful_mode.common.CommonProxy;
 import com.hexagram2021.real_peaceful_mode.common.RPMContent;
 import com.hexagram2021.real_peaceful_mode.common.RPMSaveData;
+import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -47,6 +49,7 @@ public class RealPeacefulMode {
     }
 
     public RealPeacefulMode() {
+        RPMLogger.logger = LogManager.getLogger(MODID);
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
         DeferredWorkQueue queue = DeferredWorkQueue.lookup(Optional.of(ModLoadingStage.CONSTRUCT)).orElseThrow();

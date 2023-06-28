@@ -23,12 +23,10 @@ public final class RPMCreativeTabs {
 			"material_and_foods", Component.translatable("itemGroup.real_peaceful_mode.material_and_foods"), () -> new ItemStack(RPMItems.SpiritBeads.HUGE_SPIRIT_BEAD),
 			(parameters, output) -> RPMItems.ItemEntry.MATERIAL_AND_FOODS.forEach(output::accept)
 	);
-	/*
 	public static final RegistryObject<CreativeModeTab> CREATIVE_ONLY = register(
-			"creative_only", Component.translatable("itemGroup.real_peaceful_mode.creative_only"), () -> new ItemStack(),
+			"creative_only", Component.translatable("itemGroup.real_peaceful_mode.creative_only"), () -> new ItemStack(RPMItems.DebugItems.ZOMBIES_WISH),
 			(parameters, output) -> RPMItems.ItemEntry.CREATIVE_ONLY.forEach(output::accept)
 	);
-	 */
 
 	public static void init(IEventBus bus) {
 		REGISTER.register(bus);

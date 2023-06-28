@@ -1,0 +1,36 @@
+{
+  "language": "English",
+  "language.code": "en_us",
+  "language.region": "United States",
+
+  "block.real_peaceful_mode.aluminum_ore": "Aluminum Ore",
+  "block.real_peaceful_mode.deepslate_aluminum_ore": "Deepslate Aluminum Ore",
+  "block.real_peaceful_mode.silver_ore": "Silver Ore",
+  "block.real_peaceful_mode.deepslate_silver_ore": "Deepslate Silver Ore",
+  "block.real_peaceful_mode.manganese_ore": "Manganese Ore",
+  "block.real_peaceful_mode.inferno_debris": "Inferno Debris",
+  "block.real_peaceful_mode.raw_aluminum_block": "Raw Aluminum Block",
+  "block.real_peaceful_mode.raw_silver_block": "Raw Silver Block",
+  "block.real_peaceful_mode.raw_manganese_block": "Raw Manganese Block",
+  "block.real_peaceful_mode.aluminum_block": "Aluminum Block",
+  "block.real_peaceful_mode.silver_block": "Silver Block",
+  "block.real_peaceful_mode.manganese_block": "Manganese Block",
+
+  "item.real_peaceful_mode.raw_aluminum": "Raw Aluminum",
+  "item.real_peaceful_mode.raw_silver": "Raw Silver",
+  "item.real_peaceful_mode.raw_manganese": "Raw Manganese",
+  "item.real_peaceful_mode.huge_spirit_bead": "Huge Spirit Bead",
+  "item.real_peaceful_mode.zombies_wish": "Zombie's Wish",
+  "item.real_peaceful_mode.skeletons_wish": "Skeleton's Wish",
+  "item.real_peaceful_mode.creepers_wish": "Creeper's Wish",
+  "item.real_peaceful_mode.aluminum_concentrate": "Aluminum Concentrate",
+  "item.real_peaceful_mode.silver_concentrate": "Silver Concentrate",
+  "item.real_peaceful_mode.manganese_concentrate": "Manganese Concentrate",
+  "item.real_peaceful_mode.melted_aluminum_bucket": "Melted Aluminum Bucket",
+  "item.real_peaceful_mode.melted_silver_bucket": "Melted Silver Bucket",
+  "item.real_peaceful_mode.melted_manganese_bucket": "Melted Manganese Bucket",
+
+  "message.real_peaceful_mode.zombies_wish.success": "Zombies are friendly to you now.",
+  "message.real_peaceful_mode.skeletons_wish.success": "Skeletons are friendly to you now.",
+  "message.real_peaceful_mode.creepers_wish.success": "Creepers are friendly to you now."
+}

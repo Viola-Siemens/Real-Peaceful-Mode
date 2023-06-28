@@ -2,10 +2,17 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.common.crafting.compat.ModsCompatManager;
+import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -52,6 +59,55 @@ public class RPMItems {
 		public static void init() {}
 	}
 
+	public static class DebugItems {
+		public static ItemEntry<Item> ZOMBIES_WISH = ItemEntry.register(
+				"zombies_wish", () -> new Item(new Item.Properties()) {
+					@Override @Nonnull
+					public InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player player, @Nonnull InteractionHand hand) {
+						ItemStack itemstack = player.getItemInHand(hand);
+						if(hand == InteractionHand.MAIN_HAND && player.getAbilities().instabuild && player instanceof IMonsterHero hero) {
+							hero.setHero(EntityType.ZOMBIE);
+							player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.zombies_wish.success"));
+							return InteractionResultHolder.consume(itemstack);
+						}
+						return InteractionResultHolder.pass(itemstack);
+					}
+				}, ItemEntry.ItemGroupType.CREATIVE_ONLY
+		);
+		public static ItemEntry<Item> SKELETONS_WISH = ItemEntry.register(
+				"skeletons_wish", () -> new Item(new Item.Properties()) {
+					@Override @Nonnull
+					public InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player player, @Nonnull InteractionHand hand) {
+						ItemStack itemstack = player.getItemInHand(hand);
+						if(hand == InteractionHand.MAIN_HAND && player.getAbilities().instabuild && player instanceof IMonsterHero hero) {
+							hero.setHero(EntityType.SKELETON);
+							player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.skeletons_wish.success"));
+							return InteractionResultHolder.consume(itemstack);
+						}
+						return InteractionResultHolder.pass(itemstack);
+					}
+				}, ItemEntry.ItemGroupType.CREATIVE_ONLY
+		);
+		public static ItemEntry<Item> CREEPERS_WISH = ItemEntry.register(
+				"creepers_wish", () -> new Item(new Item.Properties()) {
+					@Override @Nonnull
+					public InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player player, @Nonnull InteractionHand hand) {
+						ItemStack itemstack = player.getItemInHand(hand);
+						if(hand == InteractionHand.MAIN_HAND && player.getAbilities().instabuild && player instanceof IMonsterHero hero) {
+							hero.setHero(EntityType.CREEPER);
+							player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.creepers_wish.success"));
+							return InteractionResultHolder.consume(itemstack);
+						}
+						return InteractionResultHolder.pass(itemstack);
+					}
+				}, ItemEntry.ItemGroupType.CREATIVE_ONLY
+		);
+
+		private DebugItems() {}
+
+		public static void init() {}
+	}
+
 	public static class ECCompatItems {
 		public static ItemEntry<Item> ALUMINUM_CONCENTRATE = ItemEntry.register(
 				"aluminum_concentrate", () -> new Item(new Item.Properties()), ItemEntry.ItemGroupType.MATERIAL_AND_FOODS
@@ -84,6 +140,7 @@ public class RPMItems {
 
 		RawOreItems.init();
 		SpiritBeads.init();
+		DebugItems.init();
 
 		if(ModsCompatManager.EMERALD_CRAFT) {
 			ECCompatItems.init();
