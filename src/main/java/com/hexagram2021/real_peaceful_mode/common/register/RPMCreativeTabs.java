@@ -26,12 +26,14 @@ public final class RPMCreativeTabs {
 
 			}
 	);
+	/*
 	public static final RegistryObject<CreativeModeTab> CREATIVE_ONLY = register(
 			"creative_only", Component.translatable("itemGroup.real_peaceful_mode.creative_only"), () -> new ItemStack(),
 			(parameters, output) -> {
 
 			}
 	);
+	 */
 
 	public static void init() {
 	}

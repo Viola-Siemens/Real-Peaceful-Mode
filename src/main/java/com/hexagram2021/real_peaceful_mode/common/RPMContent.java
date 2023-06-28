@@ -18,6 +18,7 @@ public class RPMContent {
 
 		RPMBlocks.init(bus);
 		RPMItems.init(bus);
+		RPMCreativeTabs.init();
 	}
 
 	public static void init() {
