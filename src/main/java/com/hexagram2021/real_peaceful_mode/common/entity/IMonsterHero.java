@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.entity;
 
+import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 
@@ -11,4 +12,6 @@ public interface IMonsterHero {
 	void setHero(EntityType<?> monsterType);
 
 	Map<ResourceLocation, Integer> getHelpedMonsters();
+
+	PlayerMissions gerPlayerMissions();
 }

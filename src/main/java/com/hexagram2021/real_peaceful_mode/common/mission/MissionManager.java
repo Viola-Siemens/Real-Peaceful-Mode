@@ -1,5 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.mission;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -12,6 +14,8 @@ import java.util.Map;
 
 public class MissionManager extends SimpleJsonResourceReloadListener {
 	private static final Gson GSON = (new GsonBuilder()).create();
+
+	private Map<ResourceLocation, Mission> missionsByName = ImmutableMap.of();
 
 	public MissionManager() {
 		super(GSON, "missions");
