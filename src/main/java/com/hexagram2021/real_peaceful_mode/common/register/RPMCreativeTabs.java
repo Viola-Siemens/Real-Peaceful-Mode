@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -16,26 +17,21 @@ public final class RPMCreativeTabs {
 
 	public static final RegistryObject<CreativeModeTab> BUILDING_BLOCKS = register(
 			"building_blocks", Component.translatable("itemGroup.real_peaceful_mode.building_blocks"), () -> new ItemStack(RPMBlocks.OreBlocks.MANGANESE_BLOCK),
-			(parameters, output) -> {
-
-			}
+			(parameters, output) -> RPMItems.ItemEntry.BUILDING_BLOCKS.forEach(output::accept)
 	);
 	public static final RegistryObject<CreativeModeTab> MATERIAL_AND_FOODS = register(
 			"material_and_foods", Component.translatable("itemGroup.real_peaceful_mode.material_and_foods"), () -> new ItemStack(RPMItems.SpiritBeads.HUGE_SPIRIT_BEAD),
-			(parameters, output) -> {
-
-			}
+			(parameters, output) -> RPMItems.ItemEntry.MATERIAL_AND_FOODS.forEach(output::accept)
 	);
 	/*
 	public static final RegistryObject<CreativeModeTab> CREATIVE_ONLY = register(
 			"creative_only", Component.translatable("itemGroup.real_peaceful_mode.creative_only"), () -> new ItemStack(),
-			(parameters, output) -> {
-
-			}
+			(parameters, output) -> RPMItems.ItemEntry.CREATIVE_ONLY.forEach(output::accept)
 	);
 	 */
 
-	public static void init() {
+	public static void init(IEventBus bus) {
+		REGISTER.register(bus);
 	}
 
 	private static RegistryObject<CreativeModeTab> register(String name, Component title, Supplier<ItemStack> icon, CreativeModeTab.DisplayItemsGenerator generator) {
