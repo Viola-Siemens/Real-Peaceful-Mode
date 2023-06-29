@@ -1,0 +1,18 @@
+{
+  "requires": [],
+  "advancement_id": "real_peaceful_mode:",
+  "messages": [
+    {
+      "key": "rpm.mission.zombie1.message1",
+      "entity_type": "minecraft:player"
+    },
+    {
+      "key": "rpm.mission.zombie1.message2",
+      "entity_type": "real_peaceful_mode:zombie_king"
+    },
+    {
+      "key": "rpm.mission.zombie1.message3",
+      "entity_type": "minecraft:player"
+    }
+  ]
+}

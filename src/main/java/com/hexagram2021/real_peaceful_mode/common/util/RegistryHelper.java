@@ -8,20 +8,22 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Objects;
+
 public interface RegistryHelper {
 	static ResourceLocation getRegistryName(Item item) {
-		return ForgeRegistries.ITEMS.getKey(item);
+		return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item));
 	}
 	static ResourceLocation getRegistryName(Block block) {
-		return ForgeRegistries.BLOCKS.getKey(block);
+		return Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block));
 	}
 	static ResourceLocation getRegistryName(VillagerProfession profession) {
-		return ForgeRegistries.VILLAGER_PROFESSIONS.getKey(profession);
+		return Objects.requireNonNull(ForgeRegistries.VILLAGER_PROFESSIONS.getKey(profession));
 	}
 	static ResourceLocation getRegistryName(Biome biome) {
-		return ForgeRegistries.BIOMES.getKey(biome);
+		return Objects.requireNonNull(ForgeRegistries.BIOMES.getKey(biome));
 	}
 	static ResourceLocation getRegistryName(EntityType<?> entityType) {
-		return ForgeRegistries.ENTITY_TYPES.getKey(entityType);
+		return Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(entityType));
 	}
 }
