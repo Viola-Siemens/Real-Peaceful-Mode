@@ -5,7 +5,9 @@
   "refmap": "real_peaceful_mode.refmap.json",
   "mixins": [
     "NearestAttackableTargetGoalMixin",
-    "ServerPlayerMixin"
+    "PlayerListMixin",
+    "ServerPlayerMixin",
+    "SimpleCriterionTriggerMixin"
   ],
   "minVersion": "0.8"
 }

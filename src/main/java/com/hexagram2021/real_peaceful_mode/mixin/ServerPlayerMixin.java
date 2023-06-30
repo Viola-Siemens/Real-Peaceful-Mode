@@ -2,10 +2,15 @@ package com.hexagram2021.real_peaceful_mode.mixin;
 
 import com.google.common.collect.Maps;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
+import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,6 +25,12 @@ import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.get
 @Mixin(ServerPlayer.class)
 public class ServerPlayerMixin implements IMonsterHero {
 	private final Map<ResourceLocation, Integer> helpedMonsters = Maps.newHashMap();
+
+	private final PlayerMissions playerMissions;
+
+	public ServerPlayerMixin(MinecraftServer server, ServerLevel level, GameProfile gameProfile) {
+		this.playerMissions = ((IPlayerListWithMissions)server.getPlayerList()).getPlayerMissions((ServerPlayer)(Object)this);
+	}
 
 	@Override
 	public boolean isHero(EntityType<?> monsterType) {
@@ -41,6 +52,11 @@ public class ServerPlayerMixin implements IMonsterHero {
 		return this.helpedMonsters;
 	}
 
+	@Override
+	public PlayerMissions gerPlayerMissions() {
+		return this.playerMissions;
+	}
+
 	private static final String HELPED_MONSTERS = "helpedMonsters";
 	@Inject(method = "readAdditionalSaveData", at = @At(value = "TAIL"))
 	public void readRPMData(CompoundTag nbt, CallbackInfo ci) {
@@ -51,6 +67,7 @@ public class ServerPlayerMixin implements IMonsterHero {
 				this.helpedMonsters.compute(new ResourceLocation(compound.getString("type")), (type, count) -> compound.getInt("count"));
 			});
 		}
+		this.playerMissions.readNBT(nbt);
 	}
 
 	@Inject(method = "addAdditionalSaveData", at = @At(value = "TAIL"))
@@ -63,12 +80,14 @@ public class ServerPlayerMixin implements IMonsterHero {
 			tags.add(tag);
 		});
 		nbt.put(HELPED_MONSTERS, tags);
+		this.playerMissions.writeNBT(nbt);
 	}
 
 	@Inject(method = "restoreFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;setLastDeathLocation(Ljava/util/Optional;)V"))
 	public void restoreRPMDataFrom(ServerPlayer player, boolean won, CallbackInfo ci) {
 		if(player instanceof IMonsterHero hero) {
 			hero.getHelpedMonsters().forEach((type, count) -> this.helpedMonsters.compute(type, (type1, count1) -> count));
+			this.playerMissions.replaceWith(hero.gerPlayerMissions());
 		}
 	}
 }

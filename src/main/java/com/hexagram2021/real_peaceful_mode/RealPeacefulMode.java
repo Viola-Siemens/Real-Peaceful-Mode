@@ -2,6 +2,7 @@ package com.hexagram2021.real_peaceful_mode;
 
 import com.hexagram2021.real_peaceful_mode.client.ClientProxy;
 import com.hexagram2021.real_peaceful_mode.common.CommonProxy;
+import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.RPMContent;
 import com.hexagram2021.real_peaceful_mode.common.RPMSaveData;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
@@ -60,6 +61,7 @@ public class RealPeacefulMode {
         DistExecutor.safeRunWhenOn(Dist.CLIENT, bootstrapErrorToXCPInDev(() -> ClientProxy::modConstruction));
 
         bus.addListener(this::setup);
+        MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
         MinecraftForge.EVENT_BUS.register(this);
     }
 
