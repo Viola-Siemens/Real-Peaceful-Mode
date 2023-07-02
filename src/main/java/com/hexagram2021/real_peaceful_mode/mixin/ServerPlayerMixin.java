@@ -26,9 +26,10 @@ import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.get
 public class ServerPlayerMixin implements IMonsterHero {
 	private final Map<ResourceLocation, Integer> helpedMonsters = Maps.newHashMap();
 
-	private final PlayerMissions playerMissions;
+	private PlayerMissions playerMissions;
 
-	public ServerPlayerMixin(MinecraftServer server, ServerLevel level, GameProfile gameProfile) {
+	@Inject(method = "<init>", at = @At(value = "TAIL"))
+	public void create(MinecraftServer server, ServerLevel level, GameProfile gameProfile, CallbackInfo ci) {
 		this.playerMissions = ((IPlayerListWithMissions)server.getPlayerList()).getPlayerMissions((ServerPlayer)(Object)this);
 	}
 
