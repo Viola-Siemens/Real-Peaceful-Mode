@@ -10,14 +10,16 @@ import net.minecraft.world.item.ItemStack;
 
 public class MissionMessageMenu extends AbstractContainerMenu {
 	private final MessagedMission mission;
+	private final Runnable onRemoved;
 
 	public MissionMessageMenu(int counter, Inventory inventory) {
-		this(counter, new ClientSideMessagedMission(inventory.player));
+		this(counter, new ClientSideMessagedMission(inventory.player), () -> {});
 	}
 
-	public MissionMessageMenu(int counter, MessagedMission mission) {
+	public MissionMessageMenu(int counter, MessagedMission mission, Runnable onRemoved) {
 		super(RPMMenuTypes.MISSION_MESSAGE_MENU.get(), counter);
 		this.mission = mission;
+		this.onRemoved = onRemoved;
 	}
 
 	@Override
@@ -32,5 +34,11 @@ public class MissionMessageMenu extends AbstractContainerMenu {
 
 	public MessagedMission getMission() {
 		return this.mission;
+	}
+
+	@Override
+	public void removed(Player player) {
+		super.removed(player);
+		this.onRemoved.run();
 	}
 }

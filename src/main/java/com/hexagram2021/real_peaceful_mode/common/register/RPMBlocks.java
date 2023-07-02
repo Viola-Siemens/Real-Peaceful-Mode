@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
+import com.hexagram2021.real_peaceful_mode.common.block.SummonBlock;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
@@ -19,6 +20,12 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class RPMBlocks {
 	public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+
+	public static final class TechnicalBlocks {
+		public static final BlockEntry<SummonBlock> SUMMON_BLOCK = new BlockEntry<>(
+				"summon_block", () -> BlockBehaviour.Properties.of().noCollission().noLootTable().air(), SummonBlock::new
+		);
+	}
 
 	private RPMBlocks() {}
 

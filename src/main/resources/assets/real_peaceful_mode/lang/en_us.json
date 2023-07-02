@@ -10,5 +10,8 @@
 
   "message.real_peaceful_mode.zombies_wish.success": "Zombies are friendly to you now.",
   "message.real_peaceful_mode.skeletons_wish.success": "Skeletons are friendly to you now.",
-  "message.real_peaceful_mode.creepers_wish.success": "Creepers are friendly to you now."
+  "message.real_peaceful_mode.creepers_wish.success": "Creepers are friendly to you now.",
+  "message.real_peaceful_mode.receive_mission": "Receive new mission [%s].",
+  "message.real_peaceful_mode.finish_mission": "Successfully finish mission [%s]!",
+  "message.real_peaceful_mode.mission.name.zombie1": "Zombie's Fort"
 }

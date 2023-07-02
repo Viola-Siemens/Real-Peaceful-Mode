@@ -5,8 +5,10 @@ import net.minecraft.advancements.CriterionTriggerInstance;
 import java.util.Objects;
 
 public interface IMissionCriterionTrigger<T extends CriterionTriggerInstance> {
-	void addPlayerListener(PlayerMissions playerMissions, IMissionCriterionTrigger.Listener<T> listener);
-	void removePlayerListener(PlayerMissions playerMissions, IMissionCriterionTrigger.Listener<T> listener);
+	void addPlayerAcceptListener(PlayerMissions playerMissions, IMissionCriterionTrigger.Listener<T> listener);
+	void removePlayerAcceptListener(PlayerMissions playerMissions, IMissionCriterionTrigger.Listener<T> listener);
+	void addPlayerFinishListener(PlayerMissions playerMissions, IMissionCriterionTrigger.Listener<T> listener);
+	void removePlayerFinishListener(PlayerMissions playerMissions, IMissionCriterionTrigger.Listener<T> listener);
 	void removePlayerListeners(PlayerMissions playerMissions);
 
 	class Listener<T extends CriterionTriggerInstance> {
@@ -22,8 +24,12 @@ public interface IMissionCriterionTrigger<T extends CriterionTriggerInstance> {
 			return this.trigger;
 		}
 
-		public void run(PlayerMissions missions) {
-			missions.award(this.mission);
+		public void runAccept(PlayerMissions missions) {
+			missions.receiveNewMission(this.mission);
+		}
+
+		public void runFinish(PlayerMissions missions) {
+			missions.finishMission(this.mission);
 		}
 
 		@Override

@@ -1,6 +1,9 @@
 package com.hexagram2021.real_peaceful_mode.common.mission;
 
 import com.google.common.collect.Lists;
+import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstance;
+import com.hexagram2021.real_peaceful_mode.common.crafting.menus.MissionMessageMenu;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTriggerInstance;
@@ -8,8 +11,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayer;
 
 import java.nio.file.Path;
@@ -64,18 +70,48 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 		this.finishedMissions.addAll(other.finishedMissions);
 	}
 
-	public void award(MissionManager.Mission mission) {
+	public void receiveNewMission(MissionManager.Mission mission) {
 		if (this.player instanceof FakePlayer) {
 			return;
 		}
 
+		//TODO: 可以重写为靠近方块触发任务
 		mission.formers().stream().filter(id -> !this.finishedMissions.contains(id)).findAny().ifPresentOrElse(
-				id -> RPMLogger.debug("Ignore award mission %s for not finishing mission %s.".formatted(mission.id(), id)),
-				() -> {
-					//this.player.openMenu();
-					//TODO
-				}
+				id -> RPMLogger.debug("Ignore receive mission %s for not finishing mission %s.".formatted(mission.id(), id)),
+				() -> this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
+						new MissionMessageMenu(counter, new MessagedMissionInstance(
+								player, npc, mission.messages()
+						), () -> {
+							this.player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.receive_mission", Component.translatable(getMissionDescriptionId(mission))));
+							this.activeMissions().add(mission.id());
+						})
+				))
 		);
+	}
+
+	public void finishMission(MissionManager.Mission mission) {
+		if (this.player instanceof FakePlayer) {
+			return;
+		}
+
+		this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
+				new MissionMessageMenu(counter, new MessagedMissionInstance(
+						player, npc, mission.messagesAfter()
+				), () -> {
+					this.player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.finish_mission", Component.translatable(getMissionDescriptionId(mission))));
+					this.activeMissions().remove(mission.id());
+					this.finishedMissions().add(mission.id());
+				})
+		)
+	}
+
+	public static String getMissionDescriptionId(MissionManager.Mission mission) {
+		ResourceLocation id = mission.id();
+		return "message.%s.mission.name.%s".formatted(id.getNamespace(), id.getPath())
+	}
+
+	public finishMission(MissionManager.Mission mission) {
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -85,7 +121,7 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 			if (triggerInstance != null) {
 				IMissionCriterionTrigger<CriterionTriggerInstance> trigger = (IMissionCriterionTrigger<CriterionTriggerInstance>)CriteriaTriggers.getCriterion(triggerInstance.getCriterion());
 				if (trigger != null) {
-					trigger.addPlayerListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
+					trigger.addPlayerAcceptListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
 				}
 			}
 		}
@@ -98,7 +134,7 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 			if (triggerInstance != null) {
 				IMissionCriterionTrigger<CriterionTriggerInstance> trigger = (IMissionCriterionTrigger<CriterionTriggerInstance>)CriteriaTriggers.getCriterion(triggerInstance.getCriterion());
 				if (trigger != null) {
-					trigger.removePlayerListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
+					trigger.removePlayerAcceptListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
 				}
 			}
 		}
@@ -111,7 +147,7 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 			if (triggerInstance != null) {
 				IMissionCriterionTrigger<CriterionTriggerInstance> trigger = (IMissionCriterionTrigger<CriterionTriggerInstance>)CriteriaTriggers.getCriterion(triggerInstance.getCriterion());
 				if (trigger != null) {
-					trigger.addPlayerListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
+					trigger.addPlayerFinishListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
 				}
 			}
 		}
@@ -124,7 +160,7 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 			if (triggerInstance != null) {
 				IMissionCriterionTrigger<CriterionTriggerInstance> trigger = (IMissionCriterionTrigger<CriterionTriggerInstance>)CriteriaTriggers.getCriterion(triggerInstance.getCriterion());
 				if (trigger != null) {
-					trigger.removePlayerListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
+					trigger.removePlayerFinishListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
 				}
 			}
 		}

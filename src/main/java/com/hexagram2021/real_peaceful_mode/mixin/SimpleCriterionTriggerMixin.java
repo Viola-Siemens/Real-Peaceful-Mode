@@ -23,34 +23,52 @@ import java.util.function.Predicate;
 
 @Mixin(SimpleCriterionTrigger.class)
 public class SimpleCriterionTriggerMixin<T extends AbstractCriterionTriggerInstance> implements IMissionCriterionTrigger<T> {
-	private final Map<PlayerMissions, Set<Listener<T>>> players = Maps.newIdentityHashMap();
+	private final Map<PlayerMissions, Set<Listener<T>>> playerAccepts = Maps.newIdentityHashMap();
+	private final Map<PlayerMissions, Set<Listener<T>>> playerFinishes = Maps.newIdentityHashMap();
 
 	@Override
-	public void addPlayerListener(PlayerMissions playerMissions, Listener<T> listener) {
-		this.players.computeIfAbsent(playerMissions, ignored -> Sets.newHashSet()).add(listener);
+	public void addPlayerAcceptListener(PlayerMissions playerMissions, Listener<T> listener) {
+		this.playerAccepts.computeIfAbsent(playerMissions, ignored -> Sets.newHashSet()).add(listener);
 	}
 
 	@Override
-	public void removePlayerListener(PlayerMissions playerMissions, Listener<T> listener) {
-		Set<Listener<T>> set = this.players.get(playerMissions);
+	public void removePlayerAcceptListener(PlayerMissions playerMissions, Listener<T> listener) {
+		Set<Listener<T>> set = this.playerAccepts.get(playerMissions);
 		if (set != null) {
 			set.remove(listener);
 			if (set.isEmpty()) {
-				this.players.remove(playerMissions);
+				this.playerAccepts.remove(playerMissions);
+			}
+		}
+	}
+
+	@Override
+	public void addPlayerFinishListener(PlayerMissions playerMissions, Listener<T> listener) {
+		this.playerFinishes.computeIfAbsent(playerMissions, ignored -> Sets.newHashSet()).add(listener);
+	}
+
+	@Override
+	public void removePlayerFinishListener(PlayerMissions playerMissions, Listener<T> listener) {
+		Set<Listener<T>> set = this.playerFinishes.get(playerMissions);
+		if (set != null) {
+			set.remove(listener);
+			if (set.isEmpty()) {
+				this.playerFinishes.remove(playerMissions);
 			}
 		}
 	}
 
 	@Override
 	public void removePlayerListeners(PlayerMissions playerMissions) {
-		this.players.remove(playerMissions);
+		this.playerAccepts.remove(playerMissions);
+		this.playerFinishes.remove(playerMissions);
 	}
 
 	@Inject(method = "trigger", at = @At(value = "TAIL"))
 	protected void triggerMissions(ServerPlayer player, Predicate<T> predicate, CallbackInfo ci) {
 		if(player instanceof IMonsterHero hero) {
 			PlayerMissions playerMissions = hero.gerPlayerMissions();
-			Set<Listener<T>> set = this.players.get(playerMissions);
+			Set<Listener<T>> set = this.playerAccepts.get(playerMissions);
 			if (set != null && !set.isEmpty()) {
 				LootContext lootcontext = EntityPredicate.createContext(player, player);
 				List<Listener<T>> list = null;
@@ -68,7 +86,29 @@ public class SimpleCriterionTriggerMixin<T extends AbstractCriterionTriggerInsta
 
 				if (list != null) {
 					for(Listener<T> listener1 : list) {
-						listener1.run(playerMissions);
+						listener1.runAccept(playerMissions);
+					}
+				}
+			}
+			set = this.playerFinishes.get(playerMissions);
+			if (set != null && !set.isEmpty()) {
+				LootContext lootcontext = EntityPredicate.createContext(player, player);
+				List<Listener<T>> list = null;
+
+				for(Listener<T> listener : set) {
+					T t = listener.getTriggerInstance();
+					if (predicate.test(t) && t.getPlayerPredicate().matches(lootcontext)) {
+						if (list == null) {
+							list = Lists.newArrayList();
+						}
+
+						list.add(listener);
+					}
+				}
+
+				if (list != null) {
+					for(Listener<T> listener1 : list) {
+						listener1.runFinish(playerMissions);
 					}
 				}
 			}
