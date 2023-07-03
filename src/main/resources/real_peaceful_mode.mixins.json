@@ -6,8 +6,7 @@
   "mixins": [
     "NearestAttackableTargetGoalMixin",
     "PlayerListMixin",
-    "ServerPlayerMixin",
-    "SimpleCriterionTriggerMixin"
+    "ServerPlayerMixin"
   ],
   "minVersion": "0.8"
 }

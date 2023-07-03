@@ -3,7 +3,6 @@ package com.hexagram2021.real_peaceful_mode.common.mission;
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstance;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menus.MissionMessageMenu;
-import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTriggerInstance;
@@ -15,7 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.util.FakePlayer;
 
 import java.nio.file.Path;
@@ -70,7 +69,7 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 		this.finishedMissions.addAll(other.finishedMissions);
 	}
 
-	public void receiveNewMission(MissionManager.Mission mission) {
+	public void receiveNewMission(MissionManager.Mission mission, LivingEntity npc) {
 		if (this.player instanceof FakePlayer) {
 			return;
 		}
@@ -84,12 +83,12 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 						), () -> {
 							this.player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.receive_mission", Component.translatable(getMissionDescriptionId(mission))));
 							this.activeMissions().add(mission.id());
-						})
+						}), Component.translatable("title.real_peaceful_mode.menu.mission")
 				))
 		);
 	}
 
-	public void finishMission(MissionManager.Mission mission) {
+	public void finishMission(MissionManager.Mission mission, LivingEntity npc) {
 		if (this.player instanceof FakePlayer) {
 			return;
 		}
@@ -101,68 +100,12 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 					this.player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.finish_mission", Component.translatable(getMissionDescriptionId(mission))));
 					this.activeMissions().remove(mission.id());
 					this.finishedMissions().add(mission.id());
-				})
-		)
+				}), Component.translatable("title.real_peaceful_mode.menu.mission")
+		));
 	}
 
 	public static String getMissionDescriptionId(MissionManager.Mission mission) {
 		ResourceLocation id = mission.id();
-		return "message.%s.mission.name.%s".formatted(id.getNamespace(), id.getPath())
-	}
-
-	public finishMission(MissionManager.Mission mission) {
-
-	}
-
-	@SuppressWarnings("unchecked")
-	private void registerAcceptListeners(MissionManager.Mission mission) {
-		if(!this.finishedMissions.contains(mission.id())) {
-			CriterionTriggerInstance triggerInstance = mission.accept().getTrigger();
-			if (triggerInstance != null) {
-				IMissionCriterionTrigger<CriterionTriggerInstance> trigger = (IMissionCriterionTrigger<CriterionTriggerInstance>)CriteriaTriggers.getCriterion(triggerInstance.getCriterion());
-				if (trigger != null) {
-					trigger.addPlayerAcceptListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
-				}
-			}
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private void unregisterAcceptListeners(MissionManager.Mission mission) {
-		if(!this.finishedMissions.contains(mission.id())) {
-			CriterionTriggerInstance triggerInstance = mission.accept().getTrigger();
-			if (triggerInstance != null) {
-				IMissionCriterionTrigger<CriterionTriggerInstance> trigger = (IMissionCriterionTrigger<CriterionTriggerInstance>)CriteriaTriggers.getCriterion(triggerInstance.getCriterion());
-				if (trigger != null) {
-					trigger.removePlayerAcceptListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
-				}
-			}
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private void registerFinishListeners(MissionManager.Mission mission) {
-		if(!this.finishedMissions.contains(mission.id())) {
-			CriterionTriggerInstance triggerInstance = mission.finish().getTrigger();
-			if (triggerInstance != null) {
-				IMissionCriterionTrigger<CriterionTriggerInstance> trigger = (IMissionCriterionTrigger<CriterionTriggerInstance>)CriteriaTriggers.getCriterion(triggerInstance.getCriterion());
-				if (trigger != null) {
-					trigger.addPlayerFinishListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
-				}
-			}
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private void unregisterFinishListeners(MissionManager.Mission mission) {
-		if(!this.finishedMissions.contains(mission.id())) {
-			CriterionTriggerInstance triggerInstance = mission.finish().getTrigger();
-			if (triggerInstance != null) {
-				IMissionCriterionTrigger<CriterionTriggerInstance> trigger = (IMissionCriterionTrigger<CriterionTriggerInstance>)CriteriaTriggers.getCriterion(triggerInstance.getCriterion());
-				if (trigger != null) {
-					trigger.removePlayerFinishListener(this, new IMissionCriterionTrigger.Listener<>(triggerInstance, mission));
-				}
-			}
-		}
+		return "message.%s.mission.name.%s".formatted(id.getNamespace(), id.getPath());
 	}
 }

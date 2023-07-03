@@ -2,6 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.block.SummonBlock;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -25,6 +26,10 @@ public class RPMBlocks {
 		public static final BlockEntry<SummonBlock> SUMMON_BLOCK = new BlockEntry<>(
 				"summon_block", () -> BlockBehaviour.Properties.of().noCollission().noLootTable().air(), SummonBlock::new
 		);
+
+		private static void init() {
+			RPMItems.ItemEntry.register(SUMMON_BLOCK.getId().getPath(), () -> new BlockItem(SUMMON_BLOCK.get(), new Item.Properties()));
+		}
 	}
 
 	private RPMBlocks() {}

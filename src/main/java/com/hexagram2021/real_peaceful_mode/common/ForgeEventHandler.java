@@ -9,7 +9,7 @@ public class ForgeEventHandler {
 
 	@SubscribeEvent
 	public void onResourceReload(AddReloadListenerEvent event) {
-		this.missionManager = new MissionManager(event.getServerResources().getLootData());
+		this.missionManager = new MissionManager();
 		event.addListener(this.missionManager);
 	}
 

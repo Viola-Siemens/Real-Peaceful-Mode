@@ -5,15 +5,12 @@ import com.google.common.collect.Lists;
 import com.google.gson.*;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.storage.loot.LootDataManager;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collection;
@@ -26,11 +23,9 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 	private static final Gson GSON = (new GsonBuilder()).create();
 
 	private Map<ResourceLocation, Mission> missionsByName = ImmutableMap.of();
-	private final LootDataManager lootData;
 
-	public MissionManager(LootDataManager lootData) {
+	public MissionManager() {
 		super(GSON, "rpm/missions");
-		this.lootData = lootData;
 	}
 
 	@Override
@@ -48,7 +43,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 					continue;
 				}
 				JsonObject jsonObject = GsonHelper.convertToJsonObject(entry.getValue(), "top element");
-				Mission mission = Mission.fromJson(id, jsonObject, new DeserializationContext(id, this.lootData));
+				Mission mission = Mission.fromJson(id, jsonObject);
 				builder.put(id, mission);
 			} catch (IllegalArgumentException | JsonParseException exception) {
 				RPMLogger.error("Parsing error loading mission %s.".formatted(id));
@@ -58,17 +53,13 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 		this.missionsByName = builder.build();
 	}
 
-	public record Mission(ResourceLocation id, Criterion accept, Criterion finish, List<Message> messages, List<Message> messagesAfter, List<ResourceLocation> formers, EntityType<?> reward) {
+	public record Mission(ResourceLocation id, List<Message> messages, List<Message> messagesAfter, List<ResourceLocation> formers, EntityType<?> reward) {
 		public record Message(String messageKey, EntityType<?> entityType) {
 		}
 
-		private static Mission fromJson(ResourceLocation id, JsonObject json, DeserializationContext context) {
+		private static Mission fromJson(ResourceLocation id, JsonObject json) {
 			List<Mission.Message> messages = Lists.newArrayList();
 			List<Mission.Message> messagesAfter = Lists.newArrayList();
-			JsonObject acceptJson = GsonHelper.getAsJsonObject(json, "accept");
-			Criterion accept = Criterion.criterionFromJson(acceptJson, context);
-			JsonObject finishJson = GsonHelper.getAsJsonObject(json, "finish");
-			Criterion finish = Criterion.criterionFromJson(finishJson, context);
 			JsonArray messageArray = GsonHelper.getAsJsonArray(json, "messages");
 			JsonArray messageAfterArray = GsonHelper.getAsJsonArray(json, "messagesAfter");
 			getMessages(messages, messageArray);
@@ -82,7 +73,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 			}
 			ResourceLocation reward = new ResourceLocation(GsonHelper.getAsString(json, "reward", "minecraft:player"));
 			EntityType<?> rewardEntityType = ForgeRegistries.ENTITY_TYPES.getValue(reward);
-			return new Mission(id, accept, finish, messages, messagesAfter, formers, rewardEntityType == null ? EntityType.PLAYER : rewardEntityType);
+			return new Mission(id, messages, messagesAfter, formers, rewardEntityType == null ? EntityType.PLAYER : rewardEntityType);
 		}
 
 		public void finish(IMonsterHero hero) {
