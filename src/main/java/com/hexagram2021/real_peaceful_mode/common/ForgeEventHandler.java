@@ -5,15 +5,15 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ForgeEventHandler {
-	private MissionManager missionManager;
+	private static MissionManager missionManager;
 
 	@SubscribeEvent
 	public void onResourceReload(AddReloadListenerEvent event) {
-		this.missionManager = new MissionManager();
-		event.addListener(this.missionManager);
+		missionManager = new MissionManager();
+		event.addListener(missionManager);
 	}
 
-	public MissionManager getMissionManager() {
-		return this.missionManager;
+	public static MissionManager getMissionManager() {
+		return missionManager;
 	}
 }

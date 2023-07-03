@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.crafting.menus;
 import com.hexagram2021.real_peaceful_mode.common.crafting.ClientSideMessagedMission;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMission;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMenuTypes;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -29,7 +30,11 @@ public class MissionMessageMenu extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return this.mission.player().closerThan(this.mission.npc(), 24.0D);
+		LivingEntity npc = this.mission.npc();
+		if(npc == null) {
+			return true;
+		}
+		return this.mission.player().closerThan(npc, 24.0D);
 	}
 
 	public MessagedMission getMission() {

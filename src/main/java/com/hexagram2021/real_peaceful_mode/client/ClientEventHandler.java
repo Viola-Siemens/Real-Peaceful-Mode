@@ -1,13 +1,10 @@
 package com.hexagram2021.real_peaceful_mode.client;
 
-import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.common.Mod;
 
-public class ClientEventHandler implements ResourceManagerReloadListener {
-	@Override
-	public void onResourceManagerReload(@NotNull ResourceManager resourceManager) {
-		RealPeacefulMode.proxy.clearRenderCaches();
-	}
+import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
+
+@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+public class ClientEventHandler {
 }

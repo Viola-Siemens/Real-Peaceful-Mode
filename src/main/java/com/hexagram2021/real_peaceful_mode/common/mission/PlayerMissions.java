@@ -4,8 +4,6 @@ import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstance;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menus.MissionMessageMenu;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -16,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.util.FakePlayer;
+import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -69,12 +68,11 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 		this.finishedMissions.addAll(other.finishedMissions);
 	}
 
-	public void receiveNewMission(MissionManager.Mission mission, LivingEntity npc) {
+	public void receiveNewMission(MissionManager.Mission mission, @Nullable LivingEntity npc) {
 		if (this.player instanceof FakePlayer) {
 			return;
 		}
 
-		//TODO: 可以重写为靠近方块触发任务
 		mission.formers().stream().filter(id -> !this.finishedMissions.contains(id)).findAny().ifPresentOrElse(
 				id -> RPMLogger.debug("Ignore receive mission %s for not finishing mission %s.".formatted(mission.id(), id)),
 				() -> this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
@@ -88,7 +86,7 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 		);
 	}
 
-	public void finishMission(MissionManager.Mission mission, LivingEntity npc) {
+	public void finishMission(MissionManager.Mission mission, @Nullable LivingEntity npc) {
 		if (this.player instanceof FakePlayer) {
 			return;
 		}

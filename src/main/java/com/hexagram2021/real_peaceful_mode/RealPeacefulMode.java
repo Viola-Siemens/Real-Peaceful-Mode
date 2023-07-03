@@ -1,7 +1,6 @@
 package com.hexagram2021.real_peaceful_mode;
 
 import com.hexagram2021.real_peaceful_mode.client.ClientProxy;
-import com.hexagram2021.real_peaceful_mode.common.CommonProxy;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.RPMContent;
 import com.hexagram2021.real_peaceful_mode.common.RPMSaveData;
@@ -29,11 +28,7 @@ import java.util.function.Supplier;
 @Mod(RealPeacefulMode.MODID)
 public class RealPeacefulMode {
     public static final String MODID = "real_peaceful_mode";
-
-    public static final CommonProxy proxy = DistExecutor.safeRunForDist(
-            bootstrapErrorToXCPInDev(() -> ClientProxy::new),
-            bootstrapErrorToXCPInDev(() -> CommonProxy::new)
-    );
+    public static final String MODNAME = "Real Peaceful Mode";
 
     public static <T>
     Supplier<T> bootstrapErrorToXCPInDev(Supplier<T> in) {
