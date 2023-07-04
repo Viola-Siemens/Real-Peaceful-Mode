@@ -1,33 +1,43 @@
 {
   "requires": [],
-  "accept": {
-    "conditions": {
-      "player": [
-        {
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "location": {
-              "structure": "real_peaceful_mode:zombie_fort"
-            }
-          }
-        }
-      ]
-    },
-    "trigger": "minecraft:location"
-  },
   "messages": [
     {
-      "key": "rpm.mission.zombie1.message1",
-      "entity_type": "minecraft:player"
+      "key": "rpm.mission.real_peaceful_mode.zombie1.message1",
+      "speaker": "player"
     },
     {
-      "key": "rpm.mission.zombie1.message2",
-      "entity_type": "real_peaceful_mode:zombie_king"
+      "key": "rpm.mission.real_peaceful_mode.zombie1.message2",
+      "speaker": "npc"
     },
     {
-      "key": "rpm.mission.zombie1.message3",
-      "entity_type": "minecraft:player"
+      "key": "rpm.mission.real_peaceful_mode.zombie1.message3",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie1.message4",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie1.message5",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie1.message6",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie1.message7",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie1.message8",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie1.message9",
+      "speaker": "player"
     }
   ]
 }

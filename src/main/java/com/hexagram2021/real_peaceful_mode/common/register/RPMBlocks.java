@@ -27,6 +27,8 @@ public class RPMBlocks {
 				"summon_block", () -> BlockBehaviour.Properties.of().noCollission().noLootTable().air(), SummonBlock::new
 		);
 
+		private TechnicalBlocks() {}
+
 		private static void init() {
 			RPMItems.ItemEntry.register(SUMMON_BLOCK.getId().getPath(), () -> new BlockItem(SUMMON_BLOCK.get(), new Item.Properties()));
 		}
@@ -37,7 +39,7 @@ public class RPMBlocks {
 	public static void init(IEventBus bus) {
 		REGISTER.register(bus);
 
-
+		TechnicalBlocks.init();
 	}
 
 	public static final class BlockEntry<T extends Block> implements Supplier<T>, ItemLike {

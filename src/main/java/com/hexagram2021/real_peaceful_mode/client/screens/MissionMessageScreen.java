@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.client.screens;
 
-import com.hexagram2021.real_peaceful_mode.common.crafting.menus.MissionMessageMenu;
+import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -16,6 +16,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.List;
+
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 @OnlyIn(Dist.CLIENT)
@@ -25,9 +27,24 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 	private int messageIndex = 0;
 	private int deltaIndex = 0;
 
+	private List<FormattedCharSequence> cachedText;
+
 	public MissionMessageScreen(MissionMessageMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title);
 		--this.titleLabelY;
+		this.loadCachedText();
+	}
+
+	private void loadCachedText() {
+		List<MissionManager.Mission.Message> messages = this.menu.getMission().messages();
+		if(messages.size() > 0) {
+			this.cachedText = this.font.split(Component.translatable(messages.get(this.messageIndex).messageKey()), 140);
+		}
+	}
+
+	@Override
+	protected void renderLabels(GuiGraphics transform, int x, int y) {
+		transform.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 0x404040, false);
 	}
 
 	@Override
@@ -35,12 +52,22 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		transform.blit(BG_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
-		MissionManager.Mission.Message message = this.menu.getMission().messages().get(this.messageIndex);
+		List<MissionManager.Mission.Message> messages = this.menu.getMission().messages();
+		if(messages.size() <= 0) {
+			return;
+		}
+		MissionManager.Mission.Message message = messages.get(this.messageIndex);
 		LivingEntity currentSpeaker = this.menu.getSpeaker(message.speaker());
 		if(currentSpeaker != null) {
 			FormattedCharSequence name = currentSpeaker.getDisplayName().getVisualOrderText();
 			transform.drawString(this.font, name, i + 116 - this.font.width(name), j + 88, 0xa0a0a0);
 			InventoryScreen.renderEntityInInventoryFollowsMouse(transform, i + 143, j + 151, 24, x, y, currentSpeaker);
+		}
+		if(this.cachedText.size() <= 0) {
+			this.loadCachedText();
+		}
+		for(int l = 0; l < this.cachedText.size(); ++l) {
+			transform.drawString(this.font, this.cachedText.get(l), i + 16, j + 16 + l * 9, 0x404040, false);
 		}
 		this.renderButtons(transform, x, y);
 	}
@@ -96,7 +123,9 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 					this.messageIndex = 0;
 				} else if(this.messageIndex >= this.menu.getMission().messages().size()) {
 					this.onClose();
+					return true;
 				}
+				this.loadCachedText();
 				return true;
 			}
 		}

@@ -19,10 +19,10 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 public class MissionListScreen extends Screen {
 	private static final int MAX_MISSIONS_PER_SCREEN = 6;
 
-	protected int imageWidth = 176;
-	protected int imageHeight = 166;
-	protected int titleLabelX = 16;
-	protected int titleLabelY = 6;
+	protected final int imageWidth = 176;
+	protected final int imageHeight = 166;
+	protected final int titleLabelX = 16;
+	protected final int titleLabelY = 6;
 	protected int leftPos;
 	protected int topPos;
 
@@ -53,7 +53,7 @@ public class MissionListScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics transform, int x, int y, float ticks) {
-		transform.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 0xa0a0a0);
+		transform.drawString(this.font, this.title, this.leftPos + this.titleLabelX, this.topPos + this.titleLabelY, 0x404040);
 		this.renderBg(transform, x, y);
 		super.render(transform, x, y, ticks);
 	}
@@ -79,15 +79,14 @@ public class MissionListScreen extends Screen {
 	private void renderMissions(GuiGraphics transform) {
 		int bound = Math.min(this.shadows.size(), MAX_MISSIONS_PER_SCREEN);
 		if(bound == 0) {
-			transform.drawString(this.font, Component.translatable("gui.real_peaceful_mode.menu.mission_list.no_mission"), 6, 38, 0xa0a0a0);
+			transform.drawString(this.font, Component.translatable("gui.real_peaceful_mode.menu.mission_list.no_mission"), this.leftPos + 6, this.topPos + 38, 0xa0a0a0);
 		} else {
 			for (int i = 0; i < bound; ++i) {
-				transform.blit(BG_LOCATION, 6, this.leftPos + 38 + 18 * i, this.topPos + 54, 166, 140, 18);
+				transform.blit(BG_LOCATION, this.leftPos + 6, this.topPos + 38 + 18 * i, 54, 166, 140, 18);
 				ResourceLocation id = this.shadows.get(this.beginIndex + i).id();
 				transform.drawString(this.font, Component.translatable("mission.%s.%s.name".formatted(id.getNamespace(), id.getPath())), this.leftPos + 8, this.topPos + 38 + 18 * i, 0xffffff);
 				FormattedCharSequence description = Component.translatable("mission.%s.%s.description".formatted(id.getNamespace(), id.getPath())).getVisualOrderText();
-				int textWidth = this.font.width(description);
-				transform.drawString(this.font, description, this.leftPos + 146 - textWidth, this.topPos + 38 + 18 * i, 0xa0a0a0);
+				transform.drawString(this.font, description, this.leftPos + 6, this.topPos + 47 + 18 * i, 0xa0a0a0);
 			}
 		}
 	}

@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 import com.google.common.collect.ImmutableSet;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -18,4 +19,8 @@ public class RPMBlockEntities {
 					SummonBlockEntity::new, ImmutableSet.of(RPMBlocks.TechnicalBlocks.SUMMON_BLOCK.get()), null
 			)
 	);
+
+	public static void init(IEventBus bus) {
+		REGISTER.register(bus);
+	}
 }

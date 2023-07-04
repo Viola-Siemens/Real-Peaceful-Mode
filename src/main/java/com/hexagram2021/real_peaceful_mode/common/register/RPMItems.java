@@ -24,11 +24,12 @@ import java.util.function.Supplier;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
+@SuppressWarnings("unused")
 public class RPMItems {
 	public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
 	public static class SpiritBeads {
-		public static ItemEntry<Item> HUGE_SPIRIT_BEAD = ItemEntry.register(
+		public static final ItemEntry<Item> HUGE_SPIRIT_BEAD = ItemEntry.register(
 				"huge_spirit_bead", () -> new Item(new Item.Properties()) {
 					@Override
 					public boolean isFoil(@NotNull ItemStack itemStack) {

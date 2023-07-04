@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
-import com.hexagram2021.real_peaceful_mode.common.crafting.menus.MissionMessageMenu;
+import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.eventbus.api.IEventBus;

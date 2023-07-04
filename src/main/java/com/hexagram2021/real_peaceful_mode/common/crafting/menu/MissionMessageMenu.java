@@ -1,4 +1,4 @@
-package com.hexagram2021.real_peaceful_mode.common.crafting.menus;
+package com.hexagram2021.real_peaceful_mode.common.crafting.menu;
 
 import com.hexagram2021.real_peaceful_mode.common.crafting.ClientSideMessagedMission;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMission;
@@ -9,10 +9,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class MissionMessageMenu extends AbstractContainerMenu {
-	private final MessagedMission mission;
+	private MessagedMission mission;
 	private final Runnable onRemoved;
 
 	public MissionMessageMenu(int counter, Inventory inventory) {
@@ -41,6 +42,10 @@ public class MissionMessageMenu extends AbstractContainerMenu {
 
 	public MessagedMission getMission() {
 		return this.mission;
+	}
+
+	public void setMission(MessagedMission mission) {
+		this.mission = mission;
 	}
 
 	@Nullable

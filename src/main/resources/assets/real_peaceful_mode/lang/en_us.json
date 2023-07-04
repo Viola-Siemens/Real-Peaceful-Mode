@@ -19,5 +19,16 @@
 
   "gui.real_peaceful_mode.menu.mission_list.no_mission": "You haven't received any missions.",
 
-  "mission.real_peaceful_mode.zombie1.name": "Zombie's Fort"
+  "mission.real_peaceful_mode.zombie1.name": "Zombie's Fort",
+  "mission.real_peaceful_mode.zombie1.description": "Find someone to help you from zombie guards.",
+
+  "rpm.mission.real_peaceful_mode.zombie1.message1": "What a magnificent fort! But there's an awful smell exuded from the deep of it. What could it be?",
+  "rpm.mission.real_peaceful_mode.zombie1.message2": "Who the freak is bothering me when I'm sleeping?",
+  "rpm.mission.real_peaceful_mode.zombie1.message3": "Who's that?",
+  "rpm.mission.real_peaceful_mode.zombie1.message4": "What? A player? What are you here for?",
+  "rpm.mission.real_peaceful_mode.zombie1.message5": "Nothing, sir. I come for peace.",
+  "rpm.mission.real_peaceful_mode.zombie1.message6": "There's no peace between zombies and human beings. Where's my guards? TAKE HIM OUT!",
+  "rpm.mission.real_peaceful_mode.zombie1.message7": "Stop please!",
+  "rpm.mission.real_peaceful_mode.zombie1.message8": "Dang, there's so many of them. I have to run away.",
+  "rpm.mission.real_peaceful_mode.zombie1.message9": "Is it the king of zombie? Why we're always chased by zombies? Maybe there's someone who can explain everything to me no far away from the fort."
 }

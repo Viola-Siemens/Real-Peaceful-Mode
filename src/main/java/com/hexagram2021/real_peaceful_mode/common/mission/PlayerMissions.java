@@ -1,10 +1,11 @@
 package com.hexagram2021.real_peaceful_mode.common.mission;
 
 import com.google.common.collect.Lists;
+import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstance;
-import com.hexagram2021.real_peaceful_mode.common.crafting.menus.MissionMessageMenu;
-import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
+import com.hexagram2021.real_peaceful_mode.network.ClientboundMissionMessagePacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -15,11 +16,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.util.FakePlayer;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.network.PacketDistributor;
+
+import javax.annotation.Nullable;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
+import java.util.OptionalInt;
 
 public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<ResourceLocation> activeMissions, List<ResourceLocation> finishedMissions) {
 	public PlayerMissions(Path playerSavePath, ServerPlayer player) {
@@ -77,14 +81,21 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 
 		mission.formers().stream().filter(id -> !this.finishedMissions.contains(id)).findAny().ifPresentOrElse(
 				id -> RPMLogger.debug("Ignore receive mission %s for not finishing mission %s.".formatted(mission.id(), id)),
-				() -> this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
-						new MissionMessageMenu(counter, new MessagedMissionInstance(
-								player, npc, mission.messages()
-						), () -> {
-							this.player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.receive_mission", Component.translatable(getMissionDescriptionId(mission))));
-							this.activeMissions().add(mission.id());
-						}), Component.translatable("title.real_peaceful_mode.menu.mission")
-				))
+				() -> {
+					MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messages());
+					OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
+							new MissionMessageMenu(counter, instance, () -> {
+								this.player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.receive_mission", Component.translatable(getMissionDescriptionId(mission))));
+								this.activeMissions().add(mission.id());
+							}), Component.translatable("title.real_peaceful_mode.menu.mission")
+					));
+					if(id.isPresent()) {
+						RealPeacefulMode.packetHandler.send(
+								PacketDistributor.PLAYER.with(() -> this.player),
+								new ClientboundMissionMessagePacket(instance, id.getAsInt())
+						);
+					}
+				}
 		);
 	}
 

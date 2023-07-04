@@ -21,14 +21,6 @@ public class RPMSaveData extends SavedData {
 	@NotNull
 	@Override
 	public CompoundTag save(@NotNull CompoundTag nbt) {
-		ListTag dimensionList = new ListTag();
-
-		//nbt.put("", dimensionList);
-
-
-		ListTag receivedShaderList = new ListTag();
-		//nbt.put("", receivedShaderList);
-
 		return nbt;
 	}
 

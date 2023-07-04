@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
+@SuppressWarnings("unused")
 public final class RPMCreativeTabs {
 	private static final DeferredRegister<CreativeModeTab> REGISTER = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 

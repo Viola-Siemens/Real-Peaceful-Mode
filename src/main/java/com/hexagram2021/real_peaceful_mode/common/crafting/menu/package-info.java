@@ -1,7 +1,7 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 
-package com.hexagram2021.real_peaceful_mode.common.crafting.menus;
+package com.hexagram2021.real_peaceful_mode.common.crafting.menu;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

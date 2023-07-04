@@ -5,6 +5,7 @@ import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.RPMContent;
 import com.hexagram2021.real_peaceful_mode.common.RPMSaveData;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
+import com.hexagram2021.real_peaceful_mode.network.ClientboundMissionMessagePacket;
 import com.hexagram2021.real_peaceful_mode.network.IRPMPacket;
 import com.hexagram2021.real_peaceful_mode.network.GetMissionsPacket;
 import net.minecraft.network.FriendlyByteBuf;
@@ -82,6 +83,7 @@ public class RealPeacefulMode {
     private void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(RPMContent::init);
         registerMessage(GetMissionsPacket.class, GetMissionsPacket::new);
+        registerMessage(ClientboundMissionMessagePacket.class, ClientboundMissionMessagePacket::new);
     }
 
     public void serverStarted(ServerStartedEvent event) {

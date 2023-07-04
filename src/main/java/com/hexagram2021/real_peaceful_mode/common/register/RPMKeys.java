@@ -20,6 +20,7 @@ public final class RPMKeys {
 
 		private final KeyMapping keyMapping;
 
+		@SuppressWarnings("SameParameterValue")
 		private KeyEntry(String name, int defaultKey) {
 			String descriptionId = MODID + ".keyinfo." + name;
 			this.keyMapping = new KeyMapping(descriptionId, defaultKey, MODNAME);
