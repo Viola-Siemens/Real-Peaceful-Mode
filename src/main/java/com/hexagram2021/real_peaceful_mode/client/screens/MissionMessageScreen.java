@@ -86,7 +86,7 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 			case 1 -> buttonHeightRight = this.imageHeight + 18;
 		}
 		transform.blit(BG_LOCATION, buttonX1, buttonY, 0, buttonHeightLeft, 18, 18);
-		transform.blit(BG_LOCATION, buttonX2, buttonY, 0, buttonHeightRight, 18, 18);
+		transform.blit(BG_LOCATION, buttonX2, buttonY, 18, buttonHeightRight, 18, 18);
 	}
 
 	@Override
