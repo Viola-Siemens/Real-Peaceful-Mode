@@ -6,11 +6,19 @@ import com.google.gson.*;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootDataManager;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collection;
@@ -53,7 +61,10 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 		this.missionsByName = builder.build();
 	}
 
-	public record Mission(ResourceLocation id, List<Message> messages, List<Message> messagesAfter, List<ResourceLocation> formers, EntityType<?> reward) {
+	public record Mission(ResourceLocation id,
+						  List<Message> messages, List<Message> messagesAfter,
+						  List<ResourceLocation> formers,
+						  EntityType<?> reward, ResourceLocation rewardLootTable) {
 		public record Message(String messageKey, Speaker speaker) {
 			public enum Speaker {
 				PLAYER,
@@ -77,12 +88,19 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 			}
 			ResourceLocation reward = new ResourceLocation(GsonHelper.getAsString(json, "reward", "minecraft:player"));
 			EntityType<?> rewardEntityType = ForgeRegistries.ENTITY_TYPES.getValue(reward);
-			return new Mission(id, messages, messagesAfter, formers, rewardEntityType == null ? EntityType.PLAYER : rewardEntityType);
+			ResourceLocation rewardLootTable = new ResourceLocation(GsonHelper.getAsString(json, "loot_table", BuiltInLootTables.EMPTY.toString()));
+			return new Mission(id, messages, messagesAfter, formers, rewardEntityType == null ? EntityType.PLAYER : rewardEntityType, rewardLootTable);
 		}
 
-		public void finish(IMonsterHero hero) {
+		public void finish(ServerPlayer player, LootDataManager lootTables) {
 			if(!this.reward.equals(EntityType.PLAYER)) {
-				hero.setHero(this.reward);
+				((IMonsterHero)player).setHero(this.reward);
+			}
+			if(this.rewardLootTable != null && !this.rewardLootTable.equals(BuiltInLootTables.EMPTY)) {
+				LootTable lootTable = lootTables.getLootTable(this.rewardLootTable);
+				lootTable.getRandomItems(new LootParams.Builder((ServerLevel) player.level()).create(LootContextParamSets.EMPTY), itemStack -> player.level().addFreshEntity(
+						new ItemEntity(player.level(), player.getX(), player.getY() + 0.5D, player.getZ(), itemStack)
+				));
 			}
 		}
 	}

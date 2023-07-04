@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.mission;
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstance;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menus.MissionMessageMenu;
+import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 
 public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<ResourceLocation> activeMissions, List<ResourceLocation> finishedMissions) {
 	public PlayerMissions(Path playerSavePath, ServerPlayer player) {
@@ -98,6 +100,7 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 					this.player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.finish_mission", Component.translatable(getMissionDescriptionId(mission))));
 					this.activeMissions().remove(mission.id());
 					this.finishedMissions().add(mission.id());
+					mission.finish(this.player, Objects.requireNonNull(this.player.getServer()).getLootData());
 				}), Component.translatable("title.real_peaceful_mode.menu.mission")
 		));
 	}

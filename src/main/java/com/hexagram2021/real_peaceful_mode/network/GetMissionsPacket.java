@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.getRegistryName;
+
 public class GetMissionsPacket implements IRPMPacket {
 	private final PacketType type;
 	private final List<MissionManager.Mission> activeMissions;
@@ -44,7 +46,8 @@ public class GetMissionsPacket implements IRPMPacket {
 			if(entityType == null) {
 				entityType = EntityType.PLAYER;
 			}
-			return new MissionManager.Mission(id, List.of(), List.of(), List.of(), entityType);
+			ResourceLocation loot = readerBuf.readResourceLocation();
+			return new MissionManager.Mission(id, List.of(), List.of(), List.of(), entityType, loot);
 		});
 		this.finishedMissions = buf.readCollection(Lists::newArrayListWithCapacity, readerBuf -> {
 			ResourceLocation id = readerBuf.readResourceLocation();
@@ -52,13 +55,24 @@ public class GetMissionsPacket implements IRPMPacket {
 			if(entityType == null) {
 				entityType = EntityType.PLAYER;
 			}
-			return new MissionManager.Mission(id, List.of(), List.of(), List.of(), entityType);
+			ResourceLocation loot = readerBuf.readResourceLocation();
+			return new MissionManager.Mission(id, List.of(), List.of(), List.of(), entityType, loot);
 		});
 	}
 
 	@Override
 	public void write(FriendlyByteBuf buf) {
-
+		buf.writeEnum(this.type);
+		buf.writeCollection(this.activeMissions, (writerBuf, mission) -> {
+			writerBuf.writeResourceLocation(mission.id());
+			writerBuf.writeResourceLocation(getRegistryName(mission.reward()));
+			writerBuf.writeResourceLocation(mission.rewardLootTable());
+		});
+		buf.writeCollection(this.finishedMissions, (writerBuf, mission) -> {
+			writerBuf.writeResourceLocation(mission.id());
+			writerBuf.writeResourceLocation(getRegistryName(mission.reward()));
+			writerBuf.writeResourceLocation(mission.rewardLootTable());
+		});
 	}
 
 	@Override
