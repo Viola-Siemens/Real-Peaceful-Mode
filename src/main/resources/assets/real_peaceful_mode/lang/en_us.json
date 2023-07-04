@@ -13,7 +13,11 @@
   "message.real_peaceful_mode.creepers_wish.success": "Creepers are friendly to you now.",
   "message.real_peaceful_mode.receive_mission": "Receive new mission [%s].",
   "message.real_peaceful_mode.finish_mission": "Successfully finish mission [%s]!",
-  "message.real_peaceful_mode.mission.name.zombie1": "Zombie's Fort",
 
-  "title.real_peaceful_mode.menu.mission": "Mission Conversation"
+  "title.real_peaceful_mode.menu.mission": "Mission Conversation",
+  "title.real_peaceful_mode.menu.mission_list": "Missions",
+
+  "gui.real_peaceful_mode.menu.mission_list.no_mission": "You haven't received any missions.",
+
+  "mission.real_peaceful_mode.zombie1.name": "Zombie's Fort"
 }

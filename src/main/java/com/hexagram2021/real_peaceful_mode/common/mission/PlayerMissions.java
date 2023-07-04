@@ -104,6 +104,6 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 
 	public static String getMissionDescriptionId(MissionManager.Mission mission) {
 		ResourceLocation id = mission.id();
-		return "message.%s.mission.name.%s".formatted(id.getNamespace(), id.getPath());
+		return "mission.%s.%s.name".formatted(id.getNamespace(), id.getPath());
 	}
 }

@@ -27,23 +27,7 @@ public class ClientProxy extends CommonProxy {
 		RPMKeys.init();
 	}
 
-	@SubscribeEvent
-	public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-		event.registerAboveAll("rpm_missions", ((gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
-			RenderSystem.enableBlend();
-			RenderSystem.blendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
-
-			renderMissionGui(screenWidth, screenHeight, guiGraphics);
-		}));
-	}
-
 	private static void registerContainersAndScreens() {
 		MenuScreens.register(RPMMenuTypes.MISSION_MESSAGE_MENU.get(), MissionMessageScreen::new);
-	}
-
-	private static void renderMissionGui(int width, int height, GuiGraphics guiGraphics) {
-		if(RPMKeys.MISSION_SCREEN.isDown()) {
-			//TODO
-		}
 	}
 }

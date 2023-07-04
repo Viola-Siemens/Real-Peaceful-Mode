@@ -1,9 +1,9 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.apache.commons.compress.utils.Lists;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;

@@ -54,7 +54,11 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 	}
 
 	public record Mission(ResourceLocation id, List<Message> messages, List<Message> messagesAfter, List<ResourceLocation> formers, EntityType<?> reward) {
-		public record Message(String messageKey, EntityType<?> entityType) {
+		public record Message(String messageKey, Speaker speaker) {
+			public enum Speaker {
+				PLAYER,
+				NPC
+			}
 		}
 
 		private static Mission fromJson(ResourceLocation id, JsonObject json) {
@@ -92,15 +96,16 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 		for(JsonElement element: messageArray) {
 			if(element.isJsonObject()) {
 				JsonObject json = element.getAsJsonObject();
-				String entityTypeId = GsonHelper.getAsString(json, "entity_type");
-				EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(entityTypeId));
-				if(entityType == null) {
-					throw new IllegalArgumentException("No entity type named \"%s\"!".formatted(entityTypeId));
-				}
-				messages.add(new Mission.Message(GsonHelper.getAsString(json, "key"), entityType));
+				String speakerType = GsonHelper.getAsString(json, "speaker");
+				Mission.Message.Speaker speaker = switch(speakerType) {
+					case "player" -> Mission.Message.Speaker.PLAYER;
+					case "npc" -> Mission.Message.Speaker.NPC;
+					default -> throw new IllegalArgumentException("No speaker named \"%s\"!".formatted(speakerType));
+				};
+				messages.add(new Mission.Message(GsonHelper.getAsString(json, "key"), speaker));
 			} else if(element.isJsonPrimitive()) {
 				String message = element.getAsString();
-				messages.add(new Mission.Message(message, EntityType.PLAYER));
+				messages.add(new Mission.Message(message, Mission.Message.Speaker.PLAYER));
 			} else {
 				throw new IllegalArgumentException("Field \"messages\" must be an array of strings and json objects!");
 			}

@@ -1,14 +1,17 @@
 package com.hexagram2021.real_peaceful_mode.client.screens;
 
 import com.hexagram2021.real_peaceful_mode.common.crafting.menus.MissionMessageMenu;
+import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -32,8 +35,14 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		transform.blit(BG_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
-		FormattedCharSequence name = this.menu.getMission().messages().get(this.messageIndex).entityType().getDescription().getVisualOrderText();
-		transform.drawString(this.font, name, 116 - this.font.width(name), 88, 0xa0a0a0);
+		MissionManager.Mission.Message message = this.menu.getMission().messages().get(this.messageIndex);
+		LivingEntity currentSpeaker = this.menu.getSpeaker(message.speaker());
+		if(currentSpeaker != null) {
+			FormattedCharSequence name = currentSpeaker.getDisplayName().getVisualOrderText();
+			transform.drawString(this.font, name, i + 116 - this.font.width(name), j + 88, 0xa0a0a0);
+			InventoryScreen.renderEntityInInventoryFollowsMouse(transform, i + 143, j + 151, 24, x, y, currentSpeaker);
+		}
+		this.renderButtons(transform, x, y);
 	}
 
 	private void renderButtons(GuiGraphics transform, int x, int y) {
@@ -43,14 +52,14 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 		boolean x1InRange = x >= buttonX1 && x < buttonX1 + 18;
 		boolean x2InRange = x >= buttonX2 && x < buttonX2 + 18;
 		boolean yInRange = y >= buttonY && y < buttonY + 18;
-		int buttonHeightLeft = (x1InRange && yInRange) ? this.imageHeight + 18 : this.imageHeight;
-		int buttonHeightRight = (x2InRange && yInRange) ? this.imageHeight + 18 : this.imageHeight;
+		int buttonHeightLeft = (x1InRange && yInRange) ? this.imageHeight + 36 : this.imageHeight;
+		int buttonHeightRight = (x2InRange && yInRange) ? this.imageHeight + 36 : this.imageHeight;
 		switch(this.deltaIndex) {
-			case -1 -> buttonHeightLeft = this.imageHeight + 36;
-			case 1 -> buttonHeightRight = this.imageHeight + 36;
+			case -1 -> buttonHeightLeft = this.imageHeight + 18;
+			case 1 -> buttonHeightRight = this.imageHeight + 18;
 		}
-		transform.blit(BG_LOCATION, 13, 78, 0, buttonHeightLeft, 18, 18);
-		transform.blit(BG_LOCATION, 49, 78, 0, buttonHeightRight, 18, 18);
+		transform.blit(BG_LOCATION, buttonX1, buttonY, 0, buttonHeightLeft, 18, 18);
+		transform.blit(BG_LOCATION, buttonX2, buttonY, 0, buttonHeightRight, 18, 18);
 	}
 
 	@Override

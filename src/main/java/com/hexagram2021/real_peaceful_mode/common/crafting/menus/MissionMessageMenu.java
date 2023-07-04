@@ -2,12 +2,14 @@ package com.hexagram2021.real_peaceful_mode.common.crafting.menus;
 
 import com.hexagram2021.real_peaceful_mode.common.crafting.ClientSideMessagedMission;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMission;
+import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMenuTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 public class MissionMessageMenu extends AbstractContainerMenu {
 	private final MessagedMission mission;
@@ -39,6 +41,14 @@ public class MissionMessageMenu extends AbstractContainerMenu {
 
 	public MessagedMission getMission() {
 		return this.mission;
+	}
+
+	@Nullable
+	public LivingEntity getSpeaker(MissionManager.Mission.Message.Speaker speaker) {
+		return switch (speaker) {
+			case PLAYER -> this.mission.player();
+			case NPC -> this.mission.npc();
+		};
 	}
 
 	@Override
