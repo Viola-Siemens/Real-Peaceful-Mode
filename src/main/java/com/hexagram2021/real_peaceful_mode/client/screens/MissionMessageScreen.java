@@ -63,7 +63,7 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 			transform.drawString(this.font, name, i + 116 - this.font.width(name), j + 88, 0xa0a0a0);
 			InventoryScreen.renderEntityInInventoryFollowsMouse(transform, i + 143, j + 151, 24, x, y, currentSpeaker);
 		}
-		if(this.cachedText.size() <= 0) {
+		if(this.cachedText == null || this.cachedText.size() <= 0) {
 			this.loadCachedText();
 		}
 		for(int l = 0; l < this.cachedText.size(); ++l) {
