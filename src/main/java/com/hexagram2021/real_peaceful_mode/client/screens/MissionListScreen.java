@@ -59,6 +59,8 @@ public class MissionListScreen extends Screen {
 
 	protected void renderBg(GuiGraphics transform, int x, int y) {
 		transform.blit(BG_LOCATION, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+		int k = (int)(91.0F * this.scrollOffs);
+		transform.blit(BG_LOCATION, this.leftPos + 149, this.topPos + 39 + k, 176 + (this.isScrollBarActive() ? 0 : 12), 0, 12, 15);
 		this.renderButtons(transform, x, y);
 		this.renderMissions(transform);
 		this.renderTooltip(transform, x, y);
@@ -120,7 +122,7 @@ public class MissionListScreen extends Screen {
 				return true;
 			}
 		}
-		buttonX = this.leftPos + 144;
+		buttonX = this.leftPos + 148;
 		buttonY = this.topPos + 38;
 		if (x >= buttonX && x < buttonX + 12 && y >= buttonY && y < buttonY + 108) {
 			this.scrolling = true;

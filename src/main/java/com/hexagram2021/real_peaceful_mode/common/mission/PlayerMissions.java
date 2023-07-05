@@ -104,16 +104,21 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 			return;
 		}
 
-		this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
-				new MissionMessageMenu(counter, new MessagedMissionInstance(
-						player, npc, mission.messagesAfter()
-				), () -> {
+		MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messagesAfter());
+		OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
+				new MissionMessageMenu(counter, instance, () -> {
 					this.player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.finish_mission", Component.translatable(getMissionDescriptionId(mission))));
 					this.activeMissions().remove(mission.id());
 					this.finishedMissions().add(mission.id());
 					mission.finish(this.player, Objects.requireNonNull(this.player.getServer()).getLootData());
 				}), Component.translatable("title.real_peaceful_mode.menu.mission")
 		));
+		if(id.isPresent()) {
+			RealPeacefulMode.packetHandler.send(
+					PacketDistributor.PLAYER.with(() -> this.player),
+					new ClientboundMissionMessagePacket(instance, id.getAsInt())
+			);
+		}
 	}
 
 	public static String getMissionDescriptionId(MissionManager.Mission mission) {
