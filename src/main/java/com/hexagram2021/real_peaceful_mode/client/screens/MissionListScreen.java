@@ -9,7 +9,6 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 
 import java.util.List;
@@ -62,6 +61,7 @@ public class MissionListScreen extends Screen {
 		transform.blit(BG_LOCATION, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 		this.renderButtons(transform, x, y);
 		this.renderMissions(transform);
+		this.renderTooltip(transform, x, y);
 	}
 
 	private void renderButtons(GuiGraphics transform, int x, int y) {
@@ -84,9 +84,18 @@ public class MissionListScreen extends Screen {
 			for (int i = 0; i < bound; ++i) {
 				transform.blit(BG_LOCATION, this.leftPos + 6, this.topPos + 38 + 18 * i, 54, 166, 140, 18);
 				ResourceLocation id = this.shadows.get(this.beginIndex + i).id();
-				transform.drawString(this.font, Component.translatable("mission.%s.%s.name".formatted(id.getNamespace(), id.getPath())), this.leftPos + 8, this.topPos + 38 + 18 * i, 0xffffff);
-				FormattedCharSequence description = Component.translatable("mission.%s.%s.description".formatted(id.getNamespace(), id.getPath())).getVisualOrderText();
-				transform.drawString(this.font, description, this.leftPos + 6, this.topPos + 47 + 18 * i, 0xa0a0a0);
+				transform.drawString(this.font, Component.translatable("mission.%s.%s.name".formatted(id.getNamespace(), id.getPath())), this.leftPos + 8, this.topPos + 42 + 18 * i, 0xffffff, false);
+			}
+		}
+	}
+
+	private void renderTooltip(GuiGraphics transform, int x, int y) {
+		if(x >= this.leftPos + 6 && x < this.leftPos + 6 + 140) {
+			int bound = Math.min(this.shadows.size(), MAX_MISSIONS_PER_SCREEN);
+			int i = (y - this.topPos - 38) / 18;
+			if(i >= 0 && i < bound) {
+				ResourceLocation id = this.shadows.get(this.beginIndex + i).id();
+				transform.renderTooltip(this.font, Component.translatable("mission.%s.%s.description".formatted(id.getNamespace(), id.getPath())), x, y);
 			}
 		}
 	}

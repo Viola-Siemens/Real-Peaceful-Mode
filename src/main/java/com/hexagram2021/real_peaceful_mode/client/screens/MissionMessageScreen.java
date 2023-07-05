@@ -60,8 +60,8 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 		LivingEntity currentSpeaker = this.menu.getSpeaker(message.speaker());
 		if(currentSpeaker != null) {
 			FormattedCharSequence name = currentSpeaker.getDisplayName().getVisualOrderText();
-			transform.drawString(this.font, name, i + 116 - this.font.width(name), j + 88, 0xa0a0a0);
-			InventoryScreen.renderEntityInInventoryFollowsMouse(transform, i + 143, j + 151, 24, x, y, currentSpeaker);
+			transform.drawString(this.font, name, i + 116 - this.font.width(name), j + 108, 0xa0a0a0);
+			InventoryScreen.renderEntityInInventoryFollowsMouse(transform, i + 143, j + 151, 24, i + 143 - x, j + 120 - y, currentSpeaker);
 		}
 		if(this.cachedText == null || this.cachedText.size() <= 0) {
 			this.loadCachedText();
