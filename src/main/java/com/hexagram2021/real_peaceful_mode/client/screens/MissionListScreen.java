@@ -9,6 +9,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 
 import java.util.List;
@@ -36,6 +37,8 @@ public class MissionListScreen extends Screen {
 	private final List<MissionManager.Mission> finishedMissions;
 
 	private List<MissionManager.Mission> shadows;
+
+	private final List<FormattedCharSequence> noMissionText = this.font.split(Component.translatable("gui.real_peaceful_mode.menu.mission_list.no_mission"), 128);
 
 	public MissionListScreen(List<MissionManager.Mission> activeMissions, List<MissionManager.Mission> finishedMissions) {
 		super(Component.translatable("title.real_peaceful_mode.menu.mission_list"));
@@ -81,7 +84,9 @@ public class MissionListScreen extends Screen {
 	private void renderMissions(GuiGraphics transform) {
 		int bound = Math.min(this.shadows.size(), MAX_MISSIONS_PER_SCREEN);
 		if(bound == 0) {
-			transform.drawString(this.font, Component.translatable("gui.real_peaceful_mode.menu.mission_list.no_mission"), this.leftPos + 6, this.topPos + 38, 0xa0a0a0);
+			for(int i = 0; i < this.noMissionText.size(); ++i) {
+				transform.drawString(this.font, this.noMissionText.get(i), this.leftPos + 6, this.topPos + 38 + i * 9, 0xa0a0a0, false);
+			}
 		} else {
 			for (int i = 0; i < bound; ++i) {
 				transform.blit(BG_LOCATION, this.leftPos + 6, this.topPos + 38 + 18 * i, 54, 166, 140, 18);
