@@ -38,6 +38,10 @@ public class RPMItems {
 				}
 		);
 
+		public static final ItemEntry<Item> ZOMBIE_SPIRIT_BEAD = ItemEntry.register("zombie_spirit_bead", () -> new Item(new Item.Properties()));
+		public static final ItemEntry<Item> SKELETON_SPIRIT_BEAD = ItemEntry.register("skeleton_spirit_bead", () -> new Item(new Item.Properties()));
+		public static final ItemEntry<Item> CREEPER_SPIRIT_BEAD = ItemEntry.register("creeper_spirit_bead", () -> new Item(new Item.Properties()));
+
 		private SpiritBeads() {}
 
 		public static void init() {}

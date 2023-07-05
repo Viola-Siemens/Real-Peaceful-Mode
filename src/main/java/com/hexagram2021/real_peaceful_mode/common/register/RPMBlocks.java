@@ -8,6 +8,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -38,12 +39,27 @@ public class RPMBlocks {
 		}
 	}
 
+	public static final class WorkStation {
+		public static final BlockEntry<Block> REFINEMENT_TABLE = new BlockEntry<>(
+				"refinement_table", () -> BlockBehaviour.Properties.of()
+				.mapColor(MapColor.COLOR_BLACK).strength(50.0F, 1200.0F).lightLevel(blockState -> 1)
+				.noOcclusion().pushReaction(PushReaction.BLOCK), Block::new
+		);
+
+		private WorkStation() {}
+
+		private static void init() {
+			RPMItems.ItemEntry.register(REFINEMENT_TABLE.getId().getPath(), () -> new BlockItem(REFINEMENT_TABLE.get(), new Item.Properties()));
+		}
+	}
+
 	private RPMBlocks() {}
 
 	public static void init(IEventBus bus) {
 		REGISTER.register(bus);
 
 		TechnicalBlocks.init();
+		WorkStation.init();
 	}
 
 	public static final class BlockEntry<T extends Block> implements Supplier<T>, ItemLike {

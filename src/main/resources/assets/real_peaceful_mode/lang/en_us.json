@@ -3,7 +3,10 @@
   "language.code": "en_us",
   "language.region": "United States",
 
+  "itemGroup.real_peaceful_mode": "Real Peaceful Mode",
+
   "block.real_peaceful_mode.summon_block": "Summon Block",
+  "block.real_peaceful_mode.refinement_table": "Refinement Table",
   "item.real_peaceful_mode.huge_spirit_bead": "Huge Spirit Bead",
   "item.real_peaceful_mode.zombie_spirit_bead": "Zombie Spirit Bead",
   "item.real_peaceful_mode.skeleton_spirit_bead": "Skeleton Spirit Bead",
@@ -11,6 +14,10 @@
   "item.real_peaceful_mode.zombies_wish": "Zombie's Wish",
   "item.real_peaceful_mode.skeletons_wish": "Skeleton's Wish",
   "item.real_peaceful_mode.creepers_wish": "Creeper's Wish",
+
+  "entity.minecraft.villager.real_peaceful_mode.senior": "Senior",
+
+  "subtitles.entity.villager.work_senior": "Senior works",
 
   "message.real_peaceful_mode.zombies_wish.success": "Zombies are friendly to you now.",
   "message.real_peaceful_mode.skeletons_wish.success": "Skeletons are friendly to you now.",
@@ -25,6 +32,11 @@
 
   "mission.real_peaceful_mode.zombie1.name": "Zombie's Fort",
   "mission.real_peaceful_mode.zombie1.description": "Find someone to help you from zombie guards.",
+  "mission.real_peaceful_mode.zombie2.name": "Senior Zombie and Villager",
+  "mission.real_peaceful_mode.zombie2.description": "Follow the senior zombie's guide and find a senior villager.",
+
+  "book.real_peaceful_mode.zombie.title": "Mind of zombies",
+  "book.real_peaceful_mode.zombie.content": "Mind of zombies",
 
   "rpm.mission.real_peaceful_mode.zombie1.message1": "What a magnificent fort! But there's an awful smell exuded from the deep of it. What could it be?",
   "rpm.mission.real_peaceful_mode.zombie1.message2": "Who the freak is bothering me when I'm sleeping?",

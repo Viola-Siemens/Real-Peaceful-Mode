@@ -92,7 +92,7 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 										"message.real_peaceful_mode.receive_mission",
 										ComponentUtils.wrapInSquareBrackets(
 												Component.translatable(getMissionDescriptionId(mission))
-														.withStyle(ChatFormatting.BOLD, ChatFormatting.GREEN)
+														.withStyle(ChatFormatting.GREEN)
 														.withStyle((style -> style.withHoverEvent(
 																new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(getMissionInformationId(mission)))
 														)))
@@ -119,7 +119,16 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 		MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messagesAfter());
 		OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
 				new MissionMessageMenu(counter, instance, () -> {
-					this.player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.finish_mission", Component.translatable(getMissionDescriptionId(mission))));
+					this.player.sendSystemMessage(Component.translatable(
+							"message.real_peaceful_mode.finish_mission",
+							ComponentUtils.wrapInSquareBrackets(
+									Component.translatable(getMissionDescriptionId(mission))
+											.withStyle(ChatFormatting.GREEN)
+											.withStyle((style -> style.withHoverEvent(
+													new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(getMissionInformationId(mission)))
+											)))
+							)
+					));
 					this.activeMissions().remove(mission.id());
 					this.finishedMissions().add(mission.id());
 					mission.finish(this.player, Objects.requireNonNull(this.player.getServer()).getLootData());

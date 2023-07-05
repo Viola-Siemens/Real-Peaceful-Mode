@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
@@ -38,7 +39,8 @@ public class MissionListScreen extends Screen {
 
 	private List<MissionManager.Mission> shadows;
 
-	private final List<FormattedCharSequence> noMissionText = this.font.split(Component.translatable("gui.real_peaceful_mode.menu.mission_list.no_mission"), 128);
+	@Nullable
+	private List<FormattedCharSequence> noMissionText = null;
 
 	public MissionListScreen(List<MissionManager.Mission> activeMissions, List<MissionManager.Mission> finishedMissions) {
 		super(Component.translatable("title.real_peaceful_mode.menu.mission_list"));
@@ -84,6 +86,9 @@ public class MissionListScreen extends Screen {
 	private void renderMissions(GuiGraphics transform) {
 		int bound = Math.min(this.shadows.size(), MAX_MISSIONS_PER_SCREEN);
 		if(bound == 0) {
+			if(this.noMissionText == null) {
+				this.noMissionText = this.font.split(Component.translatable("gui.real_peaceful_mode.menu.mission_list.no_mission"), 128);
+			}
 			for(int i = 0; i < this.noMissionText.size(); ++i) {
 				transform.drawString(this.font, this.noMissionText.get(i), this.leftPos + 6, this.topPos + 38 + i * 9, 0xa0a0a0, false);
 			}

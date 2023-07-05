@@ -4,9 +4,11 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "real_peaceful_mode.refmap.json",
   "mixins": [
+    "HeroGiftsTaskAccess",
     "NearestAttackableTargetGoalMixin",
     "PlayerListMixin",
-    "ServerPlayerMixin"
+    "ServerPlayerMixin",
+    "StructureTemplatePoolAccess"
   ],
   "minVersion": "0.8"
 }
