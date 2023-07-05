@@ -74,7 +74,7 @@ public class SummonBlockEntity extends BlockEntity {
 		blockEntity.lastCheckTick = CHECK_TICK;
 		if(level instanceof ServerLevel serverLevel && blockEntity.mission != null) {
 			List<? extends ServerPlayer> nearbyPlayers = serverLevel.players().stream()
-					.filter(player -> player.position().closerThan(blockPos.getCenter(), 16.0D) && checkMission((IMonsterHero)player, blockEntity.mission))
+					.filter(player -> player.position().closerThan(blockPos.getCenter(), 16.0D) && checkMission((IMonsterHero)player, blockEntity.type, blockEntity.mission))
 					.toList();
 			if (!nearbyPlayers.isEmpty()) {
 				LivingEntity npc = blockEntity.summon(serverLevel);
@@ -138,18 +138,22 @@ public class SummonBlockEntity extends BlockEntity {
 		this.type = SummonMissionType.TYPE_BY_NAME.getOrDefault(nbt.getString(TAG_MISSION_TYPE), SummonMissionType.RECEIVE);
 	}
 
-	private static boolean checkMission(IMonsterHero hero, MissionManager.Mission mission) {
+	private static boolean checkMission(IMonsterHero hero, SummonMissionType type, MissionManager.Mission mission) {
 		PlayerMissions playerMissions = hero.gerPlayerMissions();
 		ResourceLocation missionId = mission.id();
-		if(playerMissions.finishedMissions().contains(missionId) || playerMissions.activeMissions().contains(missionId)) {
-			return false;
-		}
-		for(ResourceLocation former: mission.formers()) {
-			if(!playerMissions.finishedMissions().contains(former)) {
+		if (type == SummonMissionType.RECEIVE) {
+			if(playerMissions.finishedMissions().contains(missionId) || playerMissions.activeMissions().contains(missionId)) {
 				return false;
 			}
+			for(ResourceLocation former: mission.formers()) {
+				if(!playerMissions.finishedMissions().contains(former)) {
+					return false;
+				}
+			}
+			return true;
 		}
-		return true;
+		return playerMissions.activeMissions().contains(missionId);
 	}
 }
 //{summon: {id: "zombie"}, mission: "real_peaceful_mode:zombie1", id: "real_peaceful_mode:summon_block", mission_type: "receive"}
+//{mission: "real_peaceful_mode:zombie1", id: "real_peaceful_mode:summon_block", mission_type: "finish"}

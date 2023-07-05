@@ -24,6 +24,11 @@ public class SummonBlock extends BaseEntityBlock {
 		super(properties);
 	}
 
+	@Override
+	public boolean propagatesSkylightDown(BlockState blockState, BlockGetter level, BlockPos blockPos) {
+		return true;
+	}
+
 	@Override @Nullable
 	public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
 		return new SummonBlockEntity(blockPos, blockState);

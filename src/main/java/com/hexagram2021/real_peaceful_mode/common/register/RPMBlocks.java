@@ -8,6 +8,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -24,7 +25,10 @@ public class RPMBlocks {
 
 	public static final class TechnicalBlocks {
 		public static final BlockEntry<SummonBlock> SUMMON_BLOCK = new BlockEntry<>(
-				"summon_block", () -> BlockBehaviour.Properties.of().noCollission().noLootTable().air(), SummonBlock::new
+				"summon_block", () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
+				.noCollission().noLootTable()
+				.isValidSpawn((blockState, level, blockPos, entityType) -> false)
+				.noParticlesOnBreak().pushReaction(PushReaction.BLOCK), SummonBlock::new
 		);
 
 		private TechnicalBlocks() {}
