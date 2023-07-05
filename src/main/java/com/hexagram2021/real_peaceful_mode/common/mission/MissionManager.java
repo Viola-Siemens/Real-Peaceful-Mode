@@ -47,7 +47,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 
 			try {
 				if (entry.getValue().isJsonObject() && !processConditions(entry.getValue().getAsJsonObject())) {
-					RPMLogger.debug("Skipping loading recipe %s as it's conditions were not met".formatted(id));
+					RPMLogger.debug("Skipping loading mission %s as it's conditions were not met".formatted(id));
 					continue;
 				}
 				JsonObject jsonObject = GsonHelper.convertToJsonObject(entry.getValue(), "top element");

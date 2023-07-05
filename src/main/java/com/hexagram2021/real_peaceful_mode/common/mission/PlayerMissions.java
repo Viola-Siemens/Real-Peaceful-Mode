@@ -6,11 +6,14 @@ import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstan
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.hexagram2021.real_peaceful_mode.network.ClientboundMissionMessagePacket;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
@@ -85,7 +88,16 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 					MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messages());
 					OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
 							new MissionMessageMenu(counter, instance, () -> {
-								this.player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.receive_mission", Component.translatable(getMissionDescriptionId(mission))));
+								this.player.sendSystemMessage(Component.translatable(
+										"message.real_peaceful_mode.receive_mission",
+										ComponentUtils.wrapInSquareBrackets(
+												Component.translatable(getMissionDescriptionId(mission))
+														.withStyle(ChatFormatting.BOLD, ChatFormatting.GREEN)
+														.withStyle((style -> style.withHoverEvent(
+																new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(getMissionInformationId(mission)))
+														)))
+										)
+								));
 								this.activeMissions().add(mission.id());
 							}), Component.translatable("title.real_peaceful_mode.menu.mission")
 					));
@@ -124,5 +136,10 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 	public static String getMissionDescriptionId(MissionManager.Mission mission) {
 		ResourceLocation id = mission.id();
 		return "mission.%s.%s.name".formatted(id.getNamespace(), id.getPath());
+	}
+
+	public static String getMissionInformationId(MissionManager.Mission mission) {
+		ResourceLocation id = mission.id();
+		return "mission.%s.%s.description".formatted(id.getNamespace(), id.getPath());
 	}
 }

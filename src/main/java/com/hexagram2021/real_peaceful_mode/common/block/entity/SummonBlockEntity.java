@@ -32,6 +32,7 @@ public class SummonBlockEntity extends BlockEntity {
 	public static final String TAG_SUMMON_ENTITY = "summon";
 	public static final String TAG_MISSION = "mission";
 	public static final String TAG_MISSION_TYPE = "mission_type";
+	public static final String TAG_DISTANCE = "distance";
 
 	private static final int CHECK_TICK = 100;
 
@@ -42,6 +43,8 @@ public class SummonBlockEntity extends BlockEntity {
 	private MissionManager.Mission mission;
 
 	private SummonMissionType type = SummonMissionType.RECEIVE;
+
+	private int distance = 16;
 
 	private int lastCheckTick = CHECK_TICK;
 
@@ -74,7 +77,7 @@ public class SummonBlockEntity extends BlockEntity {
 		blockEntity.lastCheckTick = CHECK_TICK;
 		if(level instanceof ServerLevel serverLevel && blockEntity.mission != null) {
 			List<? extends ServerPlayer> nearbyPlayers = serverLevel.players().stream()
-					.filter(player -> player.position().closerThan(blockPos.getCenter(), 16.0D) && checkMission((IMonsterHero)player, blockEntity.type, blockEntity.mission))
+					.filter(player -> player.position().closerThan(blockPos.getCenter(), blockEntity.distance) && checkMission((IMonsterHero)player, blockEntity.type, blockEntity.mission))
 					.toList();
 			if (!nearbyPlayers.isEmpty()) {
 				LivingEntity npc = blockEntity.summon(serverLevel);
@@ -123,6 +126,7 @@ public class SummonBlockEntity extends BlockEntity {
 		if(this.mission != null) {
 			nbt.putString(TAG_MISSION, this.mission.id().toString());
 		}
+		nbt.putInt(TAG_DISTANCE, this.distance);
 		nbt.putString(TAG_MISSION_TYPE, this.type.getSerializedName());
 	}
 
@@ -134,6 +138,9 @@ public class SummonBlockEntity extends BlockEntity {
 		}
 		if(nbt.contains(TAG_MISSION, Tag.TAG_STRING)) {
 			this.mission = ForgeEventHandler.getMissionManager().getMission(new ResourceLocation(nbt.getString(TAG_MISSION))).orElse(null);
+		}
+		if(nbt.contains(TAG_DISTANCE, Tag.TAG_INT)) {
+			this.distance = nbt.getInt(TAG_DISTANCE);
 		}
 		this.type = SummonMissionType.TYPE_BY_NAME.getOrDefault(nbt.getString(TAG_MISSION_TYPE), SummonMissionType.RECEIVE);
 	}
@@ -155,5 +162,5 @@ public class SummonBlockEntity extends BlockEntity {
 		return playerMissions.activeMissions().contains(missionId);
 	}
 }
-//{summon: {id: "zombie"}, mission: "real_peaceful_mode:zombie1", id: "real_peaceful_mode:summon_block", mission_type: "receive"}
-//{mission: "real_peaceful_mode:zombie1", id: "real_peaceful_mode:summon_block", mission_type: "finish"}
+//{summon: {id: "zombie"}, id: "real_peaceful_mode:summon_block", mission_type: "receive", mission: "real_peaceful_mode:zombie1"}
+//{id: "real_peaceful_mode:summon_block", mission_type: "finish", mission: "real_peaceful_mode:zombie1"}

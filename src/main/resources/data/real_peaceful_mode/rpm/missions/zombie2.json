@@ -1,0 +1,66 @@
+{
+  "requires": [
+    "real_peaceful_mode:zombie1"
+  ],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message1",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message2",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message3",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message4",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message5",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message6",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message7",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message8",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message9",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message10",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message11",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message12",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message13",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message14",
+      "speaker": "player"
+    }
+  ],
+  "loot_table": "real_peaceful_mode:missions/single_zombie_spirit"
+}

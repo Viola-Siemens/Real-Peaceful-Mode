@@ -5,6 +5,9 @@
 
   "block.real_peaceful_mode.summon_block": "Summon Block",
   "item.real_peaceful_mode.huge_spirit_bead": "Huge Spirit Bead",
+  "item.real_peaceful_mode.zombie_spirit_bead": "Zombie Spirit Bead",
+  "item.real_peaceful_mode.skeleton_spirit_bead": "Skeleton Spirit Bead",
+  "item.real_peaceful_mode.creeper_spirit_bead": "Creeper Spirit Bead",
   "item.real_peaceful_mode.zombies_wish": "Zombie's Wish",
   "item.real_peaceful_mode.skeletons_wish": "Skeleton's Wish",
   "item.real_peaceful_mode.creepers_wish": "Creeper's Wish",
@@ -12,8 +15,8 @@
   "message.real_peaceful_mode.zombies_wish.success": "Zombies are friendly to you now.",
   "message.real_peaceful_mode.skeletons_wish.success": "Skeletons are friendly to you now.",
   "message.real_peaceful_mode.creepers_wish.success": "Creepers are friendly to you now.",
-  "message.real_peaceful_mode.receive_mission": "Receive new mission [%s].",
-  "message.real_peaceful_mode.finish_mission": "Successfully finish mission [%s]!",
+  "message.real_peaceful_mode.receive_mission": "Receive new mission %s.",
+  "message.real_peaceful_mode.finish_mission": "Successfully finish mission %s!",
 
   "title.real_peaceful_mode.menu.mission": "Mission Conversation",
   "title.real_peaceful_mode.menu.mission_list": "Missions",
@@ -31,5 +34,18 @@
   "rpm.mission.real_peaceful_mode.zombie1.message6": "There's no peace between zombies and human beings. Where's my guards? TAKE HIM OUT!",
   "rpm.mission.real_peaceful_mode.zombie1.message7": "Stop please!",
   "rpm.mission.real_peaceful_mode.zombie1.message8": "Dang, there's so many of them. I have to run away.",
-  "rpm.mission.real_peaceful_mode.zombie1.message9": "Is it the king of zombie? Why we're always chased by zombies? Maybe there's someone who can explain everything to me no far away from the fort."
+  "rpm.mission.real_peaceful_mode.zombie1.message9": "Is it the king of zombie? Why we're always chased by zombies? Maybe there's someone who can explain everything to me no far away from the fort.",
+
+  "rpm.mission.real_peaceful_mode.zombie2.message1": "Hey there...",
+  "rpm.mission.real_peaceful_mode.zombie2.message2": "Another zombie guard?",
+  "rpm.mission.real_peaceful_mode.zombie2.message3": "No no, chill. I'm the forgotten.",
+  "rpm.mission.real_peaceful_mode.zombie2.message4": "The forgotten? But you look like a grandpa. I'm sorry. Could you please tell me what happened in that fort?",
+  "rpm.mission.real_peaceful_mode.zombie2.message5": "Nevermind, you've already seen the tyrant of us?",
+  "rpm.mission.real_peaceful_mode.zombie2.message6": "Tyrant? You mean the zombie looks like a king with a lot of guards?",
+  "rpm.mission.real_peaceful_mode.zombie2.message7": "Yes, he took our hearts, and our mind. I'm supposed to be the only survivor in that disaster. I've been escaping for hundreds of years. Hope they can't find and recognize me now.",
+  "rpm.mission.real_peaceful_mode.zombie2.message8": "Long time ago, zombies can get along well with human beings. But after the tyrant's accession, that water we drink was injected into cursed. Everyone lose their mind and became aggressive to players and villagers.",
+  "rpm.mission.real_peaceful_mode.zombie2.message9": "Zombie virus spread among the world, which seems to provide huge power to the tyrant. Then he trained a military called the dark zombie knights, keeping political stability of the kingdom, and killing anyone who opposes him.",
+  "rpm.mission.real_peaceful_mode.zombie2.message10": "That's horrible. I want to do something for you. But can I believe you?",
+  "rpm.mission.real_peaceful_mode.zombie2.message11": "Get their mind back please. That will make you stronger to fight against the tyrant. Take this please, go to the villages and find a senior, then you may get the answer. I'm hiding. I believe you can save us, young guy.",
+  "rpm.mission.real_peaceful_mode.zombie2.message12": "What's this, a spirit bead? Oh, okay, that's weird. Maybe I could find it out in a village."
 }
