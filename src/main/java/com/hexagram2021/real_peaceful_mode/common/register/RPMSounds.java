@@ -13,6 +13,7 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 public class RPMSounds {
 	static final Map<ResourceLocation, SoundEvent> registeredEvents = new HashMap<>();
 	public static final SoundEvent VILLAGER_WORK_SENIOR = registerSound("villager.work_senior");
+	public static final SoundEvent NOTE_BLOCK_IMITATE_DARK_ZOMBIE_KNIGHT = registerSound("block.note_block.imitate.dark_zombie_knight");
 
 	private static SoundEvent registerSound(String name) {
 		ResourceLocation location = new ResourceLocation(MODID, name);

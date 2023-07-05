@@ -1,13 +1,16 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.block.SummonBlock;
+import com.hexagram2021.real_peaceful_mode.common.block.skull.RPMSkullTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -53,6 +56,20 @@ public class RPMBlocks {
 		}
 	}
 
+	public static final class Decoration {
+		public static final BlockEntry<SkullBlock> DARK_ZOMBIE_KNIGHT_SKULL = new BlockEntry<>(
+				"dark_zombie_knight_skull", () -> BlockBehaviour.Properties.of()
+				.instrument(RPMNoteBlockInstruments.DARK_ZOMBIE_KNIGHT).strength(1.0F).pushReaction(PushReaction.DESTROY),
+				props -> new SkullBlock(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, props)
+		);
+
+		private Decoration() {}
+
+		private static void init() {
+
+		}
+	}
+
 	private RPMBlocks() {}
 
 	public static void init(IEventBus bus) {
@@ -60,6 +77,7 @@ public class RPMBlocks {
 
 		TechnicalBlocks.init();
 		WorkStation.init();
+		Decoration.init();
 	}
 
 	public static final class BlockEntry<T extends Block> implements Supplier<T>, ItemLike {

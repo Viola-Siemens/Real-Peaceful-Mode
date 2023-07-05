@@ -6,9 +6,13 @@
   "mixins": [
     "HeroGiftsTaskAccess",
     "NearestAttackableTargetGoalMixin",
+    "NoteBlockInstrumentMixin",
     "PlayerListMixin",
     "ServerPlayerMixin",
     "StructureTemplatePoolAccess"
   ],
-  "minVersion": "0.8"
+  "minVersion": "0.8",
+  "client": [
+    "SkullBlockRendererMixin"
+  ]
 }
