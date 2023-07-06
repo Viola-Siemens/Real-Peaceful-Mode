@@ -64,7 +64,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 	public record Mission(ResourceLocation id,
 						  List<Message> messages, List<Message> messagesAfter,
 						  List<ResourceLocation> formers,
-						  EntityType<?> reward, ResourceLocation rewardLootTable) {
+						  EntityType<?> reward, ResourceLocation rewardLootTable, boolean lootBefore) {
 		public record Message(String messageKey, Speaker speaker) {
 			public enum Speaker {
 				PLAYER,
@@ -89,19 +89,26 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 			ResourceLocation reward = new ResourceLocation(GsonHelper.getAsString(json, "reward", "minecraft:player"));
 			EntityType<?> rewardEntityType = ForgeRegistries.ENTITY_TYPES.getValue(reward);
 			ResourceLocation rewardLootTable = new ResourceLocation(GsonHelper.getAsString(json, "loot_table", BuiltInLootTables.EMPTY.toString()));
-			return new Mission(id, messages, messagesAfter, formers, rewardEntityType == null ? EntityType.PLAYER : rewardEntityType, rewardLootTable);
+			boolean lootBefore = GsonHelper.getAsBoolean(json, "loot_before", false);
+			return new Mission(id, messages, messagesAfter, formers, rewardEntityType == null ? EntityType.PLAYER : rewardEntityType, rewardLootTable, lootBefore);
+		}
+
+		public void tryGetLoot(ServerPlayer player, LootDataManager lootTables, boolean finished) {
+			if(this.lootBefore || finished) {
+				if (this.rewardLootTable != null && !this.rewardLootTable.equals(BuiltInLootTables.EMPTY)) {
+					LootTable lootTable = lootTables.getLootTable(this.rewardLootTable);
+					lootTable.getRandomItems(new LootParams.Builder((ServerLevel) player.level()).create(LootContextParamSets.EMPTY), itemStack -> player.level().addFreshEntity(
+							new ItemEntity(player.level(), player.getX(), player.getY() + 0.5D, player.getZ(), itemStack)
+					));
+				}
+			}
 		}
 
 		public void finish(ServerPlayer player, LootDataManager lootTables) {
 			if(!this.reward.equals(EntityType.PLAYER)) {
 				((IMonsterHero)player).setHero(this.reward);
 			}
-			if(this.rewardLootTable != null && !this.rewardLootTable.equals(BuiltInLootTables.EMPTY)) {
-				LootTable lootTable = lootTables.getLootTable(this.rewardLootTable);
-				lootTable.getRandomItems(new LootParams.Builder((ServerLevel) player.level()).create(LootContextParamSets.EMPTY), itemStack -> player.level().addFreshEntity(
-						new ItemEntity(player.level(), player.getX(), player.getY() + 0.5D, player.getZ(), itemStack)
-				));
-			}
+			this.tryGetLoot(player, lootTables, true);
 		}
 	}
 

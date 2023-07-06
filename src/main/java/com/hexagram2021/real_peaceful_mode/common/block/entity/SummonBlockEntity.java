@@ -48,7 +48,7 @@ public class SummonBlockEntity extends BlockEntity {
 
 	private int lastCheckTick = CHECK_TICK;
 
-	private enum SummonMissionType {
+	public enum SummonMissionType {
 		RECEIVE,
 		FINISH;
 
@@ -67,6 +67,15 @@ public class SummonBlockEntity extends BlockEntity {
 
 	public SummonBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(RPMBlockEntities.SUMMON_BLOCK.get(), blockPos, blockState);
+	}
+
+	public SummonBlockEntity(BlockPos blockPos, BlockState blockState,
+							 @Nullable CompoundTag summonTag, @Nullable MissionManager.Mission mission, SummonMissionType type, int distance) {
+		this(blockPos, blockState);
+		this.summonTag = summonTag;
+		this.mission = mission;
+		this.type = type;
+		this.distance = distance;
 	}
 
 	public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, SummonBlockEntity blockEntity) {
@@ -146,7 +155,7 @@ public class SummonBlockEntity extends BlockEntity {
 	}
 
 	private static boolean checkMission(IMonsterHero hero, SummonMissionType type, MissionManager.Mission mission) {
-		PlayerMissions playerMissions = hero.gerPlayerMissions();
+		PlayerMissions playerMissions = hero.getPlayerMissions();
 		ResourceLocation missionId = mission.id();
 		if (type == SummonMissionType.RECEIVE) {
 			if(playerMissions.finishedMissions().contains(missionId) || playerMissions.activeMissions().contains(missionId)) {

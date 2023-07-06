@@ -34,6 +34,6 @@ public class RPMContent {
 
 	@SubscribeEvent
 	public static void onRegister(RegisterEvent event) {
-
+		RPMEntities.init(event);
 	}
 }

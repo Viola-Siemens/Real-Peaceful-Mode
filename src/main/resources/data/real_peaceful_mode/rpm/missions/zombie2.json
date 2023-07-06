@@ -62,5 +62,6 @@
       "speaker": "player"
     }
   ],
-  "loot_table": "real_peaceful_mode:missions/single_zombie_spirit"
+  "loot_table": "real_peaceful_mode:missions/single_zombie_spirit",
+  "loot_before": true
 }

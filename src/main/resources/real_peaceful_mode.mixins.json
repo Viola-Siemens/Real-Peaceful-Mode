@@ -9,7 +9,8 @@
     "NoteBlockInstrumentMixin",
     "PlayerListMixin",
     "ServerPlayerMixin",
-    "StructureTemplatePoolAccess"
+    "StructureTemplatePoolAccess",
+    "ZombieEntityMixin"
   ],
   "minVersion": "0.8",
   "client": [

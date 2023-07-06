@@ -40,12 +40,14 @@
   "mission.real_peaceful_mode.zombie1.name": "Zombie's Fort",
   "mission.real_peaceful_mode.zombie1.description": "Find someone to help you from zombie guards.",
   "mission.real_peaceful_mode.zombie2.name": "Senior Zombie and Villager",
-  "mission.real_peaceful_mode.zombie2.description": "Follow the senior zombie's guide and find a senior villager.",
+  "mission.real_peaceful_mode.zombie2.description": "Find the key to save the zombies. You may need to find a senior villager first.",
+  "mission.real_peaceful_mode.zombie3.name": "Fight for Zombies",
+  "mission.real_peaceful_mode.zombie3.description": "Defeat the tyrant of zombies, and bring peace back to zombie's kingdom!",
 
   "book.real_peaceful_mode.zombie.title": "Mind of zombies",
-  "book.real_peaceful_mode.zombie.content1": "Hundreds years ago, zombies and human beings are two different races but get along well with each other. However, everything changed when the tyrant took the crown. Zombies lose their mind, killing human and even other mobs, and spread zombie virus to infect others. Luckily, ",
-  "book.real_peaceful_mode.zombie.content2": "some pioneers of us find golden apples are good medicine against the virus, but we must solve the problem from the root. We build magic pools in swamps - once you throw a dark zombie's head and a piece of rotten flesh into a magic pool, the magic matrix will be activated, and ",
-  "book.real_peaceful_mode.zombie.content3": "zombies will soon get their minds back. If you want to fight for zombies against the tyrant, I believe everyone will help you eventually.",
+  "book.real_peaceful_mode.zombie.content1": "Hundreds years ago, zombies and human beings are two different races but get along well with each other. However, everything changed when the tyrant took the crown. Zombies lose their mind, killing human and even other mobs, and spread zombie virus to infect others. ",
+  "book.real_peaceful_mode.zombie.content2": "It do makes zombies stronger and makes kingdom richer, but that's meaningless for those don't have mind. Luckily, some pioneers of us find golden apples are good medicine against the virus, but we must solve the problem from the root. We build magic pools in swamps - ",
+  "book.real_peaceful_mode.zombie.content3": "once you throw a dark zombie's head and a piece of rotten flesh into a magic pool, the magic matrix will be activated, and zombies will soon get their minds back. If you want to fight for zombies against the tyrant, I believe everyone will help you eventually.",
 
   "rpm.mission.real_peaceful_mode.zombie1.message1": "What a magnificent fort! But there's an awful smell exuded from the deep of it. What could it be?",
   "rpm.mission.real_peaceful_mode.zombie1.message2": "Who the freak is bothering me when I'm sleeping?",
@@ -68,5 +70,17 @@
   "rpm.mission.real_peaceful_mode.zombie2.message9": "Zombie virus spread among the world, which seems to provide huge power to the tyrant. Then he trained a military called the dark zombie knights, keeping political stability of the kingdom, and killing anyone who opposes him.",
   "rpm.mission.real_peaceful_mode.zombie2.message10": "That's horrible. I want to do something for you. But can I believe you?",
   "rpm.mission.real_peaceful_mode.zombie2.message11": "Get their mind back please. That will make you stronger to fight against the tyrant. Take this please, go to the villages and find a senior, then you may get the answer. I'm hiding. I believe you can save us, young guy.",
-  "rpm.mission.real_peaceful_mode.zombie2.message12": "What's this, a spirit bead? Oh, okay, that's weird. Maybe I could find it out in a village."
+  "rpm.mission.real_peaceful_mode.zombie2.message12": "What's this, a spirit bead? Oh, okay, that's weird. Maybe I could find it out in a village.",
+  "rpm.mission.real_peaceful_mode.zombie2.message13": "That's inconceivable. So from now on the zombies are going to stand by my side?",
+  "rpm.mission.real_peaceful_mode.zombie2.message14": "I think it's time for me to fight back towards the fort.",
+
+  "rpm.mission.real_peaceful_mode.zombie3.message1": "So here I am, going to defeat the tyrant's kingdom and rescue the zombies. Am I crazy for doing this?",
+  "rpm.mission.real_peaceful_mode.zombie3.message2": "But I feel confident about this fight. I believe zombies will stand by my side.",
+  "rpm.mission.real_peaceful_mode.zombie3.message3": "Everything's proving you are wrong, Mr. King.",
+  "rpm.mission.real_peaceful_mode.zombie3.message4": "No... I... I'm the only one who... who is right...",
+  "rpm.mission.real_peaceful_mode.zombie3.message5": "Why you still drag your heels in it? You make wars between zombies and other innocent creatures. Why?",
+  "rpm.mission.real_peaceful_mode.zombie3.message6": "Wars... makes us stronger... peace is for losers...",
+  "rpm.mission.real_peaceful_mode.zombie3.message7": "No, peace is for winners. I defeat you, and I'll bring peace to zombies.",
+  "rpm.mission.real_peaceful_mode.zombie3.message8": "It makes... no sense... I'll... be back soon...",
+  "rpm.mission.real_peaceful_mode.zombie3.message9": "If so, I'll beat you another time!"
 }

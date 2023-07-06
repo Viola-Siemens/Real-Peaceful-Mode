@@ -99,6 +99,7 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 										)
 								));
 								this.activeMissions().add(mission.id());
+								mission.tryGetLoot(this.player, Objects.requireNonNull(this.player.getServer()).getLootData(), false);
 							}), Component.translatable("title.real_peaceful_mode.menu.mission")
 					));
 					if(id.isPresent()) {

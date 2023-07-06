@@ -13,5 +13,13 @@ public interface IMonsterHero {
 
 	Map<ResourceLocation, Integer> getHelpedMonsters();
 
-	PlayerMissions gerPlayerMissions();
+	PlayerMissions getPlayerMissions();
+
+	static boolean isAtMissionsBetween(PlayerMissions playerMissions, ResourceLocation finished, ResourceLocation toFinish) {
+		return playerMissions.finishedMissions().contains(finished) && !playerMissions.finishedMissions().contains(toFinish) && !playerMissions.activeMissions().contains(toFinish);
+	}
+
+	static boolean isUnderMission(PlayerMissions playerMissions, ResourceLocation toFinish) {
+		return playerMissions.activeMissions().contains(toFinish);
+	}
 }
