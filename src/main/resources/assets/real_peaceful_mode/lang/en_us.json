@@ -7,6 +7,10 @@
 
   "block.real_peaceful_mode.summon_block": "Summon Block",
   "block.real_peaceful_mode.refinement_table": "Refinement Table",
+  "block.real_peaceful_mode.magic_pool_water": "Magic Pool Water",
+  "block.real_peaceful_mode.dark_magic_pool_water": "Dark Magic Pool Water",
+  "block.real_peaceful_mode.dark_zombie_knight_skull": "Dark Zombie Knight Skull",
+  "block.real_peaceful_mode.dark_zombie_knight_wall_skull": "Dark Zombie Knight Wall Skull",
   "item.real_peaceful_mode.huge_spirit_bead": "Huge Spirit Bead",
   "item.real_peaceful_mode.zombie_spirit_bead": "Zombie Spirit Bead",
   "item.real_peaceful_mode.skeleton_spirit_bead": "Skeleton Spirit Bead",
@@ -14,6 +18,8 @@
   "item.real_peaceful_mode.zombies_wish": "Zombie's Wish",
   "item.real_peaceful_mode.skeletons_wish": "Skeleton's Wish",
   "item.real_peaceful_mode.creepers_wish": "Creeper's Wish",
+  "item.real_peaceful_mode.magic_pool_water_bucket": "Magic Pool Water Bucket",
+  "item.real_peaceful_mode.dark_magic_pool_water_bucket": "Dark Magic Pool Water Bucket",
 
   "entity.minecraft.villager.real_peaceful_mode.senior": "Senior",
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "Zombie Senior",
@@ -37,7 +43,9 @@
   "mission.real_peaceful_mode.zombie2.description": "Follow the senior zombie's guide and find a senior villager.",
 
   "book.real_peaceful_mode.zombie.title": "Mind of zombies",
-  "book.real_peaceful_mode.zombie.content": "Mind of zombies",
+  "book.real_peaceful_mode.zombie.content1": "Hundreds years ago, zombies and human beings are two different races but get along well with each other. However, everything changed when the tyrant took the crown. Zombies lose their mind, killing human and even other mobs, and spread zombie virus to infect others. Luckily, ",
+  "book.real_peaceful_mode.zombie.content2": "some pioneers of us find golden apples are good medicine against the virus, but we must solve the problem from the root. We build magic pools in swamps - once you throw a dark zombie's head and a piece of rotten flesh into a magic pool, the magic matrix will be activated, and ",
+  "book.real_peaceful_mode.zombie.content3": "zombies will soon get their minds back. If you want to fight for zombies against the tyrant, I believe everyone will help you eventually.",
 
   "rpm.mission.real_peaceful_mode.zombie1.message1": "What a magnificent fort! But there's an awful smell exuded from the deep of it. What could it be?",
   "rpm.mission.real_peaceful_mode.zombie1.message2": "Who the freak is bothering me when I'm sleeping?",

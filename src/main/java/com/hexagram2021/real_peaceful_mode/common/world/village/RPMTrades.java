@@ -89,17 +89,17 @@ public class RPMTrades {
 	static class WrittenBookForBead implements VillagerTrades.ItemListing {
 		private final Component title;
 		private final Component author;
-		private final Component content;
+		private final Component[] contents;
 		private final ItemLike costItem;
 		private final int cost;
 		private final int maxUses;
 		private final int Xp;
 		private final float priceMultiplier;
 
-		public WrittenBookForBead(Component title, Component author, Component content, ItemLike costItem, int cost, int maxUses, int Xp) {
+		public WrittenBookForBead(Component title, Component author, ItemLike costItem, int cost, int maxUses, int Xp, Component... contents) {
 			this.title = title;
 			this.author = author;
-			this.content = content;
+			this.contents = contents;
 			this.costItem = costItem;
 			this.cost = cost;
 			this.maxUses = maxUses;
@@ -112,10 +112,12 @@ public class RPMTrades {
 		public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
 			ItemStack itemstack = new ItemStack(Items.WRITTEN_BOOK);
 			CompoundTag compoundtag = new CompoundTag();
-			compoundtag.putString(WrittenBookItem.TAG_TITLE, title.getString());
-			compoundtag.putString(WrittenBookItem.TAG_AUTHOR, author.getString());
+			compoundtag.putString(WrittenBookItem.TAG_TITLE, this.title.getString());
+			compoundtag.putString(WrittenBookItem.TAG_AUTHOR, this.author.getString());
 			ListTag pages = new ListTag();
-			pages.add(StringTag.valueOf("{\"text\":\"" + content.getString() + "\"}"));
+			for(int i = 0; i <= this.contents.length; ++i) {
+				pages.add(StringTag.valueOf("{\"text\":\"" + this.contents[i].getString() + "\"}"));
+			}
 			compoundtag.put(WrittenBookItem.TAG_PAGES, pages);
 			itemstack.setTag(compoundtag);
 			return new MerchantOffer(new ItemStack(this.costItem, this.cost), itemstack, this.maxUses, this.Xp, this.priceMultiplier);

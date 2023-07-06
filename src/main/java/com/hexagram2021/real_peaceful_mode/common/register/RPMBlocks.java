@@ -2,12 +2,16 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.block.SummonBlock;
 import com.hexagram2021.real_peaceful_mode.common.block.skull.RPMSkullTypes;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SkullBlock;
+import net.minecraft.world.level.block.WallSkullBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -62,11 +66,18 @@ public class RPMBlocks {
 				.instrument(RPMNoteBlockInstruments.DARK_ZOMBIE_KNIGHT).strength(1.0F).pushReaction(PushReaction.DESTROY),
 				props -> new SkullBlock(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, props)
 		);
+		public static final BlockEntry<WallSkullBlock> DARK_ZOMBIE_KNIGHT_WALL_SKULL = new BlockEntry<>(
+				"dark_zombie_knight_wall_skull", () -> BlockBehaviour.Properties.of()
+				.instrument(RPMNoteBlockInstruments.DARK_ZOMBIE_KNIGHT).strength(1.0F).pushReaction(PushReaction.DESTROY),
+				props -> new WallSkullBlock(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, props)
+		);
 
 		private Decoration() {}
 
 		private static void init() {
-
+			RPMItems.ItemEntry.register(DARK_ZOMBIE_KNIGHT_SKULL.getId().getPath(), () -> new StandingAndWallBlockItem(
+					DARK_ZOMBIE_KNIGHT_SKULL.get(), DARK_ZOMBIE_KNIGHT_WALL_SKULL.get(), new Item.Properties().rarity(Rarity.UNCOMMON), Direction.DOWN
+			));
 		}
 	}
 

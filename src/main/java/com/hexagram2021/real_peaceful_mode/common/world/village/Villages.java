@@ -26,6 +26,7 @@ import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraftforge.event.village.VillagerTradesEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -83,6 +84,11 @@ public class Villages {
 		public static final RegistryObject<VillagerProfession> PROF_SENIOR = PROFESSIONS.register(
 				"senior", () -> createProf(SENIOR, POI_REFINEMENT_TABLE::getKey, RPMSounds.VILLAGER_WORK_SENIOR)
 		);
+
+		public static void init(IEventBus bus) {
+			POINTS_OF_INTEREST.register(bus);
+			PROFESSIONS.register(bus);
+		}
 	}
 
 	private static Collection<BlockState> assembleStates(Block block) {
@@ -117,28 +123,30 @@ public class Villages {
 				trades.get(1).add(new RPMTrades.WrittenBookForBead(
 						Component.translatable("book.real_peaceful_mode.zombie.title"),
 						Component.translatable("entity.minecraft.villager.real_peaceful_mode.senior"),
-						Component.translatable("book.real_peaceful_mode.zombie.content"),
 						RPMItems.SpiritBeads.ZOMBIE_SPIRIT_BEAD, 1,
 						ONLY_SUPPLY_ONCE,
-						XP_LEVEL_1_SELL
+						XP_LEVEL_1_SELL,
+						Component.translatable("book.real_peaceful_mode.zombie.content1"),
+						Component.translatable("book.real_peaceful_mode.zombie.content2"),
+						Component.translatable("book.real_peaceful_mode.zombie.content3")
 				));
 				trades.get(1).add(new RPMTrades.EmeraldForItems(Items.ROTTEN_FLESH, 32, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_1_BUY));
 				trades.get(2).add(new RPMTrades.WrittenBookForBead(
 						Component.translatable("book.real_peaceful_mode.skeleton.title"),
 						Component.translatable("entity.minecraft.villager.real_peaceful_mode.senior"),
-						Component.translatable("book.real_peaceful_mode.skeleton.content"),
 						RPMItems.SpiritBeads.SKELETON_SPIRIT_BEAD, 1,
 						ONLY_SUPPLY_ONCE,
-						XP_LEVEL_2_SELL
+						XP_LEVEL_2_SELL,
+						Component.translatable("book.real_peaceful_mode.skeleton.content")
 				));
 				trades.get(2).add(new RPMTrades.EmeraldForItems(Items.BONE, 16, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_2_BUY));
 				trades.get(3).add(new RPMTrades.WrittenBookForBead(
 						Component.translatable("book.real_peaceful_mode.creeper.title"),
 						Component.translatable("entity.minecraft.villager.real_peaceful_mode.senior"),
-						Component.translatable("book.real_peaceful_mode.creeper.content"),
 						RPMItems.SpiritBeads.CREEPER_SPIRIT_BEAD, 1,
 						ONLY_SUPPLY_ONCE,
-						XP_LEVEL_3_SELL
+						XP_LEVEL_3_SELL,
+						Component.translatable("book.real_peaceful_mode.creeper.content")
 				));
 				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.GUNPOWDER, 16, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_3_BUY));
 			}
