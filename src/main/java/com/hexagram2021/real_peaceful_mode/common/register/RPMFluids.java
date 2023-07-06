@@ -4,10 +4,8 @@ import com.hexagram2021.real_peaceful_mode.common.fluid.MagicPoolWaterFluid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BucketItem;
@@ -58,7 +56,7 @@ public class RPMFluids {
 									for(int y = -2; y < 2; ++y) {
 										BlockPos current = blockPos.offset(x, y, z);
 										if(level.getFluidState(current).is(RPMFluidTags.MAGIC_POOL_WATER)) {
-											level.setBlock(current, DARK_MAGIC_POOL_WATER_FLUID.getBlock().defaultBlockState().setValue(LEVEL, 8), UPDATE_ALL);
+											level.setBlock(current, DARK_MAGIC_POOL_WATER_FLUID.getBlock().defaultBlockState(), UPDATE_ALL);
 										}
 									}
 								}
