@@ -6,8 +6,8 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -26,7 +26,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -102,7 +101,7 @@ public class DarkZombieKnight extends Monster {
 	}
 
 	protected SoundEvent getStepSound() {
-		return RPMSounds.DARK_ZOMBIE_KNIGHT_STEP;
+		return SoundEvents.ZOMBIE_STEP;
 	}
 
 	@Override
@@ -117,6 +116,6 @@ public class DarkZombieKnight extends Monster {
 
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficultyInstance) {
-		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.));
+		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.Weapons.IRON_PIKE));
 	}
 }

@@ -1,0 +1,39 @@
+{
+  "entity.villager.work_senior": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:villager/work_senior"
+    ],
+    "subtitle": "subtitles.entity.villager.work_senior"
+  },
+  "entity.dark_zombie_knight.ambient": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:dark_zombie_knight/ambient"
+    ],
+    "subtitle": "subtitles.entity.dark_zombie_knight.ambient"
+  },
+  "entity.dark_zombie_knight.hurt": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:dark_zombie_knight/hurt"
+    ],
+    "subtitle": "subtitles.entity.dark_zombie_knight.hurt"
+  },
+  "entity.dark_zombie_knight.death": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:dark_zombie_knight/death"
+    ],
+    "subtitle": "subtitles.entity.dark_zombie_knight.death"
+  },
+  "block.note_block.imitate.dark_zombie_knight": {
+    "sounds": [
+      {
+        "name": "entity.dark_zombie_knight.ambient",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.dark_zombie_knight.ambient"
+  }
+}

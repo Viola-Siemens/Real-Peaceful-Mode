@@ -2,15 +2,14 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.item.SkeletonScepterItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -50,7 +49,25 @@ public class RPMItems {
 	}
 
 	public static class Weapons {
-		public static ItemEntry<Item> SKELETON_SCEPTER = ItemEntry.register("skeleton_scepter", () -> new Item(new Item.Properties().stacksTo(1)));
+		public static ItemEntry<SkeletonScepterItem> SKELETON_SCEPTER = ItemEntry.register(
+				"skeleton_scepter", () -> new SkeletonScepterItem(new Item.Properties().stacksTo(1))
+		);
+		public static ItemEntry<SwordItem> IRON_PIKE = ItemEntry.register(
+				"iron_pike", () -> new SwordItem(Tiers.IRON, 4, -3.0F, new Item.Properties().stacksTo(1))
+		);
+		public static ItemEntry<SwordItem> GOLDEN_PIKE = ItemEntry.register(
+				"golden_pike", () -> new SwordItem(Tiers.GOLD, 4, -3.0F, new Item.Properties().stacksTo(1))
+		);
+		public static ItemEntry<SwordItem> DIAMOND_PIKE = ItemEntry.register(
+				"diamond_pike", () -> new SwordItem(Tiers.DIAMOND, 4, -3.0F, new Item.Properties().stacksTo(1))
+		);
+		public static ItemEntry<SwordItem> NETHERITE_PIKE = ItemEntry.register(
+				"netherite_pike", () -> new SwordItem(Tiers.NETHERITE, 4, -3.0F, new Item.Properties().stacksTo(1))
+		);
+
+		private Weapons() {}
+
+		public static void init() {}
 	}
 
 	public static class DebugItems {
