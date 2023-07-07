@@ -49,6 +49,10 @@ public class RPMItems {
 		public static void init() {}
 	}
 
+	public static class Weapons {
+		public static ItemEntry<Item> SKELETON_SCEPTER = ItemEntry.register("skeleton_scepter", () -> new Item(new Item.Properties().stacksTo(1)));
+	}
+
 	public static class DebugItems {
 		public static ItemEntry<Item> ZOMBIES_WISH = ItemEntry.register(
 				"zombies_wish", () -> new Item(new Item.Properties()) {

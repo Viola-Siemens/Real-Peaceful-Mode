@@ -1,15 +1,122 @@
 package com.hexagram2021.real_peaceful_mode.common.entity;
 
+import com.hexagram2021.real_peaceful_mode.common.entity.goal.ZombieKnightAttackGoal;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MoveThroughVillageGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class DarkZombieKnight extends Zombie {
+public class DarkZombieKnight extends Monster {
 	public DarkZombieKnight(EntityType<? extends DarkZombieKnight> entityType, Level level) {
 		super(entityType, level);
+		this.xpReward = 10;
 	}
 	public DarkZombieKnight(Level level) {
-		super(RPMEntities.DARK_ZOMBIE_KNIGHT, level);
+		this(RPMEntities.DARK_ZOMBIE_KNIGHT, level);
+	}
+
+	@Override
+	protected void registerGoals() {
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+		this.addBehaviourGoals();
+	}
+
+	protected void addBehaviourGoals() {
+		this.goalSelector.addGoal(2, new ZombieKnightAttackGoal(this));
+		this.goalSelector.addGoal(6, new MoveThroughVillageGoal(this, 1.0D, true, 4, () -> true));
+		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+	}
+
+	public static AttributeSupplier.Builder createAttributes() {
+		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 25.0D).add(Attributes.MOVEMENT_SPEED, 0.3D).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 3.0D).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
+	}
+
+	public void aiStep() {
+		if (this.isAlive()) {
+			boolean flag = this.isSunBurnTick();
+			if (flag) {
+				ItemStack itemstack = this.getItemBySlot(EquipmentSlot.HEAD);
+				if (!itemstack.isEmpty()) {
+					if (itemstack.isDamageableItem()) {
+						itemstack.setDamageValue(itemstack.getDamageValue() + this.random.nextInt(2));
+						if (itemstack.getDamageValue() >= itemstack.getMaxDamage()) {
+							this.broadcastBreakEvent(EquipmentSlot.HEAD);
+							this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+						}
+					}
+
+					flag = false;
+				}
+
+				if (flag) {
+					this.setSecondsOnFire(8);
+				}
+			}
+		}
+
+		super.aiStep();
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return RPMSounds.DARK_ZOMBIE_KNIGHT_AMBIENT;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
+		return RPMSounds.DARK_ZOMBIE_KNIGHT_HURT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return RPMSounds.DARK_ZOMBIE_KNIGHT_DEATH;
+	}
+
+	protected SoundEvent getStepSound() {
+		return RPMSounds.DARK_ZOMBIE_KNIGHT_STEP;
+	}
+
+	@Override
+	protected void playStepSound(BlockPos blockPos, BlockState blockState) {
+		this.playSound(this.getStepSound(), 0.1F, 1.0F);
+	}
+
+	@Override
+	public MobType getMobType() {
+		return MobType.UNDEAD;
+	}
+
+	@Override
+	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficultyInstance) {
+		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.));
 	}
 }

@@ -1,8 +1,10 @@
 package com.hexagram2021.real_peaceful_mode.common;
 
 import com.hexagram2021.real_peaceful_mode.common.crafting.compat.ModsCompatManager;
+import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
 import com.hexagram2021.real_peaceful_mode.common.register.*;
 import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,5 +37,10 @@ public class RPMContent {
 	@SubscribeEvent
 	public static void onRegister(RegisterEvent event) {
 		RPMEntities.init(event);
+	}
+
+	@SubscribeEvent
+	public static void onAttributeCreate(EntityAttributeCreationEvent event) {
+		event.put(RPMEntities.DARK_ZOMBIE_KNIGHT, DarkZombieKnight.createAttributes().build());
 	}
 }
