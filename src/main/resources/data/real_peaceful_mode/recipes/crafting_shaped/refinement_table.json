@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#E#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:tinted_glass"
+    },
+    "E": {
+      "item": "minecraft:dragon_egg"
+    }
+  },
+  "result": {
+    "item": "real_peaceful_mode:refinement_table",
+    "count": 1
+  }
+}

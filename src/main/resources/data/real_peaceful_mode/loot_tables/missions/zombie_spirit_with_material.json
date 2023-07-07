@@ -20,11 +20,30 @@
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 8.0,
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 3.0,
+                "max": 5.0
+              },
               "add": false
             }
           ],
-          "name": "minecraft:iron_block"
+          "name": "minecraft:gold_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4.0,
+                "max": 9.0
+              },
+              "add": false
+            }
+          ],
+          "name": "minecraft:iron_ingot"
         }
       ]
     }
