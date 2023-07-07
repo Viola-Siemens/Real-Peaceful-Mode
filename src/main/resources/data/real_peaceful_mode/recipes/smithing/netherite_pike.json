@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "base": {
     "item": "real_peaceful_mode:diamond_pike"
   },
@@ -8,5 +8,8 @@
   },
   "result": {
     "item": "real_peaceful_mode:netherite_pike"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

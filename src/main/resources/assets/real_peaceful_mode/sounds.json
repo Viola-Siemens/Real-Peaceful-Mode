@@ -6,6 +6,20 @@
     ],
     "subtitle": "subtitles.entity.villager.work_senior"
   },
+  "entity.zombie_tyrant.death": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:zombie_tyrant/death"
+    ],
+    "subtitle": "subtitles.entity.zombie_tyrant.death"
+  },
+  "entity.zombie_tyrant.spell": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:zombie_tyrant/spell"
+    ],
+    "subtitle": "subtitles.entity.zombie_tyrant.spell"
+  },
   "entity.dark_zombie_knight.ambient": {
     "category": "entity",
     "sounds": [

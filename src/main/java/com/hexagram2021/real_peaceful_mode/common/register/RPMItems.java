@@ -131,6 +131,7 @@ public class RPMItems {
 		REGISTER.register(bus);
 
 		SpiritBeads.init();
+		Weapons.init();
 		DebugItems.init();
 	}
 

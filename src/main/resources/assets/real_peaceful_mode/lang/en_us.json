@@ -30,6 +30,8 @@
   "subtitles.entity.dark_zombie_knight.ambient": "Dark Zombie Knight groans",
   "subtitles.entity.dark_zombie_knight.hurt": "Dark Zombie Knight hurts",
   "subtitles.entity.dark_zombie_knight.death": "Dark Zombie Knight dies",
+  "subtitles.entity.zombie_tyrant.death": "Zombie Tyrant dies",
+  "subtitles.entity.zombie_tyrant.spell": "Zombie Tyrant summons knights",
 
   "message.real_peaceful_mode.zombies_wish.success": "Zombies are friendly to you now.",
   "message.real_peaceful_mode.skeletons_wish.success": "Skeletons are friendly to you now.",
