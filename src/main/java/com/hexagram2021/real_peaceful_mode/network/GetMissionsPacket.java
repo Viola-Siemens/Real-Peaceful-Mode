@@ -47,7 +47,8 @@ public class GetMissionsPacket implements IRPMPacket {
 				entityType = EntityType.PLAYER;
 			}
 			ResourceLocation loot = readerBuf.readResourceLocation();
-			return new MissionManager.Mission(id, List.of(), List.of(), List.of(), entityType, loot);
+			boolean lootBefore = readerBuf.readBoolean();
+			return new MissionManager.Mission(id, List.of(), List.of(), List.of(), entityType, loot, lootBefore);
 		});
 		this.finishedMissions = buf.readCollection(Lists::newArrayListWithCapacity, readerBuf -> {
 			ResourceLocation id = readerBuf.readResourceLocation();
@@ -56,7 +57,8 @@ public class GetMissionsPacket implements IRPMPacket {
 				entityType = EntityType.PLAYER;
 			}
 			ResourceLocation loot = readerBuf.readResourceLocation();
-			return new MissionManager.Mission(id, List.of(), List.of(), List.of(), entityType, loot);
+			boolean lootBefore = readerBuf.readBoolean();
+			return new MissionManager.Mission(id, List.of(), List.of(), List.of(), entityType, loot, lootBefore);
 		});
 	}
 
@@ -67,11 +69,13 @@ public class GetMissionsPacket implements IRPMPacket {
 			writerBuf.writeResourceLocation(mission.id());
 			writerBuf.writeResourceLocation(getRegistryName(mission.reward()));
 			writerBuf.writeResourceLocation(mission.rewardLootTable());
+			writerBuf.writeBoolean(mission.lootBefore());
 		});
 		buf.writeCollection(this.finishedMissions, (writerBuf, mission) -> {
 			writerBuf.writeResourceLocation(mission.id());
 			writerBuf.writeResourceLocation(getRegistryName(mission.reward()));
 			writerBuf.writeResourceLocation(mission.rewardLootTable());
+			writerBuf.writeBoolean(mission.lootBefore());
 		});
 	}
 
