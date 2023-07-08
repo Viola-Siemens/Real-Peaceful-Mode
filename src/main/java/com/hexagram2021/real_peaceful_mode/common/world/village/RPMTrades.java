@@ -115,8 +115,8 @@ public class RPMTrades {
 			compoundtag.putString(WrittenBookItem.TAG_TITLE, this.title.getString());
 			compoundtag.putString(WrittenBookItem.TAG_AUTHOR, this.author.getString());
 			ListTag pages = new ListTag();
-			for(int i = 0; i <= this.contents.length; ++i) {
-				pages.add(StringTag.valueOf("{\"text\":\"" + this.contents[i].getString() + "\"}"));
+			for (Component content : this.contents) {
+				pages.add(StringTag.valueOf("{\"text\":\"" + content.getString() + "\"}"));
 			}
 			compoundtag.put(WrittenBookItem.TAG_PAGES, pages);
 			itemstack.setTag(compoundtag);

@@ -50,9 +50,14 @@ public class Villages {
 	}
 
 	public static void addAllStructuresToPool(RegistryAccess registryAccess) {
-
+		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_refinery_1"), 4, registryAccess);
+		addToPool(new ResourceLocation("village/plains/houses"), new ResourceLocation(MODID, "village/plains/houses/plains_refinery_1"), 4, registryAccess);
+		addToPool(new ResourceLocation("village/savanna/houses"), new ResourceLocation(MODID, "village/savanna/houses/savanna_refinery_1"), 4, registryAccess);
+		addToPool(new ResourceLocation("village/snowy/houses"), new ResourceLocation(MODID, "village/snowy/houses/snowy_refinery_1"), 4, registryAccess);
+		addToPool(new ResourceLocation("village/taiga/houses"), new ResourceLocation(MODID, "village/taiga/houses/taiga_refinery_1"), 4, registryAccess);
 	}
 
+	@SuppressWarnings("SameParameterValue")
 	private static void addToPool(ResourceLocation poolName, ResourceLocation toAdd, int weight, RegistryAccess registryAccess) {
 		Registry<StructureTemplatePool> registry = registryAccess.registryOrThrow(Registries.TEMPLATE_POOL);
 		StructureTemplatePool structureTemplatePool = registry.get(poolName);
