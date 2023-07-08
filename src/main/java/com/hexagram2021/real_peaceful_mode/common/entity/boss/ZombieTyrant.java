@@ -29,7 +29,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 
 public class ZombieTyrant extends Mob implements Enemy {
-	private static final EntityDataAccessor<Boolean> DATA_IS_SPELL = SynchedEntityData.defineId(ZombieTyrant.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> DATA_SPELL_COUNTER = SynchedEntityData.defineId(ZombieTyrant.class, EntityDataSerializers.INT);
 	
 	public ZombieTyrant(EntityType<? extends ZombieTyrant> entityType, Level level) {
 		super(entityType, level);
@@ -59,11 +59,23 @@ public class ZombieTyrant extends Mob implements Enemy {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.getEntityData().define(DATA_IS_SPELL, false);
+		this.getEntityData().define(DATA_SPELL_COUNTER, 0);
 	}
 
-	private void setSpelling(boolean spelling) {
-		this.getEntityData().set(DATA_IS_SPELL, spelling);
+	public int getSpelling() {
+		return this.getEntityData().get(DATA_SPELL_COUNTER);
+	}
+
+	private void setSpelling(int tick) {
+		this.getEntityData().set(DATA_SPELL_COUNTER, tick);
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		if(this.getSpelling() > 0) {
+			this.setSpelling(this.getSpelling() - 1);
+		}
 	}
 
 	@Override
@@ -118,7 +130,7 @@ public class ZombieTyrant extends Mob implements Enemy {
 			this.nextAttackTickCount = ZombieTyrant.this.tickCount + this.getCastingInterval();
 			ZombieTyrant.this.playSound(this.getSpellSound(), 1.0F, 1.0F);
 
-			ZombieTyrant.this.setSpelling(true);
+			ZombieTyrant.this.setSpelling(40);
 		}
 
 		@Override
@@ -140,7 +152,6 @@ public class ZombieTyrant extends Mob implements Enemy {
 						level.addFreshEntityWithPassengers(knight);
 					}
 				}
-				ZombieTyrant.this.setSpelling(false);
 			}
 		}
 		

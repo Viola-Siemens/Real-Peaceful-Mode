@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "real_peaceful_mode:item/iron_pike"
+  }
+}
