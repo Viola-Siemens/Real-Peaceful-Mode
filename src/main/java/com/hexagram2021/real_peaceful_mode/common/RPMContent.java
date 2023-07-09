@@ -25,6 +25,8 @@ public class RPMContent {
 	public static void modConstruction(IEventBus bus, Consumer<Runnable> runLater) {
 		ModsCompatManager.compatModLoaded();
 
+		initTags();
+
 		RPMFluids.init(bus);
 		RPMBlocks.init(bus);
 		RPMItems.init(bus);
@@ -32,7 +34,15 @@ public class RPMContent {
 		RPMBlockEntities.init(bus);
 		RPMCreativeTabs.init(bus);
 		RPMMenuTypes.init(bus);
+		RPMStructureTypes.init(bus);
+	}
 
+	private static void initTags() {
+		RPMBiomeTags.init();
+		RPMStructurePieceTypes.init();
+		RPMStructureTags.init();
+		RPMStructureKeys.init();
+		RPMStructureSetKeys.init();
 	}
 
 	public static void init() {

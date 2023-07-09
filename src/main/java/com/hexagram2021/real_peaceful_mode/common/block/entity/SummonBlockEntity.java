@@ -84,20 +84,22 @@ public class SummonBlockEntity extends BlockEntity {
 			return;
 		}
 		blockEntity.lastCheckTick = CHECK_TICK;
-		if(level instanceof ServerLevel serverLevel && blockEntity.mission != null) {
+		if(level instanceof ServerLevel serverLevel && (blockEntity.mission != null || blockEntity.summonTag != null)) {
 			List<? extends ServerPlayer> nearbyPlayers = serverLevel.players().stream()
-					.filter(player -> player.position().closerThan(blockPos.getCenter(), blockEntity.distance) && checkMission((IMonsterHero)player, blockEntity.type, blockEntity.mission))
+					.filter(player -> player.position().closerThan(blockPos.getCenter(), blockEntity.distance) && !player.getAbilities().instabuild && checkMission((IMonsterHero)player, blockEntity.type, blockEntity.mission))
 					.toList();
 			if (!nearbyPlayers.isEmpty()) {
 				LivingEntity npc = blockEntity.summon(serverLevel);
 				serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), UPDATE_ALL);
-				nearbyPlayers.forEach(player -> {
-					PlayerMissions playerMissions = ((IPlayerListWithMissions) serverLevel.getServer().getPlayerList()).getPlayerMissions(player);
-					switch (blockEntity.type) {
-						case RECEIVE -> playerMissions.receiveNewMission(blockEntity.mission, npc);
-						case FINISH -> playerMissions.finishMission(blockEntity.mission, npc);
-					}
-				});
+				if(blockEntity.mission != null) {
+					nearbyPlayers.forEach(player -> {
+						PlayerMissions playerMissions = ((IPlayerListWithMissions) serverLevel.getServer().getPlayerList()).getPlayerMissions(player);
+						switch (blockEntity.type) {
+							case RECEIVE -> playerMissions.receiveNewMission(blockEntity.mission, npc);
+							case FINISH -> playerMissions.finishMission(blockEntity.mission, npc);
+						}
+					});
+				}
 			}
 		}
 	}
