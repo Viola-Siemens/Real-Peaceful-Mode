@@ -35,10 +35,6 @@ public class ZombieTyrant extends Mob implements Enemy {
 		super(entityType, level);
 	}
 
-	public ZombieTyrant(Level level) {
-		this(RPMEntities.ZOMBIE_TYRANT, level);
-	}
-
 	protected void registerGoals() {
 		this.goalSelector.addGoal(4, new ZombieTyrant.SummonKnightsGoal());
 		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));

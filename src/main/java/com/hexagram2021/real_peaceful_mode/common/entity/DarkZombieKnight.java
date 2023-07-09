@@ -1,7 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.entity;
 
 import com.hexagram2021.real_peaceful_mode.common.entity.goal.ZombieKnightAttackGoal;
-import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.core.BlockPos;
@@ -21,6 +21,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +29,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 
@@ -37,9 +37,6 @@ public class DarkZombieKnight extends Monster {
 	public DarkZombieKnight(EntityType<? extends DarkZombieKnight> entityType, Level level) {
 		super(entityType, level);
 		this.xpReward = 10;
-	}
-	public DarkZombieKnight(Level level) {
-		this(RPMEntities.DARK_ZOMBIE_KNIGHT, level);
 	}
 
 	@Override
@@ -123,6 +120,7 @@ public class DarkZombieKnight extends Monster {
 		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.Weapons.IRON_PIKE));
 	}
 
+	@SuppressWarnings("OverrideOnly")
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyInstance,
 										MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag tag) {
@@ -132,5 +130,17 @@ public class DarkZombieKnight extends Monster {
 		this.populateDefaultEquipmentSlots(randomsource, difficultyInstance);
 		this.populateDefaultEquipmentEnchantments(randomsource, difficultyInstance);
 		return spawnGroupData;
+	}
+
+	@Override
+	protected void dropCustomDeathLoot(DamageSource damageSource, int looting, boolean hitByPlayer) {
+		super.dropCustomDeathLoot(damageSource, looting, hitByPlayer);
+		Entity entity = damageSource.getEntity();
+		if (entity instanceof Creeper creeper) {
+			if (creeper.canDropMobsSkull()) {
+				creeper.increaseDroppedSkulls();
+				this.spawnAtLocation(RPMBlocks.Decoration.DARK_ZOMBIE_KNIGHT_SKULL);
+			}
+		}
 	}
 }
