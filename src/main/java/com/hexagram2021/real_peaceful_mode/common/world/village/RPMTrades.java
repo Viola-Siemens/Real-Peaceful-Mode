@@ -120,7 +120,7 @@ public class RPMTrades {
 			}
 			compoundtag.put(WrittenBookItem.TAG_PAGES, pages);
 			itemstack.setTag(compoundtag);
-			return new MerchantOffer(new ItemStack(this.costItem, this.cost), itemstack, this.maxUses, this.Xp, this.priceMultiplier);
+			return new MerchantOffer(new ItemStack(this.costItem, this.cost), new ItemStack(Items.EMERALD), itemstack, this.maxUses, this.Xp, this.priceMultiplier);
 		}
 	}
 }

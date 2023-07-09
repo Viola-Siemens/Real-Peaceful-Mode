@@ -154,6 +154,7 @@ public class Villages {
 						Component.translatable("book.real_peaceful_mode.creeper.content")
 				));
 				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.GUNPOWDER, 16, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_3_BUY));
+				trades.get(5).add(new RPMTrades.ItemsForEmeralds(RPMBlocks.WorkStation.REFINEMENT_TABLE, 16, 1, ONLY_SUPPLY_ONCE, XP_LEVEL_5_TRADE));
 			}
 		}
 	}
