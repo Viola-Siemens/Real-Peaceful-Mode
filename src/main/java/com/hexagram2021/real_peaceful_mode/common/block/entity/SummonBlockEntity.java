@@ -156,8 +156,11 @@ public class SummonBlockEntity extends BlockEntity {
 		this.type = SummonMissionType.TYPE_BY_NAME.getOrDefault(nbt.getString(TAG_MISSION_TYPE), SummonMissionType.RECEIVE);
 	}
 
-	private static boolean checkMission(IMonsterHero hero, SummonMissionType type, MissionManager.Mission mission) {
+	private static boolean checkMission(IMonsterHero hero, SummonMissionType type, @Nullable MissionManager.Mission mission) {
 		PlayerMissions playerMissions = hero.getPlayerMissions();
+		if(mission == null) {
+			return true;
+		}
 		ResourceLocation missionId = mission.id();
 		if (type == SummonMissionType.RECEIVE) {
 			if(playerMissions.finishedMissions().contains(missionId) || playerMissions.activeMissions().contains(missionId)) {
