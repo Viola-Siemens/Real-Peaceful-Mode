@@ -5,12 +5,17 @@ import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
 import com.hexagram2021.real_peaceful_mode.common.register.*;
 import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
+import com.hexagram2021.real_peaceful_mode.mixin.BlockEntityTypeAccess;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegisterEvent;
 
+import java.util.Set;
 import java.util.function.Consumer;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
@@ -33,6 +38,17 @@ public class RPMContent {
 	public static void init() {
 		Villages.init();
 		ModVanillaCompat.setup();
+		appendBlocksToBlockEntities();
+	}
+
+	private static void appendBlocksToBlockEntities() {
+		BlockEntityTypeAccess skullBuilderAccess = (BlockEntityTypeAccess) BlockEntityType.SKULL;
+		Set<Block> skullValidBlocks = new ObjectOpenHashSet<>(skullBuilderAccess.rpm_getValidBlocks());
+
+		skullValidBlocks.add(RPMBlocks.Decoration.DARK_ZOMBIE_KNIGHT_SKULL.get());
+		skullValidBlocks.add(RPMBlocks.Decoration.DARK_ZOMBIE_KNIGHT_WALL_SKULL.get());
+
+		skullBuilderAccess.rpm_setValidBlocks(skullValidBlocks);
 	}
 
 	@SubscribeEvent

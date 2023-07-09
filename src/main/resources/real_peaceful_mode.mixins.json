@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "real_peaceful_mode.refmap.json",
   "mixins": [
+    "BlockEntityTypeAccess",
     "HeroGiftsTaskAccess",
     "NearestAttackableTargetGoalMixin",
     "NoteBlockInstrumentMixin",
