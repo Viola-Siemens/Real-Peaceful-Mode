@@ -12,8 +12,5 @@
     "StructureTemplatePoolAccess",
     "ZombieEntityMixin"
   ],
-  "minVersion": "0.8",
-  "client": [
-    "SkullBlockRendererMixin"
-  ]
+  "minVersion": "0.8"
 }

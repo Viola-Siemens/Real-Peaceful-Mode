@@ -12,6 +12,8 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMKeys;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.SkullModel;
+import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,7 +29,10 @@ public class ClientProxy extends CommonProxy {
 
 	@SubscribeEvent
 	public static void setup(FMLClientSetupEvent event) {
-		event.enqueueWork(ClientProxy::registerContainersAndScreens);
+		event.enqueueWork(() -> {
+			ClientProxy.registerContainersAndScreens();
+			SkullBlockRenderer.SKIN_BY_TYPE.put(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, new ResourceLocation(MODID, "textures/entity/dark_zombie_knight.png"));
+		});
 		RPMKeys.init();
 	}
 
@@ -46,7 +51,7 @@ public class ClientProxy extends CommonProxy {
 		event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_INNER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(0.5F));
 		event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_OUTER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(1.0F));
 		event.registerLayerDefinition(RPMModelLayers.ZOMBIE_TYRANT, ZombieTyrantModel::createBodyLayer);
-		event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL, SkullModel::createMobHeadLayer);
+		event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL, SkullModel::createHumanoidHeadLayer);
 	}
 
 	@SubscribeEvent

@@ -1,7 +1,6 @@
 {
-  "parent": "minecraft:item/handheld",
   "textures": {
-    "main": "real_peaceful_mode:item/skeleton_scepter",
+    "main": "real_peaceful_mode:item/skeleton_scepter_hold",
     "skull1": "real_peaceful_mode:item/skeleton_skull1",
     "skull2": "real_peaceful_mode:item/skeleton_skull2"
   },
@@ -45,7 +44,7 @@
     {
       "from": [10, 18, 5],
       "to": [11, 23, 6],
-      "rotation": {"angle": -22.5, "axis": "x", "origin": [8, 19, 8]},
+      "rotation": { "angle": -22.5, "axis": "x", "origin": [8, 18, 8] },
       "faces": {
         "north": { "uv": [0, 0, 1, 5], "texture": "#main" },
         "east":  { "uv": [0, 0, 1, 5], "texture": "#main" },
@@ -58,7 +57,7 @@
     {
       "from": [5, 18, 5],
       "to": [6, 23, 6],
-      "rotation": {"angle": -22.5, "axis": "x", "origin": [8, 19, 8]},
+      "rotation": { "angle": -22.5, "axis": "x", "origin": [8, 18, 8] },
       "faces": {
         "north": { "uv": [0, 0, 1, 5], "texture": "#main" },
         "east":  { "uv": [0, 0, 1, 5], "texture": "#main" },
@@ -71,7 +70,7 @@
     {
       "from": [5, 18, 10],
       "to": [6, 23, 11],
-      "rotation": {"angle": 22.5, "axis": "x", "origin": [8, 19, 8]},
+      "rotation": { "angle": 22.5, "axis": "x", "origin": [8, 18, 8] },
       "faces": {
         "north": { "uv": [0, 0, 1, 5], "texture": "#main" },
         "east":  { "uv": [0, 0, 1, 5], "texture": "#main" },
@@ -84,7 +83,7 @@
     {
       "from": [10, 18, 10],
       "to": [11, 23, 11],
-      "rotation": {"angle": 22.5, "axis": "x", "origin": [8, 19, 8]},
+      "rotation": { "angle": 22.5, "axis": "x", "origin": [8, 18, 8] },
       "faces": {
         "north": { "uv": [0, 0, 1, 5], "texture": "#main" },
         "east":  { "uv": [0, 0, 1, 5], "texture": "#main" },
