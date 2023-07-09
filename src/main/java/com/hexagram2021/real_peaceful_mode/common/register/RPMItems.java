@@ -48,6 +48,16 @@ public class RPMItems {
 		public static void init() {}
 	}
 
+	public static class Materials {
+		public static ItemEntry<Item> CRYSTAL_SKULL = ItemEntry.register(
+				"crystal_skull", () -> new Item(new Item.Properties().stacksTo(1))
+		);
+
+		private Materials() {}
+
+		public static void init() {}
+	}
+
 	public static class Weapons {
 		public static ItemEntry<SkeletonScepterItem> SKELETON_SCEPTER = ItemEntry.register(
 				"skeleton_scepter", () -> new SkeletonScepterItem(new Item.Properties().stacksTo(1))
@@ -131,6 +141,7 @@ public class RPMItems {
 		REGISTER.register(bus);
 
 		SpiritBeads.init();
+		Materials.init();
 		Weapons.init();
 		DebugItems.init();
 	}
