@@ -51,7 +51,7 @@ public class ModVanillaCompat {
 						itemStack.setCount(0);
 						break;
 					}
-				};
+				}
 			}
 			this.setSuccess(success);
 			return itemStack;

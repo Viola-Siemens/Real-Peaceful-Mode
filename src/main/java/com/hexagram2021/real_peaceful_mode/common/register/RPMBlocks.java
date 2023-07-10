@@ -114,6 +114,15 @@ public class RPMBlocks {
 		public static final BlockEntry<SlabBlock> GRAY_BRICK_SLAB = registerSlab(GRAY_BRICKS);
 		public static final BlockEntry<WallBlock> GRAY_BRICK_WALL = registerWall(GRAY_BRICKS);
 
+		public static final BlockEntry<Block> POLISHED_CALCITE = new BlockEntry<>(
+				"polished_calcite", () -> BlockBehaviour.Properties.copy(Blocks.CALCITE),
+				Block::new
+		);
+		public static final BlockEntry<Block> CUT_CALCITE = new BlockEntry<>(
+				"cut_calcite", () -> BlockBehaviour.Properties.copy(Blocks.CALCITE),
+				Block::new
+		);
+
 		private Decoration() {}
 
 		private static void init() {
@@ -124,6 +133,8 @@ public class RPMBlocks {
 			RPMItems.ItemEntry.register(GRAY_BRICK_STAIR.getId().getPath(), () -> new BlockItem(GRAY_BRICK_STAIR.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(GRAY_BRICK_SLAB.getId().getPath(), () -> new BlockItem(GRAY_BRICK_SLAB.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(GRAY_BRICK_WALL.getId().getPath(), () -> new BlockItem(GRAY_BRICK_WALL.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(POLISHED_CALCITE.getId().getPath(), () -> new BlockItem(POLISHED_CALCITE.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CUT_CALCITE.getId().getPath(), () -> new BlockItem(CUT_CALCITE.get(), new Item.Properties()));
 		}
 	}
 
