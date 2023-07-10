@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "real_peaceful_mode:block/gray_bricks",
+    "top": "real_peaceful_mode:block/gray_bricks",
+    "side": "real_peaceful_mode:block/gray_bricks"
+  }
+}

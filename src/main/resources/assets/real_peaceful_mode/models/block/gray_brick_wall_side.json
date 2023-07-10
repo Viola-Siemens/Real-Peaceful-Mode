@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "real_peaceful_mode:block/gray_bricks"
+  }
+}
