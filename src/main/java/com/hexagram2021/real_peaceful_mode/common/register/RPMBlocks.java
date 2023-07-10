@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
+import com.hexagram2021.real_peaceful_mode.common.block.ContinuousSummonBlock;
 import com.hexagram2021.real_peaceful_mode.common.block.SummonBlock;
 import com.hexagram2021.real_peaceful_mode.common.block.skull.RPMSkullTypes;
 import net.minecraft.core.Direction;
@@ -37,11 +38,18 @@ public class RPMBlocks {
 				.isValidSpawn((blockState, level, blockPos, entityType) -> false)
 				.noParticlesOnBreak().pushReaction(PushReaction.BLOCK), SummonBlock::new
 		);
+		public static final BlockEntry<ContinuousSummonBlock> CONTINUOUS_SUMMON_BLOCK = new BlockEntry<>(
+				"continuous_summon_block", () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
+				.noCollission().noLootTable()
+				.isValidSpawn((blockState, level, blockPos, entityType) -> false)
+				.noParticlesOnBreak().pushReaction(PushReaction.BLOCK), ContinuousSummonBlock::new
+		);
 
 		private TechnicalBlocks() {}
 
 		private static void init() {
 			RPMItems.ItemEntry.register(SUMMON_BLOCK.getId().getPath(), () -> new BlockItem(SUMMON_BLOCK.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CONTINUOUS_SUMMON_BLOCK.getId().getPath(), () -> new BlockItem(CONTINUOUS_SUMMON_BLOCK.get(), new Item.Properties()));
 		}
 	}
 

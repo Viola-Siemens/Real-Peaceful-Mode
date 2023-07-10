@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "real_peaceful_mode:item/skeletons_spirit_bead"
+    "layer0": "real_peaceful_mode:item/skeleton_spirit_bead"
   }
 }

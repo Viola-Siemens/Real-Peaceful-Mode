@@ -12,6 +12,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -55,7 +56,10 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 	}
 
 	@Override
-	public boolean preventAttack(LivingEntity target) {
+	public boolean preventAttack(@Nullable LivingEntity target) {
+		if(this.fightForPlayer && target instanceof Player) {
+			return true;
+		}
 		return this.level().players().stream().anyMatch(player -> {
 			if(player instanceof IMonsterHero hero) {
 				return hero.isHero(EntityType.ZOMBIE);

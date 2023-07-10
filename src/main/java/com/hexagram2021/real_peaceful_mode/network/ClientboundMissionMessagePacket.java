@@ -36,8 +36,6 @@ public class ClientboundMissionMessagePacket implements IRPMPacket {
 	public void handle(NetworkEvent.Context context) {
 		LocalPlayer player = Minecraft.getInstance().player;
 		RPMLogger.debug(this.mission.createTag());
-		//RPMLogger.debug(this.containerId);
-		//RPMLogger.debug(player == null);
 		if(player != null) {
 			AbstractContainerMenu menu = player.containerMenu;
 			if(menu.containerId == this.containerId && menu instanceof MissionMessageMenu missionMessageMenu) {

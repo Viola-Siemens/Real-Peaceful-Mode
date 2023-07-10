@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.mixin;
 
+import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,6 +39,9 @@ public abstract class NearestAttackableTargetGoalMixin<T extends LivingEntity> e
 					this.target = null;
 				}
 			}
+		}
+		if(this.mob instanceof IFriendlyMonster friendlyMonster && friendlyMonster.preventAttack(this.target)) {
+			this.target = null;
 		}
 		//TODO 猜测特性：如果一个帮助过怪物的英雄玩家站得比另一位没帮助过的玩家近，那么怪物也不会索敌该玩家，除非英雄离开。
 	}

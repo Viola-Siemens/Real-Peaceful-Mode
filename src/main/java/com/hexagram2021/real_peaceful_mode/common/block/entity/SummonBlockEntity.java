@@ -34,7 +34,7 @@ public class SummonBlockEntity extends BlockEntity {
 	public static final String TAG_MISSION_TYPE = "mission_type";
 	public static final String TAG_DISTANCE = "distance";
 
-	private static final int CHECK_TICK = 100;
+	private static final int CHECK_TICK = 40;
 
 	@Nullable
 	private CompoundTag summonTag;
