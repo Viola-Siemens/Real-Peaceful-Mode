@@ -1,6 +1,8 @@
 package com.hexagram2021.real_peaceful_mode.mixin;
 
 import com.google.common.collect.ImmutableList;
+import com.hexagram2021.real_peaceful_mode.common.spawner.skeleton.*;
+import com.hexagram2021.real_peaceful_mode.common.spawner.zombie.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -33,7 +35,11 @@ public class ServerLevelMixin {
 									 ChunkProgressListener progressListener, boolean debug, long seed, List<CustomSpawner> customSpawners,
 									 boolean tickTime, RandomSequences randomSequences, CallbackInfo ci) {
 		if(dimension.equals(Level.OVERWORLD)) {
-			this.customSpawners = ImmutableList.<CustomSpawner>builder().addAll(this.customSpawners).add().build();
+			this.customSpawners = ImmutableList.<CustomSpawner>builder().addAll(this.customSpawners).add(
+					new ZombieRobberyEventSpawner(),
+					new ZombieHelmetEventSpawner(),
+					new SkeletonArmEventSpawner()
+			).build();
 		}
 	}
 }
