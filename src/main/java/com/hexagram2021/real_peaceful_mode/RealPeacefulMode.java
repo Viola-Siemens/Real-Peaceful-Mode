@@ -4,6 +4,7 @@ import com.hexagram2021.real_peaceful_mode.client.ClientProxy;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.RPMContent;
 import com.hexagram2021.real_peaceful_mode.common.RPMSaveData;
+import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructures;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
@@ -21,6 +22,7 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
@@ -71,6 +73,8 @@ public class RealPeacefulMode {
 		);
 		RPMContent.modConstruction(bus, runLater);
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, bootstrapErrorToXCPInDev(() -> ClientProxy::modConstruction));
+
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, RPMCommonConfig.getConfig());
 
 		bus.addListener(this::setup);
 		MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
