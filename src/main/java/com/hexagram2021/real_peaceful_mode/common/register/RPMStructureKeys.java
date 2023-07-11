@@ -9,6 +9,7 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class RPMStructureKeys {
 	public static final ResourceKey<Structure> CRYSTAL_SKULL_ISLAND = createKey("crystal_skull_island");
+	public static final ResourceKey<Structure> ZOMBIE_FORTS = createKey("zombie_fort");
 
 	private static ResourceKey<Structure> createKey(String name) {
 		return ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(MODID, name));
