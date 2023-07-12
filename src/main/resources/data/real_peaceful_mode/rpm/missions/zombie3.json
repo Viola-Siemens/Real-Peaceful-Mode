@@ -2,6 +2,7 @@
   "requires": [
     "real_peaceful_mode:zombie2"
   ],
+  "reward": "minecraft:zombie",
   "messages": [
     {
       "key": "rpm.mission.real_peaceful_mode.zombie3.message1",
