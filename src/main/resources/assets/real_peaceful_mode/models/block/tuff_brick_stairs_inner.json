@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "real_peaceful_mode:block/tuff_bricks",
+    "top": "real_peaceful_mode:block/tuff_bricks",
+    "side": "real_peaceful_mode:block/tuff_bricks"
+  }
+}
