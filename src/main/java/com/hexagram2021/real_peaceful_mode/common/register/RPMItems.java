@@ -56,10 +56,6 @@ public class RPMItems {
 				"tuff_brick", () -> new Item(new Item.Properties())
 		);
 
-		public static ItemEntry<Item> TUFF_BRICK = ItemEntry.register(
-			"tuff_brick", () -> new Item(new Item.Properties().stacksTo(64))
-		);
-
 		private Materials() {}
 
 		public static void init() {}
