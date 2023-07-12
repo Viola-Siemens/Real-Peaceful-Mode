@@ -32,7 +32,7 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 		super(entityType, level);
 	}
 
-	@Inject(method = "addAdditionalSaveData", at = @At(value = "TAIL"))
+	@Inject(method = "readAdditionalSaveData", at = @At(value = "TAIL"))
 	public void getRPMZombieAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
 		this.fightForPlayer = nbt.contains(TAG_FIGHT_FOR_PLAYER, Tag.TAG_BYTE) && nbt.getBoolean(TAG_FIGHT_FOR_PLAYER);
 		if(this.fightForPlayer) {
@@ -48,8 +48,8 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 		}
 	}
 
-	@Inject(method = "readAdditionalSaveData", at = @At(value = "TAIL"))
-	public void readRPMZombieAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
+	@Inject(method = "addAdditionalSaveData", at = @At(value = "TAIL"))
+	public void addRPMZombieAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
 		if(this.fightForPlayer) {
 			nbt.putBoolean(TAG_FIGHT_FOR_PLAYER, true);
 		}

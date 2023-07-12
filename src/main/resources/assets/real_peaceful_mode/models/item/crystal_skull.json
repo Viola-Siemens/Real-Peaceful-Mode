@@ -1,6 +1,22 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:block/block",
+  "render_type": "translucent",
   "textures": {
-    "layer0": "real_peaceful_mode:item/crystal_skull"
-  }
+    "skull1": "real_peaceful_mode:item/crystal_skeleton_skull1",
+    "skull2": "real_peaceful_mode:item/crystal_skeleton_skull2"
+  },
+  "elements": [
+    {
+      "from": [4, 0, 4],
+      "to": [12, 8, 12],
+      "faces": {
+        "north": { "uv": [8, 8, 16, 16], "texture": "#skull1" },
+        "east":  { "uv": [0, 8, 8, 16],  "texture": "#skull1" },
+        "south": { "uv": [8, 8, 16, 16], "texture": "#skull2" },
+        "west":  { "uv": [0, 8, 8, 16],  "texture": "#skull2" },
+        "up":    { "uv": [8, 8, 16, 0],  "texture": "#skull1" },
+        "down":  { "uv": [0, 0, 8, 8],   "texture": "#skull2" }
+      }
+    }
+  ]
 }
