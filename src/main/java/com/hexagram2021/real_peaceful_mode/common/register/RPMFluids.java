@@ -113,7 +113,11 @@ public class RPMFluids {
 							if(newMission) {
 								BlockState summonBlockState = RPMBlocks.TechnicalBlocks.SUMMON_BLOCK.defaultBlockState();
 								level.setBlock(blockPos.above(), summonBlockState, UPDATE_ALL);
-								level.setBlockEntity(new SummonBlockEntity(blockPos, summonBlockState, null, ForgeEventHandler.getMissionManager().getMission(missionToFinish).orElseThrow(), SummonBlockEntity.SummonMissionType.FINISH, distance));
+								level.setBlockEntity(new SummonBlockEntity(
+										blockPos.above(), summonBlockState, null,
+										ForgeEventHandler.getMissionManager().getMission(missionToFinish).orElseThrow(),
+										SummonBlockEntity.SummonMissionType.FINISH, distance
+								));
 							}
 						}
 					}

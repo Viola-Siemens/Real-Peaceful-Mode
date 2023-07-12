@@ -41,7 +41,7 @@
     },
     {
       "key": "rpm.mission.real_peaceful_mode.zombie2.message10",
-      "speaker": "player"
+      "speaker": "npc"
     },
     {
       "key": "rpm.mission.real_peaceful_mode.zombie2.message11",
@@ -49,16 +49,32 @@
     },
     {
       "key": "rpm.mission.real_peaceful_mode.zombie2.message12",
-      "speaker": "player"
-    }
-  ],
-  "messagesAfter": [
+      "speaker": "npc"
+    },
     {
       "key": "rpm.mission.real_peaceful_mode.zombie2.message13",
       "speaker": "player"
     },
     {
       "key": "rpm.mission.real_peaceful_mode.zombie2.message14",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message15",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message16",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message17",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.zombie2.message18",
       "speaker": "player"
     }
   ],
