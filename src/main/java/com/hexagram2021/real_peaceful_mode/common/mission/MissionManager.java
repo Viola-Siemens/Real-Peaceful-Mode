@@ -5,6 +5,10 @@ import com.google.common.collect.Lists;
 import com.google.gson.*;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -106,7 +110,13 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 
 		public void finish(ServerPlayer player, LootDataManager lootTables) {
 			if(!this.reward.equals(EntityType.PLAYER)) {
-				((IMonsterHero)player).setHero(this.reward);
+				if(!((IMonsterHero)player).isHero(this.reward)) {
+					player.sendSystemMessage(Component.translatable(
+							"message.real_peaceful_mode.reward_monster",
+							Component.translatable(this.reward.getDescriptionId()).withStyle(ChatFormatting.GREEN)
+					));
+					((IMonsterHero) player).setHero(this.reward);
+				}
 			}
 			this.tryGetLoot(player, lootTables, true);
 		}
