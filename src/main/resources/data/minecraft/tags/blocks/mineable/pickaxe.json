@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "real_peaceful_mode:tuff_bricks",
+    "real_peaceful_mode:tuff_brick_slab",
+    "real_peaceful_mode:tuff_brick_stairs",
+    "real_peaceful_mode:tuff_brick_wall"
+  ]
+}

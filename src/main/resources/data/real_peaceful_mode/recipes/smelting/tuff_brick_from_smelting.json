@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:tuff"
+  },
+  "result": "real_peaceful_mode:tuff_brick",
+  "experience": 0.3,
+  "cookingtime": 200
+}

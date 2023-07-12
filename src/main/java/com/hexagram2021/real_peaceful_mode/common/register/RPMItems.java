@@ -53,6 +53,10 @@ public class RPMItems {
 				"crystal_skull", () -> new Item(new Item.Properties().stacksTo(1))
 		);
 
+		public static ItemEntry<Item> TUFF_BRICK = ItemEntry.register(
+			"tuff_brick", () -> new Item(new Item.Properties().stacksTo(64))
+		);
+
 		private Materials() {}
 
 		public static void init() {}
