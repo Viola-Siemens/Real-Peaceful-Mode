@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "real_peaceful_mode:block/cracked_tuff_brick_slab"
+    },
+    "type=double": {
+      "model": "real_peaceful_mode:block/cracked_tuff_bricks"
+    },
+    "type=top": {
+      "model": "real_peaceful_mode:block/cracked_tuff_brick_slab_top"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "real_peaceful_mode:block/cracked_tuff_bricks",
+    "top": "real_peaceful_mode:block/cracked_tuff_bricks",
+    "side": "real_peaceful_mode:block/cracked_tuff_bricks"
+  }
+}

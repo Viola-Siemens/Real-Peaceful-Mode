@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/wall_inventory",
   "textures": {
-    "wall": "real_peaceful_mode:block/gray_bricks"
+    "wall": "real_peaceful_mode:block/cracked_tuff_bricks"
   }
 }

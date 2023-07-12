@@ -112,15 +112,6 @@ public class RPMBlocks {
 				.instrument(RPMNoteBlockInstruments.DARK_ZOMBIE_KNIGHT).strength(1.0F).pushReaction(PushReaction.DESTROY),
 				props -> new WallSkullBlock(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, props)
 		);
-
-		public static final BlockEntry<Block> GRAY_BRICKS = new BlockEntry<>(
-				"gray_bricks", () -> BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY)
-				.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(2.0F, 6.0F),
-				Block::new
-		);
-		public static final BlockEntry<StairBlock> GRAY_BRICK_STAIR = registerStairs(GRAY_BRICKS);
-		public static final BlockEntry<SlabBlock> GRAY_BRICK_SLAB = registerSlab(GRAY_BRICKS);
-		public static final BlockEntry<WallBlock> GRAY_BRICK_WALL = registerWall(GRAY_BRICKS);
 		
 		public static final BlockEntry<Block> TUFF_BRICKS = new BlockEntry<>(
 				"tuff_bricks", () -> BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY)
@@ -130,6 +121,15 @@ public class RPMBlocks {
 		public static final BlockEntry<StairBlock> TUFF_BRICK_STAIR = registerStairs(TUFF_BRICKS);
 		public static final BlockEntry<SlabBlock> TUFF_BRICK_SLAB = registerSlab(TUFF_BRICKS);
 		public static final BlockEntry<WallBlock> TUFF_BRICK_WALL = registerWall(TUFF_BRICKS);
+
+		public static final BlockEntry<Block> CRACKED_TUFF_BRICKS = new BlockEntry<>(
+				"cracked_tuff_bricks", () -> BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY)
+				.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(2.0F, 6.0F),
+				Block::new
+		);
+		public static final BlockEntry<StairBlock> CRACKED_TUFF_BRICK_STAIR = registerStairs(CRACKED_TUFF_BRICKS);
+		public static final BlockEntry<SlabBlock> CRACKED_TUFF_BRICK_SLAB = registerSlab(CRACKED_TUFF_BRICKS);
+		public static final BlockEntry<WallBlock> CRACKED_TUFF_BRICK_WALL = registerWall(CRACKED_TUFF_BRICKS);
 		
 		public static final BlockEntry<Block> POLISHED_CALCITE = new BlockEntry<>(
 				"polished_calcite", () -> BlockBehaviour.Properties.copy(Blocks.CALCITE),
@@ -146,14 +146,14 @@ public class RPMBlocks {
 			RPMItems.ItemEntry.register(DARK_ZOMBIE_KNIGHT_SKULL.getId().getPath(), () -> new StandingAndWallBlockItem(
 					DARK_ZOMBIE_KNIGHT_SKULL.get(), DARK_ZOMBIE_KNIGHT_WALL_SKULL.get(), new Item.Properties().rarity(Rarity.UNCOMMON), Direction.DOWN
 			));
-			RPMItems.ItemEntry.register(GRAY_BRICKS.getId().getPath(), () -> new BlockItem(GRAY_BRICKS.get(), new Item.Properties()));
-			RPMItems.ItemEntry.register(GRAY_BRICK_STAIR.getId().getPath(), () -> new BlockItem(GRAY_BRICK_STAIR.get(), new Item.Properties()));
-			RPMItems.ItemEntry.register(GRAY_BRICK_SLAB.getId().getPath(), () -> new BlockItem(GRAY_BRICK_SLAB.get(), new Item.Properties()));
-			RPMItems.ItemEntry.register(GRAY_BRICK_WALL.getId().getPath(), () -> new BlockItem(GRAY_BRICK_WALL.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(TUFF_BRICKS.getId().getPath(), () -> new BlockItem(TUFF_BRICKS.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(TUFF_BRICK_STAIR.getId().getPath(), () -> new BlockItem(TUFF_BRICK_STAIR.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(TUFF_BRICK_SLAB.getId().getPath(), () -> new BlockItem(TUFF_BRICK_SLAB.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(TUFF_BRICK_WALL.getId().getPath(), () -> new BlockItem(TUFF_BRICK_WALL.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CRACKED_TUFF_BRICKS.getId().getPath(), () -> new BlockItem(CRACKED_TUFF_BRICKS.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CRACKED_TUFF_BRICK_STAIR.getId().getPath(), () -> new BlockItem(CRACKED_TUFF_BRICK_STAIR.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CRACKED_TUFF_BRICK_SLAB.getId().getPath(), () -> new BlockItem(CRACKED_TUFF_BRICK_SLAB.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CRACKED_TUFF_BRICK_WALL.getId().getPath(), () -> new BlockItem(CRACKED_TUFF_BRICK_WALL.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(POLISHED_CALCITE.getId().getPath(), () -> new BlockItem(POLISHED_CALCITE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CUT_CALCITE.getId().getPath(), () -> new BlockItem(CUT_CALCITE.get(), new Item.Properties()));
 		}
