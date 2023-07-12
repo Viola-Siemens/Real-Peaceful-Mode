@@ -1,14 +1,22 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.boss;
 
+import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
+import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
+import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -19,6 +27,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
@@ -27,6 +36,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
+
+import java.util.List;
+
+import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class ZombieTyrant extends Mob implements Enemy {
 	private static final EntityDataAccessor<Integer> DATA_SPELL_COUNTER = SynchedEntityData.defineId(ZombieTyrant.class, EntityDataSerializers.INT);
@@ -49,7 +62,13 @@ public class ZombieTyrant extends Mob implements Enemy {
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
-		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 10.0D).add(Attributes.MOVEMENT_SPEED, 0.125F).add(Attributes.ATTACK_DAMAGE, 1.0D).add(Attributes.ARMOR, 5.0D).add(Attributes.MAX_HEALTH, 120.0D);
+		return Monster.createMonsterAttributes()
+				.add(Attributes.FOLLOW_RANGE, 10.0D)
+				.add(Attributes.MOVEMENT_SPEED, 0.125F)
+				.add(Attributes.ATTACK_DAMAGE, 1.0D)
+				.add(Attributes.ARMOR, 5.0D)
+				.add(Attributes.KNOCKBACK_RESISTANCE, 0.75D)
+				.add(Attributes.MAX_HEALTH, 160.0D);
 	}
 
 	@Override
@@ -102,6 +121,20 @@ public class ZombieTyrant extends Mob implements Enemy {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return RPMSounds.ZOMBIE_TYRANT_DEATH;
+	}
+	
+	@Override
+	public void die(DamageSource damageSource) {
+		if(this.level() instanceof ServerLevel serverLevel) {
+			List<Player> nearbyPlayers = serverLevel.getNearbyPlayers(TargetingConditions.forCombat().range(32.0D), this, this.getBoundingBox().inflate(12.0D, 8.0D, 12.0D));
+			ForgeEventHandler.getMissionManager().getMission(new ResourceLocation(MODID, "zombie3")).ifPresent(mission -> nearbyPlayers.forEach(player -> {
+				if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && SummonBlockEntity.checkMission(hero, SummonBlockEntity.SummonMissionType.FINISH, mission)) {
+					PlayerMissions playerMissions = ((IPlayerListWithMissions) serverLevel.getServer().getPlayerList()).getPlayerMissions((ServerPlayer) player);
+					playerMissions.finishMission(mission, this);
+				}
+			}));
+		}
+		super.die(damageSource);
 	}
 
 	class SummonKnightsGoal extends Goal {
@@ -156,7 +189,7 @@ public class ZombieTyrant extends Mob implements Enemy {
 		}
 		
 		protected int getCastingInterval() {
-			return 200;
+			return 280;
 		}
 
 		protected SoundEvent getSpellSound() {
