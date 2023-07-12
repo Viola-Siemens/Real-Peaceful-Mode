@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "real_peaceful_mode:tuff_bricks"
+    }
+  },
+  "result": {
+    "item": "real_peaceful_mode:tuff_brick_stairs",
+    "count": 4
+  }
+}
