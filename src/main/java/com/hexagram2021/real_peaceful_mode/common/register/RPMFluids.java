@@ -1,19 +1,18 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
-import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
+import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
-import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.fluid.MagicPoolWaterFluid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -67,7 +66,7 @@ public class RPMFluids {
 									}
 								}
 							}
-							level.explode(itemEntity, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 0.25F, Level.ExplosionInteraction.NONE);
+							level.explode(itemEntity, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 0.5F, Level.ExplosionInteraction.NONE);
 							itemEntity.discard();
 						}
 					}
@@ -82,43 +81,27 @@ public class RPMFluids {
 			(entry, props) -> new LiquidBlock(entry::getStill, props) {
 				@Override
 				public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-					if(entity instanceof ItemEntity itemEntity) {
+					if(entity instanceof ItemEntity itemEntity && level instanceof ServerLevel serverLevel) {
 						ItemStack itemStack = itemEntity.getItem();
 						if(itemStack.is(Items.ROTTEN_FLESH)) {
 							for(int x = -2; x <= 2; ++x) {
 								for(int z = -2; z <= 2; ++z) {
 									for(int y = -2; y < 2; ++y) {
 										BlockPos current = blockPos.offset(x, y, z);
-										if(level.getFluidState(current).is(RPMFluidTags.DARK_MAGIC_POOL_WATER)) {
-											level.setBlock(current, MAGIC_POOL_WATER_FLUID.getBlock().defaultBlockState(), UPDATE_ALL);
+										if(serverLevel.getFluidState(current).is(RPMFluidTags.DARK_MAGIC_POOL_WATER)) {
+											serverLevel.setBlock(current, MAGIC_POOL_WATER_FLUID.getBlock().defaultBlockState(), UPDATE_ALL);
 										}
 									}
 								}
 							}
-							level.explode(itemEntity, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 0.25F, Level.ExplosionInteraction.NONE);
-							boolean newMission = false;
-							ResourceLocation missionToFinish = new ResourceLocation(MODID, "zombie2");
+							serverLevel.explode(itemEntity, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 0.5F, Level.ExplosionInteraction.NONE);
+
 							int distance = 16;
-							for(Player player: level.players()) {
-								if(player.closerThan(itemEntity, distance)) {
-									player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100));
-									if(player instanceof IMonsterHero hero) {
-										if(IMonsterHero.isUnderMission(hero.getPlayerMissions(), missionToFinish)) {
-											newMission = true;
-										}
-									}
-								}
-							}
+							MissionHelper.triggerMissionForPlayers(
+									new ResourceLocation(MODID, "zombie2"), SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
+									player -> player.closerThan(itemEntity, distance), null, player -> player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 160))
+							);
 							itemEntity.discard();
-							if(newMission) {
-								BlockState summonBlockState = RPMBlocks.TechnicalBlocks.SUMMON_BLOCK.defaultBlockState();
-								level.setBlock(blockPos.above(), summonBlockState, UPDATE_ALL);
-								level.setBlockEntity(new SummonBlockEntity(
-										blockPos.above(), summonBlockState, null,
-										ForgeEventHandler.getMissionManager().getMission(missionToFinish).orElseThrow(),
-										SummonBlockEntity.SummonMissionType.FINISH, distance
-								));
-							}
 						}
 					}
 					super.entityInside(blockState, level, blockPos, entity);

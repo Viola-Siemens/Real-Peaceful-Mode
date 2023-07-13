@@ -19,7 +19,11 @@ public interface IMonsterHero {
 		return playerMissions.finishedMissions().contains(finished) && !playerMissions.finishedMissions().contains(toFinish) && !playerMissions.activeMissions().contains(toFinish);
 	}
 
-	static boolean isUnderMission(PlayerMissions playerMissions, ResourceLocation toFinish) {
+	static boolean underMission(PlayerMissions playerMissions, ResourceLocation toFinish) {
 		return playerMissions.activeMissions().contains(toFinish);
+	}
+
+	static boolean completeMission(PlayerMissions playerMissions, ResourceLocation finish) {
+		return playerMissions.finishedMissions().contains(finish);
 	}
 }

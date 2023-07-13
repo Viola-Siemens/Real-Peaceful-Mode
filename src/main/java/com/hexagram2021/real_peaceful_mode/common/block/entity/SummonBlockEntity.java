@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.block.entity;
 
 import com.google.common.collect.ImmutableMap;
+import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
@@ -85,20 +86,17 @@ public class SummonBlockEntity extends BlockEntity {
 		}
 		blockEntity.lastCheckTick = CHECK_TICK;
 		if(level instanceof ServerLevel serverLevel && (blockEntity.mission != null || blockEntity.summonTag != null)) {
-			List<? extends ServerPlayer> nearbyPlayers = serverLevel.players().stream()
+			List<ServerPlayer> nearbyPlayers = serverLevel.players().stream()
 					.filter(player -> player.position().closerThan(blockPos.getCenter(), blockEntity.distance) && !player.getAbilities().instabuild && checkMission((IMonsterHero)player, blockEntity.type, blockEntity.mission))
 					.toList();
 			if (!nearbyPlayers.isEmpty()) {
 				LivingEntity npc = blockEntity.summon(serverLevel);
 				serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), UPDATE_ALL);
 				if(blockEntity.mission != null) {
-					nearbyPlayers.forEach(player -> {
-						PlayerMissions playerMissions = ((IPlayerListWithMissions) serverLevel.getServer().getPlayerList()).getPlayerMissions(player);
-						switch (blockEntity.type) {
-							case RECEIVE -> playerMissions.receiveNewMission(blockEntity.mission, npc);
-							case FINISH -> playerMissions.finishMission(blockEntity.mission, npc);
-						}
-					});
+					MissionHelper.triggerMissionForPlayers(
+							blockEntity.mission, blockEntity.type, nearbyPlayers,
+							(IPlayerListWithMissions) serverLevel.getServer().getPlayerList(), npc, p -> {}
+					);
 				}
 			}
 		}
@@ -163,11 +161,11 @@ public class SummonBlockEntity extends BlockEntity {
 		}
 		ResourceLocation missionId = mission.id();
 		if (type == SummonMissionType.RECEIVE) {
-			if(playerMissions.finishedMissions().contains(missionId) || playerMissions.activeMissions().contains(missionId)) {
+			if(IMonsterHero.underMission(playerMissions, missionId) || IMonsterHero.completeMission(playerMissions, missionId)) {
 				return false;
 			}
 			for(ResourceLocation former: mission.formers()) {
-				if(!playerMissions.finishedMissions().contains(former)) {
+				if(!IMonsterHero.completeMission(playerMissions, former)) {
 					return false;
 				}
 			}

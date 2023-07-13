@@ -127,7 +127,7 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 			return false;
 		}
 		ResourceLocation missionId = mission.id();
-		return playerMissions.activeMissions().contains(missionId);
+		return IMonsterHero.underMission(playerMissions, missionId);
 	}
 
 	private static boolean checkBlockReplace(IMonsterHero hero, @Nullable MissionManager.Mission mission) {
@@ -136,7 +136,7 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 			return false;
 		}
 		ResourceLocation missionId = mission.id();
-		return playerMissions.finishedMissions().contains(missionId);
+		return IMonsterHero.completeMission(playerMissions, missionId);
 	}
 }
 
