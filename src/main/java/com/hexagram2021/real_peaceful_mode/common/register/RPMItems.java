@@ -1,25 +1,18 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.google.common.collect.Lists;
-import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.item.DebugWishItem;
 import com.hexagram2021.real_peaceful_mode.common.item.SkeletonScepterItem;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -33,7 +26,7 @@ public class RPMItems {
 		public static final ItemEntry<Item> HUGE_SPIRIT_BEAD = ItemEntry.register(
 				"huge_spirit_bead", () -> new Item(new Item.Properties()) {
 					@Override
-					public boolean isFoil(@NotNull ItemStack itemStack) {
+					public boolean isFoil(ItemStack itemStack) {
 						return true;
 					}
 				}
@@ -85,46 +78,13 @@ public class RPMItems {
 
 	public static class DebugItems {
 		public static ItemEntry<Item> ZOMBIES_WISH = ItemEntry.register(
-				"zombies_wish", () -> new Item(new Item.Properties()) {
-					@Override @Nonnull
-					public InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player player, @Nonnull InteractionHand hand) {
-						ItemStack itemstack = player.getItemInHand(hand);
-						if(hand == InteractionHand.MAIN_HAND && player.getAbilities().instabuild && player instanceof IMonsterHero hero) {
-							hero.setHero(EntityType.ZOMBIE);
-							player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.zombies_wish.success"));
-							return InteractionResultHolder.consume(itemstack);
-						}
-						return InteractionResultHolder.pass(itemstack);
-					}
-				}
+				"zombies_wish", () -> new DebugWishItem(EntityType.ZOMBIE, new Item.Properties())
 		);
 		public static ItemEntry<Item> SKELETONS_WISH = ItemEntry.register(
-				"skeletons_wish", () -> new Item(new Item.Properties()) {
-					@Override @Nonnull
-					public InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player player, @Nonnull InteractionHand hand) {
-						ItemStack itemstack = player.getItemInHand(hand);
-						if(hand == InteractionHand.MAIN_HAND && player.getAbilities().instabuild && player instanceof IMonsterHero hero) {
-							hero.setHero(EntityType.SKELETON);
-							player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.skeletons_wish.success"));
-							return InteractionResultHolder.consume(itemstack);
-						}
-						return InteractionResultHolder.pass(itemstack);
-					}
-				}
+				"skeletons_wish", () -> new DebugWishItem(EntityType.SKELETON, new Item.Properties())
 		);
 		public static ItemEntry<Item> CREEPERS_WISH = ItemEntry.register(
-				"creepers_wish", () -> new Item(new Item.Properties()) {
-					@Override @Nonnull
-					public InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player player, @Nonnull InteractionHand hand) {
-						ItemStack itemstack = player.getItemInHand(hand);
-						if(hand == InteractionHand.MAIN_HAND && player.getAbilities().instabuild && player instanceof IMonsterHero hero) {
-							hero.setHero(EntityType.CREEPER);
-							player.sendSystemMessage(Component.translatable("message.real_peaceful_mode.creepers_wish.success"));
-							return InteractionResultHolder.consume(itemstack);
-						}
-						return InteractionResultHolder.pass(itemstack);
-					}
-				}
+				"creepers_wish", () -> new DebugWishItem(EntityType.CREEPER, new Item.Properties())
 		);
 
 		public static ItemEntry<SpawnEggItem> DARK_ZOMBIE_KNIGHT_SPAWN_EGG = ItemEntry.register(
@@ -165,13 +125,11 @@ public class RPMItems {
 		}
 
 		@Override
-		@Nonnull
 		public T get()
 		{
 			return this.regObject.get();
 		}
 
-		@Nonnull
 		@Override
 		public Item asItem()
 		{

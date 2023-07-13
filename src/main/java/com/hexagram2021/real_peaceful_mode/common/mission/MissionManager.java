@@ -7,8 +7,6 @@ import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentUtils;
-import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -113,6 +111,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 				if(!((IMonsterHero)player).isHero(this.reward)) {
 					player.sendSystemMessage(Component.translatable(
 							"message.real_peaceful_mode.reward_monster",
+							player.getDisplayName(),
 							Component.translatable(this.reward.getDescriptionId()).withStyle(ChatFormatting.GREEN)
 					));
 					((IMonsterHero) player).setHero(this.reward);

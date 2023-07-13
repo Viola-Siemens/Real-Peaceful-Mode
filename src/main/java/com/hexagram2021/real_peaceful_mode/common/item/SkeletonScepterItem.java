@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Predicate;
 
@@ -33,17 +34,16 @@ public class SkeletonScepterItem extends ProjectileWeaponItem implements Vanisha
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack scepter = player.getItemInHand(hand);
         if (!level.isClientSide) {
-            var vec = player.getLookAngle();
-            var witherSkull = new WitherSkull(level, player, vec.x(), vec.y(), vec.z());
+            Vec3 vec = player.getLookAngle();
+            WitherSkull witherSkull = new WitherSkull(level, player, vec.x(), vec.y(), vec.z());
             witherSkull.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
-            scepter.hurtAndBreak(1, player, (player1) -> {
-                player1.broadcastBreakEvent(player.getUsedItemHand());
-            });
+            scepter.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(player.getUsedItemHand()));
 
             level.addFreshEntity(witherSkull);
+            player.getCooldowns().addCooldown(this, 5);
         }
 
-        level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.consume(scepter);
     }

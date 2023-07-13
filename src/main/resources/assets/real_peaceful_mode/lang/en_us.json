@@ -58,7 +58,7 @@
   "message.real_peaceful_mode.creepers_wish.success": "Creepers are friendly to you now.",
   "message.real_peaceful_mode.receive_mission": "Receive new mission %s.",
   "message.real_peaceful_mode.finish_mission": "Successfully finish mission %s!",
-  "message.real_peaceful_mode.reward_monster": "Congratulations! You've successfully completed the wishes of %s. They will never regard you as enemies from now on.",
+  "message.real_peaceful_mode.reward_monster": "Congratulations to %s for completing the wishes of %s. They will never regard you as enemies from now on.",
 
   "title.real_peaceful_mode.menu.mission": "Mission Conversation",
   "title.real_peaceful_mode.menu.mission_list": "Missions",
