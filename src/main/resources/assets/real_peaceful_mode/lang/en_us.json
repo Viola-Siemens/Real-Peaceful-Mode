@@ -6,6 +6,7 @@
   "itemGroup.real_peaceful_mode": "Real Peaceful Mode",
 
   "block.real_peaceful_mode.summon_block": "Summon Block",
+  "block.real_peaceful_mode.continuous_summon_block": "Continuous Summon Block",
   "block.real_peaceful_mode.refinement_table": "Refinement Table",
   "block.real_peaceful_mode.magic_pool_water": "Magic Pool Water",
   "block.real_peaceful_mode.dark_magic_pool_water": "Dark Magic Pool Water",
@@ -21,6 +22,7 @@
   "block.real_peaceful_mode.tuff_brick_wall": "Tuff Brick Wall",
   "block.real_peaceful_mode.polished_calcite": "Polished Calcite",
   "block.real_peaceful_mode.cut_calcite": "Cut Calcite",
+  "block.real_peaceful_mode.infested_glowing_crystal": "Infested Glowing Crystal",
   "item.real_peaceful_mode.tuff_brick": "Tuff Brick",
   "item.real_peaceful_mode.huge_spirit_bead": "Huge Spirit Bead",
   "item.real_peaceful_mode.zombie_spirit_bead": "Zombie Spirit Bead",
@@ -53,6 +55,8 @@
   "subtitles.entity.zombie_tyrant.death": "Zombie Tyrant dies",
   "subtitles.entity.zombie_tyrant.spell": "Zombie Tyrant summons knights",
 
+  "enchantment.real_peaceful_mode.cracking": "Cracking",
+
   "message.real_peaceful_mode.zombies_wish.success": "Zombies are friendly to you now.",
   "message.real_peaceful_mode.skeletons_wish.success": "Skeletons are friendly to you now.",
   "message.real_peaceful_mode.creepers_wish.success": "Creepers are friendly to you now.",
@@ -71,6 +75,9 @@
   "mission.real_peaceful_mode.zombie2.description": "Find the key to save the zombies. You may need to find a senior villager first.",
   "mission.real_peaceful_mode.zombie3.name": "Fight for Zombies",
   "mission.real_peaceful_mode.zombie3.description": "Defeat the tyrant of zombies, and bring peace back to zombie's kingdom!",
+
+  "mission.real_peaceful_mode.skeleton1.name": "",
+  "mission.real_peaceful_mode.skeleton1.description": "",
 
   "book.real_peaceful_mode.zombie.title": "Mind of zombies",
   "book.real_peaceful_mode.zombie.content1": "Hundreds years ago, zombies and human beings are two different races but get along well with each other. However, everything changed when the tyrant took the crown. Zombies lose their mind, killing human and even other mobs, and spread zombie virus to infect others. ",
@@ -114,5 +121,7 @@
   "rpm.mission.real_peaceful_mode.zombie3.message6": "Wars... makes us stronger... peace is for losers...",
   "rpm.mission.real_peaceful_mode.zombie3.message7": "No, peace is for winners. I defeat you, and I'll bring peace to zombies.",
   "rpm.mission.real_peaceful_mode.zombie3.message8": "It makes... no sense... I'll... be back soon...",
-  "rpm.mission.real_peaceful_mode.zombie3.message9": "If so, I'll beat you another time!"
+  "rpm.mission.real_peaceful_mode.zombie3.message9": "If so, I'll beat you another time!",
+
+  "rpm.mission.real_peaceful_mode.skeleton1.message1": ""
 }

@@ -35,11 +35,11 @@ public class NoteBlockInstrumentMixin {
 	}
 
 	@Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/world/level/block/state/properties/NoteBlockInstrument;$VALUES:[Lnet/minecraft/world/level/block/state/properties/NoteBlockInstrument;", shift = At.Shift.AFTER))
-	private static void ipp_injectEnum(CallbackInfo ci) {
+	private static void rpm_injectEnum(CallbackInfo ci) {
 		int ordinal = $VALUES.length;
 		$VALUES = Arrays.copyOf($VALUES, ordinal + 1);
 
 		DARK_ZOMBIE_KNIGHT = $VALUES[ordinal] =
-				createSkullInstrument("BASSOON", ordinal, RPMSounds.NOTE_BLOCK_IMITATE_DARK_ZOMBIE_KNIGHT);
+				createSkullInstrument("DARK_ZOMBIE_KNIGHT", ordinal, RPMSounds.NOTE_BLOCK_IMITATE_DARK_ZOMBIE_KNIGHT);
 	}
 }

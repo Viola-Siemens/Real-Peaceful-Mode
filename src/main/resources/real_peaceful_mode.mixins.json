@@ -4,12 +4,14 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "real_peaceful_mode.refmap.json",
   "mixins": [
+    "AbstractArrowMixin",
+    "ArrowItemMixin",
     "BlockEntityTypeAccess",
     "HeroGiftsTaskAccess",
     "LivingEntityMixin",
-    "ServerLevelMixin",
     "NoteBlockInstrumentMixin",
     "PlayerListMixin",
+    "ServerLevelMixin",
     "ServerPlayerMixin",
     "StructureTemplatePoolAccess",
     "ZombieEntityMixin"

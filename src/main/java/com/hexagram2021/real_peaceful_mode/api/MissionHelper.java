@@ -17,6 +17,12 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+/**
+ * 	There's two approaches to trigger missions. One is to use MissionHelper.triggerMissionForPlayers, the other one is
+ * to use Summon Block. For datapack developers, the second choice seems to be the only choice.
+ *
+ * @see SummonBlockEntity#load
+ */
 public class MissionHelper {
 	/**
 	 * API for custom mods to trigger mission on/off.
@@ -45,6 +51,7 @@ public class MissionHelper {
 		));
 	}
 
+	//You don't need to call this api lol.
 	@ApiStatus.Internal
 	public static void triggerMissionForPlayers(MissionManager.Mission mission, SummonBlockEntity.SummonMissionType summonMissionType,
 												List<ServerPlayer> players, IPlayerListWithMissions playerList, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {

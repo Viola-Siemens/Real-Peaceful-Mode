@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:glass",
+    "#forge:glass_panes",
+    "minecraft:budding_amethyst",
+    "minecraft:infested_stone",
+    "minecraft:infested_cobblestone",
+    "minecraft:infested_stone_bricks",
+    "minecraft:infested_cracked_stone_bricks",
+    "minecraft:infested_mossy_stone_bricks",
+    "minecraft:infested_chiseled_stone_bricks",
+    "minecraft:infested_deepslate",
+    "real_peaceful_mode:infested_glowing_crystal"
+  ]
+}

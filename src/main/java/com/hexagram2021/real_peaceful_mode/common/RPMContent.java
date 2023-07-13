@@ -35,9 +35,11 @@ public class RPMContent {
 		RPMCreativeTabs.init(bus);
 		RPMMenuTypes.init(bus);
 		RPMStructureTypes.init(bus);
+		RPMEnchantments.init(bus);
 	}
 
 	private static void initTags() {
+		RPMBlockTags.init();
 		RPMBiomeTags.init();
 		RPMStructureTags.init();
 		RPMStructureKeys.init();
