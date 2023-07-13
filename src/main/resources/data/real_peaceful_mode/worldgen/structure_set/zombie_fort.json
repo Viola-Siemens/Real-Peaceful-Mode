@@ -1,0 +1,15 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1656795275,
+    "separation": 15,
+    "spacing": 31,
+    "spread_type": "triangular"
+  },
+  "structures": [
+    {
+      "structure": "real_peaceful_mode:zombie_fort",
+      "weight": 1
+    }
+  ]
+}
