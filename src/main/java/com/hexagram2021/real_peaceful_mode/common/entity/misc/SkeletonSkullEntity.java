@@ -1,18 +1,13 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.misc;
 
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
@@ -30,10 +25,6 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile {
         return false;
     }
 
-    public float getBlockExplosionResistance(Explosion p_37619_, BlockGetter p_37620_, BlockPos p_37621_, BlockState p_37622_, FluidState p_37623_, float p_37624_) {
-        return 1F;
-    }
-
     protected void onHitEntity(EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
         if (!this.level().isClientSide) {
@@ -47,10 +38,8 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile {
     protected void onHit(HitResult p_37628_) {
         super.onHit(p_37628_);
         if (!this.level().isClientSide) {
-            this.level().explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, false, Level.ExplosionInteraction.NONE);
             this.discard();
         }
-
     }
 
     public boolean isPickable() {

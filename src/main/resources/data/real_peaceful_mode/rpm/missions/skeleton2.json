@@ -1,0 +1,67 @@
+{
+  "requires": [
+    "real_peaceful_mode:skeleton1"
+  ],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message1",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message2",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message3",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message4",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message5",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message6",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message7",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message8",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message9",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message10",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message11",
+      "speaker": "npc"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message12",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message13",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton2.message14",
+      "speaker": "player"
+    }
+  ],
+  "loot_table": "real_peaceful_mode:missions/single_skeleton_spirit",
+  "loot_before": true
+}

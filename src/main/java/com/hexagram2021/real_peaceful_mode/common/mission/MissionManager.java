@@ -96,7 +96,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 		}
 
 		public void tryGetLoot(ServerPlayer player, LootDataManager lootTables, boolean finished) {
-			if(this.lootBefore || finished) {
+			if(this.lootBefore != finished) {
 				if (this.rewardLootTable != null && !this.rewardLootTable.equals(BuiltInLootTables.EMPTY)) {
 					LootTable lootTable = lootTables.getLootTable(this.rewardLootTable);
 					lootTable.getRandomItems(new LootParams.Builder((ServerLevel) player.level()).create(LootContextParamSets.EMPTY), itemStack -> player.level().addFreshEntity(

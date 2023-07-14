@@ -1,0 +1,80 @@
+{
+  "requires": [
+    "real_peaceful_mode:skeleton2"
+  ],
+  "reward": "minecraft:skeleton",
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message1",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message2",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message3",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message4",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message5",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message6",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message7",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message8",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message9",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message10",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message11",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message12",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message13",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message14",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message15",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message16",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.skeleton3.message17",
+      "speaker": "player"
+    }
+  ],
+  "loot_table": "real_peaceful_mode:missions/finish_zombie",
+  "loot_before": false
+}

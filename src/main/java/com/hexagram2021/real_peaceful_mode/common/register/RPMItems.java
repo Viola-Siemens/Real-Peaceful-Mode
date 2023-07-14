@@ -57,7 +57,7 @@ public class RPMItems {
 
     public static class Materials {
         public static ItemEntry<Item> CRYSTAL_SKULL = ItemEntry.register(
-                "crystal_skull", () -> new Item(new Item.Properties().stacksTo(1))
+                "crystal_skull", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1))
         );
         public static ItemEntry<Item> TUFF_BRICK = ItemEntry.register(
                 "tuff_brick", () -> new Item(new Item.Properties())
@@ -72,7 +72,7 @@ public class RPMItems {
 
     public static class Weapons {
         public static ItemEntry<SkeletonScepterItem> SKELETON_SCEPTER = ItemEntry.register(
-                "skeleton_scepter", () -> new SkeletonScepterItem(new Item.Properties().stacksTo(1).durability(1395))
+                "skeleton_scepter", () -> new SkeletonScepterItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).durability(1396))
         );
         public static ItemEntry<SwordItem> IRON_PIKE = ItemEntry.register(
                 "iron_pike", () -> new SwordItem(Tiers.IRON, 4, -3.0F, new Item.Properties().stacksTo(1))

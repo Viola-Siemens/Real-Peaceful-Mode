@@ -86,7 +86,7 @@
   "mission.real_peaceful_mode.skeleton2.description": "Find the crystal skull. You may need to find a senior villager first.",
   "mission.real_peaceful_mode.skeleton2.after": "Take the skull back and give it to the king.",
   "mission.real_peaceful_mode.skeleton3.name": "Noise of the Nether",
-  "mission.real_peaceful_mode.skeleton3.description": "Find 64 soul soil blocks and give it to the king.",
+  "mission.real_peaceful_mode.skeleton3.description": "Find 64 of the dirt-like blocks for the king, which is able to turn cooled lava into basalt.",
   "mission.real_peaceful_mode.skeleton3.after": "Congratulations! You have already completed the missions given by the skeletons.",
 
   "book.real_peaceful_mode.zombie.title": "Mind of zombies",
@@ -159,5 +159,32 @@
   "rpm.mission.real_peaceful_mode.skeleton2.message4": "But we really need the crystal skull. Our skeleton family's prosperity is on the decline. So we need it to put us on the path to the recovery.",
   "rpm.mission.real_peaceful_mode.skeleton2.message5": "I don't quite understand, and I afraid that the crystal skull is still in the dimension called the aether.",
   "rpm.mission.real_peaceful_mode.skeleton2.message6": "Well... you know why skeletons are always attacking the players for no reasons?",
-  "rpm.mission.real_peaceful_mode.skeleton2.message7": "No, sire. "
+  "rpm.mission.real_peaceful_mode.skeleton2.message7": "No, sire.",
+  "rpm.mission.real_peaceful_mode.skeleton2.message8": "Skeletons are cursed, powerful but weak. They have to protect themselves this way unconsciously.",
+  "rpm.mission.real_peaceful_mode.skeleton2.message9": "But if I obtain the crystal skull, everything will change. I can charge my scepter with it, and save my people of my kingdom. That's my duty.",
+  "rpm.mission.real_peaceful_mode.skeleton2.message10": "What a nice king... I mean, yes, I'll try to help you.",
+  "rpm.mission.real_peaceful_mode.skeleton2.message11": "Thanks. Take this with you. You might need this bead in some cases.",
+
+  "rpm.mission.real_peaceful_mode.skeleton2.message12": "This island must be the crystal skull island.",
+  "rpm.mission.real_peaceful_mode.skeleton2.message13": "Hiss, hiss...",
+  "rpm.mission.real_peaceful_mode.skeleton2.message14": "Endermites? This place seems to be deeply erosion by some mysterious power. And the skull must lies in the cave. I'll take it back to the king.",
+
+  "rpm.mission.real_peaceful_mode.skeleton3.message1": "I found the crystal cave in the End, sire. And this must be the crystal skull you need.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message2": "You made it! I'm going to grant you \"the Cavalier of Skeleton\" title.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message3": "I appreciate that, sire.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message4": "Eh, that's weird...",
+  "rpm.mission.real_peaceful_mode.skeleton3.message5": "What happens? Did I make any mistakes?",
+  "rpm.mission.real_peaceful_mode.skeleton3.message6": "No, you did a good job. But the crystal skull has little energy left, neither does my scepter. \"Noise of the nether\" is needed to charge them.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message7": "I don't know what it is, but I can tell you the key characteristic of it. It's as soft as dirt, and can be commonly found in the nether.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message8": "When the wind blows over, it reflects noise that sounds like ghosts' yell. Most importantly, it has the ability to turn cooled lava into basalt.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message9": "Turning cooled lava into basalt? I think I know what it is.",
+
+  "rpm.mission.real_peaceful_mode.skeleton3.message10": "I've got 64 soul soil blocks. Is it what you need?",
+  "rpm.mission.real_peaceful_mode.skeleton3.message11": "Yes, nice job! That's right what I need! I'll try it.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message12": "It works! Take my scepter, my cavalier.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message13": "What? So you give the scepter to me?",
+  "rpm.mission.real_peaceful_mode.skeleton3.message14": "You deserve it. You put our skeleton family on the way to the recovery, and also I don't need this anymore.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message15": "You must walk on a more harder path to your journey in this world. All creature changes a lot after the Aether Dragon's death.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message16": "I wish the scepter will bless you when you meet troubles, and give you power to fight back, my cavalier.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message17": "Thank you, sire. And I'm going to help "
 }
