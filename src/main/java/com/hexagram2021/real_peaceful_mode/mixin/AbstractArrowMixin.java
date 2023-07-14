@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -43,6 +44,7 @@ public class AbstractArrowMixin implements ICrackable {
 						new ResourceLocation(MODID, "skeleton1"), SummonBlockEntity.SummonMissionType.FINISH,
 						serverLevel, player -> player.closerThan(current, 32.0D), null, player -> {}
 				);
+				ExperienceOrb.award(serverLevel, current.position(), 80);
 			}
 			current.level().removeBlock(hitResult.getBlockPos(), false);
 			current.level().playSound(null, hitResult.getBlockPos(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS);

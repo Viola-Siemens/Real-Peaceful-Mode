@@ -94,6 +94,11 @@
   "book.real_peaceful_mode.zombie.content2": "It do makes zombies stronger and makes kingdom richer, but that's meaningless for those don't have mind. Luckily, some pioneers of us find golden apples are good medicine against the virus, but we must solve the problem from the root. We build magic pools in swamps - ",
   "book.real_peaceful_mode.zombie.content3": "once you throw a dark zombie's head and a piece of rotten flesh into a magic pool, the magic matrix will be activated, and zombies will soon get their minds back. If you want to fight for zombies against the tyrant, I believe everyone will help you eventually.",
 
+  "book.real_peaceful_mode.skeleton.title": "Crystal Skull",
+  "book.real_peaceful_mode.skeleton.content1": "Crystal Skull is an epic treasure in the Aether, maybe I have to call it, the End now. Yes, the Aether Dragon was died thousand years ago, and the curse was left to the monsters in the overworld. The Aether became more scattered and was under the domination by the ",
+  "book.real_peaceful_mode.skeleton.content2": "Ender Dragon. So young people likes to call it the End. If you want to find the crystal skull, you'd better defeat the Ender Dragon first, and travel to the outer islands, searching for a weird floating island with soul torch. Then walk down the stairs towards the ",
+  "book.real_peaceful_mode.skeleton.content3": "chest. Remember to take care when exploring, I'm not sure what will happen when you break into the cave.",
+
   "rpm.mission.real_peaceful_mode.zombie1.message1": "What a magnificent fort! But there's an awful smell exuded from the deep of it. What could it be?",
   "rpm.mission.real_peaceful_mode.zombie1.message2": "Who the freak is bothering me when I'm sleeping?",
   "rpm.mission.real_peaceful_mode.zombie1.message3": "Who's that?",
@@ -197,7 +202,7 @@
   "rpm.mission.real_peaceful_mode.creeper1.message7": "You scared me. I come for peace, and I swear I won't hurt you. I mean, why you creepers are always trying to explode?",
   "rpm.mission.real_peaceful_mode.creeper1.message8": "It's the only way... for us... to reproduce...",
   "rpm.mission.real_peaceful_mode.creeper1.message9": "Hiss, hiss, hiss...",
-  "rpm.mission.real_peaceful_mode.creeper1.message10": "Again? No, your explosion's puzzling everyone, you know? Please stop doing this.",
+  "rpm.mission.real_peaceful_mode.creeper1.message10": "Again? Nah, your explosion's puzzling everyone, you know? Please stop doing this.",
   "rpm.mission.real_peaceful_mode.creeper1.message11": "But I can't control myself... All emotional changes make us unstable - fear, worry, joy and shyness.",
   "rpm.mission.real_peaceful_mode.creeper1.message12": "And explosions spread our spores out to farther places, which may produce more creepers.",
   "rpm.mission.real_peaceful_mode.creeper1.message13": "I see, so you keep doing self-killing jobs to spread your spores out? What can I do to prevent you from exploding?",
