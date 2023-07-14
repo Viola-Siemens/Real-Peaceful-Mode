@@ -71,13 +71,23 @@
 
   "mission.real_peaceful_mode.zombie1.name": "Zombie's Fort",
   "mission.real_peaceful_mode.zombie1.description": "Find someone to help you from zombie guards.",
+  "mission.real_peaceful_mode.zombie1.after": "Stroll around outside the fort and find someone to talk to.",
   "mission.real_peaceful_mode.zombie2.name": "Senior Zombie and Villager",
   "mission.real_peaceful_mode.zombie2.description": "Find the key to save the zombies. You may need to find a senior villager first.",
+  "mission.real_peaceful_mode.zombie2.after": "Go back to the fort.",
   "mission.real_peaceful_mode.zombie3.name": "Fight for Zombies",
   "mission.real_peaceful_mode.zombie3.description": "Defeat the tyrant of zombies, and bring peace back to zombie's kingdom!",
+  "mission.real_peaceful_mode.zombie3.after": "Congratulations! You have already completed the missions given by the zombies.",
 
-  "mission.real_peaceful_mode.skeleton1.name": "",
-  "mission.real_peaceful_mode.skeleton1.description": "",
+  "mission.real_peaceful_mode.skeleton1.name": "Crack the Glowing Crystal",
+  "mission.real_peaceful_mode.skeleton1.description": "There must be a special enchantment for bows to destroy fragile blocks.",
+  "mission.real_peaceful_mode.skeleton1.after": "Go inside the palace and talk to the king.",
+  "mission.real_peaceful_mode.skeleton2.name": "Crystal Skull",
+  "mission.real_peaceful_mode.skeleton2.description": "Find the crystal skull. You may need to find a senior villager first.",
+  "mission.real_peaceful_mode.skeleton2.after": "Take the skull back and give it to the king.",
+  "mission.real_peaceful_mode.skeleton3.name": "Noise of the Nether",
+  "mission.real_peaceful_mode.skeleton3.description": "Find 64 soul soil blocks and give it to the king.",
+  "mission.real_peaceful_mode.skeleton3.after": "Congratulations! You have already completed the missions given by the skeletons.",
 
   "book.real_peaceful_mode.zombie.title": "Mind of zombies",
   "book.real_peaceful_mode.zombie.content1": "Hundreds years ago, zombies and human beings are two different races but get along well with each other. However, everything changed when the tyrant took the crown. Zombies lose their mind, killing human and even other mobs, and spread zombie virus to infect others. ",
@@ -91,6 +101,7 @@
   "rpm.mission.real_peaceful_mode.zombie1.message5": "Nothing, sir. I come for peace.",
   "rpm.mission.real_peaceful_mode.zombie1.message6": "There's no peace between zombies and human beings. Where's my guards? TAKE HIM OUT!",
   "rpm.mission.real_peaceful_mode.zombie1.message7": "Stop please!",
+
   "rpm.mission.real_peaceful_mode.zombie1.message8": "Dang, there's so many of them. I have to run away.",
   "rpm.mission.real_peaceful_mode.zombie1.message9": "Is it the king of zombie? Why we're always chased by zombies? Maybe someone can explain everything to me no far away from the fort.",
 
@@ -110,11 +121,13 @@
   "rpm.mission.real_peaceful_mode.zombie2.message14": "Get their mind back please. That will make you stronger to fight against the tyrant. I promise you that zombies will help you defeat the tyrant.",
   "rpm.mission.real_peaceful_mode.zombie2.message15": "Take this please, go to the villages and find a senior, then you may get the answer. I'm hiding. I believe you can save us, young guy.",
   "rpm.mission.real_peaceful_mode.zombie2.message16": "What's this, a spirit bead? Oh, okay, that's weird. Maybe I could find it out in a village.",
+
   "rpm.mission.real_peaceful_mode.zombie2.message17": "That's inconceivable. So from now on the zombies are going to stand by my side?",
   "rpm.mission.real_peaceful_mode.zombie2.message18": "I think it's time for me to fight back towards the fort.",
 
   "rpm.mission.real_peaceful_mode.zombie3.message1": "So here I am, going to defeat the tyrant's kingdom and rescue the zombies. Am I crazy for doing this?",
   "rpm.mission.real_peaceful_mode.zombie3.message2": "But I feel confident about this fight. I believe zombies will stand by my side.",
+
   "rpm.mission.real_peaceful_mode.zombie3.message3": "Everything's proving you are wrong, Mr. King of zombie!",
   "rpm.mission.real_peaceful_mode.zombie3.message4": "No... I... I'm the only one who... who is right...",
   "rpm.mission.real_peaceful_mode.zombie3.message5": "Why you still drag your heels in it? You make wars between zombies and other innocent creatures. Why?",
@@ -123,5 +136,28 @@
   "rpm.mission.real_peaceful_mode.zombie3.message8": "It makes... no sense... I'll... be back soon...",
   "rpm.mission.real_peaceful_mode.zombie3.message9": "If so, I'll beat you another time!",
 
-  "rpm.mission.real_peaceful_mode.skeleton1.message1": ""
+  "rpm.mission.real_peaceful_mode.skeleton1.message1": "My bow's broken now. And I still can't crack the crystal. What could it be inside the rock?",
+  "rpm.mission.real_peaceful_mode.skeleton1.message2": "Woah, a skeleton without weapon!",
+  "rpm.mission.real_peaceful_mode.skeleton1.message3": "Player? P... please... don't hurt me...",
+  "rpm.mission.real_peaceful_mode.skeleton1.message4": "No no, I swear I won't hurt you if you don't hurt me. This building is awesome. Is it your house?",
+  "rpm.mission.real_peaceful_mode.skeleton1.message5": "Obviously no, I'm just an archer protecting my king.",
+  "rpm.mission.real_peaceful_mode.skeleton1.message6": "Well, yea, an archer without a bow.",
+  "rpm.mission.real_peaceful_mode.skeleton1.message7": "Stop laughing at me! I was just trying to crack the crystal but broke my bow by accident. What are you here for? I'll call the security.",
+  "rpm.mission.real_peaceful_mode.skeleton1.message8": "Chill out, archer. Listen, I come for peace. Why you want to break the glowing rock?",
+  "rpm.mission.real_peaceful_mode.skeleton1.message9": "Have you heard about the legend about crystal skull? It is said that this rock was brought from a crystal cave in the aether.",
+  "rpm.mission.real_peaceful_mode.skeleton1.message10": "But Aether Dragon died thousand years ago. We are not sure what the crystal cave turned into, neither do we know where the crystal skull is.",
+  "rpm.mission.real_peaceful_mode.skeleton1.message11": "So another question, why you hold on to the crystal skull? And actually I don't know the legend.",
+  "rpm.mission.real_peaceful_mode.skeleton1.message12": "Crystal skull is the symbol of power and glory. If you can crack the crystal and present it to the king, he must bestow supreme honor on you.",
+  "rpm.mission.real_peaceful_mode.skeleton1.message13": "Fine. I'll take a try. But the crystal is infected, so I'm not sure the crystal skull lies inside it.",
+  "rpm.mission.real_peaceful_mode.skeleton1.message14": "And do not play tricks, foreigner. You are inside the skeleton palace. I'm watching you.",
+
+  "rpm.mission.real_peaceful_mode.skeleton1.message15": "What? There's nothing inside the crystal. I'm going to tell the king about it.",
+
+  "rpm.mission.real_peaceful_mode.skeleton2.message1": "Who's that?",
+  "rpm.mission.real_peaceful_mode.skeleton2.message2": "Sorry for entering the palace without permission, sire. But I'm supposed to tell you there's nothing inside the glowing crystal.",
+  "rpm.mission.real_peaceful_mode.skeleton2.message3": "I heard about you, but you just cracked it already? Amazing! None of my archers made it out.",
+  "rpm.mission.real_peaceful_mode.skeleton2.message4": "But we really need the crystal skull. Our skeleton family's prosperity is on the decline. So we need it to put us on the path to the recovery.",
+  "rpm.mission.real_peaceful_mode.skeleton2.message5": "I don't quite understand, and I afraid that the crystal skull is still in the dimension called the aether.",
+  "rpm.mission.real_peaceful_mode.skeleton2.message6": "Well... you know why skeletons are always attacking the players for no reasons?",
+  "rpm.mission.real_peaceful_mode.skeleton2.message7": "No, sire. "
 }

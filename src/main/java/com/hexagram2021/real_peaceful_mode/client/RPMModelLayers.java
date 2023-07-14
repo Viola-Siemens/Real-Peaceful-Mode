@@ -11,6 +11,7 @@ public class RPMModelLayers {
 	public static final ModelLayerLocation DARK_ZOMBIE_KNIGHT_OUTER_ARMOR = registerOuterArmor("dark_zombie_knight");
 	public static final ModelLayerLocation ZOMBIE_TYRANT = register("zombie_tyrant");
 	public static final ModelLayerLocation DARK_ZOMBIE_KNIGHT_SKULL = register("dark_zombie_knight_skull");
+	public static final ModelLayerLocation SKELETON_SKULL = register("skeleton_skull");
 
 	private static ModelLayerLocation register(String name) {
 		return register(new ResourceLocation(MODID, name), "main");

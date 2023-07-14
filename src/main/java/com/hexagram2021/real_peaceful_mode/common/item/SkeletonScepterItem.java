@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.item;
 
-import com.hexagram2021.real_peaceful_mode.common.entity.misc.Skull;
+import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -35,7 +35,7 @@ public class SkeletonScepterItem extends ProjectileWeaponItem implements Vanisha
         ItemStack scepter = player.getItemInHand(hand);
         if (!level.isClientSide) {
             Vec3 vec = player.getLookAngle();
-            Skull skull = new Skull(level, player, vec.x(), vec.y(), vec.z());
+            SkeletonSkullEntity skull = new SkeletonSkullEntity(level, player, vec.x(), vec.y(), vec.z());
             skull.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
             scepter.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(player.getUsedItemHand()));
             level.addFreshEntity(skull);

@@ -3,7 +3,7 @@ package com.hexagram2021.real_peaceful_mode.client;
 import com.hexagram2021.real_peaceful_mode.client.models.DarkZombieKnightModel;
 import com.hexagram2021.real_peaceful_mode.client.models.ZombieTyrantModel;
 import com.hexagram2021.real_peaceful_mode.client.renderers.DarkZombieKnightRenderer;
-import com.hexagram2021.real_peaceful_mode.client.renderers.SkullRenderer;
+import com.hexagram2021.real_peaceful_mode.client.renderers.SkeletonSkullRenderer;
 import com.hexagram2021.real_peaceful_mode.client.renderers.ZombieTyrantRenderer;
 import com.hexagram2021.real_peaceful_mode.client.screens.MissionMessageScreen;
 import com.hexagram2021.real_peaceful_mode.common.CommonProxy;
@@ -14,6 +14,7 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
+import net.minecraft.client.renderer.entity.WitherSkullRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -53,12 +54,13 @@ public class ClientProxy extends CommonProxy {
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_OUTER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(1.0F));
         event.registerLayerDefinition(RPMModelLayers.ZOMBIE_TYRANT, ZombieTyrantModel::createBodyLayer);
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL, SkullModel::createHumanoidHeadLayer);
+        event.registerLayerDefinition(RPMModelLayers.SKELETON_SKULL, WitherSkullRenderer::createSkullLayer);
     }
 
     @SubscribeEvent
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(RPMEntities.DARK_ZOMBIE_KNIGHT, DarkZombieKnightRenderer::new);
         event.registerEntityRenderer(RPMEntities.ZOMBIE_TYRANT, ZombieTyrantRenderer::new);
-        event.registerEntityRenderer(RPMEntities.SKULL, SkullRenderer::new);
+        event.registerEntityRenderer(RPMEntities.SKELETON_SKULL, SkeletonSkullRenderer::new);
     }
 }

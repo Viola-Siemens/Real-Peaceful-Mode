@@ -11,9 +11,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Tuple;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
@@ -37,7 +39,7 @@ public class MissionListScreen extends Screen {
 	private final List<MissionManager.Mission> activeMissions;
 	private final List<MissionManager.Mission> finishedMissions;
 
-	private List<MissionManager.Mission> shadows;
+	private List<Tuple<MissionManager.Mission, Boolean>> shadows;
 
 	@Nullable
 	private List<FormattedCharSequence> noMissionText = null;
@@ -46,7 +48,7 @@ public class MissionListScreen extends Screen {
 		super(Component.translatable("title.real_peaceful_mode.menu.mission_list"));
 		this.activeMissions = activeMissions;
 		this.finishedMissions = finishedMissions;
-		this.shadows = List.copyOf(this.activeMissions);
+		this.shadows = this.activeMissions.stream().map(mission -> new Tuple<>(mission, true)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -94,8 +96,12 @@ public class MissionListScreen extends Screen {
 			}
 		} else {
 			for (int i = 0; i < bound; ++i) {
-				transform.blit(BG_LOCATION, this.leftPos + 6, this.topPos + 38 + 18 * i, 54, 166, 140, 18);
-				ResourceLocation id = this.shadows.get(this.beginIndex + i).id();
+				if(this.shadows.get(this.beginIndex + i).getB()) {
+					transform.blit(BG_LOCATION, this.leftPos + 6, this.topPos + 38 + 18 * i, 54, 166, 140, 18);
+				} else {
+					transform.blit(BG_LOCATION, this.leftPos + 6, this.topPos + 38 + 18 * i, 54, 184, 140, 18);
+				}
+				ResourceLocation id = this.shadows.get(this.beginIndex + i).getA().id();
 				transform.drawString(this.font, Component.translatable("mission.%s.%s.name".formatted(id.getNamespace(), id.getPath())), this.leftPos + 8, this.topPos + 42 + 18 * i, 0xffffff, false);
 			}
 		}
@@ -106,8 +112,12 @@ public class MissionListScreen extends Screen {
 			int bound = Math.min(this.shadows.size(), MAX_MISSIONS_PER_SCREEN);
 			int i = (y - this.topPos - 38) / 18;
 			if(i >= 0 && i < bound) {
-				ResourceLocation id = this.shadows.get(this.beginIndex + i).id();
-				transform.renderTooltip(this.font, Component.translatable("mission.%s.%s.description".formatted(id.getNamespace(), id.getPath())), x, y);
+				ResourceLocation id = this.shadows.get(this.beginIndex + i).getA().id();
+				if(this.shadows.get(this.beginIndex + i).getB()) {
+					transform.renderTooltip(this.font, Component.translatable("mission.%s.%s.description".formatted(id.getNamespace(), id.getPath())), x, y);
+				} else {
+					transform.renderTooltip(this.font, Component.translatable("mission.%s.%s.after".formatted(id.getNamespace(), id.getPath())), x, y);
+				}
 			}
 		}
 	}
@@ -122,12 +132,12 @@ public class MissionListScreen extends Screen {
 				Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
 				this.showFinished = !this.showFinished;
 				if(this.showFinished) {
-					ImmutableList.Builder<MissionManager.Mission> builder = ImmutableList.builder();
-					builder.addAll(this.activeMissions);
-					builder.addAll(this.finishedMissions);
+					ImmutableList.Builder<Tuple<MissionManager.Mission, Boolean>> builder = ImmutableList.builder();
+					builder.addAll(this.activeMissions.stream().map(mission -> new Tuple<>(mission, true)).collect(Collectors.toList()));
+					builder.addAll(this.finishedMissions.stream().map(mission -> new Tuple<>(mission, false)).collect(Collectors.toList()));
 					this.shadows = builder.build();
 				} else {
-					this.shadows = List.copyOf(this.activeMissions);
+					this.shadows = this.activeMissions.stream().map(mission -> new Tuple<>(mission, true)).collect(Collectors.toList());
 				}
 				return true;
 			}

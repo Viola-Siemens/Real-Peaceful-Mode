@@ -2,9 +2,6 @@ package com.hexagram2021.real_peaceful_mode.common.entity.misc;
 
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -19,19 +16,14 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class Skull extends AbstractHurtingProjectile {
-    private static final EntityDataAccessor<Boolean> DATA_DANGEROUS = SynchedEntityData.defineId(Skull.class, EntityDataSerializers.BOOLEAN);
+public class SkeletonSkullEntity extends AbstractHurtingProjectile {
 
-    public Skull(EntityType<? extends Skull> entityType, Level level) {
+    public SkeletonSkullEntity(EntityType<? extends SkeletonSkullEntity> entityType, Level level) {
         super(entityType, level);
     }
 
-    public Skull(Level level, LivingEntity owner, double vecX, double vecY, double vecZ) {
-        super(RPMEntities.SKULL, owner, vecX, vecY, vecZ, level);
-    }
-
-    protected float getInertia() {
-        return this.isDangerous() ? 0.73F : super.getInertia();
+    public SkeletonSkullEntity(Level level, LivingEntity owner, double vecX, double vecY, double vecZ) {
+        super(RPMEntities.SKELETON_SKULL, owner, vecX, vecY, vecZ, level);
     }
 
     public boolean isOnFire() {
@@ -67,18 +59,6 @@ public class Skull extends AbstractHurtingProjectile {
 
     public boolean hurt(DamageSource p_37616_, float p_37617_) {
         return false;
-    }
-
-    protected void defineSynchedData() {
-        this.entityData.define(DATA_DANGEROUS, false);
-    }
-
-    public boolean isDangerous() {
-        return this.entityData.get(DATA_DANGEROUS);
-    }
-
-    public void setDangerous(boolean p_37630_) {
-        this.entityData.set(DATA_DANGEROUS, p_37630_);
     }
 
     protected boolean shouldBurn() {
