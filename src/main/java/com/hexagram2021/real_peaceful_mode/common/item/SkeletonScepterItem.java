@@ -1,12 +1,12 @@
 package com.hexagram2021.real_peaceful_mode.common.item;
 
+import com.hexagram2021.real_peaceful_mode.common.entity.misc.Skull;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.WitherSkull;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.Vanishable;
@@ -35,11 +35,10 @@ public class SkeletonScepterItem extends ProjectileWeaponItem implements Vanisha
         ItemStack scepter = player.getItemInHand(hand);
         if (!level.isClientSide) {
             Vec3 vec = player.getLookAngle();
-            WitherSkull witherSkull = new WitherSkull(level, player, vec.x(), vec.y(), vec.z());
-            witherSkull.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
+            Skull skull = new Skull(level, player, vec.x(), vec.y(), vec.z());
+            skull.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
             scepter.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(player.getUsedItemHand()));
-
-            level.addFreshEntity(witherSkull);
+            level.addFreshEntity(skull);
             player.getCooldowns().addCooldown(this, 5);
         }
 

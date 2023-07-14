@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.client;
 import com.hexagram2021.real_peaceful_mode.client.models.DarkZombieKnightModel;
 import com.hexagram2021.real_peaceful_mode.client.models.ZombieTyrantModel;
 import com.hexagram2021.real_peaceful_mode.client.renderers.DarkZombieKnightRenderer;
+import com.hexagram2021.real_peaceful_mode.client.renderers.SkullRenderer;
 import com.hexagram2021.real_peaceful_mode.client.renderers.ZombieTyrantRenderer;
 import com.hexagram2021.real_peaceful_mode.client.screens.MissionMessageScreen;
 import com.hexagram2021.real_peaceful_mode.common.CommonProxy;
@@ -24,39 +25,40 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientProxy extends CommonProxy {
-	public static void modConstruction() {
-	}
+    public static void modConstruction() {
+    }
 
-	@SubscribeEvent
-	public static void setup(FMLClientSetupEvent event) {
-		event.enqueueWork(() -> {
-			ClientProxy.registerContainersAndScreens();
-			SkullBlockRenderer.SKIN_BY_TYPE.put(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, new ResourceLocation(MODID, "textures/entity/dark_zombie_knight.png"));
-		});
-		RPMKeys.init();
-	}
+    @SubscribeEvent
+    public static void setup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            ClientProxy.registerContainersAndScreens();
+            SkullBlockRenderer.SKIN_BY_TYPE.put(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, new ResourceLocation(MODID, "textures/entity/dark_zombie_knight.png"));
+        });
+        RPMKeys.init();
+    }
 
-	private static void registerContainersAndScreens() {
-		MenuScreens.register(RPMMenuTypes.MISSION_MESSAGE_MENU.get(), MissionMessageScreen::new);
-	}
+    private static void registerContainersAndScreens() {
+        MenuScreens.register(RPMMenuTypes.MISSION_MESSAGE_MENU.get(), MissionMessageScreen::new);
+    }
 
-	@SubscribeEvent
-	public static void onCreateSkullModel(EntityRenderersEvent.CreateSkullModels event) {
-		event.registerSkullModel(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, new SkullModel(event.getEntityModelSet().bakeLayer(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL)));
-	}
+    @SubscribeEvent
+    public static void onCreateSkullModel(EntityRenderersEvent.CreateSkullModels event) {
+        event.registerSkullModel(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, new SkullModel(event.getEntityModelSet().bakeLayer(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL)));
+    }
 
-	@SubscribeEvent
-	public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-		event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT, DarkZombieKnightModel::createBodyLayer);
-		event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_INNER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(0.5F));
-		event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_OUTER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(1.0F));
-		event.registerLayerDefinition(RPMModelLayers.ZOMBIE_TYRANT, ZombieTyrantModel::createBodyLayer);
-		event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL, SkullModel::createHumanoidHeadLayer);
-	}
+    @SubscribeEvent
+    public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT, DarkZombieKnightModel::createBodyLayer);
+        event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_INNER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(0.5F));
+        event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_OUTER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(1.0F));
+        event.registerLayerDefinition(RPMModelLayers.ZOMBIE_TYRANT, ZombieTyrantModel::createBodyLayer);
+        event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL, SkullModel::createHumanoidHeadLayer);
+    }
 
-	@SubscribeEvent
-	public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerEntityRenderer(RPMEntities.DARK_ZOMBIE_KNIGHT, DarkZombieKnightRenderer::new);
-		event.registerEntityRenderer(RPMEntities.ZOMBIE_TYRANT, ZombieTyrantRenderer::new);
-	}
+    @SubscribeEvent
+    public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(RPMEntities.DARK_ZOMBIE_KNIGHT, DarkZombieKnightRenderer::new);
+        event.registerEntityRenderer(RPMEntities.ZOMBIE_TYRANT, ZombieTyrantRenderer::new);
+        event.registerEntityRenderer(RPMEntities.SKULL, SkullRenderer::new);
+    }
 }
