@@ -1,15 +1,7 @@
 {
-  "type": "minecraft:jigsaw",
-  "start_pool": "real_peaceful_mode:zombie_fort",
-  "size": 1,
-  "max_distance_from_center": 80,
+  "type": "real_peaceful_mode:zombie_fort",
   "biomes": "#real_peaceful_mode:has_structure/zombie_fort",
+  "spawn_overrides": {},
   "step": "surface_structures",
-  "start_height": {
-    "absolute": 0
-  },
-  "terrain_adaptation": "beard_thin",
-  "project_start_to_heightmap": "WORLD_SURFACE_WG",
-  "use_expansion_hack": false,
-  "spawn_overrides": {}
+  "terrain_adaptation": "beard_thin"
 }

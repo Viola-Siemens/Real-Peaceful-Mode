@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
@@ -42,7 +43,7 @@ public class ZombieFortPieces {
 
 
 		private static StructurePlaceSettings makeSettings(Rotation rotation) {
-			return (new StructurePlaceSettings())
+			return new StructurePlaceSettings()
 					.setRotation(rotation)
 					.setMirror(Mirror.LEFT_RIGHT)
 					.setRotationPivot(new BlockPos(16, 1, 24))
@@ -72,14 +73,38 @@ public class ZombieFortPieces {
 				for(int z = 0; z < curBoundingBox.getZSpan(); ++z) {
 					for(int y = 0; y < curBoundingBox.getYSpan(); ++y) {
 						BlockState blockstate = this.getBlock(level, x, y, z, boundingBox);
-						if(blockstate.is(Blocks.STONE_BRICKS) && random.nextDouble() > MOSSY_PERCENTAGE) {
-							this.placeBlock(level, Blocks.MOSSY_STONE_BRICKS.defaultBlockState(), x, y, z, boundingBox);
+						if(random.nextDouble() < MOSSY_PERCENTAGE) {
+							mossify(blockstate, level, x, y, z, boundingBox);
 						}
 						if((blockstate.is(Blocks.BARREL) || blockstate.is(Blocks.HAY_BLOCK)) && random.nextDouble() < COBWEB_PERCENTAGE) {
 							this.placeBlock(level, Blocks.COBWEB.defaultBlockState(), x, y, z, boundingBox);
 						}
 					}
 				}
+			}
+		}
+
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		private void mossify(BlockState blockstate, WorldGenLevel level, int x, int y, int z, BoundingBox boundingBox) {
+			BlockState newBlock = null;
+			if (blockstate.is(Blocks.STONE_BRICKS)) {
+				newBlock = Blocks.MOSSY_STONE_BRICKS.defaultBlockState();
+			} else if (blockstate.is(Blocks.COBBLESTONE)) {
+				newBlock = Blocks.MOSSY_COBBLESTONE.defaultBlockState();
+			} else if (blockstate.is(Blocks.STONE_BRICK_WALL)) {
+				newBlock = Blocks.MOSSY_STONE_BRICK_WALL.defaultBlockState();
+			} else if (blockstate.is(Blocks.COBBLESTONE_SLAB)) {
+				newBlock = Blocks.MOSSY_COBBLESTONE_SLAB.defaultBlockState();
+			} else if (blockstate.is(Blocks.COBBLESTONE_STAIRS)) {
+				newBlock = Blocks.MOSSY_COBBLESTONE_STAIRS.defaultBlockState();
+			}
+			if(newBlock != null) {
+				for(Property property: blockstate.getProperties()) {
+					if(newBlock.hasProperty(property)) {
+						newBlock.setValue(property, blockstate.getValue(property));
+					}
+				}
+				this.placeBlock(level, newBlock, x, y, z, boundingBox);
 			}
 		}
 	}
