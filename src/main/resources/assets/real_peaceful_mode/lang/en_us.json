@@ -166,7 +166,7 @@
   "rpm.mission.real_peaceful_mode.skeleton2.message11": "Thanks. Take this with you. You might need this bead in some cases.",
 
   "rpm.mission.real_peaceful_mode.skeleton2.message12": "This island must be the crystal skull island.",
-  "rpm.mission.real_peaceful_mode.skeleton2.message13": "Hiss, hiss...",
+  "rpm.mission.real_peaceful_mode.skeleton2.message13": "Fizz, fizz...",
   "rpm.mission.real_peaceful_mode.skeleton2.message14": "Endermites? This place seems to be deeply erosion by some mysterious power. And the skull must lies in the cave. I'll take it back to the king.",
 
   "rpm.mission.real_peaceful_mode.skeleton3.message1": "I found the crystal cave in the End, sire. And this must be the crystal skull you need.",
@@ -184,7 +184,22 @@
   "rpm.mission.real_peaceful_mode.skeleton3.message12": "It works! Take my scepter, my cavalier.",
   "rpm.mission.real_peaceful_mode.skeleton3.message13": "What? So you give the scepter to me?",
   "rpm.mission.real_peaceful_mode.skeleton3.message14": "You deserve it. You put our skeleton family on the way to the recovery, and also I don't need this anymore.",
-  "rpm.mission.real_peaceful_mode.skeleton3.message15": "You must walk on a more harder path to your journey in this world. All creature changes a lot after the Aether Dragon's death.",
+  "rpm.mission.real_peaceful_mode.skeleton3.message15": "You must walk on a more harder path to your journey in this world. All monsters changes a lot after the Aether Dragon's death.",
   "rpm.mission.real_peaceful_mode.skeleton3.message16": "I wish the scepter will bless you when you meet troubles, and give you power to fight back, my cavalier.",
-  "rpm.mission.real_peaceful_mode.skeleton3.message17": "Thank you, sire. And I'm going to help "
+  "rpm.mission.real_peaceful_mode.skeleton3.message17": "Thank you for your encouragement, sire. And I'm ready to help other creatures.",
+
+  "rpm.mission.real_peaceful_mode.creeper1.message1": "A dilapidated town? Everything seems to lose its vitality here.",
+  "rpm.mission.real_peaceful_mode.creeper1.message2": "...",
+  "rpm.mission.real_peaceful_mode.creeper1.message3": "What? A creeper? I'm gonna run.",
+  "rpm.mission.real_peaceful_mode.creeper1.message4": "Hiss hiss...",
+  "rpm.mission.real_peaceful_mode.creeper1.message5": "(Splat)",
+  "rpm.mission.real_peaceful_mode.creeper1.message6": "I... I cannot explode... I'm trying...",
+  "rpm.mission.real_peaceful_mode.creeper1.message7": "You scared me. I come for peace, and I swear I won't hurt you. I mean, why you creepers are always trying to explode?",
+  "rpm.mission.real_peaceful_mode.creeper1.message8": "It's the only way... for us... to reproduce...",
+  "rpm.mission.real_peaceful_mode.creeper1.message9": "Hiss, hiss, hiss...",
+  "rpm.mission.real_peaceful_mode.creeper1.message10": "Again? No, your explosion's puzzling everyone, you know? Please stop doing this.",
+  "rpm.mission.real_peaceful_mode.creeper1.message11": "But I can't control myself... All emotional changes make us unstable - fear, worry, joy and shyness.",
+  "rpm.mission.real_peaceful_mode.creeper1.message12": "And explosions spread our spores out to farther places, which may produce more creepers.",
+  "rpm.mission.real_peaceful_mode.creeper1.message13": "I see, so you keep doing self-killing jobs to spread your spores out? What can I do to prevent you from exploding?",
+  "rpm.mission.real_peaceful_mode.creeper1.message14": "We do not have any cognition about living or killing. I'm sorry for not knowing what can I do for you. Please ask anyone else."
 }

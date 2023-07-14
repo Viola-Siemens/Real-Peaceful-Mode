@@ -75,6 +75,6 @@
       "speaker": "player"
     }
   ],
-  "loot_table": "real_peaceful_mode:missions/finish_zombie",
+  "loot_table": "real_peaceful_mode:missions/finish_skeleton",
   "loot_before": false
 }
