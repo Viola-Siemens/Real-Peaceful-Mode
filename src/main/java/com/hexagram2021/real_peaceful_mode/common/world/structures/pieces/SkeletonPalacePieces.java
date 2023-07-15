@@ -25,20 +25,20 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-public class ZombieFortPieces {
-	private static final ResourceLocation ZOMBIE_FORT = new ResourceLocation(MODID, "mission/zombie_fort");
+public class SkeletonPalacePieces {
+	private static final ResourceLocation SKELETON_PALACE = new ResourceLocation(MODID, "mission/skeleton_palace");
 
 	public static void addPieces(StructureTemplateManager structureManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieces) {
-		pieces.addPiece(new ZombieFortPiece(structureManager, ZOMBIE_FORT, pos, rotation));
+		pieces.addPiece(new SkeletonPalacePiece(structureManager, SKELETON_PALACE, pos, rotation));
 	}
 
-	public static class ZombieFortPiece extends TemplateStructurePiece {
-		public ZombieFortPiece(StructureTemplateManager structureManager, ResourceLocation location, BlockPos pos, Rotation rotation) {
-			super(RPMStructurePieceTypes.ZOMBIE_FORT_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(16, -1, 24));
+	public static class SkeletonPalacePiece extends TemplateStructurePiece {
+		public SkeletonPalacePiece(StructureTemplateManager structureManager, ResourceLocation location, BlockPos pos, Rotation rotation) {
+			super(RPMStructurePieceTypes.SKELETON_PALACE_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(16, -1, 16));
 		}
 
-		public ZombieFortPiece(StructurePieceSerializationContext context, CompoundTag tag) {
-			super(RPMStructurePieceTypes.ZOMBIE_FORT_TYPE, tag, context.structureTemplateManager(), (location) -> makeSettings(Rotation.valueOf(tag.getString("Rot"))));
+		public SkeletonPalacePiece(StructurePieceSerializationContext context, CompoundTag tag) {
+			super(RPMStructurePieceTypes.SKELETON_PALACE_TYPE, tag, context.structureTemplateManager(), (location) -> makeSettings(Rotation.valueOf(tag.getString("Rot"))));
 		}
 
 
@@ -46,7 +46,7 @@ public class ZombieFortPieces {
 			return new StructurePlaceSettings()
 					.setRotation(rotation)
 					.setMirror(Mirror.LEFT_RIGHT)
-					.setRotationPivot(new BlockPos(16, 1, 24))
+					.setRotationPivot(new BlockPos(16, 1, 16))
 					.addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK);
 		}
 
@@ -61,8 +61,7 @@ public class ZombieFortPieces {
 		protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox sbb) {
 		}
 
-		public static final double MOSSY_PERCENTAGE = 0.65D;
-		public static final double COBWEB_PERCENTAGE = 0.1D;
+		public static final double OXIDIZE_PERCENTAGE = 0.15D;
 
 		@Override
 		public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource random,
@@ -73,11 +72,8 @@ public class ZombieFortPieces {
 				for(int z = 0; z < curBoundingBox.getZSpan(); ++z) {
 					for(int y = 0; y < curBoundingBox.getYSpan(); ++y) {
 						BlockState blockstate = this.getBlock(level, x, y, z, boundingBox);
-						if(random.nextDouble() < MOSSY_PERCENTAGE) {
-							mossify(blockstate, level, x, y, z, boundingBox);
-						}
-						if((blockstate.is(Blocks.BARREL) || blockstate.is(Blocks.HAY_BLOCK)) && random.nextDouble() < COBWEB_PERCENTAGE) {
-							this.placeBlock(level, Blocks.COBWEB.defaultBlockState(), x, y, z, boundingBox);
+						if(random.nextDouble() < OXIDIZE_PERCENTAGE) {
+							oxidize(blockstate, level, x, y, z, boundingBox, random);
 						}
 					}
 				}
@@ -85,18 +81,32 @@ public class ZombieFortPieces {
 		}
 
 		@SuppressWarnings({"unchecked", "rawtypes"})
-		private void mossify(BlockState blockstate, WorldGenLevel level, int x, int y, int z, BoundingBox boundingBox) {
+		private void oxidize(BlockState blockstate, WorldGenLevel level, int x, int y, int z, BoundingBox boundingBox, RandomSource random) {
 			BlockState newBlock = null;
-			if (blockstate.is(Blocks.STONE_BRICKS)) {
-				newBlock = Blocks.MOSSY_STONE_BRICKS.defaultBlockState();
-			} else if (blockstate.is(Blocks.COBBLESTONE)) {
-				newBlock = Blocks.MOSSY_COBBLESTONE.defaultBlockState();
-			} else if (blockstate.is(Blocks.STONE_BRICK_WALL)) {
-				newBlock = Blocks.MOSSY_STONE_BRICK_WALL.defaultBlockState();
-			} else if (blockstate.is(Blocks.COBBLESTONE_SLAB)) {
-				newBlock = Blocks.MOSSY_COBBLESTONE_SLAB.defaultBlockState();
-			} else if (blockstate.is(Blocks.COBBLESTONE_STAIRS)) {
-				newBlock = Blocks.MOSSY_COBBLESTONE_STAIRS.defaultBlockState();
+			if (blockstate.is(Blocks.WAXED_COPPER_BLOCK)) {
+				switch (random.nextInt(10)) {
+					case 0 -> newBlock = Blocks.WAXED_OXIDIZED_COPPER.defaultBlockState();
+					case 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_COPPER.defaultBlockState();
+					default -> newBlock = Blocks.WAXED_EXPOSED_COPPER.defaultBlockState();
+				}
+			} else if (blockstate.is(Blocks.WAXED_CUT_COPPER)) {
+				switch (random.nextInt(10)) {
+					case 0 -> newBlock = Blocks.WAXED_OXIDIZED_CUT_COPPER.defaultBlockState();
+					case 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_CUT_COPPER.defaultBlockState();
+					default -> newBlock = Blocks.WAXED_EXPOSED_CUT_COPPER.defaultBlockState();
+				}
+			} else if (blockstate.is(Blocks.WAXED_CUT_COPPER_SLAB)) {
+				switch (random.nextInt(10)) {
+					case 0 -> newBlock = Blocks.WAXED_OXIDIZED_CUT_COPPER_SLAB.defaultBlockState();
+					case 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_CUT_COPPER_SLAB.defaultBlockState();
+					default -> newBlock = Blocks.WAXED_EXPOSED_CUT_COPPER_SLAB.defaultBlockState();
+				}
+			} else if (blockstate.is(Blocks.WAXED_CUT_COPPER_STAIRS)) {
+				switch (random.nextInt(10)) {
+					case 0 -> newBlock = Blocks.WAXED_OXIDIZED_CUT_COPPER_STAIRS.defaultBlockState();
+					case 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_CUT_COPPER_STAIRS.defaultBlockState();
+					default -> newBlock = Blocks.WAXED_EXPOSED_CUT_COPPER_STAIRS.defaultBlockState();
+				}
 			}
 			if(newBlock != null) {
 				for(Property property: blockstate.getProperties()) {

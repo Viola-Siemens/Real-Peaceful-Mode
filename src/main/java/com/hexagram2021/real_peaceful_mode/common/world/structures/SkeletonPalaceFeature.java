@@ -1,7 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.world.structures;
 
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTypes;
-import com.hexagram2021.real_peaceful_mode.common.world.structures.pieces.ZombieFortPieces;
+import com.hexagram2021.real_peaceful_mode.common.world.structures.pieces.SkeletonPalacePieces;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
@@ -12,10 +12,10 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 
 import java.util.Optional;
 
-public class ZombieFortFeature extends Structure {
-	public static final Codec<ZombieFortFeature> CODEC = simpleCodec(ZombieFortFeature::new);
+public class SkeletonPalaceFeature extends Structure {
+	public static final Codec<SkeletonPalaceFeature> CODEC = simpleCodec(SkeletonPalaceFeature::new);
 
-	public ZombieFortFeature(Structure.StructureSettings settings) {
+	public SkeletonPalaceFeature(StructureSettings settings) {
 		super(settings);
 	}
 
@@ -24,7 +24,7 @@ public class ZombieFortFeature extends Structure {
 		return onTopOfChunkCenter(context, Heightmap.Types.WORLD_SURFACE_WG, (builder) -> generatePieces(builder, context));
 	}
 
-	private void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context) {
+	private void generatePieces(StructurePiecesBuilder builder, GenerationContext context) {
 		BlockPos centerOfChunk = new BlockPos(context.chunkPos().getMinBlockX() + 7, 0, context.chunkPos().getMinBlockZ() + 7);
 		BlockPos blockpos = new BlockPos(
 				centerOfChunk.getX(),
@@ -34,11 +34,11 @@ public class ZombieFortFeature extends Structure {
 				centerOfChunk.getZ()
 		);
 		Rotation rotation = Rotation.getRandom(context.random());
-		ZombieFortPieces.addPieces(context.structureTemplateManager(), blockpos, rotation, builder);
+		SkeletonPalacePieces.addPieces(context.structureTemplateManager(), blockpos, rotation, builder);
 	}
 
 	@Override
 	public StructureType<?> type() {
-		return RPMStructureTypes.ZOMBIE_FORT.get();
+		return RPMStructureTypes.SKELETON_PALACE.get();
 	}
 }
