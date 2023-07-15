@@ -29,10 +29,10 @@
                 "max": 8.0,
                 "min": 5.0
               },
-              "function": "minecraft:arrow"
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:packed_mud"
+          "name": "minecraft:arrow"
         },
         {
           "type": "minecraft:item",
