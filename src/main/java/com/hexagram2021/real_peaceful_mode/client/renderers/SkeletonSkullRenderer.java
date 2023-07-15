@@ -6,6 +6,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -21,6 +26,13 @@ public class SkeletonSkullRenderer extends EntityRenderer<SkeletonSkullEntity> {
     public SkeletonSkullRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.model = new SkullModel(context.bakeLayer(RPMModelLayers.SKELETON_SKULL));
+    }
+
+    public static LayerDefinition createSkullLayer() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+        partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 35).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F), PartPose.ZERO);
+        return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
     protected int getBlockLightLevel(SkeletonSkullEntity entity, BlockPos blockPos) {

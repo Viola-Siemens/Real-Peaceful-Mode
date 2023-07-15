@@ -57,7 +57,7 @@ public class ClientProxy extends CommonProxy {
         event.registerLayerDefinition(RPMModelLayers.ZOMBIE_TYRANT, ZombieTyrantModel::createBodyLayer);
         event.registerLayerDefinition(RPMModelLayers.SKELETON_KING, SkeletonKingModel::createBodyLayer);
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL, SkullModel::createHumanoidHeadLayer);
-        event.registerLayerDefinition(RPMModelLayers.SKELETON_SKULL, WitherSkullRenderer::createSkullLayer);
+        event.registerLayerDefinition(RPMModelLayers.SKELETON_SKULL, SkeletonSkullRenderer::createSkullLayer);
     }
 
     @SubscribeEvent

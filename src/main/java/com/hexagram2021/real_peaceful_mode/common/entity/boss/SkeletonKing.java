@@ -169,8 +169,8 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 		if(this.getMainHandItem().is(RPMItems.Weapons.SKELETON_SCEPTER.get())) {
 			double x = target.getX() - this.getX();
 			double z = target.getZ() - this.getZ();
+			double y = target.getY(1.0D / 3.0D) - this.getY();
 			double r = Math.sqrt(x * x + z * z);
-			double y = target.getY(1.0D / 3.0D) - this.getY() + r * 0.2D;
 			double r2 = Math.sqrt(x * x + y * y + z * z);
 			SkeletonSkullEntity skeletonSkullEntity = new SkeletonSkullEntity(this.level(), this, x / r2, y / r2, z / r2);
 			skeletonSkullEntity.setPos(this.getX() + x / r, this.getY() + this.getEyeHeight(), this.getZ() + z / r);
