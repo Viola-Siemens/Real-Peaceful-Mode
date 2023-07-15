@@ -1,8 +1,10 @@
 package com.hexagram2021.real_peaceful_mode.client;
 
 import com.hexagram2021.real_peaceful_mode.client.models.DarkZombieKnightModel;
+import com.hexagram2021.real_peaceful_mode.client.models.SkeletonKingModel;
 import com.hexagram2021.real_peaceful_mode.client.models.ZombieTyrantModel;
 import com.hexagram2021.real_peaceful_mode.client.renderers.DarkZombieKnightRenderer;
+import com.hexagram2021.real_peaceful_mode.client.renderers.SkeletonKingRenderer;
 import com.hexagram2021.real_peaceful_mode.client.renderers.SkeletonSkullRenderer;
 import com.hexagram2021.real_peaceful_mode.client.renderers.ZombieTyrantRenderer;
 import com.hexagram2021.real_peaceful_mode.client.screens.MissionMessageScreen;
@@ -53,6 +55,7 @@ public class ClientProxy extends CommonProxy {
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_INNER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(0.5F));
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_OUTER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(1.0F));
         event.registerLayerDefinition(RPMModelLayers.ZOMBIE_TYRANT, ZombieTyrantModel::createBodyLayer);
+        event.registerLayerDefinition(RPMModelLayers.SKELETON_KING, SkeletonKingModel::createBodyLayer);
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL, SkullModel::createHumanoidHeadLayer);
         event.registerLayerDefinition(RPMModelLayers.SKELETON_SKULL, WitherSkullRenderer::createSkullLayer);
     }
@@ -61,6 +64,7 @@ public class ClientProxy extends CommonProxy {
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(RPMEntities.DARK_ZOMBIE_KNIGHT, DarkZombieKnightRenderer::new);
         event.registerEntityRenderer(RPMEntities.ZOMBIE_TYRANT, ZombieTyrantRenderer::new);
+        event.registerEntityRenderer(RPMEntities.SKELETON_KING, SkeletonKingRenderer::new);
         event.registerEntityRenderer(RPMEntities.SKELETON_SKULL, SkeletonSkullRenderer::new);
     }
 }

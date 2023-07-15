@@ -39,7 +39,6 @@ public class SkeletonScepterItem extends ProjectileWeaponItem implements Vanisha
             if(scepter.getMaxDamage() - scepter.getDamageValue() >= 10) {
                 SkeletonSkullEntity skull = new SkeletonSkullEntity(level, player, vec.x(), vec.y(), vec.z());
                 skull.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
-                skull.setOwner(player);
                 scepter.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(player.getUsedItemHand()));
                 level.addFreshEntity(skull);
                 player.getCooldowns().addCooldown(this, 10);

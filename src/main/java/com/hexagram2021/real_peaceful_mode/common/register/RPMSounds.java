@@ -19,6 +19,8 @@ public class RPMSounds {
 	public static final SoundEvent DARK_ZOMBIE_KNIGHT_DEATH = registerSound("entity.dark_zombie_knight.death");
 	public static final SoundEvent ZOMBIE_TYRANT_DEATH = registerSound("entity.zombie_tyrant.death");
 	public static final SoundEvent ZOMBIE_TYRANT_SPELL = registerSound("entity.zombie_tyrant.spell");
+	public static final SoundEvent SKELETON_KING_AMBIENT = registerSound("entity.skeleton_king.ambient");
+	public static final SoundEvent SKELETON_KING_DEATH = registerSound("entity.skeleton_king.death");
 
 	private static SoundEvent registerSound(String name) {
 		ResourceLocation location = new ResourceLocation(MODID, name);

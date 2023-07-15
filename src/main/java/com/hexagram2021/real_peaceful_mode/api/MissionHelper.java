@@ -14,6 +14,7 @@ import org.jetbrains.annotations.ApiStatus;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -51,19 +52,42 @@ public class MissionHelper {
 		));
 	}
 
+	/**
+	 * API for custom mods to trigger mission on/off for a single player.
+	 *
+	 * @param missionId				Mission ID (for example, "real_peaceful_mode:zombie3") of the triggered mission.
+	 * @param summonMissionType		RECEIVE for receiving a new mission, FINISH for finishing a mission.
+	 * @param player				The player who triggers the mission.
+	 * @param npc                    The NPC that will be rendered in GUI. This field could be null if the messages of
+	 *                          the mission are monologue of player.
+	 * @param additionWork			Additional works to do with the player when trigger the mission.
+	 */
+	public static void triggerMissionForPlayer(ResourceLocation missionId, SummonBlockEntity.SummonMissionType summonMissionType,
+											   ServerPlayer player, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
+		ForgeEventHandler.getMissionManager().getMission(missionId).ifPresent(mission -> triggerMissionForPlayer(
+				mission, summonMissionType, player,
+				(IPlayerListWithMissions) Objects.requireNonNull(player.level().getServer()).getPlayerList(),
+				npc, additionWork
+		));
+	}
+
 	//You don't need to call this api lol.
 	@ApiStatus.Internal
 	public static void triggerMissionForPlayers(MissionManager.Mission mission, SummonBlockEntity.SummonMissionType summonMissionType,
 												List<ServerPlayer> players, IPlayerListWithMissions playerList, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
-		players.forEach(player -> {
+		players.forEach(player -> triggerMissionForPlayer(mission, summonMissionType, player, playerList, npc, additionWork));
+	}
+
+	@ApiStatus.Internal
+	public static void triggerMissionForPlayer(MissionManager.Mission mission, SummonBlockEntity.SummonMissionType summonMissionType,
+											   ServerPlayer player, IPlayerListWithMissions playerList, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
+		if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && SummonBlockEntity.checkMission(hero, summonMissionType, mission)) {
 			additionWork.accept(player);
-			if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && SummonBlockEntity.checkMission(hero, summonMissionType, mission)) {
-				PlayerMissions playerMissions = playerList.getPlayerMissions(player);
-				switch (summonMissionType) {
-					case RECEIVE -> playerMissions.receiveNewMission(mission, npc);
-					case FINISH -> playerMissions.finishMission(mission, npc);
-				}
+			PlayerMissions playerMissions = playerList.getPlayerMissions(player);
+			switch (summonMissionType) {
+				case RECEIVE -> playerMissions.receiveNewMission(mission, npc);
+				case FINISH -> playerMissions.finishMission(mission, npc);
 			}
-		});
+		}
 	}
 }

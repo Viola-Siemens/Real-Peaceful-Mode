@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.boss.SkeletonKing;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
 import net.minecraft.core.registries.Registries;
@@ -20,16 +21,21 @@ public class RPMEntities {
             .sized(1.0F, 2.8F)
             .clientTrackingRange(10)
             .build(new ResourceLocation(MODID, "zombie_tyrant").toString());
+    public static final EntityType<SkeletonKing> SKELETON_KING = EntityType.Builder.of(SkeletonKing::new, MobCategory.MONSTER)
+            .sized(1.0F, 2.8F)
+            .clientTrackingRange(10)
+            .build(new ResourceLocation(MODID, "skeleton_king").toString());
     public static final EntityType<SkeletonSkullEntity> SKELETON_SKULL = EntityType.Builder.<SkeletonSkullEntity>of(SkeletonSkullEntity::new, MobCategory.MISC)
             .sized(0.3125F, 0.3125F)
-            .clientTrackingRange(4)
-            .updateInterval(10)
+            .clientTrackingRange(8)
+            .updateInterval(6)
             .build(new ResourceLocation(MODID, "skeleton_skull").toString());
 
     public static void init(RegisterEvent event) {
         event.register(Registries.ENTITY_TYPE, helper -> {
             helper.register(new ResourceLocation(MODID, "dark_zombie_knight"), DARK_ZOMBIE_KNIGHT);
             helper.register(new ResourceLocation(MODID, "zombie_tyrant"), ZOMBIE_TYRANT);
+            helper.register(new ResourceLocation(MODID, "skeleton_king"), SKELETON_KING);
             helper.register(new ResourceLocation(MODID, "skeleton_skull"), SKELETON_SKULL);
         });
     }
