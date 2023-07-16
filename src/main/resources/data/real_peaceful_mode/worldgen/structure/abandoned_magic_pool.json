@@ -1,0 +1,6 @@
+{
+  "type": "real_peaceful_mode:abandoned_magic_pool",
+  "biomes": "#real_peaceful_mode:has_structure/abandoned_magic_pool",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

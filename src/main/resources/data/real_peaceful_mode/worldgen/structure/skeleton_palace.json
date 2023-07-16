@@ -1,0 +1,7 @@
+{
+  "type": "real_peaceful_mode:skeleton_palace",
+  "biomes": "#real_peaceful_mode:has_structure/skeleton_palace",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin"
+}

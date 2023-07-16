@@ -5,14 +5,14 @@
       "chunk_count": 5,
       "other_set": "minecraft:villages"
     },
-    "salt": 6142865,
+    "salt": 1938370668,
     "separation": 21,
     "spacing": 49,
     "spread_type": "triangular"
   },
   "structures": [
     {
-      "structure": "real_peaceful_mode:zombie_fort",
+      "structure": "real_peaceful_mode:skeleton_palace",
       "weight": 1
     }
   ]

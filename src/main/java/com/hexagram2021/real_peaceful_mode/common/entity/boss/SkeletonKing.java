@@ -169,11 +169,11 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 		if(this.getMainHandItem().is(RPMItems.Weapons.SKELETON_SCEPTER.get())) {
 			double x = target.getX() - this.getX();
 			double z = target.getZ() - this.getZ();
-			double y = target.getY(1.0D / 3.0D) - this.getY();
+			double y = target.getY() - this.getY(1.0D / 3.0D);
 			double r = Math.sqrt(x * x + z * z);
 			double r2 = Math.sqrt(x * x + y * y + z * z);
 			SkeletonSkullEntity skeletonSkullEntity = new SkeletonSkullEntity(this.level(), this, x / r2, y / r2, z / r2);
-			skeletonSkullEntity.setPos(this.getX() + x / r, this.getY() + this.getEyeHeight(), this.getZ() + z / r);
+			skeletonSkullEntity.setPos(this.getX() + x / r, this.getY(1.0D / 3.0D), this.getZ() + z / r);
 			this.level().addFreshEntity(skeletonSkullEntity);
 		}
 	}
@@ -216,7 +216,6 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 			super.stop();
 			SkeletonKing.this.setAggressive(false);
 			this.attackTime = -1;
-			SkeletonKing.this.stopUsingItem();
 		}
 
 		@Override

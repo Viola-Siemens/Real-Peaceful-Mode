@@ -14,7 +14,7 @@ public class SkeletonKingModel<T extends SkeletonKing> extends HumanoidModel<T> 
 
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-		this.animateArms(entity.getTarget() != null, ageInTicks);
+		this.animateArms(entity.isAggressive(), ageInTicks);
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -25,8 +25,8 @@ public class SkeletonKingModel<T extends SkeletonKing> extends HumanoidModel<T> 
 	private void animateArms(boolean isAttacking, float tick) {
 		if(isAttacking) {
 			float noise = Mth.sin(tick * Mth.PI / 40.0F) * 0.05F;
-			this.leftArm.xRot = -Mth.HALF_PI * 1.35F;
-			this.rightArm.xRot = -Mth.HALF_PI * 1.35F;
+			this.leftArm.xRot = -Mth.HALF_PI * 1.35F + noise;
+			this.rightArm.xRot = -Mth.HALF_PI * 1.35F - noise;
 		}
 	}
 }
