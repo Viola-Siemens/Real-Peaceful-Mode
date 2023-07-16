@@ -61,7 +61,7 @@ public class SkeletonPalacePieces {
 		protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox sbb) {
 		}
 
-		public static final double OXIDIZE_PERCENTAGE = 0.15D;
+		public static final double OXIDIZE_PERCENTAGE = 0.2D;
 
 		@Override
 		public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource random,
@@ -84,27 +84,23 @@ public class SkeletonPalacePieces {
 		private void oxidize(BlockState blockstate, WorldGenLevel level, int x, int y, int z, BoundingBox boundingBox, RandomSource random) {
 			BlockState newBlock = null;
 			if (blockstate.is(Blocks.WAXED_COPPER_BLOCK)) {
-				switch (random.nextInt(10)) {
-					case 0 -> newBlock = Blocks.WAXED_OXIDIZED_COPPER.defaultBlockState();
-					case 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_COPPER.defaultBlockState();
+				switch (random.nextInt(12)) {
+					case 0, 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_COPPER.defaultBlockState();
 					default -> newBlock = Blocks.WAXED_EXPOSED_COPPER.defaultBlockState();
 				}
 			} else if (blockstate.is(Blocks.WAXED_CUT_COPPER)) {
-				switch (random.nextInt(10)) {
-					case 0 -> newBlock = Blocks.WAXED_OXIDIZED_CUT_COPPER.defaultBlockState();
-					case 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_CUT_COPPER.defaultBlockState();
+				switch (random.nextInt(12)) {
+					case 0, 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_CUT_COPPER.defaultBlockState();
 					default -> newBlock = Blocks.WAXED_EXPOSED_CUT_COPPER.defaultBlockState();
 				}
 			} else if (blockstate.is(Blocks.WAXED_CUT_COPPER_SLAB)) {
-				switch (random.nextInt(10)) {
-					case 0 -> newBlock = Blocks.WAXED_OXIDIZED_CUT_COPPER_SLAB.defaultBlockState();
-					case 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_CUT_COPPER_SLAB.defaultBlockState();
+				switch (random.nextInt(12)) {
+					case 0, 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_CUT_COPPER_SLAB.defaultBlockState();
 					default -> newBlock = Blocks.WAXED_EXPOSED_CUT_COPPER_SLAB.defaultBlockState();
 				}
 			} else if (blockstate.is(Blocks.WAXED_CUT_COPPER_STAIRS)) {
-				switch (random.nextInt(10)) {
-					case 0 -> newBlock = Blocks.WAXED_OXIDIZED_CUT_COPPER_STAIRS.defaultBlockState();
-					case 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_CUT_COPPER_STAIRS.defaultBlockState();
+				switch (random.nextInt(12)) {
+					case 0, 1, 2, 3 -> newBlock = Blocks.WAXED_WEATHERED_CUT_COPPER_STAIRS.defaultBlockState();
 					default -> newBlock = Blocks.WAXED_EXPOSED_CUT_COPPER_STAIRS.defaultBlockState();
 				}
 			}

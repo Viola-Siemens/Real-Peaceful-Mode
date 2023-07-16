@@ -44,6 +44,8 @@
   "entity.minecraft.villager.real_peaceful_mode.senior": "Senior",
   "entity.real_peaceful_mode.dark_zombie_knight": "Dark Zombie Knight",
   "entity.real_peaceful_mode.zombie_tyrant": "Zombie Tyrant",
+  "entity.real_peaceful_mode.skeleton_king": "Skeleton King",
+  "entity.real_peaceful_mode.pink_creeper": "Pink Creeper",
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "Zombie Senior",
 
   "death.attack.pike_hidden": "%s is piked to death by a hidden weapon",
