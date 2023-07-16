@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.block.ContinuousSummonBlock;
+import com.hexagram2021.real_peaceful_mode.common.block.CultureTableBlock;
 import com.hexagram2021.real_peaceful_mode.common.block.SummonBlock;
 import com.hexagram2021.real_peaceful_mode.common.block.skull.RPMSkullTypes;
 import net.minecraft.core.Direction;
@@ -59,11 +60,17 @@ public class RPMBlocks {
 				.mapColor(MapColor.COLOR_BLACK).strength(50.0F, 1200.0F).lightLevel(blockState -> 1)
 				.noOcclusion().pushReaction(PushReaction.BLOCK), Block::new
 		);
+		public static final BlockEntry<CultureTableBlock> CULTURE_TABLE = new BlockEntry<>(
+				"culture_table", () -> BlockBehaviour.Properties.of()
+				.mapColor(MapColor.WOOD).strength(2.0F)
+				.noOcclusion().pushReaction(PushReaction.BLOCK), CultureTableBlock::new
+		);
 
 		private WorkStation() {}
 
 		private static void init() {
 			RPMItems.ItemEntry.register(REFINEMENT_TABLE.getId().getPath(), () -> new BlockItem(REFINEMENT_TABLE.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CULTURE_TABLE.getId().getPath(), () -> new BlockItem(CULTURE_TABLE.get(), new Item.Properties()));
 		}
 	}
 

@@ -8,6 +8,7 @@
   "block.real_peaceful_mode.summon_block": "Summon Block",
   "block.real_peaceful_mode.continuous_summon_block": "Continuous Summon Block",
   "block.real_peaceful_mode.refinement_table": "Refinement Table",
+  "block.real_peaceful_mode.culture_table": "Culture Table",
   "block.real_peaceful_mode.magic_pool_water": "Magic Pool Water",
   "block.real_peaceful_mode.dark_magic_pool_water": "Dark Magic Pool Water",
   "block.real_peaceful_mode.dark_zombie_knight_skull": "Dark Zombie Knight Skull",
@@ -24,6 +25,7 @@
   "block.real_peaceful_mode.cut_calcite": "Cut Calcite",
   "block.real_peaceful_mode.infested_glowing_crystal": "Infested Glowing Crystal",
   "item.real_peaceful_mode.tuff_brick": "Tuff Brick",
+  "item.real_peaceful_mode.experiment_flower": "Experiment Flower",
   "item.real_peaceful_mode.huge_spirit_bead": "Huge Spirit Bead",
   "item.real_peaceful_mode.zombie_spirit_bead": "Zombie Spirit Bead",
   "item.real_peaceful_mode.skeleton_spirit_bead": "Skeleton Spirit Bead",
@@ -47,6 +49,8 @@
   "entity.real_peaceful_mode.skeleton_king": "Skeleton King",
   "entity.real_peaceful_mode.pink_creeper": "Pink Creeper",
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "Zombie Senior",
+
+  "container.culture_table": "Culture Table",
 
   "death.attack.pike_hidden": "%s is piked to death by a hidden weapon",
 

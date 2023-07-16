@@ -62,6 +62,9 @@ public class RPMItems {
         public static ItemEntry<Item> TUFF_BRICK = ItemEntry.register(
                 "tuff_brick", () -> new Item(new Item.Properties())
         );
+        public static ItemEntry<Item> EXPERIMENT_FLOWER = ItemEntry.register(
+                "experiment_flower", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1))
+        );
 
         private Materials() {
         }
