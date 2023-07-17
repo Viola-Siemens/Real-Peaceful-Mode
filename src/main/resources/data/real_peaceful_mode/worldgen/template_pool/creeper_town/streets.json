@@ -1,0 +1,149 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/corner_01",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/corner_02",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/corner_03",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/straight_01",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 4
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/straight_02",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 4
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/straight_03",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 7
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/straight_04",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 7
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/straight_05",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 3
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/straight_06",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 4
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/crossroad_01",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/crossroad_02",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/crossroad_03",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/crossroad_04",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/crossroad_05",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/crossroad_06",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/turn_01",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 3
+    }
+  ],
+  "fallback": "real_peaceful_mode:creeper_town/terminators"
+}

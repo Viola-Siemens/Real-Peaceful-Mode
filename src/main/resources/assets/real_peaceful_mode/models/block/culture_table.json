@@ -2,8 +2,8 @@
     "parent": "minecraft:block/block",
     "render_type": "translucent",
     "textures": {
-        "particle": "real_peaceful_mode:block/culture_table",
-        "texture_glass": "real_peaceful_mode:block/culture_table",
+        "particle": "real_peaceful_mode:block/culture_table_glass",
+        "texture_glass": "real_peaceful_mode:block/culture_table_glass",
         "texture_wood": "minecraft:block/oak_planks"
     },
     "elements": [

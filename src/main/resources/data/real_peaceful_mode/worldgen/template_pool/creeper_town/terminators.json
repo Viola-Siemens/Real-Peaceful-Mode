@@ -1,0 +1,41 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/terminator_01",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/terminator_02",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/terminator_03",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+        "location": "real_peaceful_mode:mission/creeper_town/streets/terminator_04",
+        "processors": "real_peaceful_mode:street_creeper_town",
+        "projection": "terrain_matching"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

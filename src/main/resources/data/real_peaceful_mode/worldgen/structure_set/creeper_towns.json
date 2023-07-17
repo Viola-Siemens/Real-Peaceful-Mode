@@ -1,0 +1,19 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "exclusion_zone": {
+      "chunk_count": 5,
+      "other_set": "minecraft:villages"
+    },
+    "salt": 2058102377,
+    "separation": 21,
+    "spacing": 49,
+    "spread_type": "triangular"
+  },
+  "structures": [
+    {
+      "structure": "real_peaceful_mode:creeper_towns",
+      "weight": 1
+    }
+  ]
+}
