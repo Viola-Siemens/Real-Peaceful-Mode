@@ -62,7 +62,7 @@ public class RPMBlocks {
 		);
 		public static final BlockEntry<CultureTableBlock> CULTURE_TABLE = new BlockEntry<>(
 				"culture_table", () -> BlockBehaviour.Properties.of()
-				.mapColor(MapColor.WOOD).strength(2.0F)
+				.mapColor(MapColor.WOOD).strength(2.0F).lightLevel(blockState -> blockState.getValue(AbstractFurnaceBlock.LIT) ? 3 : 0)
 				.noOcclusion().pushReaction(PushReaction.BLOCK), CultureTableBlock::new
 		);
 

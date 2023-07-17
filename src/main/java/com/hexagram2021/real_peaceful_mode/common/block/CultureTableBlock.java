@@ -11,12 +11,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
@@ -69,5 +71,10 @@ public class CultureTableBlock extends AbstractFurnaceBlock {
 
 			super.onRemove(blockState, level, blockPos, newBlockState, b);
 		}
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState p_51309_, BlockGetter p_51310_, BlockPos p_51311_, CollisionContext p_51312_) {
+		return Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
 	}
 }
