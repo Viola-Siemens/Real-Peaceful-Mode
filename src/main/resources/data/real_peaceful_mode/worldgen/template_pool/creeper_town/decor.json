@@ -3,7 +3,7 @@
     {
       "element": {
         "element_type": "minecraft:feature_pool_element",
-        "feature": "minecraft:birch",
+        "feature": "minecraft:birch_checked",
         "projection": "rigid"
       },
       "weight": 3

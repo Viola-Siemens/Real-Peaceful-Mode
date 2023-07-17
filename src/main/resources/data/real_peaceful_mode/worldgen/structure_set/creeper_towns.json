@@ -12,7 +12,7 @@
   },
   "structures": [
     {
-      "structure": "real_peaceful_mode:creeper_towns",
+      "structure": "real_peaceful_mode:creeper_town",
       "weight": 1
     }
   ]
