@@ -44,6 +44,7 @@
   "item.real_peaceful_mode.dark_zombie_knight_spawn_egg": "Dark Zombie Knight Spawn Egg",
 
   "entity.minecraft.villager.real_peaceful_mode.senior": "Senior",
+  "entity.minecraft.villager.real_peaceful_mode.botanist": "Botanist",
   "entity.real_peaceful_mode.dark_zombie_knight": "Dark Zombie Knight",
   "entity.real_peaceful_mode.zombie_tyrant": "Zombie Tyrant",
   "entity.real_peaceful_mode.skeleton_king": "Skeleton King",
@@ -55,11 +56,14 @@
   "death.attack.pike_hidden": "%s is piked to death by a hidden weapon",
 
   "subtitles.entity.villager.work_senior": "Senior works",
+  "subtitles.entity.villager.work_botanist": "Botanist works",
   "subtitles.entity.dark_zombie_knight.ambient": "Dark Zombie Knight groans",
   "subtitles.entity.dark_zombie_knight.hurt": "Dark Zombie Knight hurts",
   "subtitles.entity.dark_zombie_knight.death": "Dark Zombie Knight dies",
   "subtitles.entity.zombie_tyrant.death": "Zombie Tyrant dies",
   "subtitles.entity.zombie_tyrant.spell": "Zombie Tyrant summons knights",
+  "subtitles.entity.skeleton_king.ambient": "Skeleton King rattles",
+  "subtitles.entity.skeleton_king.death": "Skeleton King dies",
 
   "enchantment.real_peaceful_mode.cracking": "Cracking",
 

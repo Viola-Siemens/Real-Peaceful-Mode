@@ -6,6 +6,13 @@
     ],
     "subtitle": "subtitles.entity.villager.work_senior"
   },
+  "entity.villager.work_botanist": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:villager/work_botanist"
+    ],
+    "subtitle": "subtitles.entity.villager.work_botanist"
+  },
   "entity.zombie_tyrant.death": {
     "category": "entity",
     "sounds": [
@@ -19,6 +26,20 @@
       "real_peaceful_mode:zombie_tyrant/spell"
     ],
     "subtitle": "subtitles.entity.zombie_tyrant.spell"
+  },
+  "entity.skeleton_king.ambient": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:skeleton_king/ambient"
+    ],
+    "subtitle": "subtitles.entity.skeleton_king.ambient"
+  },
+  "entity.skeleton_king.death": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:skeleton_king/death"
+    ],
+    "subtitle": "subtitles.entity.skeleton_king.death"
   },
   "entity.dark_zombie_knight.ambient": {
     "category": "entity",

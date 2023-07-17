@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "real_peaceful_mode:refinement_table",
     "real_peaceful_mode:culture_table"
   ]
 }

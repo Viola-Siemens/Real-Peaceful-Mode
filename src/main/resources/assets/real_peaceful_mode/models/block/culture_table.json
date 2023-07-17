@@ -1,0 +1,35 @@
+{
+    "parent": "minecraft:block/block",
+    "render_type": "translucent",
+    "textures": {
+        "particle": "real_peaceful_mode:block/culture_table",
+        "texture_glass": "real_peaceful_mode:block/culture_table",
+        "texture_wood": "minecraft:block/oak_planks"
+    },
+    "elements": [
+        {
+            "from": [ 1, 2, 1 ],
+            "to": [ 15, 16, 15 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 14, 14 ], "texture": "#texture_cbottom" },
+                "up":    { "uv": [ 0, 0, 14, 14 ], "texture": "#texture_ctop" },
+                "north": { "uv": [ 0, 0, 14, 14 ], "texture": "#texture_cside" },
+                "south": { "uv": [ 0, 0, 14, 14 ], "texture": "#texture_cside" },
+                "west":  { "uv": [ 0, 0, 14, 14 ], "texture": "#texture_cside" },
+                "east":  { "uv": [ 0, 0, 14, 14 ], "texture": "#texture_cside" }
+            }
+        },
+        {
+            "from": [ 1, 0, 1 ],
+            "to": [ 15, 2, 15 ],
+            "faces": {
+                "down":  { "uv": [ 1, 1, 15, 15 ], "texture": "#texture_wbottom", "cullface": "down" },
+                "up":    { "uv": [ 1, 1, 15, 15 ], "texture": "#texture_wbottom", "cullface": "up" },
+                "north": { "uv": [ 1, 0, 15, 2 ], "texture": "#texture_wside", "cullface": "north" },
+                "south": { "uv": [ 1, 0, 15, 2 ], "texture": "#texture_wside", "cullface": "south" },
+                "west":  { "uv": [ 1, 0, 15, 2 ], "texture": "#texture_wside", "cullface": "west" },
+                "east":  { "uv": [ 1, 0, 15, 2 ], "texture": "#texture_wside", "cullface": "east" }
+            }
+        }
+    ]
+}
