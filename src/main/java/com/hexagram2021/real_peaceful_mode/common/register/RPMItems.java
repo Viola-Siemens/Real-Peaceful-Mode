@@ -65,6 +65,9 @@ public class RPMItems {
         public static ItemEntry<Item> EXPERIMENT_FLOWER = ItemEntry.register(
                 "experiment_flower", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1))
         );
+        public static ItemEntry<Item> EXPLOSION_BLOCKER = ItemEntry.register(
+                "explosion_blocker", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1))
+        );
 
         private Materials() {
         }

@@ -65,7 +65,7 @@ public class RealPeacefulMode {
 	public RealPeacefulMode() {
 		RPMLogger.logger = LogManager.getLogger(MODID);
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        MinecraftForge.EVENT_BUS.addListener(this::tagsUpdated);
+		MinecraftForge.EVENT_BUS.addListener(this::tagsUpdated);
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
 		DeferredWorkQueue queue = DeferredWorkQueue.lookup(Optional.of(ModLoadingStage.CONSTRUCT)).orElseThrow();
 		Consumer<Runnable> runLater = job -> queue.enqueueWork(

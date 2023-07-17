@@ -13,6 +13,7 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.phys.AABB;
 
@@ -20,6 +21,7 @@ import net.minecraft.world.phys.AABB;
 public class ModVanillaCompat {
 	public static void setup() {
 		registerDispensers();
+		registerComposters();
 	}
 
 	private static final DispenseItemBehavior BUCKET_DISPENSE_BEHAVIOR = new DefaultDispenseItemBehavior() {
@@ -69,5 +71,9 @@ public class ModVanillaCompat {
 
 	private static void registerDispenser(RPMFluids.FluidEntry<?> entry) {
 		DispenserBlock.registerBehavior(entry.getBucket(), BUCKET_DISPENSE_BEHAVIOR);
+	}
+
+	private static void registerComposters() {
+		ComposterBlock.COMPOSTABLES.put(RPMItems.Materials.EXPERIMENT_FLOWER, 0.85F);
 	}
 }
