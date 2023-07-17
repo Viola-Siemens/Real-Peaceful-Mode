@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -76,6 +77,13 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 			return;
 		}
 		CompoundTag compoundtag = this.summonTag.copy();
+		if(!this.summonTag.contains("id", Tag.TAG_STRING)) {
+			return;
+		}
+		EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(this.summonTag.getString("id")));
+		if(entityType == null || level.getEntities(entityType, entity -> entity.position().closerThan(this.getBlockPos().getCenter(), 16.0D)).size() > 16) {
+			return;
+		}
 		Entity ret = EntityType.loadEntityRecursive(compoundtag, level, entity -> {
 			entity.moveTo(this.getBlockPos().getCenter());
 			return entity;

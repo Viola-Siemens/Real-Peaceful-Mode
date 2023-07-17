@@ -49,8 +49,8 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 	private static final int[] SLOTS_FOR_DOWN = new int[]{SLOT_RESULT, SLOT_FUEL};
 	private static final int[] SLOTS_FOR_SIDES = new int[]{SLOT_FUEL, SLOT_MIX1, SLOT_MIX2};
 
-	private static final int BONE_MEAL_AMOUNT = 100;
-	private static final int ANALYZE_TIME = 600;
+	public static final int BONE_MEAL_AMOUNT = 100;
+	public static final int ANALYZE_TIME = 600;
 
 	protected NonNullList<ItemStack> items = NonNullList.withSize(NUM_SLOTS, ItemStack.EMPTY);
 
@@ -125,6 +125,10 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 		return this.analyzeTime > 0;
 	}
 
+	public static boolean canAnalyze(ItemStack itemStack) {
+		return ACCEPTABLE_FLOWERS.test(itemStack);
+	}
+
 	public static void serverTick(Level level, BlockPos pos, BlockState blockState, CultureTableBlockEntity blockEntity) {
 		boolean changed = false;
 		if(!blockEntity.canAnalyze()) {
@@ -157,7 +161,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 
 	private boolean canAnalyze() {
 		return this.items.get(SLOT_INPUT).is(Items.GUNPOWDER) && this.items.get(SLOT_RESULT).isEmpty() &&
-				ACCEPTABLE_FLOWERS.test(this.items.get(SLOT_MIX1)) && ACCEPTABLE_FLOWERS.test(this.items.get(SLOT_MIX2));
+				canAnalyze(this.items.get(SLOT_MIX1)) && canAnalyze(this.items.get(SLOT_MIX2));
 	}
 
 	private void finishAnalyze() {
@@ -283,7 +287,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 		if (index == SLOT_FUEL) {
 			return itemStack.is(Items.BONE_MEAL);
 		}
-		return ACCEPTABLE_FLOWERS.test(itemStack);
+		return canAnalyze(itemStack);
 	}
 
 	@Override
