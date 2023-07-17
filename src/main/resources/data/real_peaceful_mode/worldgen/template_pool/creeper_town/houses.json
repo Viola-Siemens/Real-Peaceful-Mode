@@ -4,10 +4,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/houses/small_house1",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 4
@@ -16,10 +13,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/houses/small_house2",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 4
@@ -28,10 +22,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/houses/small_house3",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 3
@@ -40,10 +31,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/houses/middle_house1",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 2
@@ -52,10 +40,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/houses/middle_house2",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 2
@@ -64,10 +49,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/houses/middle_house3",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 2
@@ -76,10 +58,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/houses/large_house1",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 1
@@ -88,10 +67,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/houses/large_house2",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 1
@@ -118,10 +94,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/houses/fountain",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 1
@@ -130,10 +103,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/houses/well",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 1

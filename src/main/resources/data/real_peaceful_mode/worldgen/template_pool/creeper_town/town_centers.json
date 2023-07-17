@@ -4,10 +4,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
         "location": "real_peaceful_mode:mission/creeper_town/centers/center",
-        "processors": [
-          "real_peaceful_mode:ruin_8_percent",
-          "real_peaceful_mode:crack_40_percent"
-        ],
+        "processors": "real_peaceful_mode:ruin_8_and_crack_40_percent",
         "projection": "rigid"
       },
       "weight": 50
