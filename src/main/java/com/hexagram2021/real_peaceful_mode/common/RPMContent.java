@@ -66,6 +66,7 @@ public class RPMContent {
 
 	@SubscribeEvent
 	public static void onRegister(RegisterEvent event) {
+		RPMSounds.init(event);
 		RPMEntities.init(event);
 		RPMStructurePieceTypes.init();
 	}
