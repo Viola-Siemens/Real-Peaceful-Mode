@@ -145,7 +145,7 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 		if(player instanceof ServerPlayer serverPlayer) {
 			if (itemInHand.is(RPMItems.Materials.CRYSTAL_SKULL.get())) {
 				MissionHelper.triggerMissionForPlayer(
-						new ResourceLocation(MODID, "skeleton2"), SummonBlockEntity.SummonMissionType.FINISH, serverPlayer,
+						new ResourceLocation(MODID, "skeleton3"), SummonBlockEntity.SummonMissionType.RECEIVE, serverPlayer,
 						this, player1 -> player1.getItemInHand(hand).shrink(1)
 				);
 			}
