@@ -25,7 +25,7 @@ public class AbandonedMagicPoolFeature extends Structure {
 	}
 
 	private static void generatePieces(StructurePiecesBuilder builder, GenerationContext context) {
-		BlockPos centerOfChunk = new BlockPos(context.chunkPos().getMinBlockX() + 7, 0, context.chunkPos().getMinBlockZ() + 7);
+		BlockPos centerOfChunk = new BlockPos(context.chunkPos().getMinBlockX() + 2, 0, context.chunkPos().getMinBlockZ() + 2);
 		BlockPos blockpos = new BlockPos(
 				centerOfChunk.getX(),
 				context.chunkGenerator().getBaseHeight(

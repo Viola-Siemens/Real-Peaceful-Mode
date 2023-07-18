@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.block.entity;
 
+import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.block.CultureTableBlock;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.CultureTableMenu;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
@@ -9,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
@@ -31,6 +33,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.Nullable;
+
+import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class CultureTableBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, StackedContentsCompatible {
 	public static final int SLOT_INPUT = 0;
@@ -189,6 +193,11 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 			}
 			if(cnt >= 2) {
 				this.items.set(SLOT_RESULT, new ItemStack(RPMItems.Materials.EXPERIMENT_FLOWER));
+				MissionHelper.triggerMissionForPlayers(
+						new ResourceLocation(MODID, "creeper1"), SummonBlockEntity.SummonMissionType.FINISH,
+						serverLevel, player -> player.position().closerThan(this.getBlockPos().getCenter(), 32.0D),
+						null, player -> {}
+				);
 			} else if(cnt == 1) {
 				this.items.set(SLOT_RESULT, serverLevel.getRandom().nextBoolean() ? new ItemStack(Items.BONE_MEAL) : new ItemStack(Items.GRASS));
 			} else {

@@ -1,0 +1,120 @@
+{
+  "requires": [],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message1",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message2",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message3",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message4",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message5",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message6",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message7",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message8",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message9",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message10",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message11",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message12",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message13",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message14",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message15",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message16",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message17",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message18",
+      "speaker": "npc"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message19",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message20",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message21",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message22",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message23",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message24",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message25",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message26",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message27",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper2.message28",
+      "speaker": "npc"
+    }
+  ],
+  "loot_table": "real_peaceful_mode:missions/single_creeper_spirit"
+}

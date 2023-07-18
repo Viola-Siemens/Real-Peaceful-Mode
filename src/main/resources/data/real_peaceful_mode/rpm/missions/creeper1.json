@@ -1,0 +1,75 @@
+{
+  "requires": [],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message1",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message2",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message3",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message4",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message5",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message6",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message7",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message8",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message9",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message10",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message11",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message12",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message13",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message14",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message15",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message16",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.creeper1.message17",
+      "speaker": "player"
+    }
+  ]
+}
