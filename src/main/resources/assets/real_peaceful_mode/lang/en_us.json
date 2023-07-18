@@ -101,6 +101,16 @@
   "mission.real_peaceful_mode.skeleton3.description": "Find 64 of the dirt-like blocks for the king, which is able to turn cooled lava into basalt.",
   "mission.real_peaceful_mode.skeleton3.after": "Congratulations! You have already completed the missions given by the skeletons.",
 
+  "mission.real_peaceful_mode.creeper1.name": "Why Explode?",
+  "mission.real_peaceful_mode.creeper1.description": "Make an experimental flower with culture table. You may need to find a botanist villager",
+  "mission.real_peaceful_mode.creeper1.after": "You've got an experimental flower. How to make the explosion blocker?",
+  "mission.real_peaceful_mode.creeper2.name": "A Pink Friend",
+  "mission.real_peaceful_mode.creeper2.description": "Take the pink creeper back to creeper's town. You are allowed to keep her in your place for a while until you find the way to the destination.",
+  "mission.real_peaceful_mode.creeper2.after": "You've got a creeper's bead. Make the explosion blocker and send it to your friend.",
+  "mission.real_peaceful_mode.creeper3.name": "A Difficult Challenge",
+  "mission.real_peaceful_mode.creeper3.description": "Wait for the pink creepers at creeper's town.",
+  "mission.real_peaceful_mode.creeper3.after": "Congratulations! You have already completed the missions given by the creepers.",
+
   "book.real_peaceful_mode.zombie.title": "Mind of zombies",
   "book.real_peaceful_mode.zombie.content1": "Hundreds years ago, zombies and human beings are two different races but get along well with each other. However, everything changed when the tyrant took the crown. Zombies lose their mind, killing human and even other mobs, and spread zombie virus to infect others. ",
   "book.real_peaceful_mode.zombie.content2": "It do makes zombies stronger and makes kingdom richer, but that's meaningless for those don't have mind. Luckily, some pioneers of us find golden apples are good medicine against the virus, but we must solve the problem from the root. We build magic pools in swamps - ",
