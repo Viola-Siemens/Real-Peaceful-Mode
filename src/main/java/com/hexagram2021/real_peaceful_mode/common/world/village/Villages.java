@@ -9,9 +9,11 @@ import com.hexagram2021.real_peaceful_mode.mixin.HeroGiftsTaskAccess;
 import com.hexagram2021.real_peaceful_mode.mixin.StructureTemplatePoolAccess;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.ProcessorLists;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,6 +35,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,15 +56,15 @@ public class Villages {
 	}
 
 	public static void addAllStructuresToPool(RegistryAccess registryAccess) {
-		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_refinery_1"), 4, registryAccess);
-		addToPool(new ResourceLocation("village/plains/houses"), new ResourceLocation(MODID, "village/plains/houses/plains_refinery_1"), 4, registryAccess);
-		addToPool(new ResourceLocation("village/savanna/houses"), new ResourceLocation(MODID, "village/savanna/houses/savanna_refinery_1"), 4, registryAccess);
-		addToPool(new ResourceLocation("village/snowy/houses"), new ResourceLocation(MODID, "village/snowy/houses/snowy_refinery_1"), 4, registryAccess);
-		addToPool(new ResourceLocation("village/taiga/houses"), new ResourceLocation(MODID, "village/taiga/houses/taiga_refinery_1"), 4, registryAccess);
+		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_refinery_1"), 4, null, registryAccess);
+		addToPool(new ResourceLocation("village/plains/houses"), new ResourceLocation(MODID, "village/plains/houses/plains_refinery_1"), 4, ProcessorLists.MOSSIFY_10_PERCENT, registryAccess);
+		addToPool(new ResourceLocation("village/savanna/houses"), new ResourceLocation(MODID, "village/savanna/houses/savanna_refinery_1"), 4, null, registryAccess);
+		addToPool(new ResourceLocation("village/snowy/houses"), new ResourceLocation(MODID, "village/snowy/houses/snowy_refinery_1"), 4, null, registryAccess);
+		addToPool(new ResourceLocation("village/taiga/houses"), new ResourceLocation(MODID, "village/taiga/houses/taiga_refinery_1"), 4, null, registryAccess);
 	}
 
 	@SuppressWarnings("SameParameterValue")
-	private static void addToPool(ResourceLocation poolName, ResourceLocation toAdd, int weight, RegistryAccess registryAccess) {
+	private static void addToPool(ResourceLocation poolName, ResourceLocation toAdd, int weight, @Nullable ResourceKey<StructureProcessorList> processorList, RegistryAccess registryAccess) {
 		Registry<StructureTemplatePool> registry = registryAccess.registryOrThrow(Registries.TEMPLATE_POOL);
 		StructureTemplatePool structureTemplatePool = registry.get(poolName);
 		if(structureTemplatePool == null) {
@@ -71,7 +75,13 @@ public class Villages {
 		List<Pair<StructurePoolElement, Integer>> rawTemplates = pool.getRawTemplates() instanceof ArrayList ?
 				pool.getRawTemplates() : new ArrayList<>(pool.getRawTemplates());
 
-		SinglePoolElement addedElement = SinglePoolElement.single(toAdd.toString()).apply(StructureTemplatePool.Projection.RIGID);
+		SinglePoolElement addedElement;
+		if(processorList == null) {
+			addedElement = SinglePoolElement.single(toAdd.toString()).apply(StructureTemplatePool.Projection.RIGID);
+		} else {
+			HolderGetter<StructureProcessorList> processorListHolder = registryAccess.lookupOrThrow(Registries.PROCESSOR_LIST);
+			addedElement = SinglePoolElement.single(toAdd.toString(), processorListHolder.getOrThrow(processorList)).apply(StructureTemplatePool.Projection.RIGID);
+		}
 		rawTemplates.add(Pair.of(addedElement, weight));
 		pool.getTemplates().add(addedElement);
 
