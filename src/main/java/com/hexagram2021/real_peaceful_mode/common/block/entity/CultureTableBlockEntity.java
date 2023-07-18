@@ -174,7 +174,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 
 	private void finishAnalyze() {
 		if(this.level instanceof ServerLevel serverLevel && this.canAnalyze()) {
-			long seed = serverLevel.getSeed() ^ this.getBlockPos().asLong();
+			long seed = (serverLevel.getSeed() ^ this.getBlockPos().asLong()) & 0x7fffffff;
 			int a = (int)(seed % MAX_FLOWER_TYPES);
 			int b = (int)((seed / MAX_FLOWER_TYPES) % (MAX_FLOWER_TYPES - 1));
 			if(b >= a) {

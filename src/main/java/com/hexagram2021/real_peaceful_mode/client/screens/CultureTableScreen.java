@@ -36,7 +36,7 @@ public class CultureTableScreen extends AbstractContainerScreen<CultureTableMenu
 		transform.blit(CULTURE_TABLE_LOCATION, left, top, 0, 0, this.imageWidth, this.imageHeight);
 		int boneMealAmount = this.menu.getBoneMealAmount();
 		if (boneMealAmount > 0) {
-			transform.blit(CULTURE_TABLE_LOCATION, left + 118, top + 20, 176, 0, boneMealAmount, 4);
+			transform.blit(CULTURE_TABLE_LOCATION, left + 118, top + 21, 176, 0, boneMealAmount, 4);
 		}
 
 		int analyzeProgress = this.menu.getAnalyzeProgress();
