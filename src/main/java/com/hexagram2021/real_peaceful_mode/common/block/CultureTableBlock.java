@@ -5,6 +5,7 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -29,12 +30,15 @@ public class CultureTableBlock extends AbstractFurnaceBlock {
 
 	@Override
 	protected void openContainer(Level level, BlockPos blockPos, Player player) {
-
+		BlockEntity blockentity = level.getBlockEntity(blockPos);
+		if (blockentity instanceof CultureTableBlockEntity) {
+			player.openMenu((MenuProvider)blockentity);
+		}
 	}
 
 	@Override @Nullable
-	public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-		return null;
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new CultureTableBlockEntity(blockPos, blockState);
 	}
 
 	@Override @Nullable

@@ -129,6 +129,10 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 		return this.analyzeTime > 0;
 	}
 
+	public static boolean isInput(ItemStack itemStack) {
+		return itemStack.is(Items.GUNPOWDER);
+	}
+
 	public static boolean canAnalyze(ItemStack itemStack) {
 		return ACCEPTABLE_FLOWERS.test(itemStack);
 	}
@@ -164,7 +168,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 	}
 
 	private boolean canAnalyze() {
-		return this.items.get(SLOT_INPUT).is(Items.GUNPOWDER) && this.items.get(SLOT_RESULT).isEmpty() &&
+		return isInput(this.items.get(SLOT_INPUT)) && this.items.get(SLOT_RESULT).isEmpty() &&
 				canAnalyze(this.items.get(SLOT_MIX1)) && canAnalyze(this.items.get(SLOT_MIX2));
 	}
 
@@ -291,7 +295,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 			return false;
 		}
 		if(index == SLOT_INPUT) {
-			return itemStack.is(Items.GUNPOWDER);
+			return isInput(itemStack);
 		}
 		if (index == SLOT_FUEL) {
 			return itemStack.is(Items.BONE_MEAL);

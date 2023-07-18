@@ -68,8 +68,12 @@ public class CultureTableMenu extends AbstractContainerMenu {
 
 				slot.onQuickCraft(slotItem, itemstack);
 			} else if (index != SLOT_FUEL && index != SLOT_INPUT && index != SLOT_MIX1 && index != SLOT_MIX2) {
-				if (canAnalyze(slotItem)) {
-					if (!this.moveItemStackTo(slotItem, SLOT_INPUT, SLOT_FUEL, false)) {
+				if (isInput(slotItem)) {
+					if (!this.moveItemStackTo(slotItem, SLOT_INPUT, SLOT_MIX1, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (canAnalyze(slotItem)) {
+					if (!this.moveItemStackTo(slotItem, SLOT_MIX1, SLOT_FUEL, false)) {
 						return ItemStack.EMPTY;
 					}
 				} else if (CultureTableFuelSlot.isFuel(slotItem)) {
