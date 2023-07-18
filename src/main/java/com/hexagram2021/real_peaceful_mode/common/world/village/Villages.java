@@ -78,7 +78,6 @@ public class Villages {
 		pool.setRawTemplates(rawTemplates);
 	}
 
-	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class Registers {
 		public static final DeferredRegister<PoiType> POINTS_OF_INTEREST = DeferredRegister.create(ForgeRegistries.POI_TYPES, MODID);
 		public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, MODID);
@@ -166,6 +165,9 @@ public class Villages {
 				));
 				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.GUNPOWDER, 16, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_3_BUY));
 				trades.get(5).add(new RPMTrades.ItemsForEmeralds(RPMBlocks.WorkStation.REFINEMENT_TABLE, 16, 1, ONLY_SUPPLY_ONCE, XP_LEVEL_5_TRADE));
+			}
+			if(BOTANIST.equals(currentVillagerProfession)) {
+
 			}
 		}
 	}
