@@ -205,7 +205,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 			} else if(cnt == 1) {
 				this.items.set(SLOT_RESULT, serverLevel.getRandom().nextBoolean() ? new ItemStack(Items.BONE_MEAL) : new ItemStack(Items.GRASS));
 			} else {
-				this.items.set(SLOT_RESULT, new ItemStack(Items.BONE_MEAL));
+				this.items.set(SLOT_RESULT, new ItemStack(Items.GRASS));
 			}
 			this.items.get(SLOT_MIX1).shrink(1);
 			this.items.get(SLOT_MIX2).shrink(1);

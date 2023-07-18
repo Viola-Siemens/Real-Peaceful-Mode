@@ -17,12 +17,6 @@ public class CultureTableScreen extends AbstractContainerScreen<CultureTableMenu
 	}
 
 	@Override
-	protected void init() {
-		super.init();
-		this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
-	}
-
-	@Override
 	public void render(GuiGraphics transform, int x, int y, float partialTicks) {
 		this.renderBackground(transform);
 		super.render(transform, x, y, partialTicks);
