@@ -211,7 +211,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 		@Override
 		public void tick() {
 			if (this.player != null && --this.timeToRecalculatePath <= 0) {
-				if(PinkCreeperEntity.this.distanceToSqr(this.player) > 64.0D) {
+				if(PinkCreeperEntity.this.distanceTo(this.player) > 40.0D) {
 					if (PinkCreeperEntity.this.tickCount - PinkCreeperEntity.this.receiveMissionTick >= 400) {
 						PinkCreeperEntity.this.receiveMissionTick = -2;
 						this.timeToRecalculatePath = this.adjustedTickDelay(20);
