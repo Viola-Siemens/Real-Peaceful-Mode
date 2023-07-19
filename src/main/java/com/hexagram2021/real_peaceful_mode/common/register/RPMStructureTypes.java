@@ -1,9 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
-import com.hexagram2021.real_peaceful_mode.common.world.structures.AbandonedMagicPoolFeature;
-import com.hexagram2021.real_peaceful_mode.common.world.structures.CrystalSkullIslandFeature;
-import com.hexagram2021.real_peaceful_mode.common.world.structures.SkeletonPalaceFeature;
-import com.hexagram2021.real_peaceful_mode.common.world.structures.ZombieFortFeature;
+import com.hexagram2021.real_peaceful_mode.common.world.structures.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -18,6 +15,7 @@ public final class RPMStructureTypes {
 
 	public static final RegistryObject<StructureType<CrystalSkullIslandFeature>> CRYSTAL_SKULL_ISLAND = register("crystal_skull_island", () -> CrystalSkullIslandFeature.CODEC);
 	public static final RegistryObject<StructureType<AbandonedMagicPoolFeature>> ABANDONED_MAGIC_POOL = register("abandoned_magic_pool", () -> AbandonedMagicPoolFeature.CODEC);
+	public static final RegistryObject<StructureType<PinkCreeperFeature>> PINK_CREEPER = register("pink_creeper", () -> PinkCreeperFeature.CODEC);
 	public static final RegistryObject<StructureType<ZombieFortFeature>> ZOMBIE_FORT = register("zombie_fort", () -> ZombieFortFeature.CODEC);
 	public static final RegistryObject<StructureType<SkeletonPalaceFeature>> SKELETON_PALACE = register("skeleton_palace", () -> SkeletonPalaceFeature.CODEC);
 
