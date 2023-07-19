@@ -1,0 +1,15 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 521876005,
+    "separation": 16,
+    "spacing": 40,
+    "spread_type": "triangular"
+  },
+  "structures": [
+    {
+      "structure": "real_peaceful_mode:pink_creeper",
+      "weight": 1
+    }
+  ]
+}
