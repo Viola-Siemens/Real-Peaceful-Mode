@@ -39,6 +39,6 @@ public class PinkCreeperFeature extends Structure {
 
 	@Override
 	public StructureType<?> type() {
-		return RPMStructureTypes.ABANDONED_MAGIC_POOL.get();
+		return RPMStructureTypes.PINK_CREEPER.get();
 	}
 }
