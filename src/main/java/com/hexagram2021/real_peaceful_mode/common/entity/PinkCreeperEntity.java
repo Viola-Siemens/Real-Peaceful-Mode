@@ -142,7 +142,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 							);
 							this.restrictTo(blockPos, 16);
 						}
-					} else {
+					} else if(this.receiveMissionTick == -2) {
 						Player player = serverLevel.getPlayerByUUID(this.likedPlayer);
 						if(player != null && player.closerThan(this, 8.0D)) {
 							MissionHelper.triggerMissionForPlayers(
@@ -163,6 +163,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 							player, this, player1 -> {
 								this.setNoAi(false);
 								this.setLikedPlayer(player1.getUUID());
+								this.receiveMissionTick = this.tickCount;
 							}
 					));
 				}

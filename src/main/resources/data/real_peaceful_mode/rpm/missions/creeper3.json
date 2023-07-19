@@ -3,7 +3,7 @@
     "real_peaceful_mode:creeper1",
     "real_peaceful_mode:creeper2"
   ],
-  "reward": "minecraft:skeleton",
+  "reward": "minecraft:creeper",
   "messages": [
     {
       "key": "rpm.mission.real_peaceful_mode.creeper3.message1",
