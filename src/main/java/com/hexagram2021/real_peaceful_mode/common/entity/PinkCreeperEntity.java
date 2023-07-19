@@ -47,13 +47,13 @@ public class PinkCreeperEntity extends PathfinderMob {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
 		this.goalSelector.addGoal(2, new PinkCreeperEntity.GoAwayFromLikedPlayer());
-		this.goalSelector.addGoal(2, new PinkCreeperEntity.FollowLikedPlayerGoal());
-		this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Ocelot.class, 6.0F, 1.0D, 1.2D));
-		this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Cat.class, 6.0F, 1.0D, 1.2D));
-		this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 0.8D));
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
-		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(3, new PinkCreeperEntity.FollowLikedPlayerGoal());
+		this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, Ocelot.class, 6.0F, 1.0D, 1.2D));
+		this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, Cat.class, 6.0F, 1.0D, 1.2D));
+		this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 0.8D));
+		this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.8D));
+		this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -77,6 +77,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 	@Override
 	public void addAdditionalSaveData(CompoundTag nbt) {
 		super.addAdditionalSaveData(nbt);
+		nbt.putInt("ReceiveMissionTick", this.receiveMissionTick);
 		if(this.likedPlayer != null) {
 			nbt.putUUID("LikedPlayer", this.likedPlayer);
 		}
@@ -85,6 +86,11 @@ public class PinkCreeperEntity extends PathfinderMob {
 	@Override
 	public void readAdditionalSaveData(CompoundTag nbt) {
 		super.readAdditionalSaveData(nbt);
+		if(nbt.contains("ReceiveMissionTick", Tag.TAG_INT)) {
+			this.receiveMissionTick = nbt.getInt("ReceiveMissionTick");
+		} else {
+			this.receiveMissionTick = -1;
+		}
 		if(nbt.contains("LikedPlayer", Tag.TAG_INT_ARRAY)) {
 			this.likedPlayer = nbt.getUUID("LikedPlayer");
 		}
@@ -180,11 +186,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 				return false;
 			}
 			this.player = PinkCreeperEntity.this.level().getPlayerByUUID(PinkCreeperEntity.this.likedPlayer);
-			if(this.player == null) {
-				return false;
-			}
-			double distance = PinkCreeperEntity.this.distanceToSqr(this.player);
-			return distance < 80.0D;
+			return this.player != null;
 		}
 
 		@Override
@@ -192,11 +194,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 			if(PinkCreeperEntity.this.receiveMissionTick < 0 || PinkCreeperEntity.this.likedPlayer == null) {
 				return false;
 			}
-			if(this.player == null || !this.player.isAlive()) {
-				return false;
-			}
-			double distance = PinkCreeperEntity.this.distanceToSqr(this.player);
-			return distance < 80.0D;
+			return this.player != null;
 		}
 
 		@Override
@@ -212,9 +210,11 @@ public class PinkCreeperEntity extends PathfinderMob {
 		@Override
 		public void tick() {
 			if (this.player != null && --this.timeToRecalculatePath <= 0) {
-				if(PinkCreeperEntity.this.receiveMissionTick - PinkCreeperEntity.this.tickCount >= 400 && PinkCreeperEntity.this.distanceToSqr(this.player) > 64.0D) {
-					PinkCreeperEntity.this.receiveMissionTick = -2;
-					this.timeToRecalculatePath = this.adjustedTickDelay(20);
+				if(PinkCreeperEntity.this.distanceToSqr(this.player) > 64.0D) {
+					if (PinkCreeperEntity.this.tickCount - PinkCreeperEntity.this.receiveMissionTick >= 400) {
+						PinkCreeperEntity.this.receiveMissionTick = -2;
+						this.timeToRecalculatePath = this.adjustedTickDelay(20);
+					}
 					return;
 				}
 				this.timeToRecalculatePath = this.adjustedTickDelay(20);
@@ -270,7 +270,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 		public void tick() {
 			if (this.player != null && --this.timeToRecalculatePath <= 0) {
 				this.timeToRecalculatePath = this.adjustedTickDelay(10);
-				PinkCreeperEntity.this.getNavigation().moveTo(this.player, 1.0D);
+				PinkCreeperEntity.this.getNavigation().moveTo(this.player, 1.25D);
 			}
 		}
 	}
