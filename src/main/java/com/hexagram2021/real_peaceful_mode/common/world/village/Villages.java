@@ -165,19 +165,28 @@ public class Villages {
 						Component.translatable("book.real_peaceful_mode.skeleton.content3")
 				));
 				trades.get(2).add(new RPMTrades.EmeraldForItems(Items.BONE, 16, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_2_BUY));
-				trades.get(3).add(new RPMTrades.WrittenBookForBead(
-						Component.translatable("book.real_peaceful_mode.creeper.title"),
-						Component.translatable("entity.minecraft.villager.real_peaceful_mode.senior"),
-						RPMItems.SpiritBeads.CREEPER_SPIRIT_BEAD, 1,
-						ONLY_SUPPLY_ONCE,
-						XP_LEVEL_3_SELL,
-						Component.translatable("book.real_peaceful_mode.creeper.content1")
-				));
-				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.GUNPOWDER, 16, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_3_BUY));
+				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.GUNPOWDER, 16, 1, DEFAULT_SUPPLY, XP_LEVEL_3_BUY));
+				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.SPIDER_EYE, 13, 1, DEFAULT_SUPPLY, XP_LEVEL_3_BUY));
 				trades.get(5).add(new RPMTrades.ItemsForEmeralds(RPMBlocks.WorkStation.REFINEMENT_TABLE, 16, 1, ONLY_SUPPLY_ONCE, XP_LEVEL_5_TRADE));
 			}
 			if(BOTANIST.equals(currentVillagerProfession)) {
-
+				trades.get(1).add(new RPMTrades.WrittenBookForBead(
+						Component.translatable("book.real_peaceful_mode.creeper.title"),
+						Component.translatable("entity.minecraft.villager.real_peaceful_mode.botanist"),
+						RPMItems.SpiritBeads.CREEPER_SPIRIT_BEAD, 1,
+						ONLY_SUPPLY_ONCE,
+						XP_LEVEL_1_SELL,
+						Component.translatable("book.real_peaceful_mode.creeper.content1"),
+						Component.translatable("book.real_peaceful_mode.creeper.content2"),
+						Component.translatable("book.real_peaceful_mode.creeper.content3")
+				));
+				trades.get(1).add(new RPMTrades.EmeraldForItems(Items.BONE_BLOCK, 7, 1, DEFAULT_SUPPLY, XP_LEVEL_1_BUY));
+				trades.get(2).add(new RPMTrades.EmeraldForItems(Items.ORANGE_TULIP, 15, 1, DEFAULT_SUPPLY, XP_LEVEL_2_BUY));
+				trades.get(2).add(new RPMTrades.EmeraldForItems(Items.PINK_TULIP, 15, 1, DEFAULT_SUPPLY, XP_LEVEL_2_BUY));
+				trades.get(2).add(new RPMTrades.EmeraldForItems(Items.RED_TULIP, 15, 1, DEFAULT_SUPPLY, XP_LEVEL_2_BUY));
+				trades.get(2).add(new RPMTrades.EmeraldForItems(Items.WHITE_TULIP, 15, 1, DEFAULT_SUPPLY, XP_LEVEL_2_BUY));
+				trades.get(3).add(new RPMTrades.ItemsForEmeralds(Items.DEAD_BUSH, 1, 3, UNCOMMON_ITEMS_SUPPLY, XP_LEVEL_3_SELL));
+				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.TORCHFLOWER, 13, 1, DEFAULT_SUPPLY, XP_LEVEL_3_BUY));
 			}
 		}
 	}

@@ -4,7 +4,9 @@ import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.common.item.DebugWishItem;
 import com.hexagram2021.real_peaceful_mode.common.item.SkeletonScepterItem;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -115,6 +117,20 @@ public class RPMItems {
                 "dark_zombie_knight_spawn_egg", () -> new ForgeSpawnEggItem(
                         () -> RPMEntities.DARK_ZOMBIE_KNIGHT, 0x084616, 0x3cbc12, new Item.Properties()
                 )
+        );
+
+        public static ItemEntry<Item> WHITE_MUSTACHE = ItemEntry.register(
+                "white_mustache", () -> new ArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties()) {
+                    @Override
+                    public boolean isDamageable(ItemStack stack) {
+                        return false;
+                    }
+
+                    @Override
+                    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+                        return MODID+":textures/models/white_mustache.png";
+                    }
+                }
         );
 
         private DebugItems() {
