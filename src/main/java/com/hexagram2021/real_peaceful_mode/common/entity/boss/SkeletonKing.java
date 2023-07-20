@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
@@ -175,6 +176,7 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 			SkeletonSkullEntity skeletonSkullEntity = new SkeletonSkullEntity(this.level(), this, x / r2, y / r2, z / r2);
 			skeletonSkullEntity.setPos(this.getX() + x / r, this.getY(1.0D / 3.0D), this.getZ() + z / r);
 			this.level().addFreshEntity(skeletonSkullEntity);
+			this.playSound(SoundEvents.FIRECHARGE_USE);
 		}
 	}
 

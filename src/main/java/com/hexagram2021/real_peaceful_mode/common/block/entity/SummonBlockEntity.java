@@ -113,7 +113,7 @@ public class SummonBlockEntity extends BlockEntity {
 			return entity;
 		});
 		if(ret instanceof LivingEntity livingEntity) {
-			if(livingEntity instanceof Mob mob) {
+			if(livingEntity instanceof Mob mob && compoundtag.size() <= 1) {
 				ForgeEventFactory.onFinalizeSpawn(mob, level, level.getCurrentDifficultyAt(this.getBlockPos()), MobSpawnType.MOB_SUMMONED, null, null);
 			}
 			if(level.tryAddFreshEntityWithPassengers(ret)) {

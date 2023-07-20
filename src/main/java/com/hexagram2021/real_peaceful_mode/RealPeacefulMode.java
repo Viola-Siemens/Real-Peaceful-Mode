@@ -82,7 +82,6 @@ public class RealPeacefulMode {
 	}
 
 	private static int messageId = 0;
-	@SuppressWarnings("SameParameterValue")
 	private static <T extends IRPMPacket> void registerMessage(Class<T> packetType,
 															   Function<FriendlyByteBuf, T> constructor) {
 		packetHandler.registerMessage(messageId++, packetType, IRPMPacket::write, constructor, (packet, ctx) -> packet.handle(ctx.get()));

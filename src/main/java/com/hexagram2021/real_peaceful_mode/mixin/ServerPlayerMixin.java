@@ -88,7 +88,6 @@ public class ServerPlayerMixin implements IMonsterHero {
 	public void restoreRPMDataFrom(ServerPlayer player, boolean won, CallbackInfo ci) {
 		if(player instanceof IMonsterHero hero) {
 			hero.getHelpedMonsters().forEach((type, count) -> this.helpedMonsters.compute(type, (type1, count1) -> count));
-			this.playerMissions.replaceWith(hero.getPlayerMissions());
 		}
 	}
 }
