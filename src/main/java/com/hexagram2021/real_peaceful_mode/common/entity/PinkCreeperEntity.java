@@ -23,6 +23,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Ocelot;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -120,7 +121,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 			if(--this.checkNearbyPlayers <= 0) {
 				this.checkNearbyPlayers = 100;
 				if (this.level() instanceof ServerLevel serverLevel) {
-						serverLevel.players().stream().filter(player -> player.closerThan(this, 8.0D)).findAny().ifPresent(player -> MissionHelper.triggerMissionForPlayer(
+						serverLevel.players().stream().filter(player -> player.closerThan(this, 6.0D)).findAny().ifPresent(player -> MissionHelper.triggerMissionForPlayer(
 								new ResourceLocation(MODID, "creeper2"), SummonBlockEntity.SummonMissionType.RECEIVE,
 								player, this, player1 -> {
 									this.setNoAi(false);
@@ -271,7 +272,17 @@ public class PinkCreeperEntity extends PathfinderMob {
 		public void tick() {
 			if (this.player != null && --this.timeToRecalculatePath <= 0) {
 				this.timeToRecalculatePath = this.adjustedTickDelay(10);
-				PinkCreeperEntity.this.getNavigation().moveTo(this.player, 1.25D);
+				if(PinkCreeperEntity.this.distanceTo(this.player) > 16.0D) {
+
+					Vec3 direction = new Vec3(
+							this.player.getX() - PinkCreeperEntity.this.getX(),
+							this.player.getY() - PinkCreeperEntity.this.getY(),
+							this.player.getZ() - PinkCreeperEntity.this.getZ()
+					).normalize();
+					Vec3 destination = direction.scale(16.0D).add(PinkCreeperEntity.this.getX(), PinkCreeperEntity.this.getY(), PinkCreeperEntity.this.getZ());
+					PinkCreeperEntity.this.navigation.moveTo(destination.x, destination.y, destination.z, 1.25D);
+				}
+				PinkCreeperEntity.this.getNavigation().moveTo(this.player, 1.0D);
 			}
 		}
 	}
