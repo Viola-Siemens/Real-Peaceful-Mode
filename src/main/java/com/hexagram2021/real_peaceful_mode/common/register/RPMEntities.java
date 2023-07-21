@@ -23,11 +23,11 @@ public class RPMEntities {
             .clientTrackingRange(8)
             .build(new ResourceLocation(MODID, "pink_creeper").toString());
     public static final EntityType<ZombieTyrant> ZOMBIE_TYRANT = EntityType.Builder.of(ZombieTyrant::new, MobCategory.MONSTER)
-            .sized(1.0F, 2.8F)
+            .sized(0.9F, 2.0F)
             .clientTrackingRange(10)
             .build(new ResourceLocation(MODID, "zombie_tyrant").toString());
     public static final EntityType<SkeletonKing> SKELETON_KING = EntityType.Builder.of(SkeletonKing::new, MobCategory.MONSTER)
-            .sized(1.0F, 2.8F)
+            .sized(0.9F, 2.0F)
             .clientTrackingRange(10)
             .build(new ResourceLocation(MODID, "skeleton_king").toString());
     public static final EntityType<SkeletonSkullEntity> SKELETON_SKULL = EntityType.Builder.<SkeletonSkullEntity>of(SkeletonSkullEntity::new, MobCategory.MISC)
