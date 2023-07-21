@@ -1,8 +1,8 @@
 package com.hexagram2021.real_peaceful_mode.common.crafting;
 
 import com.google.common.collect.ImmutableList;
+import com.hexagram2021.real_peaceful_mode.client.ScreenManager;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -11,7 +11,6 @@ import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 
 public class MessagedMissionInstance implements MessagedMission {
 	private final Player player;
@@ -26,11 +25,11 @@ public class MessagedMissionInstance implements MessagedMission {
 	}
 
 	public MessagedMissionInstance(CompoundTag nbt) {
-		this.player = Minecraft.getInstance().player;
+		this.player = ScreenManager.getLocalPlayer();
 		LivingEntity npc = null;
 		if(nbt.contains(NPC_ID, Tag.TAG_INT)) {
 			int npcId = nbt.getInt(NPC_ID);
-			npc = (LivingEntity) Objects.requireNonNull(this.player).level().getEntity(npcId);
+			npc = (LivingEntity) this.player.level().getEntity(npcId);
 		}
 		this.npc = npc;
 		ListTag list = nbt.getList(MESSAGE_LIST, Tag.TAG_COMPOUND);
