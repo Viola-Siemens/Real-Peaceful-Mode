@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '[6.0,6.2)', changing: true
-        classpath 'org.spongepowered:mixingradle:0.7.32'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
@@ -20,10 +20,12 @@ apply plugin: 'net.minecraftforge.gradle'
 
 apply plugin: 'org.spongepowered.mixin'
 
+base {
+    archivesName = 'real_peaceful_mode'
+}
 
-version = '1.20.1-0.1.0'
+version = '1.20.1-0.1.0-snapshot1'
 group = 'com.hexagram2021.real_peaceful_mode'
-archivesBaseName = 'real_peaceful_mode'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -148,7 +150,8 @@ jar {
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "Liu Dongyu, foliet, Mon3yr1, D-Sketon",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'FMLCorePluginContainsFMLMod': 'true'
+                'FMLCorePluginContainsFMLMod': 'true',
+                "MixinConfigs"            : "real_peaceful_mode.mixins.json"
         ])
     }
 }
