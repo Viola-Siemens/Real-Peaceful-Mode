@@ -13,6 +13,13 @@
     ],
     "subtitle": "subtitles.entity.villager.work_botanist"
   },
+  "entity.zombie_tyrant.ambient": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:zombie_tyrant/ambient"
+    ],
+    "subtitle": "subtitles.entity.zombie_tyrant.ambient"
+  },
   "entity.zombie_tyrant.death": {
     "category": "entity",
     "sounds": [

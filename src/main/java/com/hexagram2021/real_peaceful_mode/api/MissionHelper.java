@@ -2,7 +2,6 @@ package com.hexagram2021.real_peaceful_mode.api;
 
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
-import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
@@ -83,7 +82,6 @@ public class MissionHelper {
 	public static void triggerMissionForPlayer(MissionManager.Mission mission, SummonBlockEntity.SummonMissionType summonMissionType,
 											   ServerPlayer player, IPlayerListWithMissions playerList, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
 		if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && SummonBlockEntity.checkMission(hero, summonMissionType, mission)) {
-			//TODO: check !(player.containerMenu instanceof MissionMessageMenu)?
 			additionWork.accept(player);
 			PlayerMissions playerMissions = playerList.getPlayerMissions(player);
 			switch (summonMissionType) {

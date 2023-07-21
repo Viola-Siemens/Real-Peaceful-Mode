@@ -65,6 +65,7 @@
   "subtitles.entity.dark_zombie_knight.ambient": "Dark Zombie Knight groans",
   "subtitles.entity.dark_zombie_knight.hurt": "Dark Zombie Knight hurts",
   "subtitles.entity.dark_zombie_knight.death": "Dark Zombie Knight dies",
+  "subtitles.entity.zombie_tyrant.ambient": "Zombie Tyrant groans",
   "subtitles.entity.zombie_tyrant.death": "Zombie Tyrant dies",
   "subtitles.entity.zombie_tyrant.spell": "Zombie Tyrant summons knights",
   "subtitles.entity.skeleton_king.ambient": "Skeleton King rattles",

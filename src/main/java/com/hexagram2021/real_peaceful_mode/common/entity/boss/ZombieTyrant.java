@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.entity.boss;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.nbt.CompoundTag;
@@ -13,10 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -96,6 +94,18 @@ public class ZombieTyrant extends Mob implements Enemy {
 		super.readAdditionalSaveData(nbt);
 	}
 
+	private static final ResourceLocation WEAKEN_MISSION = new ResourceLocation(MODID, "zombie2");
+	@Override
+	public boolean hurt(DamageSource damageSource, float v) {
+		Entity entity = damageSource.getEntity();
+		if(entity instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
+			this.heal(10.0F);
+			return super.hurt(damageSource, v / 2.5F);
+		}
+
+		return super.hurt(damageSource, v);
+	}
+
 	@Override
 	public void checkDespawn() {
 
@@ -109,6 +119,11 @@ public class ZombieTyrant extends Mob implements Enemy {
 	@Override
 	public boolean canChangeDimensions() {
 		return false;
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return RPMSounds.ZOMBIE_TYRANT_AMBIENT;
 	}
 
 	@Override
