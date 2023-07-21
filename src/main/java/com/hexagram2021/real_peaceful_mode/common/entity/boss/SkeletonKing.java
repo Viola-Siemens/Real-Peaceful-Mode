@@ -56,7 +56,7 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 	}
 
 	protected void addBehaviourGoals() {
-		this.targetSelector.addGoal(1, new RangedSkullAttackGoal(1.0D, 10, 16.0F));
+		this.targetSelector.addGoal(1, new RangedSkullAttackGoal(1.0D, 10, 32.0F));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
 	}
