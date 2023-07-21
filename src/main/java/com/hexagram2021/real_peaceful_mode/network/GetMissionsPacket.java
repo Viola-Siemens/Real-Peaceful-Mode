@@ -2,12 +2,11 @@ package com.hexagram2021.real_peaceful_mode.network;
 
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
-import com.hexagram2021.real_peaceful_mode.client.screens.MissionListScreen;
+import com.hexagram2021.real_peaceful_mode.client.ScreenManager;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
 import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -85,7 +84,7 @@ public class GetMissionsPacket implements IRPMPacket {
 		assert (sender == null) ^ (this.type == PacketType.REQUEST);
 		context.enqueueWork(() -> {
 			if(sender == null) {
-				Minecraft.getInstance().setScreen(new MissionListScreen(this.activeMissions, this.finishedMissions));
+				ScreenManager.openMissionListScreen(this.activeMissions, this.finishedMissions);
 			} else {
 				PlayerMissions playerMissions = ((IPlayerListWithMissions) Objects.requireNonNull(sender.getServer()).getPlayerList()).getPlayerMissions(sender);
 				List<MissionManager.Mission> activeMissions = playerMissions.activeMissions()

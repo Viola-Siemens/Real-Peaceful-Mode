@@ -12,6 +12,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
+@OnlyIn(Dist.CLIENT)
 public class MissionListScreen extends Screen {
 	private static final int MAX_MISSIONS_PER_SCREEN = 6;
 
