@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -36,7 +37,6 @@ public class ClientProxy extends CommonProxy {
             ClientProxy.registerContainersAndScreens();
             SkullBlockRenderer.SKIN_BY_TYPE.put(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, new ResourceLocation(MODID, "textures/entity/dark_zombie_knight.png"));
         });
-        RPMKeys.init();
     }
 
     private static void registerContainersAndScreens() {
@@ -47,6 +47,12 @@ public class ClientProxy extends CommonProxy {
     @SubscribeEvent
     public static void onCreateSkullModel(EntityRenderersEvent.CreateSkullModels event) {
         event.registerSkullModel(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, new SkullModel(event.getEntityModelSet().bakeLayer(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL)));
+    }
+
+    @SubscribeEvent
+    public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
+        RPMKeys.init();
+        RPMKeys.KeyEntry.ALL_KEYS.forEach(keyEntry -> event.register(keyEntry.getKeyMapping()));
     }
 
     @SubscribeEvent

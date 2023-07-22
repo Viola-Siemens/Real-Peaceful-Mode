@@ -44,6 +44,9 @@
   "item.real_peaceful_mode.skeletons_wish": "骷髅的愿望",
   "item.real_peaceful_mode.creepers_wish": "苦力怕的愿望",
   "item.real_peaceful_mode.dark_zombie_knight_spawn_egg": "僵尸黑骑士刷怪蛋",
+  "item.real_peaceful_mode.start": "真正的和平模式",
+
+  "book.real_peaceful_mode.start": "欢迎来到这个残酷的世界。你或许需要寻找和搭建藏身所来躲避怪物们的攻击，去杀戮或者被杀，但是你有没有想过，为什么怪物们会攻击你呢？去探寻真相吧！",
 
   "entity.minecraft.villager.real_peaceful_mode.senior": "村民长老",
   "entity.minecraft.villager.real_peaceful_mode.botanist": "植物学家",

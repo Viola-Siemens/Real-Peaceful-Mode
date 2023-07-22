@@ -44,6 +44,9 @@
   "item.real_peaceful_mode.skeletons_wish": "Skeleton's Wish",
   "item.real_peaceful_mode.creepers_wish": "Creeper's Wish",
   "item.real_peaceful_mode.dark_zombie_knight_spawn_egg": "Dark Zombie Knight Spawn Egg",
+  "item.real_peaceful_mode.start": "Real Peaceful Mode",
+
+  "book.real_peaceful_mode.start": "Welcome to the cruel world. You may have to hide to avoid attacking by monsters, kill or get killed, but do you know why they keep attacking you? Go and find it out!",
 
   "entity.minecraft.villager.real_peaceful_mode.senior": "Senior",
   "entity.minecraft.villager.real_peaceful_mode.botanist": "Botanist",

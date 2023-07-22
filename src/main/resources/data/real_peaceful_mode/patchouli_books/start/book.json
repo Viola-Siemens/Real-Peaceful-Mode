@@ -1,0 +1,10 @@
+{
+  "name": "item.real_peaceful_mode.start",
+  "landing_text": "book.real_peaceful_mode.start",
+  "version": 1,
+  "creative_tab": "real_peaceful_mode:real_peaceful_mode",
+  "book_texture": "patchouli:textures/gui/book_red.png",
+  "model": "patchouli:book_red",
+  "i18n": true,
+  "use_resource_pack": true
+}

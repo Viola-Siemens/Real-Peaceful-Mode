@@ -46,6 +46,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
+		this.goalSelector.addGoal(2, new PanicGoal(this, 1.0D));
 		this.goalSelector.addGoal(2, new PinkCreeperEntity.GoAwayFromLikedPlayer());
 		this.goalSelector.addGoal(3, new PinkCreeperEntity.FollowLikedPlayerGoal());
 		this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, Ocelot.class, 6.0F, 1.0D, 1.2D));
