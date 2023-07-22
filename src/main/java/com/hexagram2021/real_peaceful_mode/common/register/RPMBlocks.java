@@ -28,6 +28,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
+import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.getRegistryName;
 
 public class RPMBlocks {
 	public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
@@ -74,6 +75,7 @@ public class RPMBlocks {
 		}
 	}
 
+	@SuppressWarnings("SameParameterValue")
 	public static final class Decoration {
 		private static String changeNameTo(String name, String postfix) {
 			if(name.endsWith("_block")) {
@@ -91,6 +93,11 @@ public class RPMBlocks {
 			String name = changeNameTo(fullBlock.getId().getPath(), "_stairs");
 			return new BlockEntry<>(name, fullBlock::getProperties, p -> new StairBlock(fullBlock::defaultBlockState, p));
 		}
+		private static BlockEntry<StairBlock> registerStairs(Block fullBlock) {
+			String name = changeNameTo(getRegistryName(fullBlock).getPath(), "_stairs");
+			return new BlockEntry<>(name, () -> BlockBehaviour.Properties.copy(fullBlock), p -> new StairBlock(fullBlock::defaultBlockState, p));
+		}
+
 		private static <T extends Block> BlockEntry<SlabBlock> registerSlab(BlockEntry<T> fullBlock) {
 			String name = changeNameTo(fullBlock.getId().getPath(), "_slab");
 			return new BlockEntry<>(
@@ -104,9 +111,28 @@ public class RPMBlocks {
 					))
 			);
 		}
+		private static BlockEntry<SlabBlock> registerSlab(Block fullBlock) {
+			String name = changeNameTo(getRegistryName(fullBlock).getPath(), "_slab");
+			return new BlockEntry<>(
+					name,
+					() -> BlockBehaviour.Properties.copy(fullBlock),
+					p -> new SlabBlock(
+							p.isSuffocating(
+									(state, world, pos) -> fullBlock.defaultBlockState().isSuffocating(world, pos) && state.getValue(SlabBlock.TYPE) == SlabType.DOUBLE
+							).isRedstoneConductor(
+									(state, world, pos) -> fullBlock.defaultBlockState().isRedstoneConductor(world, pos) && state.getValue(SlabBlock.TYPE) == SlabType.DOUBLE
+							)
+					)
+			);
+		}
+
 		private static <T extends Block> BlockEntry<WallBlock> registerWall(BlockEntry<T> fullBlock) {
 			String name = changeNameTo(fullBlock.getId().getPath(), "_wall");
 			return new BlockEntry<>(name, fullBlock::getProperties, WallBlock::new);
+		}
+		private static BlockEntry<WallBlock> registerWall(Block fullBlock) {
+			String name = changeNameTo(getRegistryName(fullBlock).getPath(), "_wall");
+			return new BlockEntry<>(name, () -> BlockBehaviour.Properties.copy(fullBlock), WallBlock::new);
 		}
 
 		public static final BlockEntry<SkullBlock> DARK_ZOMBIE_KNIGHT_SKULL = new BlockEntry<>(
@@ -137,6 +163,10 @@ public class RPMBlocks {
 		public static final BlockEntry<StairBlock> CRACKED_TUFF_BRICK_STAIR = registerStairs(CRACKED_TUFF_BRICKS);
 		public static final BlockEntry<SlabBlock> CRACKED_TUFF_BRICK_SLAB = registerSlab(CRACKED_TUFF_BRICKS);
 		public static final BlockEntry<WallBlock> CRACKED_TUFF_BRICK_WALL = registerWall(CRACKED_TUFF_BRICKS);
+
+		public static final BlockEntry<StairBlock> CALCITE_STAIRS = registerStairs(Blocks.CALCITE);
+		public static final BlockEntry<SlabBlock> CALCITE_SLAB = registerSlab(Blocks.CALCITE);
+		public static final BlockEntry<WallBlock> CALCITE_WALL = registerWall(Blocks.CALCITE);
 		
 		public static final BlockEntry<Block> POLISHED_CALCITE = new BlockEntry<>(
 				"polished_calcite", () -> BlockBehaviour.Properties.copy(Blocks.CALCITE),
@@ -167,6 +197,9 @@ public class RPMBlocks {
 			RPMItems.ItemEntry.register(CRACKED_TUFF_BRICK_STAIR.getId().getPath(), () -> new BlockItem(CRACKED_TUFF_BRICK_STAIR.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CRACKED_TUFF_BRICK_SLAB.getId().getPath(), () -> new BlockItem(CRACKED_TUFF_BRICK_SLAB.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CRACKED_TUFF_BRICK_WALL.getId().getPath(), () -> new BlockItem(CRACKED_TUFF_BRICK_WALL.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CALCITE_STAIRS.getId().getPath(), () -> new BlockItem(CALCITE_STAIRS.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CALCITE_SLAB.getId().getPath(), () -> new BlockItem(CALCITE_SLAB.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CALCITE_WALL.getId().getPath(), () -> new BlockItem(CALCITE_WALL.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(POLISHED_CALCITE.getId().getPath(), () -> new BlockItem(POLISHED_CALCITE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CUT_CALCITE.getId().getPath(), () -> new BlockItem(CUT_CALCITE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(INFESTED_GLOWING_CRYSTAL.getId().getPath(), () -> new BlockItem(INFESTED_GLOWING_CRYSTAL.get(), new Item.Properties()));

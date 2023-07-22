@@ -4,7 +4,6 @@ import com.hexagram2021.real_peaceful_mode.client.screens.MissionListScreen;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMission;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
-import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +19,7 @@ public final class ScreenManager {
 
 	public static void openMissionMessageScreen(MessagedMission mission, int containerId) {
 		LocalPlayer player = Minecraft.getInstance().player;
-		RPMLogger.debug(mission.createTag());
+		//RPMLogger.debug(mission.createTag());
 		if(player != null) {
 			AbstractContainerMenu menu = player.containerMenu;
 			if(menu.containerId == containerId && menu instanceof MissionMessageMenu missionMessageMenu) {
