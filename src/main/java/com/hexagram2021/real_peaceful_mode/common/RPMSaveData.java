@@ -1,7 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.NotNull;
 

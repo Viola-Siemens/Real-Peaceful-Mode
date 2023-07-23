@@ -1,0 +1,39 @@
+{
+  "parent": "real_peaceful_mode:real_peaceful_mode/finish_first_mission",
+  "display": {
+    "icon": {
+      "item": "real_peaceful_mode:huge_spirit_bead"
+    },
+    "title": {
+      "translate": "advancements.real_peaceful_mode.achieve_first_entity.title"
+    },
+    "description": {
+      "translate": "advancements.real_peaceful_mode.achieve_first_entity.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "finish": {
+      "conditions": {
+        "mission": {
+          "entity_namespace": "minecraft",
+          "hero_count": {
+            "min": 1
+          }
+        }
+      },
+      "trigger": "real_peaceful_mode:mission_finish"
+    }
+  },
+  "requirements": [
+    [
+      "finish"
+    ]
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "parent": "real_peaceful_mode:real_peaceful_mode/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:paper"
+    },
+    "title": {
+      "translate": "advancements.real_peaceful_mode.finish_first_mission.title"
+    },
+    "description": {
+      "translate": "advancements.real_peaceful_mode.finish_first_mission.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "finish": {
+      "conditions": {
+        "mission": {
+          "mission_namespace": "real_peaceful_mode",
+          "total_count": {
+            "min": 1
+          }
+        }
+      },
+      "trigger": "real_peaceful_mode:mission_finish"
+    }
+  },
+  "requirements": [
+    [
+      "finish"
+    ]
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "parent": "real_peaceful_mode:real_peaceful_mode/finish_twenty_mission",
+  "display": {
+    "icon": {
+      "item": "real_peaceful_mode:netherite_pike",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.real_peaceful_mode.finish_all_missions.title"
+    },
+    "description": {
+      "translate": "advancements.real_peaceful_mode.finish_all_missions.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "criteria": {
+    "finish": {
+      "conditions": {
+        "mission": {
+          "mission_namespace": "real_peaceful_mode",
+          "total_count": {
+            "min": 9
+          }
+        }
+      },
+      "trigger": "real_peaceful_mode:mission_finish"
+    }
+  },
+  "requirements": [
+    [
+      "finish"
+    ]
+  ]
+}

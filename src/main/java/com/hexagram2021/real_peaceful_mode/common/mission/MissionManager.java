@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.*;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMTriggers;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -118,6 +119,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 				}
 			}
 			this.tryGetLoot(player, lootTables, true);
+			RPMTriggers.MISSION_FINISH.trigger(player, this.reward.equals(EntityType.PLAYER) ? null : this.reward);
 		}
 	}
 

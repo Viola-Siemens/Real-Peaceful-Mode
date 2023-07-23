@@ -6,6 +6,7 @@ import com.hexagram2021.real_peaceful_mode.common.RPMContent;
 import com.hexagram2021.real_peaceful_mode.common.RPMSaveData;
 import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructures;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMTriggers;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
 import com.hexagram2021.real_peaceful_mode.network.ClientboundMissionMessagePacket;
@@ -88,6 +89,7 @@ public class RealPeacefulMode {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
+		RPMTriggers.init();
 		event.enqueueWork(RPMContent::init);
 		registerMessage(GetMissionsPacket.class, GetMissionsPacket::new);
 		registerMessage(ClientboundMissionMessagePacket.class, ClientboundMissionMessagePacket::new);
