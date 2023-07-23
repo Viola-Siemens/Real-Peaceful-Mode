@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[47,)"
-license="Creative Commons Attribution-NonCommercial-NoDerivatives 4.0"
+license="MIT"
 [[mods]]
 modId="real_peaceful_mode"
 version="${file.jarVersion}"
