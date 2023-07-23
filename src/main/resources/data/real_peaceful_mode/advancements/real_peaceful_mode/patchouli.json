@@ -1,0 +1,39 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "patchouli"
+    }
+  ],
+  "parent": "real_peaceful_mode:real_peaceful_mode/root",
+  "display": {
+    "icon": {
+      "item": "patchouli:guide_book"
+    },
+    "title": {
+      "translate": "advancements.real_peaceful_mode.patchouli.title"
+    },
+    "description": {
+      "translate": "advancements.real_peaceful_mode.patchouli.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "rewards": {
+    "loot": [
+      "real_peaceful_mode:patchouli"
+    ]
+  }
+}

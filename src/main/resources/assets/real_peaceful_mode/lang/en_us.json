@@ -130,6 +130,11 @@
   "mission.real_peaceful_mode.creeper3.description": "Wait for the pink creepers at creeper's town. You'd better let her go alone.",
   "mission.real_peaceful_mode.creeper3.after": "Congratulations! You have already completed the missions given by the creepers.",
 
+  "advancements.emeraldcraft.root.title": "Real Peaceful Mode",
+  "advancements.emeraldcraft.root.description": "This world is full of cruelty. We are blessed and cursed.",
+  "advancements.emeraldcraft.patchouli.title": "Real Peaceful Mode",
+  "advancements.emeraldcraft.patchouli.description": "Obtain a guide book.",
+
   "book.real_peaceful_mode.zombie.title": "Mind of zombies",
   "book.real_peaceful_mode.zombie.content1": "Hundreds years ago, zombies and human beings are two different races but get along well with each other. However, everything changed when the tyrant took the crown. Zombies lose their mind, killing human and even other mobs, and spread zombie virus to infect others. ",
   "book.real_peaceful_mode.zombie.content2": "It do makes zombies stronger and makes kingdom richer, but that's meaningless for those don't have mind. Luckily, some pioneers of us find golden apples are good medicine against the virus, but we must solve the problem from the root. They built magic pools in swamps - ",
