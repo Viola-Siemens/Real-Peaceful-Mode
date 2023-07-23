@@ -1,0 +1,17 @@
+{
+  "name": "structure.real_peaceful_mode.creeper_town",
+  "category": "real_peaceful_mode:structure",
+  "icon": "real_peaceful_mode:creepers_wish",
+  "sortnum": 3,
+  "pages": [
+    "structure.real_peaceful_mode.creeper_town",
+    {
+      "type": "patchouli:image",
+      "text": "book.real_peaceful_mode.start.creeper_town",
+      "border": true,
+      "images": [
+        "real_peaceful_mode:textures/book/creeper_town.png"
+      ]
+    }
+  ]
+}

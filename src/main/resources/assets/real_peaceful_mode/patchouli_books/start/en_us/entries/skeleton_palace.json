@@ -1,0 +1,17 @@
+{
+  "name": "structure.real_peaceful_mode.skeleton_palace",
+  "category": "real_peaceful_mode:structure",
+  "icon": "real_peaceful_mode:skeletons_wish",
+  "sortnum": 2,
+  "pages": [
+    "structure.real_peaceful_mode.skeleton_palace",
+    {
+      "type": "patchouli:image",
+      "text": "book.real_peaceful_mode.start.skeleton_palace",
+      "border": true,
+      "images": [
+        "real_peaceful_mode:textures/book/skeleton_palace.png"
+      ]
+    }
+  ]
+}

@@ -49,7 +49,10 @@
   "item.real_peaceful_mode.dark_zombie_knight_spawn_egg": "僵尸黑骑士刷怪蛋",
   "item.real_peaceful_mode.start": "真正的和平模式",
 
-  "book.real_peaceful_mode.start": "欢迎来到这个残酷的世界。你或许需要寻找和搭建藏身所来躲避怪物们的攻击，去杀戮或者被杀，但是你有没有想过，为什么怪物们会攻击你呢？去探寻真相吧！",
+  "book.real_peaceful_mode.start": "欢迎来到这个梦幻而现实的世界。你或许需要寻找和搭建藏身所来躲避怪物们的攻击，去杀戮或者被杀，但是你有没有想过，为什么怪物们会攻击你呢？去探寻真相吧！",
+  "book.real_peaceful_mode.start.zombie_fort": "僵尸城堡坐落于平原、向日葵平原、草甸或森林群系，僵尸的君主在城堡内，统治着僵尸这个种族——似乎他的威望非常高，百姓都很拥护他。",
+  "book.real_peaceful_mode.start.skeleton_palace": "骷髅宫殿坐落于热带草原、风袭热带草原或热带高原群系，骷髅的君主居住在宫殿内，然而不知为何，近年来似乎没什么他的消息。",
+  "book.real_peaceful_mode.start.creeper_town": "苦力怕小镇坐落于繁花森林、桦木森林或原始桦木森林群系，苦力怕们愉快地生活在这个小镇中。",
 
   "entity.minecraft.villager.real_peaceful_mode.senior": "村民长老",
   "entity.minecraft.villager.real_peaceful_mode.botanist": "植物学家",
@@ -59,6 +62,12 @@
   "entity.real_peaceful_mode.pink_creeper": "粉色苦力怕",
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "僵尸长者",
   "entity.real_peaceful_mode.skeleton_skull": "骷髅头",
+
+  "structure.real_peaceful_mode.all_structures": "怪物们的建筑",
+  "structure.real_peaceful_mode.all_structures.description": "你可以来到这里与怪物们交谈，接收他们的委托。",
+  "structure.real_peaceful_mode.zombie_fort": "僵尸城堡",
+  "structure.real_peaceful_mode.skeleton_palace": "骷髅宫殿",
+  "structure.real_peaceful_mode.creeper_town": "苦力怕小镇",
 
   "container.culture_table": "组培台",
 

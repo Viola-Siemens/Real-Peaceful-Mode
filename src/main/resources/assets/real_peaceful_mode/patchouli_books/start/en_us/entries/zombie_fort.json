@@ -1,0 +1,17 @@
+{
+  "name": "structure.real_peaceful_mode.zombie_fort",
+  "category": "real_peaceful_mode:structure",
+  "icon": "real_peaceful_mode:zombies_wish",
+  "sortnum": 1,
+  "pages": [
+    "structure.real_peaceful_mode.zombie_fort",
+    {
+      "type": "patchouli:image",
+      "text": "book.real_peaceful_mode.start.zombie_fort",
+      "border": true,
+      "images": [
+        "real_peaceful_mode:textures/book/zombie_fort.png"
+      ]
+    }
+  ]
+}
