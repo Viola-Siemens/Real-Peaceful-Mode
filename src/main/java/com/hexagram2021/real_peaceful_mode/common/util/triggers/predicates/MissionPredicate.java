@@ -38,11 +38,9 @@ public class MissionPredicate {
 		this.heroCount = heroCount;
 	}
 
-	@SuppressWarnings("ConstantConditions")
 	public boolean matches(@Nullable EntityType<?> entityType, IMonsterHero hero) {
-		boolean ret = true;
-		if(this.entityType != null) {
-			ret = ret && entityType != null && getRegistryName(entityType).equals(this.entityType);
+		if(this.entityType != null && entityType != null && !getRegistryName(entityType).equals(this.entityType)) {
+			return false;
 		}
 		int count = hero.getPlayerMissions().finishedMissions().size();
 		int heroCount = hero.getHelpedMonsters().size();
@@ -52,32 +50,33 @@ public class MissionPredicate {
 		if(this.entityNamespace != null) {
 			heroCount = (int) hero.getHelpedMonsters().entrySet().stream().filter(entry -> entry.getKey().getNamespace().equals(this.entityNamespace)).count();
 		}
-		ret = ret && this.count.matches(count);
-		ret = ret && this.heroCount.matches(heroCount);
-		return ret;
+		if(this.count != MinMaxBounds.Ints.ANY && !this.count.matches(count)) {
+			return false;
+		}
+		return this.heroCount == MinMaxBounds.Ints.ANY || this.heroCount.matches(heroCount);
 	}
 
-	public static MissionPredicate fromJson(@Nullable JsonElement json) {
+	public static MissionPredicate fromJson(@Nullable JsonObject json) {
 		ResourceLocation entityType = null;
 		String missionNamespace = null;
 		String entityNamespace = null;
 		MinMaxBounds.Ints count = MinMaxBounds.Ints.ANY;
 		MinMaxBounds.Ints heroCount = MinMaxBounds.Ints.ANY;
-		if (json != null && !json.isJsonNull() && json instanceof JsonObject jsonObject) {
-			if(jsonObject.has("entity_type")) {
-				entityType = new ResourceLocation(GsonHelper.convertToString(jsonObject, "entity_type"));
+		if (json != null && !json.isJsonNull()) {
+			if(json.has("entity_type")) {
+				entityType = new ResourceLocation(GsonHelper.convertToString(json, "entity_type"));
 			}
-			if(jsonObject.has("mission_namespace")) {
-				missionNamespace = GsonHelper.convertToString(jsonObject, "mission_namespace");
+			if(json.has("mission_namespace")) {
+				missionNamespace = GsonHelper.convertToString(json, "mission_namespace");
 			}
-			if(jsonObject.has("entity_namespace")) {
-				entityNamespace = GsonHelper.convertToString(jsonObject, "entity_namespace");
+			if(json.has("entity_namespace")) {
+				entityNamespace = GsonHelper.convertToString(json, "entity_namespace");
 			}
-			if(jsonObject.has("total_count")) {
-				count = MinMaxBounds.Ints.fromJson(jsonObject.get("total_count"));
+			if(json.has("total_count")) {
+				count = MinMaxBounds.Ints.fromJson(json.get("total_count"));
 			}
-			if(jsonObject.has("hero_count")) {
-				heroCount = MinMaxBounds.Ints.fromJson(jsonObject.get("hero_count"));
+			if(json.has("hero_count")) {
+				heroCount = MinMaxBounds.Ints.fromJson(json.get("hero_count"));
 			}
 		}
 		return new MissionPredicate(entityType, missionNamespace, entityNamespace, count, heroCount);

@@ -21,7 +21,7 @@ public class MissionFinishTrigger extends SimpleCriterionTrigger<MissionFinishTr
 
 	@Override
 	protected TriggerInstance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext context) {
-		MissionPredicate missionPredicate = MissionPredicate.fromJson(GsonHelper.convertToJsonObject(json, "mission"));
+		MissionPredicate missionPredicate = MissionPredicate.fromJson(GsonHelper.getAsJsonObject(json, "mission"));
 		return new MissionFinishTrigger.TriggerInstance(predicate, missionPredicate);
 	}
 
@@ -48,7 +48,7 @@ public class MissionFinishTrigger extends SimpleCriterionTrigger<MissionFinishTr
 		}
 
 		public boolean matches(@Nullable EntityType<?> entityType, IMonsterHero hero) {
-			return missionPredicate.matches(entityType, hero);
+			return this.missionPredicate.matches(entityType, hero);
 		}
 	}
 }
