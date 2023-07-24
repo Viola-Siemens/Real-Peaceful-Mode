@@ -64,7 +64,7 @@ public class MissionPredicate {
 		MinMaxBounds.Ints heroCount = MinMaxBounds.Ints.ANY;
 		if (json != null && !json.isJsonNull()) {
 			if(json.has("entity_type")) {
-				entityType = new ResourceLocation(GsonHelper.convertToString(json, "entity_type"));
+				entityType = new ResourceLocation(GsonHelper.getAsString(json, "entity_type"));
 			}
 			if(json.has("mission_namespace")) {
 				missionNamespace = GsonHelper.getAsString(json, "mission_namespace");
