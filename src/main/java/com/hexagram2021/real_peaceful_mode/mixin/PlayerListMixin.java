@@ -28,9 +28,10 @@ public class PlayerListMixin implements IPlayerListWithMissions {
 		PlayerMissions playerMissions = this.missions.get(uuid);
 		if (playerMissions == null) {
 			RPMLogger.debug("Add new PlayerMissions for UUID: %s".formatted(uuid.toString()));
-			Path path = this.server.getWorldPath(PLAYER_MISSIONS_DIR).resolve(uuid + ".json");
-			playerMissions = new PlayerMissions(path, player);
+			playerMissions = new PlayerMissions(player);
 			this.missions.put(uuid, playerMissions);
+		} else {
+			playerMissions.setPlayer(player);
 		}
 
 		return playerMissions;

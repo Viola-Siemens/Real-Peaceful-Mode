@@ -87,11 +87,11 @@ public class GetMissionsPacket implements IRPMPacket {
 				ScreenManager.openMissionListScreen(this.activeMissions, this.finishedMissions);
 			} else {
 				PlayerMissions playerMissions = ((IPlayerListWithMissions) Objects.requireNonNull(sender.getServer()).getPlayerList()).getPlayerMissions(sender);
-				List<MissionManager.Mission> activeMissions = playerMissions.activeMissions()
+				List<MissionManager.Mission> activeMissions = playerMissions.getActiveMissions()
 						.stream().map(id -> ForgeEventHandler.getMissionManager().getMission(id))
 						.filter(Optional::isPresent).map(Optional::get)
 						.toList();
-				List<MissionManager.Mission> finishedMissions = playerMissions.finishedMissions()
+				List<MissionManager.Mission> finishedMissions = playerMissions.getFinishedMissions()
 						.stream().map(id -> ForgeEventHandler.getMissionManager().getMission(id))
 						.filter(Optional::isPresent).map(Optional::get)
 						.toList();

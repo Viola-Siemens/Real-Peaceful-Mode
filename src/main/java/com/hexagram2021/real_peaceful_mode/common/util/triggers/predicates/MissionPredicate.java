@@ -42,10 +42,10 @@ public class MissionPredicate {
 		if(this.entityType != null && entityType != null && !getRegistryName(entityType).equals(this.entityType)) {
 			return false;
 		}
-		int count = hero.getPlayerMissions().finishedMissions().size();
+		int count = hero.getPlayerMissions().getFinishedMissions().size();
 		int heroCount = hero.getHelpedMonsters().size();
 		if(this.missionNamespace != null) {
-			count = (int) hero.getPlayerMissions().finishedMissions().stream().filter(id -> id.getNamespace().equals(this.missionNamespace)).count();
+			count = (int) hero.getPlayerMissions().getFinishedMissions().stream().filter(id -> id.getNamespace().equals(this.missionNamespace)).count();
 		}
 		if(this.entityNamespace != null) {
 			heroCount = (int) hero.getHelpedMonsters().entrySet().stream().filter(entry -> entry.getKey().getNamespace().equals(this.entityNamespace)).count();

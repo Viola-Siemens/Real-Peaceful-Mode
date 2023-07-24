@@ -171,7 +171,7 @@ public class SummonBlockEntity extends BlockEntity {
 			}
 			return true;
 		}
-		return playerMissions.activeMissions().contains(missionId);
+		return IMonsterHero.underMission(playerMissions, missionId);
 	}
 }
 //{summon: {id: "zombie"}, id: "real_peaceful_mode:summon_block", mission_type: "receive", mission: "real_peaceful_mode:zombie1"}

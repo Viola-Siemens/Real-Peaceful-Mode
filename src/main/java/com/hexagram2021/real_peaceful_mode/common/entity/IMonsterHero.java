@@ -16,14 +16,14 @@ public interface IMonsterHero {
 	PlayerMissions getPlayerMissions();
 
 	static boolean isAtMissionsBetween(PlayerMissions playerMissions, ResourceLocation finished, ResourceLocation toFinish) {
-		return playerMissions.finishedMissions().contains(finished) && !playerMissions.finishedMissions().contains(toFinish) && !playerMissions.activeMissions().contains(toFinish);
+		return playerMissions.getFinishedMissions().contains(finished) && !playerMissions.getFinishedMissions().contains(toFinish) && !playerMissions.getActiveMissions().contains(toFinish);
 	}
 
 	static boolean underMission(PlayerMissions playerMissions, ResourceLocation toFinish) {
-		return playerMissions.activeMissions().contains(toFinish);
+		return playerMissions.getActiveMissions().contains(toFinish);
 	}
 
 	static boolean completeMission(PlayerMissions playerMissions, ResourceLocation finish) {
-		return playerMissions.finishedMissions().contains(finish);
+		return playerMissions.getFinishedMissions().contains(finish);
 	}
 }

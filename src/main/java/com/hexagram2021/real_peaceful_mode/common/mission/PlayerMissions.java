@@ -22,15 +22,28 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
-
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 import java.util.OptionalInt;
 
-public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<ResourceLocation> activeMissions, List<ResourceLocation> finishedMissions) {
-	public PlayerMissions(Path playerSavePath, ServerPlayer player) {
-		this(playerSavePath, player, Lists.newArrayList(), Lists.newArrayList());
+public class PlayerMissions {
+	private ServerPlayer player;
+	
+	private final List<ResourceLocation> activeMissions;
+	private final List<ResourceLocation> finishedMissions;
+	
+	public PlayerMissions(ServerPlayer player) {
+		this.player = player;
+		this.activeMissions = Lists.newArrayList();
+		this.finishedMissions = Lists.newArrayList();
+	}
+	
+	public List<ResourceLocation> getActiveMissions() {
+		return this.activeMissions;
+	}
+	
+	public List<ResourceLocation> getFinishedMissions() {
+		return this.finishedMissions;
 	}
 
 	private static final String PLAYER_MISSIONS = "RealPeacefulModeMissions";
@@ -68,6 +81,10 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 
 		nbt.put(PLAYER_MISSIONS, missions);
 	}
+	
+	public void setPlayer(ServerPlayer player) {
+		this.player = player;
+	}
 
 	public void replaceWith(PlayerMissions other) {
 		this.activeMissions.clear();
@@ -98,7 +115,7 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 														)))
 										)
 								));
-								this.activeMissions().add(mission.id());
+								this.activeMissions.add(mission.id());
 								mission.tryGetLoot(this.player, Objects.requireNonNull(this.player.getServer()).getLootData(), false);
 							}), Component.translatable("title.real_peaceful_mode.menu.mission")
 					));
@@ -130,8 +147,8 @@ public record PlayerMissions(Path playerSavePath, ServerPlayer player, List<Reso
 											)))
 							)
 					));
-					this.activeMissions().remove(mission.id());
-					this.finishedMissions().add(mission.id());
+					this.activeMissions.remove(mission.id());
+					this.finishedMissions.add(mission.id());
 					mission.finish(this.player, Objects.requireNonNull(this.player.getServer()).getLootData());
 				}), Component.translatable("title.real_peaceful_mode.menu.mission")
 		));
