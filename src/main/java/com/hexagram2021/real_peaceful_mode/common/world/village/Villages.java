@@ -167,6 +167,17 @@ public class Villages {
 				trades.get(2).add(new RPMTrades.EmeraldForItems(Items.BONE, 16, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_2_BUY));
 				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.GUNPOWDER, 16, 1, DEFAULT_SUPPLY, XP_LEVEL_3_BUY));
 				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.SPIDER_EYE, 13, 1, DEFAULT_SUPPLY, XP_LEVEL_3_BUY));
+				trades.get(4).add(new RPMTrades.WrittenBookForBead(
+						Component.translatable("book.real_peaceful_mode.guardian.title"),
+						Component.translatable("entity.minecraft.villager.real_peaceful_mode.senior"),
+						RPMItems.SpiritBeads.SLIME_SPIRIT_BEAD, 1,
+						ONLY_SUPPLY_ONCE,
+						XP_LEVEL_4_SELL,
+						Component.translatable("book.real_peaceful_mode.guardian.content1"),
+						Component.translatable("book.real_peaceful_mode.guardian.content2"),
+						Component.translatable("book.real_peaceful_mode.guardian.content3")
+				));
+				trades.get(4).add(new RPMTrades.EmeraldForItems(Items.SEA_LANTERN, 5, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_4_BUY));
 				trades.get(5).add(new RPMTrades.ItemsForEmeralds(RPMBlocks.WorkStation.REFINEMENT_TABLE, 16, 1, ONLY_SUPPLY_ONCE, XP_LEVEL_5_TRADE));
 			}
 			if(BOTANIST.equals(currentVillagerProfession)) {
@@ -187,6 +198,19 @@ public class Villages {
 				trades.get(2).add(new RPMTrades.EmeraldForItems(Items.WHITE_TULIP, 15, 1, DEFAULT_SUPPLY, XP_LEVEL_2_BUY));
 				trades.get(3).add(new RPMTrades.ItemsForEmeralds(Items.DEAD_BUSH, 1, 3, UNCOMMON_ITEMS_SUPPLY, XP_LEVEL_3_SELL));
 				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.TORCHFLOWER, 13, 1, DEFAULT_SUPPLY, XP_LEVEL_3_BUY));
+				trades.get(4).add(new RPMTrades.WrittenBookForBead(
+						Component.translatable("book.real_peaceful_mode.slime.title"),
+						Component.translatable("entity.minecraft.villager.real_peaceful_mode.botanist"),
+						RPMItems.SpiritBeads.SLIME_SPIRIT_BEAD, 1,
+						ONLY_SUPPLY_ONCE,
+						XP_LEVEL_4_SELL,
+						Component.translatable("book.real_peaceful_mode.slime.content1"),
+						Component.translatable("book.real_peaceful_mode.slime.content2"),
+						Component.translatable("book.real_peaceful_mode.slime.content3")
+				));
+				trades.get(4).add(new RPMTrades.EmeraldForItems(Items.SLIME_BALL, 24, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_4_BUY));
+				trades.get(5).add(new RPMTrades.ItemsForEmeralds(Items.GRASS_BLOCK, 1, 4, DEFAULT_SUPPLY, XP_LEVEL_5_TRADE));
+				trades.get(5).add(new RPMTrades.ItemsForEmeralds(Items.FLOWER_BANNER_PATTERN, 3, 1, UNCOMMON_ITEMS_SUPPLY, XP_LEVEL_5_TRADE));
 			}
 		}
 	}
