@@ -183,6 +183,6 @@ public class MissionListScreen extends Screen {
 	}
 
 	private int getScreenTotalScrollRows() {
-		return this.shadows.size() - 5;
+		return this.shadows.size() - MAX_MISSIONS_PER_SCREEN;
 	}
 }
