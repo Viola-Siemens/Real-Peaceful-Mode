@@ -34,7 +34,7 @@ public class ZombieFortPieces {
 
 	public static class ZombieFortPiece extends TemplateStructurePiece {
 		public ZombieFortPiece(StructureTemplateManager structureManager, ResourceLocation location, BlockPos pos, Rotation rotation) {
-			super(RPMStructurePieceTypes.ZOMBIE_FORT_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(16, -1, 24));
+			super(RPMStructurePieceTypes.ZOMBIE_FORT_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(-16, -1, -24));
 		}
 
 		public ZombieFortPiece(StructurePieceSerializationContext context, CompoundTag tag) {

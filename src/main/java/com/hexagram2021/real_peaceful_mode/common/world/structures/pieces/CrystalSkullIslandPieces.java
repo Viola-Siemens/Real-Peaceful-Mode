@@ -27,7 +27,7 @@ public class CrystalSkullIslandPieces {
 
 	public static class CrystalSkullIslandPiece extends TemplateStructurePiece {
 		public CrystalSkullIslandPiece(StructureTemplateManager structureManager, ResourceLocation location, BlockPos pos, Rotation rotation) {
-			super(RPMStructurePieceTypes.CRYSTAL_SKULL_ISLAND_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(6, 0, 6));
+			super(RPMStructurePieceTypes.CRYSTAL_SKULL_ISLAND_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(-6, 0, -6));
 		}
 
 		public CrystalSkullIslandPiece(StructurePieceSerializationContext context, CompoundTag tag) {

@@ -33,7 +33,7 @@ public class AbandonedMagicPoolPieces {
 
 	public static class AbandonedMagicPoolPiece extends TemplateStructurePiece {
 		public AbandonedMagicPoolPiece(StructureTemplateManager structureManager, ResourceLocation location, BlockPos pos, Rotation rotation) {
-			super(RPMStructurePieceTypes.ABANDONED_MAGIC_POOL_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(5, -1, 5));
+			super(RPMStructurePieceTypes.ABANDONED_MAGIC_POOL_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(-5, -1, -5));
 		}
 
 		public AbandonedMagicPoolPiece(StructurePieceSerializationContext context, CompoundTag tag) {

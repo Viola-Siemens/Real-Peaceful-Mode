@@ -27,7 +27,7 @@ public class PinkCreeperPieces {
 
 	public static class PinkCreeperPiece extends TemplateStructurePiece {
 		public PinkCreeperPiece(StructureTemplateManager structureManager, ResourceLocation location, BlockPos pos, Rotation rotation) {
-			super(RPMStructurePieceTypes.PINK_CREEPER_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(1, 0, 1));
+			super(RPMStructurePieceTypes.PINK_CREEPER_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(-1, 0, -1));
 		}
 
 		public PinkCreeperPiece(StructurePieceSerializationContext context, CompoundTag tag) {

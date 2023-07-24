@@ -72,7 +72,7 @@
   "block.note_block.imitate.dark_zombie_knight": {
     "sounds": [
       {
-        "name": "entity.dark_zombie_knight.ambient",
+        "name": "real_peaceful_mode:entity.dark_zombie_knight.ambient",
         "type": "event"
       }
     ],

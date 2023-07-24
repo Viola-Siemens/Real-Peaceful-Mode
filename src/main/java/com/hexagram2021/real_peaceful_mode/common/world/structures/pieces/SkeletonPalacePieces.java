@@ -34,7 +34,7 @@ public class SkeletonPalacePieces {
 
 	public static class SkeletonPalacePiece extends TemplateStructurePiece {
 		public SkeletonPalacePiece(StructureTemplateManager structureManager, ResourceLocation location, BlockPos pos, Rotation rotation) {
-			super(RPMStructurePieceTypes.SKELETON_PALACE_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(16, -1, 16));
+			super(RPMStructurePieceTypes.SKELETON_PALACE_TYPE, 0, structureManager, location, location.toString(), makeSettings(rotation), pos.offset(-16, -1, -16));
 		}
 
 		public SkeletonPalacePiece(StructurePieceSerializationContext context, CompoundTag tag) {
