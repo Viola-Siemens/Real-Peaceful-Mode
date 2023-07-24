@@ -67,10 +67,10 @@ public class MissionPredicate {
 				entityType = new ResourceLocation(GsonHelper.convertToString(json, "entity_type"));
 			}
 			if(json.has("mission_namespace")) {
-				missionNamespace = GsonHelper.convertToString(json, "mission_namespace");
+				missionNamespace = GsonHelper.getAsString(json, "mission_namespace");
 			}
 			if(json.has("entity_namespace")) {
-				entityNamespace = GsonHelper.convertToString(json, "entity_namespace");
+				entityNamespace = GsonHelper.getAsString(json, "entity_namespace");
 			}
 			if(json.has("total_count")) {
 				count = MinMaxBounds.Ints.fromJson(json.get("total_count"));
