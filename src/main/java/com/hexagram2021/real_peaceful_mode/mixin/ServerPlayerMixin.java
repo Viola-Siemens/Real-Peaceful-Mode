@@ -29,7 +29,7 @@ public class ServerPlayerMixin implements IMonsterHero {
 	private PlayerMissions playerMissions;
 
 	@Inject(method = "<init>", at = @At(value = "TAIL"))
-	public void create(MinecraftServer server, ServerLevel level, GameProfile gameProfile, CallbackInfo ci) {
+	public void createNewPlayer(MinecraftServer server, ServerLevel level, GameProfile gameProfile, CallbackInfo ci) {
 		this.playerMissions = ((IPlayerListWithMissions)server.getPlayerList()).getPlayerMissions((ServerPlayer)(Object)this);
 	}
 
