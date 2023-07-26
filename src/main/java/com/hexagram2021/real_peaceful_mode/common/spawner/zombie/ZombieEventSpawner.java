@@ -68,7 +68,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 							double x = mob.getRandom().nextGaussian() * 0.02D;
 							double y = mob.getRandom().nextGaussian() * 0.02D;
 							double z = mob.getRandom().nextGaussian() * 0.02D;
-							mob.level().addParticle(ParticleTypes.SPLASH, mob.getRandomX(1.0D), mob.getRandomY() + 1.0D, mob.getRandomZ(1.0D), x, y, z);
+							mob.level().addParticle(ParticleTypes.SPLASH, mob.getRandomX(1.0D), mob.getRandomY() + 0.5D, mob.getRandomZ(1.0D), x, y, z);
 						}
 					});
 				}

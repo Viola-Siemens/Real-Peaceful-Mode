@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Mob;
@@ -31,7 +32,7 @@ public class ForgeEventHandler {
 			if (action != null) {
 				if(event.getEntity() instanceof ServerPlayer serverPlayer) {
 					if (action.apply(serverPlayer, serverPlayer.getItemInHand(event.getHand()))) {
-						event.setCancellationResult(InteractionResult.CONSUME);
+						event.setCancellationResult(InteractionResult.SUCCESS);
 						event.setCanceled(true);
 						return;
 					}
