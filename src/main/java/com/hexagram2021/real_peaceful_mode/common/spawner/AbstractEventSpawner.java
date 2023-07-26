@@ -17,7 +17,7 @@ import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.get
 
 public abstract class AbstractEventSpawner<T extends LivingEntity> implements CustomSpawner {
 	private int tickDelay;
-	private int possibility = 80;
+	private int possibility;
 
 	@Override
 	public int tick(ServerLevel level, boolean spawnEnemies, boolean spawnFriendlies) {
