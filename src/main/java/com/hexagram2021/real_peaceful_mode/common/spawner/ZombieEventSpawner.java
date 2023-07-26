@@ -1,10 +1,9 @@
-package com.hexagram2021.real_peaceful_mode.common.spawner.zombie;
+package com.hexagram2021.real_peaceful_mode.common.spawner;
 
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
-import com.hexagram2021.real_peaceful_mode.common.spawner.AbstractEventSpawner;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.mojang.datafixers.util.Function3;
 import net.minecraft.core.BlockPos;
@@ -49,7 +48,8 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 							);
 							return true;
 						}
-						if(itemStack.is(Tags.Items.ARMORS_HELMETS)) {
+						ItemStack currentHelmet = zombie.getItemBySlot(EquipmentSlot.HEAD);
+						if(itemStack.is(Tags.Items.ARMORS_HELMETS) && itemStack.getMaxDamage() - itemStack.getDamageValue() > currentHelmet.getMaxDamage() - currentHelmet.getDamageValue()) {
 							MissionHelper.triggerMissionForPlayer(
 									ZOMBIE_HELMET_MISSION, SummonBlockEntity.SummonMissionType.FINISH, player,
 									zombie, player1 -> {

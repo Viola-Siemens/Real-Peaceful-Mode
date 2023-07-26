@@ -1,7 +1,6 @@
-package com.hexagram2021.real_peaceful_mode.common.spawner.skeleton;
+package com.hexagram2021.real_peaceful_mode.common.spawner;
 
 import com.google.common.collect.Lists;
-import com.hexagram2021.real_peaceful_mode.common.spawner.AbstractEventSpawner;
 import com.mojang.datafixers.util.Function3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
