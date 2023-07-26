@@ -65,10 +65,16 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 					});
 					monster.setNpcExtraTickAction(mob -> {
 						if(mob.level().isClientSide) {
-							double x = mob.getRandom().nextGaussian() * 0.02D;
-							double y = mob.getRandom().nextGaussian() * 0.02D;
-							double z = mob.getRandom().nextGaussian() * 0.02D;
-							mob.level().addParticle(ParticleTypes.SPLASH, mob.getRandomX(1.0D), mob.getRandomY() + 0.5D, mob.getRandomZ(1.0D), x, y, z);
+							for(int i = 0; i < 4; ++i) {
+								double x = mob.getRandom().nextGaussian() * 0.02D;
+								double y = mob.getRandom().nextGaussian() * 0.02D;
+								double z = mob.getRandom().nextGaussian() * 0.02D;
+								mob.level().addParticle(
+										ParticleTypes.SPLASH,
+										mob.getRandomX(1.0D), mob.getY(mob.getRandom().nextDouble() * 0.75D) + 0.5D, mob.getRandomZ(1.0D),
+										x, y, z
+								);
+							}
 						}
 					});
 				}
