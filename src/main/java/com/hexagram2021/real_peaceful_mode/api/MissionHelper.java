@@ -81,7 +81,7 @@ public class MissionHelper {
 	@ApiStatus.Internal
 	public static void triggerMissionForPlayer(MissionManager.Mission mission, SummonBlockEntity.SummonMissionType summonMissionType,
 											   ServerPlayer player, IPlayerListWithMissions playerList, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
-		if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && SummonBlockEntity.checkMission(hero, summonMissionType, mission)) {
+		if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && checkMission(hero, summonMissionType, mission)) {
 			additionWork.accept(player);
 			PlayerMissions playerMissions = playerList.getPlayerMissions(player);
 			switch (summonMissionType) {
@@ -89,5 +89,29 @@ public class MissionHelper {
 				case FINISH -> playerMissions.finishMission(mission, npc);
 			}
 		}
+	}
+
+	@ApiStatus.Internal
+	public static boolean checkMission(IMonsterHero hero, SummonBlockEntity.SummonMissionType type, @Nullable MissionManager.Mission mission) {
+		PlayerMissions playerMissions = hero.getPlayerMissions();
+		if(mission == null) {
+			return true;
+		}
+		ResourceLocation missionId = mission.id();
+		if(IMonsterHero.missionDisabled(missionId)) {
+			return false;
+		}
+		if (type == SummonBlockEntity.SummonMissionType.RECEIVE) {
+			if(IMonsterHero.underMission(playerMissions, missionId) || IMonsterHero.completeMission(playerMissions, missionId)) {
+				return false;
+			}
+			for(ResourceLocation former: mission.formers()) {
+				if(!IMonsterHero.missionDisabled(former) && !IMonsterHero.completeMission(playerMissions, former)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return IMonsterHero.underMission(playerMissions, missionId);
 	}
 }

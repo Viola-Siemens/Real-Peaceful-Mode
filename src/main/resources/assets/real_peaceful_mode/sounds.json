@@ -77,5 +77,30 @@
       }
     ],
     "subtitle": "subtitles.entity.dark_zombie_knight.ambient"
+  },
+
+  "music_disc.rpm.zombie": {
+    "sounds": [
+      {
+        "name": "real_peaceful_mode:records/zombie",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.rpm.skeleton": {
+    "sounds": [
+      {
+        "name": "real_peaceful_mode:records/skeleton",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.rpm.creeper": {
+    "sounds": [
+      {
+        "name": "real_peaceful_mode:records/creeper",
+        "stream": true
+      }
+    ]
   }
 }

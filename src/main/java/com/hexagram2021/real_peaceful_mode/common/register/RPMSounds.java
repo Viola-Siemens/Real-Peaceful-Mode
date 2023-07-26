@@ -24,6 +24,10 @@ public class RPMSounds {
 	public static final SoundEvent SKELETON_KING_AMBIENT = registerSound("entity.skeleton_king.ambient");
 	public static final SoundEvent SKELETON_KING_DEATH = registerSound("entity.skeleton_king.death");
 
+	public static final SoundEvent MUSIC_DISC_ZOMBIE = registerSound("music_disc.rpm.zombie");
+	public static final SoundEvent MUSIC_DISC_SKELETON = registerSound("music_disc.rpm.skeleton");
+	public static final SoundEvent MUSIC_DISC_CREEPER = registerSound("music_disc.rpm.creeper");
+
 	private static SoundEvent registerSound(String name) {
 		ResourceLocation location = new ResourceLocation(MODID, name);
 		SoundEvent event = SoundEvent.createVariableRangeEvent(location);

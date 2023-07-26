@@ -1,0 +1,36 @@
+{
+  "random_event": true,
+  "requires": [
+    "real_peaceful_mode:skeleton3"
+  ],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message1",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message2",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message3",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message4",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message5",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message6",
+      "speaker": "npc"
+    }
+  ],
+  "loot_table": "real_peaceful_mode:missions/skeleton_spirit_with_material",
+  "loot_before": false
+}

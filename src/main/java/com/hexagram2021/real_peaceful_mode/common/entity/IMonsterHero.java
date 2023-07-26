@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.entity;
 
+import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
 import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -16,7 +17,7 @@ public interface IMonsterHero {
 	PlayerMissions getPlayerMissions();
 
 	static boolean isAtMissionsBetween(PlayerMissions playerMissions, ResourceLocation finished, ResourceLocation toFinish) {
-		return playerMissions.getFinishedMissions().contains(finished) && !playerMissions.getFinishedMissions().contains(toFinish) && !playerMissions.getActiveMissions().contains(toFinish);
+		return completeMission(playerMissions, finished) && !completeMission(playerMissions, toFinish) && !underMission(playerMissions, toFinish);
 	}
 
 	static boolean underMission(PlayerMissions playerMissions, ResourceLocation toFinish) {
@@ -25,5 +26,9 @@ public interface IMonsterHero {
 
 	static boolean completeMission(PlayerMissions playerMissions, ResourceLocation finish) {
 		return playerMissions.getFinishedMissions().contains(finish);
+	}
+
+	static boolean missionDisabled(ResourceLocation mission) {
+		return RPMCommonConfig.DISABLE_MISSIONS.get().contains(mission.toString());
 	}
 }

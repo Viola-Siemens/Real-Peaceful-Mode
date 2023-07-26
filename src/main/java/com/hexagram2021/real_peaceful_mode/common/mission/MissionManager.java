@@ -67,7 +67,8 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 	public record Mission(ResourceLocation id,
 						  List<Message> messages, List<Message> messagesAfter,
 						  List<ResourceLocation> formers,
-						  EntityType<?> reward, ResourceLocation rewardLootTable, boolean lootBefore) {
+						  EntityType<?> reward, ResourceLocation rewardLootTable,
+						  boolean lootBefore, boolean isRandomEvent) {
 		public record Message(String messageKey, Speaker speaker) {
 			public enum Speaker {
 				PLAYER,
@@ -93,7 +94,8 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 			EntityType<?> rewardEntityType = ForgeRegistries.ENTITY_TYPES.getValue(reward);
 			ResourceLocation rewardLootTable = new ResourceLocation(GsonHelper.getAsString(json, "loot_table", BuiltInLootTables.EMPTY.toString()));
 			boolean lootBefore = GsonHelper.getAsBoolean(json, "loot_before", false);
-			return new Mission(id, messages, messagesAfter, formers, rewardEntityType == null ? EntityType.PLAYER : rewardEntityType, rewardLootTable, lootBefore);
+			boolean isRandomEvent = GsonHelper.getAsBoolean(json, "random_event", false);
+			return new Mission(id, messages, messagesAfter, formers, rewardEntityType == null ? EntityType.PLAYER : rewardEntityType, rewardLootTable, lootBefore, isRandomEvent);
 		}
 
 		public void tryGetLoot(ServerPlayer player, LootDataManager lootTables, boolean finished) {

@@ -104,6 +104,24 @@ public class RPMItems {
         }
     }
 
+    public static class Records {
+        public static ItemEntry<RecordItem> RECORD_ZOMBIE = ItemEntry.register(
+                "record_zombie", () -> new RecordItem(1, () -> RPMSounds.MUSIC_DISC_ZOMBIE, new Item.Properties().stacksTo(1), 120)
+        );
+        public static ItemEntry<RecordItem> RECORD_SKELETON = ItemEntry.register(
+                "record_skeleton", () -> new RecordItem(2, () -> RPMSounds.MUSIC_DISC_SKELETON, new Item.Properties().stacksTo(1), 120)
+        );
+        public static ItemEntry<RecordItem> RECORD_CREEPER = ItemEntry.register(
+                "record_creeper", () -> new RecordItem(3, () -> RPMSounds.MUSIC_DISC_CREEPER, new Item.Properties().stacksTo(1), 120)
+        );
+
+        private Records() {
+        }
+
+        public static void init() {
+        }
+    }
+
     public static class DebugItems {
         public static ItemEntry<Item> ZOMBIES_WISH = ItemEntry.register(
                 "zombies_wish", () -> new DebugWishItem(EntityType.ZOMBIE, new Item.Properties())

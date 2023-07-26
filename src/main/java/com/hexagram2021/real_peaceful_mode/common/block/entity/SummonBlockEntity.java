@@ -6,7 +6,6 @@ import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
-import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -87,8 +86,10 @@ public class SummonBlockEntity extends BlockEntity {
 		blockEntity.lastCheckTick = CHECK_TICK;
 		if(level instanceof ServerLevel serverLevel && (blockEntity.mission != null || blockEntity.summonTag != null)) {
 			List<ServerPlayer> nearbyPlayers = serverLevel.players().stream()
-					.filter(player -> player.position().closerThan(blockPos.getCenter(), blockEntity.distance) && !player.getAbilities().instabuild && checkMission((IMonsterHero)player, blockEntity.type, blockEntity.mission))
-					.toList();
+					.filter(player -> player.position().closerThan(blockPos.getCenter(), blockEntity.distance) &&
+									!player.getAbilities().instabuild &&
+									MissionHelper.checkMission((IMonsterHero)player, blockEntity.type, blockEntity.mission)
+					).toList();
 			if (!nearbyPlayers.isEmpty()) {
 				LivingEntity npc = blockEntity.summon(serverLevel);
 				serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), UPDATE_ALL);
@@ -109,7 +110,7 @@ public class SummonBlockEntity extends BlockEntity {
 		}
 		CompoundTag compoundtag = this.summonTag.copy();
 		Entity ret = EntityType.loadEntityRecursive(compoundtag, level, entity -> {
-			entity.moveTo(this.getBlockPos().getCenter());
+			entity.moveTo(this.getBlockPos().getCenter().subtract(0.0D, 0.375D, 0.0D));
 			return entity;
 		});
 		if(ret instanceof LivingEntity livingEntity) {
@@ -152,26 +153,6 @@ public class SummonBlockEntity extends BlockEntity {
 			this.distance = nbt.getInt(TAG_DISTANCE);
 		}
 		this.type = SummonMissionType.TYPE_BY_NAME.getOrDefault(nbt.getString(TAG_MISSION_TYPE), SummonMissionType.RECEIVE);
-	}
-
-	public static boolean checkMission(IMonsterHero hero, SummonMissionType type, @Nullable MissionManager.Mission mission) {
-		PlayerMissions playerMissions = hero.getPlayerMissions();
-		if(mission == null) {
-			return true;
-		}
-		ResourceLocation missionId = mission.id();
-		if (type == SummonMissionType.RECEIVE) {
-			if(IMonsterHero.underMission(playerMissions, missionId) || IMonsterHero.completeMission(playerMissions, missionId)) {
-				return false;
-			}
-			for(ResourceLocation former: mission.formers()) {
-				if(!IMonsterHero.completeMission(playerMissions, former)) {
-					return false;
-				}
-			}
-			return true;
-		}
-		return IMonsterHero.underMission(playerMissions, missionId);
 	}
 }
 //{summon: {id: "zombie"}, id: "real_peaceful_mode:summon_block", mission_type: "receive", mission: "real_peaceful_mode:zombie1"}

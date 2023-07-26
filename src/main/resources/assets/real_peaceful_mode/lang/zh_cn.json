@@ -111,6 +111,9 @@
   "mission.real_peaceful_mode.zombie3.name": "为僵尸们而战",
   "mission.real_peaceful_mode.zombie3.description": "击败僵尸帝国的暴君，将和平带回僵尸帝国！",
   "mission.real_peaceful_mode.zombie3.after": "恭喜！您已经完成了僵尸们给你的所有委托。",
+  "mission.real_peaceful_mode.events/zombie_helmet.name": "新的头盔",
+  "mission.real_peaceful_mode.events/zombie_helmet.description": "做一个头盔，并把它交给小僵尸",
+  "mission.real_peaceful_mode.events/zombie_helmet.after": "不错的头盔！小僵尸非常满意。",
 
   "mission.real_peaceful_mode.skeleton1.name": "击碎发光的水晶",
   "mission.real_peaceful_mode.skeleton1.description": "或许会有一种弓的附魔可以击碎这种易碎的方块。",
@@ -121,6 +124,9 @@
   "mission.real_peaceful_mode.skeleton3.name": "下界之噪",
   "mission.real_peaceful_mode.skeleton3.description": "去找64块“像泥土一样”的方块并交给国王。它的特征是可以将冷却的熔岩凝固成玄武岩。",
   "mission.real_peaceful_mode.skeleton3.after": "恭喜！您已经完成了骷髅们给你的所有委托。",
+  "mission.real_peaceful_mode.events/skeleton_arm.name": "遗失的胳膊",
+  "mission.real_peaceful_mode.events/skeleton_arm.description": "帮助骷髅找到他遗失的胳膊",
+  "mission.real_peaceful_mode.events/skeleton_arm.after": "希望这条胳膊还能成功安装在他身上。",
 
   "mission.real_peaceful_mode.creeper1.name": "为什么会爆炸？",
   "mission.real_peaceful_mode.creeper1.description": "用组培台制作实验性花朵。你可能需要先找到一位植物学家村民。",
@@ -206,6 +212,15 @@
   "rpm.mission.real_peaceful_mode.zombie3.message8": "这…这不可能……我…我很快就会回来的……",
   "rpm.mission.real_peaceful_mode.zombie3.message9": "如果你还敢再来，那我必定会再次击败你！",
 
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message1": "你好，额，小僵尸？",
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message2": "对不起打扰您了，请您务必帮帮我！我就要，啊，已经……快没时间了……",
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message3": "别着急，孩子。发生什么事了？需要我帮你吗？",
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message4": "嗯。我的皮革帽子的耐久剩得不多了，如果它坏掉了，我会着火的！但我自己还不会做一顶头盔……",
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message5": "好的，我会帮你做一顶头盔。等我一下。",
+
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message6": "孩子，戴上这个头盔吧。",
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message7": "谢谢您，您就是我的神！这是一些回礼，希望您能喜欢。",
+
   "rpm.mission.real_peaceful_mode.skeleton1.message1": "我的弓断了，但我仍然无法打碎这块水晶。这破石头里面到底有什么？",
   "rpm.mission.real_peaceful_mode.skeleton1.message2": "哇哦，没有武器的骷髅！",
   "rpm.mission.real_peaceful_mode.skeleton1.message3": "玩家？啊…求你…不要伤害我……",
@@ -257,6 +272,14 @@
   "rpm.mission.real_peaceful_mode.skeleton3.message15": "你在这个世界上的旅程中，一定走上了一条更加艰难的路。以太龙死后，所有怪物们都会发生了很大的变化。",
   "rpm.mission.real_peaceful_mode.skeleton3.message16": "我希望权杖能在你遇到麻烦时保佑你，并给你反击的力量。去解救他们吧，我的骑士。",
   "rpm.mission.real_peaceful_mode.skeleton3.message17": "谢谢您的鼓励，陛下。我已经准备好帮助其他生物了。",
+
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message1": "嘿，骷髅，你的右胳膊怎么了？",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message2": "我也不知道，我刚刚还在睡觉，醒来之后就发现我少了根胳膊。",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message3": "请您帮我找到我的胳膊，没有它之后，我连东西都拿不起来，更别说保护自己了。",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message4": "好的，或许你的胳膊就落在你刚刚睡觉的哪个地方的附近。我会去找找的。",
+
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message5": "我找到你的胳膊了，居然是被一只狐狸叼走了。",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message6": "太好了，这是一点小意思，请您务必收下。十分感谢您，骑士大人！",
 
   "rpm.mission.real_peaceful_mode.creeper1.message1": "一座破旧的小镇？这里的一切似乎都失去了生机。",
   "rpm.mission.real_peaceful_mode.creeper1.message2": "……",

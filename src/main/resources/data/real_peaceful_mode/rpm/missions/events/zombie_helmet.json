@@ -1,0 +1,40 @@
+{
+  "random_event": true,
+  "requires": [
+    "real_peaceful_mode:zombie3"
+  ],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_helmet.message1",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_helmet.message2",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_helmet.message3",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_helmet.message4",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_helmet.message5",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_helmet.message6",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_helmet.message7",
+      "speaker": "npc"
+    }
+  ],
+  "loot_table": "real_peaceful_mode:missions/zombie_spirit_with_material",
+  "loot_before": false
+}

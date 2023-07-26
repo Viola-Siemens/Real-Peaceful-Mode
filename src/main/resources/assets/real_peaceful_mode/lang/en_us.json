@@ -111,6 +111,9 @@
   "mission.real_peaceful_mode.zombie3.name": "Fight for Zombies",
   "mission.real_peaceful_mode.zombie3.description": "Defeat the tyrant of zombies, and bring peace back to zombie's kingdom!",
   "mission.real_peaceful_mode.zombie3.after": "Congratulations! You have already completed the missions given by the zombies.",
+  "mission.real_peaceful_mode.events/zombie_helmet.name": "A New Helmet",
+  "mission.real_peaceful_mode.events/zombie_helmet.description": "Make a helmet and give it to the little zombie.",
+  "mission.real_peaceful_mode.events/zombie_helmet.after": "Nice helmet! He feels thankful to you.",
 
   "mission.real_peaceful_mode.skeleton1.name": "Crack the Glowing Crystal",
   "mission.real_peaceful_mode.skeleton1.description": "There must be a special enchantment for bows to destroy fragile blocks.",
@@ -121,6 +124,9 @@
   "mission.real_peaceful_mode.skeleton3.name": "Noise of the Nether",
   "mission.real_peaceful_mode.skeleton3.description": "Find 64 of the dirt-like blocks for the king, which is able to turn cooled lava into basalt.",
   "mission.real_peaceful_mode.skeleton3.after": "Congratulations! You have already completed the missions given by the skeletons.",
+  "mission.real_peaceful_mode.events/skeleton_arm.name": "The Missing Arm",
+  "mission.real_peaceful_mode.events/skeleton_arm.description": "Help skeleton find his missing arm.",
+  "mission.real_peaceful_mode.events/skeleton_arm.after": "Hope the arm still fits the poor guy's body.",
 
   "mission.real_peaceful_mode.creeper1.name": "Why Explode?",
   "mission.real_peaceful_mode.creeper1.description": "Make an experimental flower with culture table. You may need to find a botanist villager first.",
@@ -206,6 +212,15 @@
   "rpm.mission.real_peaceful_mode.zombie3.message8": "It makes... no sense... I'll... be back soon...",
   "rpm.mission.real_peaceful_mode.zombie3.message9": "If so, I'll beat you another time!",
 
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message1": "Hello, uh, zombie baby?",
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message2": "Sorry to bother you, but please help me! I'm gonna, just, it's time to... no much time left...",
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message3": "Don't be hurry, my boy. What's happening? You want my help?",
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message4": "Yes. My leather cap is running out of its durability. If it breaks, I'm gonna burn! But I can't craft a helmet by myself...",
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message5": "Sure, I'll make a helmet for you. Please wait for me.",
+
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message6": "Hey my boy. Take the helmet with you.",
+  "rpm.mission.real_peaceful_mode.event.zombie_helmet.message7": "Thank you, my hero! Here's my payback. I hope you would like it.",
+
   "rpm.mission.real_peaceful_mode.skeleton1.message1": "My bow's broken now. And I still can't crack the crystal. What could it be inside the rock?",
   "rpm.mission.real_peaceful_mode.skeleton1.message2": "Woah, a skeleton without weapon!",
   "rpm.mission.real_peaceful_mode.skeleton1.message3": "Player? P... please... don't hurt me...",
@@ -257,6 +272,14 @@
   "rpm.mission.real_peaceful_mode.skeleton3.message15": "You must walk on a more harder path to your journey in this world. All monsters changes a lot after the Aether Dragon's death.",
   "rpm.mission.real_peaceful_mode.skeleton3.message16": "I wish the scepter will bless you when you meet troubles, and give you power to fight back. Go and save them, my cavalier.",
   "rpm.mission.real_peaceful_mode.skeleton3.message17": "Thank you for your encouragement, sire. And I'm ready to help other creatures.",
+
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message1": "Hello, skeleton. What happens to your right arm?",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message2": "I don't know. I was just sleeping nearby. As I woke up, I found my arm's missing.",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message3": "Please help me find my arm. I can't hold anything or protect myself without it.",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message4": "Sure, maybe it's lying some place not far away from where you was sleeping. I'm going to search for it.",
+
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message5": "I found your right arm in a fox's mouth. Here you are.",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message6": "Yes! Here's some award for you. I'm really thankful to you, my hero!",
 
   "rpm.mission.real_peaceful_mode.creeper1.message1": "A dilapidated town? Everything seems to lose its vitality here.",
   "rpm.mission.real_peaceful_mode.creeper1.message2": "...",

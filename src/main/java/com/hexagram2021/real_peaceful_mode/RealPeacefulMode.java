@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode;
 
+import com.hexagram2021.real_peaceful_mode.api.RandomEventSpawnerHelper;
 import com.hexagram2021.real_peaceful_mode.client.ClientProxy;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.RPMContent;
@@ -7,6 +8,9 @@ import com.hexagram2021.real_peaceful_mode.common.RPMSaveData;
 import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructures;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMTriggers;
+import com.hexagram2021.real_peaceful_mode.common.spawner.AbstractEventSpawner;
+import com.hexagram2021.real_peaceful_mode.common.spawner.skeleton.SkeletonEventSpawner;
+import com.hexagram2021.real_peaceful_mode.common.spawner.zombie.ZombieEventSpawner;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
 import com.hexagram2021.real_peaceful_mode.network.ClientboundMissionMessagePacket;
@@ -19,6 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TagsUpdatedEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.*;
@@ -31,6 +36,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -67,6 +73,7 @@ public class RealPeacefulMode {
 		RPMLogger.logger = LogManager.getLogger(MODID);
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		MinecraftForge.EVENT_BUS.addListener(this::tagsUpdated);
+		MinecraftForge.EVENT_BUS.addListener(this::serverAboutToStart);
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
 		DeferredWorkQueue queue = DeferredWorkQueue.lookup(Optional.of(ModLoadingStage.CONSTRUCT)).orElseThrow();
 		Consumer<Runnable> runLater = job -> queue.enqueueWork(
@@ -102,6 +109,15 @@ public class RealPeacefulMode {
 
 		RPMStructures.init(event.getRegistryAccess());
 		Villages.addAllStructuresToPool(event.getRegistryAccess());
+	}
+
+	private static final AbstractEventSpawner<?>[] rpmSpawners = new AbstractEventSpawner<?>[] {
+			new ZombieEventSpawner(),
+			new SkeletonEventSpawner()
+	};
+
+	public void serverAboutToStart(ServerAboutToStartEvent event) {
+		Arrays.stream(rpmSpawners).forEach(RandomEventSpawnerHelper::registerRandomEventSpawner);
 	}
 
 	public void serverStarted(ServerStartedEvent event) {

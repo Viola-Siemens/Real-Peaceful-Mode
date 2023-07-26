@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstance;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
+import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.hexagram2021.real_peaceful_mode.network.ClientboundMissionMessagePacket;
 import net.minecraft.ChatFormatting;
@@ -99,7 +100,7 @@ public class PlayerMissions {
 			return;
 		}
 
-		mission.formers().stream().filter(id -> !this.finishedMissions.contains(id)).findAny().ifPresentOrElse(
+		mission.formers().stream().filter(id -> !IMonsterHero.missionDisabled(id) && !IMonsterHero.completeMission(this, id)).findAny().ifPresentOrElse(
 				id -> RPMLogger.debug("Ignore receive mission %s for not finishing mission %s.".formatted(mission.id(), id)),
 				() -> {
 					MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messages());
@@ -148,7 +149,9 @@ public class PlayerMissions {
 							)
 					));
 					this.activeMissions.remove(mission.id());
-					this.finishedMissions.add(mission.id());
+					if(!mission.isRandomEvent()) {
+						this.finishedMissions.add(mission.id());
+					}
 					mission.finish(this.player, Objects.requireNonNull(this.player.getServer()).getLootData());
 				}), Component.translatable("title.real_peaceful_mode.menu.mission")
 		));
@@ -158,6 +161,14 @@ public class PlayerMissions {
 					new ClientboundMissionMessagePacket(instance, id.getAsInt())
 			);
 		}
+	}
+
+	public void removeMission(ResourceLocation id) {
+		if (this.player instanceof FakePlayer) {
+			return;
+		}
+
+		this.activeMissions.remove(id);
 	}
 
 	public static String getMissionDescriptionId(MissionManager.Mission mission) {

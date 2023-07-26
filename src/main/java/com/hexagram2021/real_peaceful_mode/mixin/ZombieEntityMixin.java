@@ -5,14 +5,17 @@ import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +23,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 @Mixin(Zombie.class)
 public abstract class ZombieEntityMixin extends Monster implements IFriendlyMonster {
@@ -28,8 +33,18 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 	@Nullable
 	private Goal attackDarkZombieKnightSelector = null;
 
+	@Nullable
+	private BiFunction<ServerPlayer, ItemStack, Boolean> npcInteractAction = null;
+	@Nullable
+	private Consumer<Mob> npcTickAction = null;
+
 	protected ZombieEntityMixin(EntityType<? extends Monster> entityType, Level level) {
 		super(entityType, level);
+	}
+
+	@Inject(method = "defineSynchedData", at = @At(value = "TAIL"))
+	public void definePhantomCureData(CallbackInfo ci) {
+		this.getEntityData().define(Data.DATA_ZOMBIE_DANCE, false);
 	}
 
 	@Inject(method = "readAdditionalSaveData", at = @At(value = "TAIL"))
@@ -66,5 +81,31 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 			}
 			return false;
 		}) && target instanceof AbstractVillager;
+	}
+
+	@Override
+	public void setDance(boolean dancing) {
+		this.getEntityData().set(Data.DATA_ZOMBIE_DANCE, dancing);
+	}
+
+
+	@Override @Nullable
+	public BiFunction<ServerPlayer, ItemStack, Boolean> getRandomEventNpcAction() {
+		return this.npcInteractAction;
+	}
+
+	@Override
+	public void setRandomEventNpcAction(@Nullable BiFunction<ServerPlayer, ItemStack, Boolean> action) {
+		this.npcInteractAction = action;
+	}
+
+	@Override @Nullable
+	public Consumer<Mob> getNpcExtraTickAction() {
+		return this.npcTickAction;
+	}
+
+	@Override
+	public void setNpcExtraTickAction(@Nullable Consumer<Mob> action) {
+		this.npcTickAction = action;
 	}
 }
