@@ -24,7 +24,7 @@ base {
     archivesName = 'real_peaceful_mode'
 }
 
-version = '1.20.1-0.1.0-pre'
+version = '1.20.1-0.1.0'
 group = 'com.hexagram2021.real_peaceful_mode'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
