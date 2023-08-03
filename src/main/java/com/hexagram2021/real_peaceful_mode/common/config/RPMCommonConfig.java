@@ -25,13 +25,13 @@ public final class RPMCommonConfig {
 		BUILDER.comment("You can determine whether each mission will be triggered or not.");
 			BUILDER.push("missions");
 				DISABLE_MISSIONS = BUILDER.comment("ID of missions to disable. Disabled missions cannot be received or finished by players. If you disable the last mission of a monster's quest, this monster will never become passive. And if you disable mission A required by mission B, B can be triggered without finishing mission A.")
-						.defineList("DISABLE_MISSIONS", List.of(), o -> o instanceof String str && ResourceLocation.isValidResourceLocation(str));
+						.defineListAllowEmpty("DISABLE_MISSIONS", List.of(), o -> o instanceof String str && ResourceLocation.isValidResourceLocation(str));
 			BUILDER.pop();
 
 			BUILDER.comment("You can determine whether each random event will happen to a hero player or not.");
 			BUILDER.push("random-events");
 				DISABLE_EVENTS = BUILDER.comment("Entity Type ID of monsters to disable. For example, if you add \"minecraft:zombie\" to this list, no random events will trigger after you complete zombies' quests.")
-						.define("DISABLE_EVENTS", List.of(), o -> o instanceof String str && ResourceLocation.isValidResourceLocation(str));
+						.defineListAllowEmpty("DISABLE_EVENTS", List.of(), o -> o instanceof String str && ResourceLocation.isValidResourceLocation(str));
 
 				RANDOM_EVENT_CHECKER_INTERVAL = BUILDER.comment("How many ticks (20 ticks = 1 second) will delay for a try to spawn a random event").defineInRange("RANDOM_EVENT_CHECKER_INTERVAL", 10000, 1200, 192000);
 				RANDOM_EVENT_POSSIBILITY = BUILDER.comment("The possibility (in percentage) for spawning a random event during a try.").defineInRange("RANDOM_EVENT_POSSIBILITY", 25, 0, 100);
