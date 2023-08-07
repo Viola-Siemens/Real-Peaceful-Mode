@@ -112,9 +112,6 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 				zombieHorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(zombieHorse.getRandom().nextDouble() * 0.1D + 0.35D);
 				darkZombieKnight.startRiding(zombieHorse);
 				darkZombieKnight.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.Weapons.GOLDEN_PIKE));
-				Direction awayDirection = Direction.fromYRot(yRot);
-				Vec3 target = blockPos.getCenter().subtract(awayDirection.getStepX() * 16.0D, awayDirection.getStepY(), awayDirection.getStepZ() * 16.0D);
-				darkZombieKnight.getNavigation().moveTo(target.x, target.y, target.z, 1.0D);
 
 				ItemStack money = new ItemStack(Items.BUNDLE);
 				CompoundTag nbt = money.getOrCreateTag();
