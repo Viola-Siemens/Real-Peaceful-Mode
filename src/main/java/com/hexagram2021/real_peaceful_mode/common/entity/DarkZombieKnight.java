@@ -6,6 +6,9 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -31,9 +34,26 @@ import javax.annotation.Nullable;
 
 @SuppressWarnings("deprecation")
 public class DarkZombieKnight extends Monster {
+	private static final EntityDataAccessor<Boolean> DATA_ATTACK_PLAYER_AFTER_TYRANT_DEATH = SynchedEntityData.defineId(DarkZombieKnight.class, EntityDataSerializers.BOOLEAN);
+
 	public DarkZombieKnight(EntityType<? extends DarkZombieKnight> entityType, Level level) {
 		super(entityType, level);
+		this.setBuster(this.getRandom().nextInt(3) != 0);
 		this.xpReward = 10;
+	}
+
+	@Override
+	public void defineSynchedData() {
+		super.defineSynchedData();
+		this.getEntityData().define(DATA_ATTACK_PLAYER_AFTER_TYRANT_DEATH, false);
+	}
+
+	public void setBuster(boolean buster) {
+		this.getEntityData().set(DATA_ATTACK_PLAYER_AFTER_TYRANT_DEATH, buster);
+	}
+
+	public boolean isBuster() {
+		return this.getEntityData().get(DATA_ATTACK_PLAYER_AFTER_TYRANT_DEATH);
 	}
 
 	@Override
@@ -49,7 +69,7 @@ public class DarkZombieKnight extends Monster {
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(9, new AvoidEntityGoal<>(this, Player.class, player -> player instanceof IMonsterHero hero && hero.isHero(EntityType.ZOMBIE), 8.0F, 1.0D, 1.2D, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true, player -> !(player instanceof IMonsterHero hero) || !hero.isHero(EntityType.ZOMBIE) || this.random.nextBoolean()));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true, player -> !(player instanceof IMonsterHero hero) || !hero.isHero(EntityType.ZOMBIE) || this.isBuster()));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 	}

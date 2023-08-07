@@ -8,9 +8,11 @@ import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
+import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Function3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -18,13 +20,16 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -101,8 +106,10 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 				zombie.setBaby(false);
 				darkZombieKnight.setYRot(360.0F - yRot);
 				darkZombieKnight.moveTo(blockPos.getCenter());
+				darkZombieKnight.setBuster(false);
 				zombieHorse.setYRot(360.0F - yRot);
 				zombieHorse.moveTo(blockPos.getCenter());
+				zombieHorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(zombieHorse.getRandom().nextDouble() * 0.1D + 0.35D);
 				darkZombieKnight.startRiding(zombieHorse);
 				darkZombieKnight.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.Weapons.GOLDEN_PIKE));
 				Direction awayDirection = Direction.fromYRot(yRot);
@@ -169,13 +176,21 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 			})
 	);
 
+	private static final List<Either<Item, TagKey<Item>>> INTERACT_ITEMS = Lists.newArrayList(
+			Either.left(Items.AIR),
+			Either.right(Tags.Items.ARMORS_HELMETS),
+			Either.left(Items.BUNDLE)
+	);
+
 	/**
 	 *
 	 * @param id				Mission ID
 	 * @param consumer			What to do when a random event is happening (for example, spawn mob, destroy blocks).
+	 * @param either			The item will be used to interact with zombies.
 	 */
-	public static void addRandomEvent(ResourceLocation id, Function3<ServerLevel, BlockPos, Float, Boolean> consumer) {
+	public static void addRandomEvent(ResourceLocation id, Function3<ServerLevel, BlockPos, Float, Boolean> consumer, Either<Item, TagKey<Item>> either) {
 		MISSIONS.add(new Tuple<>(id, consumer));
+		INTERACT_ITEMS.add(either);
 	}
 
 	private int index = 0;
@@ -201,7 +216,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 	}
 
 	@Override
-	protected EntityType<Zombie> getMonsterType() {
+	public EntityType<Zombie> getMonsterType() {
 		return EntityType.ZOMBIE;
 	}
 
@@ -218,5 +233,13 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 	@Override
 	protected ResourceLocation getMissionId() {
 		return MISSIONS.get(this.index).getA();
+	}
+
+	@Override
+	public boolean isInteractItem(Holder<Item> item) {
+		return INTERACT_ITEMS.stream().anyMatch(either -> either.map(
+				eitherItem -> item.value().equals(eitherItem),
+				item::is
+		));
 	}
 }

@@ -9,7 +9,6 @@
     "BlockEntityTypeAccess",
     "HeroGiftsTaskAccess",
     "LivingEntityMixin",
-    "MobMixin",
     "NoteBlockInstrumentMixin",
     "PlayerListMixin",
     "ServerLevelMixin",

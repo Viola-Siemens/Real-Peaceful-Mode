@@ -43,7 +43,7 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 	}
 
 	@Inject(method = "defineSynchedData", at = @At(value = "TAIL"))
-	public void definePhantomCureData(CallbackInfo ci) {
+	public void defineDanceData(CallbackInfo ci) {
 		this.getEntityData().define(Data.DATA_ZOMBIE_DANCE, false);
 	}
 

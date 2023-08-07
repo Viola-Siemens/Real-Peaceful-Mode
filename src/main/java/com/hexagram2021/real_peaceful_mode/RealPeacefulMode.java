@@ -16,9 +16,12 @@ import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
 import com.hexagram2021.real_peaceful_mode.network.ClientboundMissionMessagePacket;
 import com.hexagram2021.real_peaceful_mode.network.IRPMPacket;
 import com.hexagram2021.real_peaceful_mode.network.GetMissionsPacket;
+import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -115,6 +118,10 @@ public class RealPeacefulMode {
 			new ZombieEventSpawner(),
 			new SkeletonEventSpawner()
 	};
+
+	public static boolean isInteractItem(Holder<Item> item, EntityType<?> entityType) {
+		return Arrays.stream(rpmSpawners).anyMatch(spawner -> spawner.getMonsterType().equals(entityType) && spawner.isInteractItem(item));
+	}
 
 	public void serverAboutToStart(ServerAboutToStartEvent event) {
 		Arrays.stream(rpmSpawners).forEach(RandomEventSpawnerHelper::registerRandomEventSpawner);

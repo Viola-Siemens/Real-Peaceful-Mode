@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common;
 
+import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
@@ -29,18 +30,16 @@ public class ForgeEventHandler {
 	public void onMobInteract(PlayerInteractEvent.EntityInteract event) {
 		if (event.getTarget() instanceof IFriendlyMonster monster) {
 			BiFunction<ServerPlayer, ItemStack, Boolean> action = monster.getRandomEventNpcAction();
-			if (action != null) {
-				if(event.getEntity() instanceof ServerPlayer serverPlayer) {
-					if (event.getHand() == InteractionHand.MAIN_HAND && action.apply(serverPlayer, serverPlayer.getItemInHand(event.getHand()))) {
-						event.setCancellationResult(InteractionResult.SUCCESS);
-						event.setCanceled(true);
-						return;
-					}
-				} else {
-					event.setCancellationResult(InteractionResult.SUCCESS);
+			if (action != null && event.getEntity() instanceof ServerPlayer serverPlayer) {
+				if (event.getHand() == InteractionHand.MAIN_HAND && action.apply(serverPlayer, serverPlayer.getItemInHand(event.getHand()))) {
+					event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
 					event.setCanceled(true);
 					return;
 				}
+			} else if(event.getEntity().getItemInHand(event.getHand()).is(holder -> RealPeacefulMode.isInteractItem(holder, event.getTarget().getType()))) {
+				event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
+				event.setCanceled(true);
+				return;
 			}
 
 			if(event.getEntity() instanceof IMonsterHero hero && hero.isHero(event.getTarget().getType())) {

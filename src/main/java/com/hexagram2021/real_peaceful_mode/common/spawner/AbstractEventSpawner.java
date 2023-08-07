@@ -2,6 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.spawner;
 
 import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.Level;
 
@@ -65,11 +67,13 @@ public abstract class AbstractEventSpawner<T extends LivingEntity> implements Cu
 	//return: true if spawn successfully, false if not.
 	protected abstract boolean spawnEventNpc(ServerLevel level, ServerPlayer player);
 
-	protected abstract EntityType<T> getMonsterType();
+	public abstract EntityType<T> getMonsterType();
 
 	public abstract ResourceKey<Level> dimension();
 
 	protected abstract boolean checkSpawnConditions(ServerLevel level, ServerPlayer player);
 
 	protected abstract ResourceLocation getMissionId();
+
+	public abstract boolean isInteractItem(Holder<Item> item);
 }
