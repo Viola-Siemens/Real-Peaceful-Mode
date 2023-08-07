@@ -6,18 +6,27 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.getRegistryName;
 
 public abstract class AbstractEventSpawner<T extends LivingEntity> implements CustomSpawner {
 	private int tickDelay;
 	private int possibility;
+
+	protected static final Consumer<Mob> MOB_SWEAT = mob -> {
+		if(!mob.level().isClientSide && mob.getRandom().nextInt(64) == 0) {
+			mob.level().broadcastEntityEvent(mob, EntityEvent.VILLAGER_SWEAT);
+		}
+	};
 
 	@Override
 	public int tick(ServerLevel level, boolean spawnEnemies, boolean spawnFriendlies) {
@@ -46,7 +55,7 @@ public abstract class AbstractEventSpawner<T extends LivingEntity> implements Cu
 				return 1;
 			}
 		} else {
-			this.possibility = Math.min(this.possibility + RPMCommonConfig.RANDOM_EVENT_POSSIBILITY_ADDER.get(), RPMCommonConfig.RANDOM_EVENT_POSSIBILITY_MAX.get());
+			this.possibility = Math.max(RPMCommonConfig.RANDOM_EVENT_POSSIBILITY.get(), Math.min(this.possibility + RPMCommonConfig.RANDOM_EVENT_POSSIBILITY_ADDER.get(), RPMCommonConfig.RANDOM_EVENT_POSSIBILITY_MAX.get()));
 		}
 
 		return 0;

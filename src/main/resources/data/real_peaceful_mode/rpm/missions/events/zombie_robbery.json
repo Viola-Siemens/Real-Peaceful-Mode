@@ -1,0 +1,28 @@
+{
+  "random_event": true,
+  "requires": [
+    "real_peaceful_mode:zombie3"
+  ],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_robbery.message1",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_robbery.message2",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_robbery.message3",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.zombie_robbery.message4",
+      "speaker": "npc"
+    }
+  ],
+  "loot_table": "real_peaceful_mode:missions/zombie_spirit_with_material",
+  "loot_before": false
+}

@@ -102,6 +102,8 @@
 
   "gui.real_peaceful_mode.menu.mission_list.no_mission": "You haven't received any missions.",
 
+  "gui.ipp.jei.mob.dark_zombie_knight": "Dark Zombie Knight",
+
   "mission.real_peaceful_mode.zombie1.name": "Zombie's Fort",
   "mission.real_peaceful_mode.zombie1.description": "Run away and find someone to help you from zombie guards.",
   "mission.real_peaceful_mode.zombie1.after": "Stroll around outside the fort and find someone to talk to.",
@@ -114,6 +116,9 @@
   "mission.real_peaceful_mode.events/zombie_helmet.name": "A New Helmet",
   "mission.real_peaceful_mode.events/zombie_helmet.description": "Make a helmet and give it to the little zombie.",
   "mission.real_peaceful_mode.events/zombie_helmet.after": "Nice helmet! He feels thankful to you.",
+  "mission.real_peaceful_mode.events/zombie_robbery.name": "Robbery",
+  "mission.real_peaceful_mode.events/zombie_robbery.description": "Beat the evil knights down and take the wallet back to the zombie.",
+  "mission.real_peaceful_mode.events/zombie_robbery.after": "Nothing's missing! He feels thankful to you.",
 
   "mission.real_peaceful_mode.skeleton1.name": "Crack the Glowing Crystal",
   "mission.real_peaceful_mode.skeleton1.description": "There must be a special enchantment for bows to destroy fragile blocks.",
@@ -225,6 +230,12 @@
 
   "rpm.mission.real_peaceful_mode.event.zombie_helmet.message6": "Hey my boy. Take the helmet with you.",
   "rpm.mission.real_peaceful_mode.event.zombie_helmet.message7": "Thank you, my hero! Here's my payback. I hope you would like it.",
+
+  "rpm.mission.real_peaceful_mode.event.zombie_robbery.message1": "Please! Help me! I was just robbed by a dark knight. That's all my money and I can't live without it.",
+  "rpm.mission.real_peaceful_mode.event.zombie_robbery.message2": "Alright, I see him. I'll beat him down and take your wallet back!",
+
+  "rpm.mission.real_peaceful_mode.event.zombie_robbery.message3": "Here you are. Watch out for the evil knights.",
+  "rpm.mission.real_peaceful_mode.event.zombie_robbery.message4": "Thank you very much! Please take my payback. I have to go. Thanks a lot again.",
 
   "rpm.mission.real_peaceful_mode.skeleton1.message1": "My bow's broken now. And I still can't crack the crystal. What could it be inside the rock?",
   "rpm.mission.real_peaceful_mode.skeleton1.message2": "Woah, a skeleton without weapon!",

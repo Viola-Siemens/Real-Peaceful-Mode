@@ -19,12 +19,6 @@ public class ZombieKnightAttackGoal extends MeleeAttackGoal {
 	}
 
 	@Override
-	public void stop() {
-		super.stop();
-		this.knight.setAggressive(false);
-	}
-
-	@Override
 	public void tick() {
 		super.tick();
 		++this.raiseArmTicks;

@@ -14,6 +14,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -138,6 +140,7 @@ public class ZombieTyrant extends Mob implements Enemy {
 					new ResourceLocation(MODID, "zombie3"), SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
 					player -> player.closerThan(this, 32.0D), this, player -> {}
 			);
+			this.level().getEntitiesOfClass(DarkZombieKnight.class, this.getBoundingBox().inflate(16.0D), EntitySelector.ENTITY_STILL_ALIVE).forEach(knight -> knight.setTarget(null));
 		}
 		super.die(damageSource);
 	}
@@ -170,7 +173,7 @@ public class ZombieTyrant extends Mob implements Enemy {
 		@Override
 		public void tick() {
 			--this.warmUpTickCount;
-			if(this.warmUpTickCount <= 0) {
+			if(this.warmUpTickCount <= 0 && ZombieTyrant.this.isAlive()) {
 				int r = ZombieTyrant.this.random.nextInt(3) + 2;
 				ServerLevel level = (ServerLevel) ZombieTyrant.this.level();
 				for(int i = 0; i < r; ++i) {
@@ -185,6 +188,10 @@ public class ZombieTyrant extends Mob implements Enemy {
 						ForgeEventFactory.onFinalizeSpawn(knight, level, level.getCurrentDifficultyAt(ZombieTyrant.this.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
 						level.addFreshEntityWithPassengers(knight);
 					}
+				}
+				LivingEntity livingEntity = ZombieTyrant.this.getTarget();
+				if(livingEntity != null) {
+					livingEntity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 400), ZombieTyrant.this);
 				}
 			}
 		}

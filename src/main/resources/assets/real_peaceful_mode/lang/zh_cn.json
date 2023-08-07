@@ -102,6 +102,8 @@
 
   "gui.real_peaceful_mode.menu.mission_list.no_mission": "您还没有收到任何任务。",
 
+  "gui.ipp.jei.mob.dark_zombie_knight": "僵尸黑骑士",
+
   "mission.real_peaceful_mode.zombie1.name": "僵尸城堡",
   "mission.real_peaceful_mode.zombie1.description": "逃离这里或者找到能够帮你拦住僵尸护卫的人。",
   "mission.real_peaceful_mode.zombie1.after": "在城堡附近转转，找一位能跟你说话的人。",
@@ -114,6 +116,9 @@
   "mission.real_peaceful_mode.events/zombie_helmet.name": "新的头盔",
   "mission.real_peaceful_mode.events/zombie_helmet.description": "做一个头盔，并把它交给小僵尸",
   "mission.real_peaceful_mode.events/zombie_helmet.after": "不错的头盔！小僵尸非常满意。",
+  "mission.real_peaceful_mode.events/zombie_robbery.name": "抢劫",
+  "mission.real_peaceful_mode.events/zombie_robbery.description": "教训那个邪恶的骑士，然后把钱包带给僵尸。",
+  "mission.real_peaceful_mode.events/zombie_robbery.after": "什么都没丢！僵尸非常感激。",
 
   "mission.real_peaceful_mode.skeleton1.name": "击碎发光的水晶",
   "mission.real_peaceful_mode.skeleton1.description": "或许会有一种弓的附魔可以击碎这种易碎的方块。",
@@ -225,6 +230,12 @@
 
   "rpm.mission.real_peaceful_mode.event.zombie_helmet.message6": "孩子，戴上这个头盔吧。",
   "rpm.mission.real_peaceful_mode.event.zombie_helmet.message7": "谢谢您，您就是我的神！这是一些回礼，希望您能喜欢。",
+
+  "rpm.mission.real_peaceful_mode.event.zombie_robbery.message1": "抢劫啊！救我！我刚刚被一个黑骑士抢了，我身上所有的钱都被拿走了，没这些钱我根本活不下去。",
+  "rpm.mission.real_peaceful_mode.event.zombie_robbery.message2": "好的。我看到他了，我会过去教训一下他，把你的钱包带回来！",
+
+  "rpm.mission.real_peaceful_mode.event.zombie_robbery.message3": "给你，可要小心那些邪恶的骑士了。",
+  "rpm.mission.real_peaceful_mode.event.zombie_robbery.message4": "非常感谢您！请你收下我的回礼吧，我得走了，再次感谢您的见义勇为！",
 
   "rpm.mission.real_peaceful_mode.skeleton1.message1": "我的弓断了，但我仍然无法打碎这块水晶。这破石头里面到底有什么？",
   "rpm.mission.real_peaceful_mode.skeleton1.message2": "哇哦，没有武器的骷髅！",
