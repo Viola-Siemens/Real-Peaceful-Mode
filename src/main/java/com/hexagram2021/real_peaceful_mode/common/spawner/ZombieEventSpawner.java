@@ -160,6 +160,8 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 					dyeable.setColor(helmet, 0x4b4a4a);
 				}
 				zombie.setItemSlot(EquipmentSlot.HEAD, helmet);
+				darkZombieKnight.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.CHAINMAIL_HELMET));
+				darkZombieKnight.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.CHAINMAIL_CHESTPLATE));
 				level.addFreshEntity(zombie);
 				level.addFreshEntity(zombieHorse);
 				level.addFreshEntity(darkZombieKnight);
