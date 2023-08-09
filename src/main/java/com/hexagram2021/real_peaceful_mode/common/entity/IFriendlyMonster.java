@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 public interface IFriendlyMonster {
 	boolean preventAttack(@Nullable LivingEntity target);
 
+	boolean isDancing();
 	void setDance(boolean dancing);
 
 	@Nullable

@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.mixin;
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.entity.goal.MonsterDanceGoal;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
@@ -47,6 +48,11 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 		this.getEntityData().define(Data.DATA_ZOMBIE_DANCE, false);
 	}
 
+	@Inject(method = "addBehaviourGoals", at = @At(value = "TAIL"))
+	public void addRPMExtraGoals(CallbackInfo ci) {
+		this.goalSelector.addGoal(1, new MonsterDanceGoal<>(this));
+	}
+
 	@Inject(method = "readAdditionalSaveData", at = @At(value = "TAIL"))
 	public void getRPMZombieAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
 		this.fightForPlayer = nbt.contains(TAG_FIGHT_FOR_PLAYER, Tag.TAG_BYTE) && nbt.getBoolean(TAG_FIGHT_FOR_PLAYER);
@@ -81,6 +87,11 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 			}
 			return false;
 		}) && target instanceof AbstractVillager;
+	}
+
+	@Override
+	public boolean isDancing() {
+		return this.getEntityData().get(Data.DATA_ZOMBIE_DANCE);
 	}
 
 	@Override

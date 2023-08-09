@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.entity.boss;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -141,6 +143,12 @@ public class ZombieTyrant extends Mob implements Enemy {
 					player -> player.closerThan(this, 32.0D), this, player -> {}
 			);
 			this.level().getEntitiesOfClass(DarkZombieKnight.class, this.getBoundingBox().inflate(16.0D), EntitySelector.ENTITY_STILL_ALIVE).forEach(knight -> knight.setTarget(null));
+			this.level().getEntitiesOfClass(Zombie.class, this.getBoundingBox().inflate(32.0D), EntitySelector.ENTITY_STILL_ALIVE)
+					.forEach(zombie -> {
+						if(zombie instanceof IFriendlyMonster monster) {
+							monster.setDance(true);
+						}
+					});
 		}
 		super.die(damageSource);
 	}
