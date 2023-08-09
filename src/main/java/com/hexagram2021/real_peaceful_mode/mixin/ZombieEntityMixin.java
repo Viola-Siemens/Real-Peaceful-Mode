@@ -30,6 +30,7 @@ import java.util.function.Consumer;
 @Mixin(Zombie.class)
 public abstract class ZombieEntityMixin extends Monster implements IFriendlyMonster {
 	private static final String TAG_FIGHT_FOR_PLAYER = "RPM_FightForPlayer";
+	private static final String TAG_DANCING = "RPM_Dancing";
 	private boolean fightForPlayer = false;
 	@Nullable
 	private Goal attackDarkZombieKnightSelector = null;
@@ -67,6 +68,7 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 				this.attackDarkZombieKnightSelector = null;
 			}
 		}
+		this.setDance(nbt.contains(TAG_DANCING, Tag.TAG_BYTE) && nbt.getBoolean(TAG_DANCING));
 	}
 
 	@Inject(method = "addAdditionalSaveData", at = @At(value = "TAIL"))
@@ -74,6 +76,7 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 		if(this.fightForPlayer) {
 			nbt.putBoolean(TAG_FIGHT_FOR_PLAYER, true);
 		}
+		nbt.putBoolean(TAG_DANCING, this.isDancing());
 	}
 
 	@Override
