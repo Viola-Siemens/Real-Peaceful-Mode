@@ -6,6 +6,7 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -133,7 +134,24 @@ public class DarkZombieKnight extends Monster {
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficultyInstance) {
 		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.Weapons.IRON_PIKE));
 	}
-
+	
+	private static final String TAG_IS_BUSTER = "buster";
+	@Override
+	public void addAdditionalSaveData(CompoundTag nbt) {
+		super.addAdditionalSaveData(nbt);
+		nbt.putBoolean(TAG_IS_BUSTER, this.isBuster());
+	}
+	
+	@Override
+	public void readAdditionalSaveData(CompoundTag nbt) {
+		super.readAdditionalSaveData(nbt);
+		if(nbt.contains(TAG_IS_BUSTER, Tag.TAG_STRING)) {
+			this.setBuster(nbt.getBoolean(TAG_IS_BUSTER));
+		} else {
+			this.setBuster(this.getRandom().nextInt(3) != 0);
+		}
+	}
+	
 	@SuppressWarnings("OverrideOnly")
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyInstance,

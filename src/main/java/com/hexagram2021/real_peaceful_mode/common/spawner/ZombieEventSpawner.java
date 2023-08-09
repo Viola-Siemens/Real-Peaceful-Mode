@@ -109,7 +109,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 				darkZombieKnight.setBuster(false);
 				zombieHorse.setYRot(360.0F - yRot);
 				zombieHorse.moveTo(blockPos.getCenter());
-				zombieHorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(zombieHorse.getRandom().nextDouble() * 0.1D + 0.35D);
+				zombieHorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(zombieHorse.getRandom().nextDouble() * 0.1D + 0.25D);
 				darkZombieKnight.startRiding(zombieHorse);
 				darkZombieKnight.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.Weapons.GOLDEN_PIKE));
 
