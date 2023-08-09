@@ -100,6 +100,11 @@ public class DarkZombieKnight extends Monster {
 
 		super.aiStep();
 	}
+	
+	@Override
+	public double getMyRidingOffset() {
+		return -0.45D;
+	}
 
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -145,7 +150,7 @@ public class DarkZombieKnight extends Monster {
 	@Override
 	public void readAdditionalSaveData(CompoundTag nbt) {
 		super.readAdditionalSaveData(nbt);
-		if(nbt.contains(TAG_IS_BUSTER, Tag.TAG_STRING)) {
+		if(nbt.contains(TAG_IS_BUSTER, Tag.TAG_BYTE)) {
 			this.setBuster(nbt.getBoolean(TAG_IS_BUSTER));
 		} else {
 			this.setBuster(this.getRandom().nextInt(3) != 0);
