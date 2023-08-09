@@ -17,10 +17,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class LivingEntityMixin {
 	@Inject(method = "handleEntityEvent", at = @At(value = "HEAD"), cancellable = true)
 	public void addFriendlyMonsterEventHandler(byte event, CallbackInfo ci) {
-		if(this instanceof IFriendlyMonster friendlyMonster) {
+		if(this instanceof IFriendlyMonster) {
 			if(event == EntityEvent.VILLAGER_SWEAT) {
-				friendlyMonster.addLessParticlesAroundSelf(ParticleTypes.SPLASH);
-				friendlyMonster.addLessParticlesAroundSelf(ParticleTypes.ANGRY_VILLAGER);
+				IFriendlyMonster.addLessParticlesAroundSelf((LivingEntity)(Object)this, ParticleTypes.SPLASH);
+				IFriendlyMonster.addLessParticlesAroundSelf((LivingEntity)(Object)this, ParticleTypes.ANGRY_VILLAGER);
 				ci.cancel();
 			}
 		}
