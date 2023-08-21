@@ -26,10 +26,7 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "real_peaceful_mode:tuff_bricks",
-            "Properties": {
-              "snowy": "false"
-            }
+            "Name": "real_peaceful_mode:tuff_bricks"
           }
         },
         {
