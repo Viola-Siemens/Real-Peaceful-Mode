@@ -101,7 +101,7 @@ public class ZombieFortPieces {
 			if(newBlock != null) {
 				for(Property property: blockstate.getProperties()) {
 					if(newBlock.hasProperty(property)) {
-						newBlock.setValue(property, blockstate.getValue(property));
+						newBlock = newBlock.setValue(property, blockstate.getValue(property));
 					}
 				}
 				this.placeBlock(level, newBlock, x, y, z, boundingBox);
