@@ -169,7 +169,8 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 
 	private boolean canAnalyze() {
 		return isInput(this.items.get(SLOT_INPUT)) && this.items.get(SLOT_RESULT).isEmpty() &&
-				canAnalyze(this.items.get(SLOT_MIX1)) && canAnalyze(this.items.get(SLOT_MIX2));
+				canAnalyze(this.items.get(SLOT_MIX1)) && canAnalyze(this.items.get(SLOT_MIX2)) &&
+				!ItemStack.isSameItem(this.items.get(SLOT_MIX1), this.items.get(SLOT_MIX2));
 	}
 
 	private void finishAnalyze() {
