@@ -13,8 +13,10 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMKeys;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.CreeperModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -63,6 +65,7 @@ public class ClientProxy extends CommonProxy {
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_OUTER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(1.0F));
         event.registerLayerDefinition(RPMModelLayers.ZOMBIE_TYRANT, ZombieTyrantModel::createBodyLayer);
         event.registerLayerDefinition(RPMModelLayers.SKELETON_KING, SkeletonKingModel::createBodyLayer);
+        event.registerLayerDefinition(RPMModelLayers.HUSK_PHARAOH, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL, SkullModel::createHumanoidHeadLayer);
         event.registerLayerDefinition(RPMModelLayers.SKELETON_SKULL, SkeletonSkullRenderer::createSkullLayer);
     }
@@ -73,6 +76,7 @@ public class ClientProxy extends CommonProxy {
         event.registerEntityRenderer(RPMEntities.PINK_CREEPER, PinkCreeperRenderer::new);
         event.registerEntityRenderer(RPMEntities.ZOMBIE_TYRANT, ZombieTyrantRenderer::new);
         event.registerEntityRenderer(RPMEntities.SKELETON_KING, SkeletonKingRenderer::new);
+        event.registerEntityRenderer(RPMEntities.HUSK_PHARAOH, HuskPharaohRenderer::new);
         event.registerEntityRenderer(RPMEntities.SKELETON_SKULL, SkeletonSkullRenderer::new);
     }
 }

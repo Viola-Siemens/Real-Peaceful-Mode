@@ -2,6 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
 import com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.SkeletonKing;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
@@ -30,6 +31,10 @@ public class RPMEntities {
             .sized(0.9F, 2.0F)
             .clientTrackingRange(10)
             .build(new ResourceLocation(MODID, "skeleton_king").toString());
+    public static final EntityType<HuskPharaoh> HUSK_PHARAOH = EntityType.Builder.of(HuskPharaoh::new, MobCategory.MONSTER)
+            .sized(0.6F, 1.95F)
+            .clientTrackingRange(8)
+            .build(new ResourceLocation(MODID, "husk_pharaoh").toString());
     public static final EntityType<SkeletonSkullEntity> SKELETON_SKULL = EntityType.Builder.<SkeletonSkullEntity>of(SkeletonSkullEntity::new, MobCategory.MISC)
             .sized(0.3125F, 0.3125F)
             .clientTrackingRange(8)

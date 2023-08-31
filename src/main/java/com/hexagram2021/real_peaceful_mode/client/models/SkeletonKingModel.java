@@ -35,7 +35,6 @@ public class SkeletonKingModel<T extends SkeletonKing> extends HumanoidModel<T> 
 	}
 
 	public static LayerDefinition createBodyLayer() {
-		// TODO
 		return LayerDefinition.create(createMesh(CubeDeformation.NONE), 64, 64);
 	}
 

@@ -8,7 +8,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.level.Level;
 
 public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy {
-	protected HuskPharaoh(EntityType<? extends HuskPharaoh> entityType, Level level) {
+	public HuskPharaoh(EntityType<? extends HuskPharaoh> entityType, Level level) {
 		super(entityType, level);
 	}
 

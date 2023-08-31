@@ -43,7 +43,6 @@ public class ZombieTyrantModel<T extends ZombieTyrant> extends HumanoidModel<T> 
 	}
 
 	public static LayerDefinition createBodyLayer() {
-		// TODO
 		return LayerDefinition.create(createMesh(CubeDeformation.NONE), 64, 64);
 	}
 
