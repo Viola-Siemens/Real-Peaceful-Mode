@@ -1,0 +1,20 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:splashing",
+  "ingredients": [
+    {
+      "item": "real_peaceful_mode:zombie_spirit_bead"
+    }
+  ],
+  "results": [
+    {
+      "item": "real_peaceful_mode:drowned_spirit_bead",
+      "count": 1
+    }
+  ]
+}

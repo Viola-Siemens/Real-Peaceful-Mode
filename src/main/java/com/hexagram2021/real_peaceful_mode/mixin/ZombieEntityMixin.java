@@ -86,7 +86,7 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 		}
 		return this.level().players().stream().anyMatch(player -> {
 			if(player instanceof IMonsterHero hero) {
-				return hero.isHero(EntityType.ZOMBIE);
+				return hero.isHero(this.getType());
 			}
 			return false;
 		}) && target instanceof AbstractVillager;

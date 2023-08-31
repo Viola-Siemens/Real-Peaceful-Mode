@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "real_peaceful_mode:item/drowned_spirit_bead"
+  }
+}

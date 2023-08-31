@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "real_peaceful_mode:zombie_spirit_bead"
+  },
+  "result": "real_peaceful_mode:husk_spirit_bead",
+  "experience": 0.3,
+  "cookingtime": 200
+}

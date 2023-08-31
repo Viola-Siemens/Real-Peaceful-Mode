@@ -1,0 +1,16 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "emeraldcraft"
+    }
+  ],
+  "type": "emeraldcraft:glass_kiln",
+  "category": "clay",
+  "ingredient": {
+    "item": "minecraft:tuff"
+  },
+  "result": "real_peaceful_mode:tuff_brick",
+  "experience": 0.3,
+  "cookingtime": 100
+}

@@ -55,6 +55,8 @@ public class MissionHelper {
 	/**
 	 * API for custom mods to trigger mission on/off for a single player.
 	 *
+	 * @see com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity#tick
+	 *
 	 * @param missionId				Mission ID (for example, "real_peaceful_mode:zombie3") of the triggered mission.
 	 * @param summonMissionType		RECEIVE for receiving a new mission, FINISH for finishing a mission.
 	 * @param player				The player who triggers the mission.

@@ -51,6 +51,8 @@ public class RPMItems {
         public static final ItemEntry<Item> CREEPER_SPIRIT_BEAD = ItemEntry.register("creeper_spirit_bead", () -> new Item(new Item.Properties()));
         public static final ItemEntry<Item> SLIME_SPIRIT_BEAD = ItemEntry.register("slime_spirit_bead", () -> new Item(new Item.Properties()));
         public static final ItemEntry<Item> GUARDIAN_SPIRIT_BEAD = ItemEntry.register("guardian_spirit_bead", () -> new Item(new Item.Properties()));
+        public static final ItemEntry<Item> HUSK_SPIRIT_BEAD = ItemEntry.register("husk_spirit_bead", () -> new Item(new Item.Properties()));
+        public static final ItemEntry<Item> DROWNED_SPIRIT_BEAD = ItemEntry.register("drowned_spirit_bead", () -> new Item(new Item.Properties()));
 
         private SpiritBeads() {
         }
