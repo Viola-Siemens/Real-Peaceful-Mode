@@ -18,6 +18,7 @@ import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -78,5 +79,6 @@ public class ClientProxy extends CommonProxy {
         event.registerEntityRenderer(RPMEntities.SKELETON_KING, SkeletonKingRenderer::new);
         event.registerEntityRenderer(RPMEntities.HUSK_PHARAOH, HuskPharaohRenderer::new);
         event.registerEntityRenderer(RPMEntities.SKELETON_SKULL, SkeletonSkullRenderer::new);
+        event.registerEntityRenderer(RPMEntities.TINY_FIREBALL, TinyFireballRenderer::new);
     }
 }

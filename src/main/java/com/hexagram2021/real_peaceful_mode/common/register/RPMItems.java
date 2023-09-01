@@ -1,14 +1,17 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.google.common.collect.Lists;
+import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
 import com.hexagram2021.real_peaceful_mode.common.item.DebugWishItem;
-import com.hexagram2021.real_peaceful_mode.common.item.SkeletonScepterItem;
+import com.hexagram2021.real_peaceful_mode.common.item.ScepterItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -83,8 +86,35 @@ public class RPMItems {
     }
 
     public static class Weapons {
-        public static ItemEntry<SkeletonScepterItem> SKELETON_SCEPTER = ItemEntry.register(
-                "skeleton_scepter", () -> new SkeletonScepterItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).durability(1396))
+        public static ItemEntry<ScepterItem<SkeletonSkullEntity>> SKELETON_SCEPTER = ItemEntry.register(
+                "skeleton_scepter", () -> new ScepterItem<>(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).durability(1396)) {
+                    @Override
+                    public SkeletonSkullEntity createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
+                        SkeletonSkullEntity skull = new SkeletonSkullEntity(level, owner, directionX, directionY, directionZ);
+                        skull.setPos(owner.getX(), owner.getY() + owner.getEyeHeight(), owner.getZ());
+                        return skull;
+                    }
+
+                    @Override
+                    public boolean isValidRepairItem(ItemStack scepter, ItemStack material) {
+                        return material.is(Items.BONE) || super.isValidRepairItem(scepter, material);
+                    }
+                }
+        );
+        public static ItemEntry<ScepterItem<SkeletonSkullEntity>> PHARAOH_SCEPTER = ItemEntry.register(
+                "pharaoh_scepter", () -> new ScepterItem<>(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).durability(1280)) {
+                    @Override
+                    public SkeletonSkullEntity createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
+                        SkeletonSkullEntity skull = new SkeletonSkullEntity(level, owner, directionX, directionY, directionZ);
+                        skull.setPos(owner.getX(), owner.getY() + owner.getEyeHeight(), owner.getZ());
+                        return skull;
+                    }
+
+                    @Override
+                    public boolean isValidRepairItem(ItemStack scepter, ItemStack material) {
+                        return material.is(Items.SANDSTONE) || super.isValidRepairItem(scepter, material);
+                    }
+                }
         );
         public static ItemEntry<SwordItem> IRON_PIKE = ItemEntry.register(
                 "iron_pike", () -> new SwordItem(Tiers.IRON, 4, -3.0F, new Item.Properties().stacksTo(1))

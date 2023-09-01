@@ -67,6 +67,8 @@
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "僵尸长者",
   "entity.real_peaceful_mode.skeleton_skull": "骷髅头",
 
+  "effect.real_peaceful_mode.trance": "恍惚",
+
   "structure.real_peaceful_mode.all_structures": "怪物们的建筑",
   "structure.real_peaceful_mode.all_structures.description": "你可以来到这里与怪物们交谈，接收他们的委托。",
   "structure.real_peaceful_mode.zombie_fort": "僵尸城堡",

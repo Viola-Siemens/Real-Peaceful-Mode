@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common;
 import com.hexagram2021.real_peaceful_mode.common.crafting.compat.ModsCompatManager;
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
 import com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.SkeletonKing;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
 import com.hexagram2021.real_peaceful_mode.common.register.*;
@@ -32,6 +33,7 @@ public class RPMContent {
 		RPMFluids.init(bus);
 		RPMBlocks.init(bus);
 		RPMItems.init(bus);
+		RPMMobEffects.init(bus);
 		Villages.Registers.init(bus);
 		RPMBlockEntities.init(bus);
 		RPMCreativeTabs.init(bus);
@@ -77,5 +79,6 @@ public class RPMContent {
 		event.put(RPMEntities.PINK_CREEPER, PinkCreeperEntity.createAttributes().build());
 		event.put(RPMEntities.ZOMBIE_TYRANT, ZombieTyrant.createAttributes().build());
 		event.put(RPMEntities.SKELETON_KING, SkeletonKing.createAttributes().build());
+		event.put(RPMEntities.HUSK_PHARAOH, HuskPharaoh.createAttributes().build());
 	}
 }

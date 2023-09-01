@@ -23,6 +23,8 @@ public class RPMSounds {
 	public static final SoundEvent ZOMBIE_TYRANT_SPELL = registerSound("entity.zombie_tyrant.spell");
 	public static final SoundEvent SKELETON_KING_AMBIENT = registerSound("entity.skeleton_king.ambient");
 	public static final SoundEvent SKELETON_KING_DEATH = registerSound("entity.skeleton_king.death");
+	public static final SoundEvent HUSK_PHARAOH_AMBIENT = registerSound("entity.husk_pharaoh.ambient");
+	public static final SoundEvent HUSK_PHARAOH_DEATH = registerSound("entity.husk_pharaoh.death");
 
 	public static final SoundEvent MUSIC_DISC_ZOMBIE = registerSound("music_disc.rpm.zombie");
 	public static final SoundEvent MUSIC_DISC_SKELETON = registerSound("music_disc.rpm.skeleton");

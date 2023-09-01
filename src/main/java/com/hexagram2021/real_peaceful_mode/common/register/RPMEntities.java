@@ -6,6 +6,7 @@ import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.SkeletonKing;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -40,6 +41,11 @@ public class RPMEntities {
             .clientTrackingRange(8)
             .updateInterval(6)
             .build(new ResourceLocation(MODID, "skeleton_skull").toString());
+    public static final EntityType<TinyFireballEntity> TINY_FIREBALL = EntityType.Builder.<TinyFireballEntity>of(TinyFireballEntity::new, MobCategory.MISC)
+            .sized(0.25F, 0.25F)
+            .clientTrackingRange(4)
+            .updateInterval(6)
+            .build(new ResourceLocation(MODID, "tiny_fireball").toString());
 
     public static void init(RegisterEvent event) {
         event.register(Registries.ENTITY_TYPE, helper -> {
@@ -47,7 +53,9 @@ public class RPMEntities {
             helper.register(new ResourceLocation(MODID, "pink_creeper"), PINK_CREEPER);
             helper.register(new ResourceLocation(MODID, "zombie_tyrant"), ZOMBIE_TYRANT);
             helper.register(new ResourceLocation(MODID, "skeleton_king"), SKELETON_KING);
+            helper.register(new ResourceLocation(MODID, "husk_pharaoh"), HUSK_PHARAOH);
             helper.register(new ResourceLocation(MODID, "skeleton_skull"), SKELETON_SKULL);
+            helper.register(new ResourceLocation(MODID, "tiny_fireball"), TINY_FIREBALL);
         });
     }
 }

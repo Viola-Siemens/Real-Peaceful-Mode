@@ -1,12 +1,13 @@
 package com.hexagram2021.real_peaceful_mode.common.item;
 
-import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
@@ -16,8 +17,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Predicate;
 
-public class SkeletonScepterItem extends ProjectileWeaponItem implements Vanishable {
-    public SkeletonScepterItem(Properties props) {
+public abstract class ScepterItem<T extends AbstractHurtingProjectile> extends ProjectileWeaponItem implements Vanishable {
+    public ScepterItem(Properties props) {
         super(props);
     }
 
@@ -37,10 +38,9 @@ public class SkeletonScepterItem extends ProjectileWeaponItem implements Vanisha
         if (!level.isClientSide) {
             Vec3 vec = player.getLookAngle();
             if(scepter.getMaxDamage() - scepter.getDamageValue() >= 10) {
-                SkeletonSkullEntity skull = new SkeletonSkullEntity(level, player, vec.x(), vec.y(), vec.z());
-                skull.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
+                T projectile = this.createProjectile(level, player, vec.x(), vec.y(), vec.z());
                 scepter.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(player.getUsedItemHand()));
-                level.addFreshEntity(skull);
+                level.addFreshEntity(projectile);
                 player.getCooldowns().addCooldown(this, 10);
             }
         }
@@ -50,8 +50,5 @@ public class SkeletonScepterItem extends ProjectileWeaponItem implements Vanisha
         return InteractionResultHolder.consume(scepter);
     }
 
-    @Override
-    public boolean isValidRepairItem(ItemStack scepter, ItemStack material) {
-        return material.is(Items.BONE) || super.isValidRepairItem(scepter, material);
-    }
+    public abstract T createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ);
 }

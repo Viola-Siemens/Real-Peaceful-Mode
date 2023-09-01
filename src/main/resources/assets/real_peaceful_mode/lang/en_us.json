@@ -67,6 +67,8 @@
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "Zombie Senior",
   "entity.real_peaceful_mode.skeleton_skull": "Skeleton Skull",
 
+  "effect.real_peaceful_mode.trance": "Trance",
+
   "structure.real_peaceful_mode.all_structures": "Monsters' Buildings",
   "structure.real_peaceful_mode.all_structures.description": "You can talk with monsters here, and receive missions given by them.",
   "structure.real_peaceful_mode.zombie_fort": "Zombie Fort",

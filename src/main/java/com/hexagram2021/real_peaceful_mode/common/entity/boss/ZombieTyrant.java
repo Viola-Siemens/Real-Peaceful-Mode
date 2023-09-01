@@ -199,7 +199,7 @@ public class ZombieTyrant extends Mob implements Enemy {
 				}
 				LivingEntity livingEntity = ZombieTyrant.this.getTarget();
 				if(livingEntity != null) {
-					livingEntity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 400), ZombieTyrant.this);
+					livingEntity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 400, 1), ZombieTyrant.this);
 				}
 			}
 		}
