@@ -42,7 +42,7 @@ public class ClientEventHandler {
 				}
 			} else {
 				if(player.hasEffect(RPMMobEffects.TRANCE.get())) {
-					mc.gameRenderer.loadEffect(new ResourceLocation("shaders/post/blobs2.json"));
+					mc.gameRenderer.loadEffect(new ResourceLocation(MODID, "shaders/post/trance.json"));
 					hasEffect = true;
 				}
 			}

@@ -1,0 +1,49 @@
+{
+    "targets": [
+        "temp",
+        "swap",
+        "brighten"
+    ],
+    "passes": [
+        {
+            "name": "minecraft:blobs",
+            "intarget": "minecraft:main",
+            "outtarget": "temp"
+        },
+        {
+            "name": "minecraft:deconverge",
+            "intarget": "temp",
+            "outtarget": "swap",
+            "uniforms": [
+                {
+                    "name": "ConvergeX",
+                    "values": [ -7.0,  1.0,  4.0 ]
+                },
+                {
+                    "name": "ConvergeY",
+                    "values": [  1.0, -7.0,  4.0 ]
+                }
+            ]
+        },
+        {
+            "name": "minecraft:color_convolve",
+            "intarget": "swap",
+            "outtarget": "brighten",
+            "uniforms": [
+                {
+                    "name": "ColorScale",
+                    "values": [ 1.2,  1.2,  1.2 ]
+                },
+                {
+                    "name": "Saturation",
+                    "values": [ 1.25 ]
+                }
+            ]
+        },
+        {
+            "name": "minecraft:blit",
+            "intarget": "brighten",
+            "outtarget": "minecraft:main"
+        }
+    ]
+}
