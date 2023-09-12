@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.boss;
 
+import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -19,7 +20,6 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
@@ -60,7 +60,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		double y = target.getY() - this.getY(1.0D / 3.0D);
 		double r = Math.sqrt(x * x + z * z);
 		double r2 = Math.sqrt(x * x + y * y + z * z);
-		SmallFireball fireball = new SmallFireball(this.level(), this, x / r2, y / r2, z / r2);
+		TinyFireballEntity fireball = new TinyFireballEntity(this.level(), this, x / r2, y / r2, z / r2);
 		fireball.setPos(this.getX() + x / r, this.getY(1.0D / 3.0D), this.getZ() + z / r);
 		this.level().addFreshEntity(fireball);
 		this.playSound(SoundEvents.FIRECHARGE_USE);
