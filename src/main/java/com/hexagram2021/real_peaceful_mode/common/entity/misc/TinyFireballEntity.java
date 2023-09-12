@@ -1,7 +1,9 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.misc;
 
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMMobEffects;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,6 +36,9 @@ public class TinyFireballEntity extends Fireball {
             Entity owner = this.getOwner();
             DamageSource damageSource = owner instanceof Player ? this.damageSources().playerAttack((Player) owner) : this.damageSources().magic();
             attackTarget.hurt(damageSource, 3.0F);
+            if(attackTarget instanceof LivingEntity livingEntity) {
+                livingEntity.addEffect(new MobEffectInstance(RPMMobEffects.TRANCE.get(), 600));
+            }
         }
     }
 
