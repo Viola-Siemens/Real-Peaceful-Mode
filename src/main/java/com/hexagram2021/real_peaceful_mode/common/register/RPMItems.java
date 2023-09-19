@@ -2,6 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
 import com.hexagram2021.real_peaceful_mode.common.item.DebugWishItem;
 import com.hexagram2021.real_peaceful_mode.common.item.ScepterItem;
 import net.minecraft.resources.ResourceLocation;
@@ -101,13 +102,13 @@ public class RPMItems {
                     }
                 }
         );
-        public static ItemEntry<ScepterItem<SkeletonSkullEntity>> PHARAOH_SCEPTER = ItemEntry.register(
+        public static ItemEntry<ScepterItem<TinyFireballEntity>> PHARAOH_SCEPTER = ItemEntry.register(
                 "pharaoh_scepter", () -> new ScepterItem<>(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).durability(1280)) {
                     @Override
-                    public SkeletonSkullEntity createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
-                        SkeletonSkullEntity skull = new SkeletonSkullEntity(level, owner, directionX, directionY, directionZ);
-                        skull.setPos(owner.getX(), owner.getY() + owner.getEyeHeight(), owner.getZ());
-                        return skull;
+                    public TinyFireballEntity createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
+                        TinyFireballEntity fireball = new TinyFireballEntity(level, owner, directionX, directionY, directionZ);
+                        fireball.setPos(owner.getX(), owner.getY() + owner.getEyeHeight(), owner.getZ());
+                        return fireball;
                     }
 
                     @Override
@@ -127,6 +128,10 @@ public class RPMItems {
         );
         public static ItemEntry<SwordItem> NETHERITE_PIKE = ItemEntry.register(
                 "netherite_pike", () -> new SwordItem(Tiers.NETHERITE, 4, -3.0F, new Item.Properties().stacksTo(1))
+        );
+
+        public static ItemEntry<FireChargeItem> TINY_FLAME = ItemEntry.register(
+                "tiny_flame", () -> new FireChargeItem(new Item.Properties())
         );
 
         private Weapons() {

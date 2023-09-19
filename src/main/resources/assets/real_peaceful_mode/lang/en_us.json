@@ -42,6 +42,8 @@
   "item.real_peaceful_mode.dark_magic_pool_water_bucket": "Dark Magic Pool Water Bucket",
   "item.real_peaceful_mode.crystal_skull": "Crystal Skull",
   "item.real_peaceful_mode.skeleton_scepter": "Skeleton Scepter",
+  "item.real_peaceful_mode.pharaoh_scepter": "Pharaoh Scepter",
+  "item.real_peaceful_mode.tiny_flame": "Tiny Flame",
   "item.real_peaceful_mode.iron_pike": "Iron Pike",
   "item.real_peaceful_mode.golden_pike": "Golden Pike",
   "item.real_peaceful_mode.diamond_pike": "Diamond Pike",
@@ -60,12 +62,14 @@
 
   "entity.minecraft.villager.real_peaceful_mode.senior": "Senior",
   "entity.minecraft.villager.real_peaceful_mode.botanist": "Botanist",
+  "entity.minecraft.villager.real_peaceful_mode.plumber": "Plumber",
   "entity.real_peaceful_mode.dark_zombie_knight": "Dark Zombie Knight",
   "entity.real_peaceful_mode.zombie_tyrant": "Zombie Tyrant",
   "entity.real_peaceful_mode.skeleton_king": "Skeleton King",
   "entity.real_peaceful_mode.pink_creeper": "Pink Creeper",
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "Zombie Senior",
   "entity.real_peaceful_mode.skeleton_skull": "Skeleton Skull",
+  "entity.real_peaceful_mode.tiny_fireball": "Tiny Fireball",
 
   "effect.real_peaceful_mode.trance": "Trance",
 
@@ -83,6 +87,7 @@
 
   "subtitles.entity.villager.work_senior": "Senior works",
   "subtitles.entity.villager.work_botanist": "Botanist works",
+  "subtitles.entity.villager.work_plumber": "Plumber works",
   "subtitles.entity.dark_zombie_knight.ambient": "Dark Zombie Knight groans",
   "subtitles.entity.dark_zombie_knight.hurt": "Dark Zombie Knight hurts",
   "subtitles.entity.dark_zombie_knight.death": "Dark Zombie Knight dies",
@@ -376,5 +381,18 @@
   "rpm.mission.real_peaceful_mode.creeper3.message23": "Yes, we are best friends for ever! Thanks a lot for your help. I really appreciate that.",
   "rpm.mission.real_peaceful_mode.creeper3.message24": "Will you come to see me when you're free? I know you are busy in saving other monsters under curses...",
   "rpm.mission.real_peaceful_mode.creeper3.message25": "How can I forget my best friend! I will, of course.",
-  "rpm.mission.real_peaceful_mode.creeper3.message26": "Thank you. I'm staying here and waiting for you."
+  "rpm.mission.real_peaceful_mode.creeper3.message26": "Thank you. I'm staying here and waiting for you.",
+
+  "rpm.mission.real_peaceful_mode.husk1.message1": "So, whom's the next sinner coming to mine place?",
+  "rpm.mission.real_peaceful_mode.husk1.message2": "Oh, my... I'm sorry, I come for peace and I will leave right now.",
+  "rpm.mission.real_peaceful_mode.husk1.message3": "How dare thou? Thou regard thou just run aroint from mine place? I be will dispatch thou!",
+  "rpm.mission.real_peaceful_mode.husk1.message4": "What? This guy looks really tricky. Although I defeated the tyrant of zombie before, I still feel no confidence about this fight.",
+
+  "rpm.mission.real_peaceful_mode.husk1.message5": "What a hard struggle! Why does this guy still look unhurt? I'm so hot and thirsty...",
+  "rpm.mission.real_peaceful_mode.husk1.message6": "But it's cloudy now, which makes me feel better.",
+  "rpm.mission.real_peaceful_mode.husk1.message7": "Where's mine sun? Mine goddess's leaving me again...",
+  "rpm.mission.real_peaceful_mode.husk1.message8": "What are you talking about?",
+  "rpm.mission.real_peaceful_mode.husk1.message9": "Thou are thrifty, sinner. Now leave mine place, or I shall sear thou to a crisp!",
+  "rpm.mission.real_peaceful_mode.husk1.message10": "What?",
+  "rpm.mission.real_peaceful_mode.husk1.message11": "Fine... There's no meaning to fight anymore. I'm so weak and thirsty, so I'm gonna leave."
 }

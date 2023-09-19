@@ -66,12 +66,18 @@ public class RPMBlocks {
 				.mapColor(MapColor.WOOD).strength(2.0F).lightLevel(blockState -> blockState.getValue(AbstractFurnaceBlock.LIT) ? 3 : 0)
 				.noOcclusion().pushReaction(PushReaction.BLOCK), CultureTableBlock::new
 		);
+		public static final BlockEntry<Block> PURIFIER = new BlockEntry<>(
+				"purifier", () -> BlockBehaviour.Properties.of()
+				.mapColor(MapColor.COLOR_LIGHT_GRAY).strength(2.0F)
+				.noOcclusion().pushReaction(PushReaction.BLOCK), Block::new
+		);
 
 		private WorkStation() {}
 
 		private static void init() {
 			RPMItems.ItemEntry.register(REFINEMENT_TABLE.getId().getPath(), () -> new BlockItem(REFINEMENT_TABLE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CULTURE_TABLE.getId().getPath(), () -> new BlockItem(CULTURE_TABLE.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(PURIFIER.getId().getPath(), () -> new BlockItem(PURIFIER.get(), new Item.Properties()));
 		}
 	}
 

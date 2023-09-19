@@ -42,6 +42,8 @@
   "item.real_peaceful_mode.dark_magic_pool_water_bucket": "黑色魔法池水桶",
   "item.real_peaceful_mode.crystal_skull": "水晶头骨",
   "item.real_peaceful_mode.skeleton_scepter": "骷髅权杖",
+  "item.real_peaceful_mode.pharaoh_scepter": "法老权杖",
+  "item.real_peaceful_mode.tiny_flame": "小火花",
   "item.real_peaceful_mode.iron_pike": "铁制长枪",
   "item.real_peaceful_mode.golden_pike": "金制长枪",
   "item.real_peaceful_mode.diamond_pike": "钻石长枪",
@@ -60,12 +62,14 @@
 
   "entity.minecraft.villager.real_peaceful_mode.senior": "村民长老",
   "entity.minecraft.villager.real_peaceful_mode.botanist": "植物学家",
+  "entity.minecraft.villager.real_peaceful_mode.plumber": "水管员",
   "entity.real_peaceful_mode.dark_zombie_knight": "僵尸黑骑士",
   "entity.real_peaceful_mode.zombie_tyrant": "僵尸暴君",
   "entity.real_peaceful_mode.skeleton_king": "骷髅国王",
   "entity.real_peaceful_mode.pink_creeper": "粉色苦力怕",
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "僵尸长者",
   "entity.real_peaceful_mode.skeleton_skull": "骷髅头",
+  "entity.real_peaceful_mode.tiny_fireball": "小火球",
 
   "effect.real_peaceful_mode.trance": "恍惚",
 
@@ -83,6 +87,7 @@
 
   "subtitles.entity.villager.work_senior": "村民长老：工作",
   "subtitles.entity.villager.work_botanist": "植物学家：工作",
+  "subtitles.entity.villager.work_plumber": "水管员：工作",
   "subtitles.entity.dark_zombie_knight.ambient": "僵尸黑骑士：低吼",
   "subtitles.entity.dark_zombie_knight.hurt": "僵尸黑骑士：受伤",
   "subtitles.entity.dark_zombie_knight.death": "僵尸黑骑士：死亡",
@@ -376,5 +381,18 @@
   "rpm.mission.real_peaceful_mode.creeper3.message23": "是的，我们永远是最好的朋友！非常感谢你的帮助，我十分感激。",
   "rpm.mission.real_peaceful_mode.creeper3.message24": "你有空的时候会来看我吗？我知道你正忙着拯救其他被诅咒的怪物……",
   "rpm.mission.real_peaceful_mode.creeper3.message25": "我怎么能忘记我最好的朋友！我当然会的。",
-  "rpm.mission.real_peaceful_mode.creeper3.message26": "谢谢。我会留在这里等着你的。"
+  "rpm.mission.real_peaceful_mode.creeper3.message26": "谢谢。我会留在这里等着你的。",
+
+  "rpm.mission.real_peaceful_mode.husk1.message1": "何等卑劣罪者，至寡人之处？",
+  "rpm.mission.real_peaceful_mode.husk1.message2": "哦，我天……不好意思，我为和平而来，我这就离开。",
+  "rpm.mission.real_peaceful_mode.husk1.message3": "何敢？汝以为汝当全身而退于此地？寡人必败之！",
+  "rpm.mission.real_peaceful_mode.husk1.message4": "什么？这家伙看起来好棘手。虽然我击败了僵尸暴君，但对付这家伙我完全没有信心。",
+
+  "rpm.mission.real_peaceful_mode.husk1.message5": "好艰苦的战斗啊！为什么这家伙看起来完全没受伤？我又热又渴……",
+  "rpm.mission.real_peaceful_mode.husk1.message6": "不过现在开始阴天了，这让我觉得舒服了一些。",
+  "rpm.mission.real_peaceful_mode.husk1.message7": "吾日何在？委吾而去。",
+  "rpm.mission.real_peaceful_mode.husk1.message8": "你在说些什么啊？",
+  "rpm.mission.real_peaceful_mode.husk1.message9": "怯懦小儿，汝幸甚至，今遽去此，不然，将焚汝烧作焦灰！",
+  "rpm.mission.real_peaceful_mode.husk1.message10": "啥？",
+  "rpm.mission.real_peaceful_mode.husk1.message11": "好吧……再继续打下去也没什么意义了。我现在又虚弱又渴，我觉得我应该离开这里了。"
 }

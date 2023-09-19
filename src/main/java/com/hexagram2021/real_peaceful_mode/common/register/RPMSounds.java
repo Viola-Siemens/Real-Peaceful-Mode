@@ -14,6 +14,7 @@ public class RPMSounds {
 	static final Map<ResourceLocation, SoundEvent> registeredEvents = new HashMap<>();
 	public static final SoundEvent VILLAGER_WORK_SENIOR = registerSound("entity.villager.work_senior");
 	public static final SoundEvent VILLAGER_WORK_BOTANIST = registerSound("entity.villager.work_botanist");
+	public static final SoundEvent VILLAGER_WORK_PLUMBER = registerSound("entity.villager.work_plumber");
 	public static final SoundEvent NOTE_BLOCK_IMITATE_DARK_ZOMBIE_KNIGHT = registerSound("block.note_block.imitate.dark_zombie_knight");
 	public static final SoundEvent DARK_ZOMBIE_KNIGHT_AMBIENT = registerSound("entity.dark_zombie_knight.ambient");
 	public static final SoundEvent DARK_ZOMBIE_KNIGHT_HURT = registerSound("entity.dark_zombie_knight.hurt");

@@ -49,10 +49,12 @@ import static com.hexagram2021.real_peaceful_mode.common.world.village.RPMTrades
 public class Villages {
 	public static final ResourceLocation SENIOR = new ResourceLocation(MODID, "senior");
 	public static final ResourceLocation BOTANIST = new ResourceLocation(MODID, "botanist");
+	public static final ResourceLocation PLUMBER = new ResourceLocation(MODID, "plumber");
 
 	public static void init() {
 		HeroGiftsTaskAccess.getGifts().put(Registers.PROF_SENIOR.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/senior_gift"));
 		HeroGiftsTaskAccess.getGifts().put(Registers.PROF_BOTANIST.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/botanist_gift"));
+		HeroGiftsTaskAccess.getGifts().put(Registers.PROF_PLUMBER.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/plumber_gift"));
 	}
 
 	public static void addAllStructuresToPool(RegistryAccess registryAccess) {
@@ -97,13 +99,14 @@ public class Villages {
 		public static final DeferredRegister<PoiType> POINTS_OF_INTEREST = DeferredRegister.create(ForgeRegistries.POI_TYPES, MODID);
 		public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, MODID);
 
-		//炼珠台
 		public static final RegistryObject<PoiType> POI_REFINEMENT_TABLE = POINTS_OF_INTEREST.register(
 				"refinement_table", () -> createPOI(assembleStates(RPMBlocks.WorkStation.REFINEMENT_TABLE.get()))
 		);
-		//组培台
 		public static final RegistryObject<PoiType> POI_CULTURE_TABLE = POINTS_OF_INTEREST.register(
 				"culture_table", () -> createPOI(assembleStates(RPMBlocks.WorkStation.CULTURE_TABLE.get()))
+		);
+		public static final RegistryObject<PoiType> POI_PURIFIER = POINTS_OF_INTEREST.register(
+				"purifier", () -> createPOI(assembleStates(RPMBlocks.WorkStation.PURIFIER.get()))
 		);
 
 		public static final RegistryObject<VillagerProfession> PROF_SENIOR = PROFESSIONS.register(
@@ -111,6 +114,9 @@ public class Villages {
 		);
 		public static final RegistryObject<VillagerProfession> PROF_BOTANIST = PROFESSIONS.register(
 				"botanist", () -> createProf(BOTANIST, POI_CULTURE_TABLE::getKey, RPMSounds.VILLAGER_WORK_BOTANIST)
+		);
+		public static final RegistryObject<VillagerProfession> PROF_PLUMBER = PROFESSIONS.register(
+				"plumber", () -> createProf(PLUMBER, POI_PURIFIER::getKey, RPMSounds.VILLAGER_WORK_PLUMBER)
 		);
 
 		public static void init(IEventBus bus) {

@@ -7,6 +7,7 @@ import com.hexagram2021.real_peaceful_mode.network.GetMissionsPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -40,6 +41,10 @@ public class ClientEventHandler {
 					mc.gameRenderer.checkEntityPostEffect(player);
 					hasEffect = false;
 				}
+				float deltaYaw = 15.0F * Mth.sin((float)(player.tickCount * Math.PI / 101.0D)) + 6.0F * Mth.sin((float)(player.tickCount * Math.PI / 89.0D + 13.0D * Math.PI));
+				float deltaPitch = 12.0F * Mth.sin((float)(player.tickCount * Math.PI / 97.0D)) + 5.0F * Mth.sin((float)(player.tickCount * Math.PI / 83.0D + 11.0D * Math.PI));
+				event.setYaw(event.getYaw() + deltaYaw);
+				event.setPitch(event.getPitch() + deltaPitch);
 			} else {
 				if(player.hasEffect(RPMMobEffects.TRANCE.get())) {
 					mc.gameRenderer.loadEffect(new ResourceLocation(MODID, "shaders/post/trance.json"));

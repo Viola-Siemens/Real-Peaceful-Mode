@@ -13,6 +13,13 @@
     ],
     "subtitle": "subtitles.entity.villager.work_botanist"
   },
+  "entity.villager.work_plumber": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:villager/work_plumber"
+    ],
+    "subtitle": "subtitles.entity.villager.work_plumber"
+  },
   "entity.zombie_tyrant.ambient": {
     "category": "entity",
     "sounds": [
