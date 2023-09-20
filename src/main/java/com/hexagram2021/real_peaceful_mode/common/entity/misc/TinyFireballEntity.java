@@ -43,6 +43,9 @@ public class TinyFireballEntity extends Fireball {
             attackTarget.hurt(damageSource, 2.5F);
             if(attackTarget instanceof LivingEntity livingEntity) {
                 livingEntity.addEffect(new MobEffectInstance(RPMMobEffects.TRANCE.get(), 600));
+                if(livingEntity.isOnFire()) {
+                    livingEntity.setRemainingFireTicks(livingEntity.getRemainingFireTicks() + 20);
+                }
                 if(livingEntity instanceof Mob mob) {
                     mob.setTarget(null);
                 }

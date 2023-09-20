@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -102,12 +103,16 @@ public class ZombieTyrant extends Mob implements Enemy {
 	@Override
 	public boolean hurt(DamageSource damageSource, float v) {
 		Entity entity = damageSource.getEntity();
-		if(entity instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
-			this.heal(10.0F);
-			return super.hurt(damageSource, v / 2.5F);
+		if(entity instanceof IMonsterHero hero) {
+			if(!IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
+				this.heal(10.0F);
+				return super.hurt(damageSource, v / 5.0F);
+			}
+			return super.hurt(damageSource, v);
 		}
 
-		return super.hurt(damageSource, v);
+		return !damageSource.is(DamageTypes.FELL_OUT_OF_WORLD) && !damageSource.is(DamageTypes.GENERIC) && !damageSource.is(DamageTypes.GENERIC_KILL) &&
+				super.hurt(damageSource, v);
 	}
 
 	@Override
