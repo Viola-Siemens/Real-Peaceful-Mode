@@ -13,7 +13,9 @@ public class HuskPharaohModel<T extends HuskPharaoh> extends HumanoidModel<T> {
 
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-		this.animateArms(entity.isAggressive(), ageInTicks);
+		if(!entity.isStone()) {
+			this.animateArms(entity.isAggressive(), ageInTicks);
+		}
 	}
 
 	private void animateArms(boolean isAttacking, float tick) {

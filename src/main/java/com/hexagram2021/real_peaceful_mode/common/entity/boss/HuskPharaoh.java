@@ -60,6 +60,12 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 	}
+	
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(DATA_STONE, false);
+	}
 
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes()
@@ -92,11 +98,11 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 			if(!IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
 				this.heal(10.0F);
 				if(v > 0) {
-					this.totalDamage += v / (TRIGGER_MISSION_TOTAL_DAMAGE * 2.0F - this.totalDamage);
+					this.totalDamage += v * 100.0F / (TRIGGER_MISSION_TOTAL_DAMAGE * 2.0F - this.totalDamage);
 					if(this.totalDamage >= TRIGGER_MISSION_TOTAL_DAMAGE) {
 						this.setIsStone(true);
 						if(this.level() instanceof ServerLevel serverLevel) {
-							serverLevel.setWeatherParameters(12000, 0, false, false);
+							serverLevel.setWeatherParameters(0, 12000, true, false);
 						}
 						MissionHelper.triggerMissionForPlayer(
 								new ResourceLocation(MODID, "husk1"), SummonBlockEntity.SummonMissionType.FINISH,
@@ -109,7 +115,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 			return super.hurt(damageSource, v);
 		}
 
-		return !damageSource.is(DamageTypes.FELL_OUT_OF_WORLD) && !damageSource.is(DamageTypes.GENERIC) && !damageSource.is(DamageTypes.GENERIC_KILL) &&
+		return (damageSource.is(DamageTypes.FELL_OUT_OF_WORLD) || damageSource.is(DamageTypes.GENERIC) || damageSource.is(DamageTypes.GENERIC_KILL)) &&
 				super.hurt(damageSource, v);
 	}
 
@@ -148,19 +154,19 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 	@Override
 	public void addAdditionalSaveData(CompoundTag nbt) {
 		super.addAdditionalSaveData(nbt);
+		nbt.putBoolean(TAG_IS_STONE, this.isStone());
+		nbt.putFloat(TAG_TOTAL_DAMAGE, this.getTotalDamage());
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundTag nbt) {
+		super.readAdditionalSaveData(nbt);
 		if(nbt.contains(TAG_IS_STONE, Tag.TAG_BYTE)) {
 			this.setIsStone(nbt.getBoolean(TAG_IS_STONE));
 		}
 		if(nbt.contains(TAG_TOTAL_DAMAGE, Tag.TAG_FLOAT)) {
 			this.setTotalDamage(nbt.getFloat(TAG_TOTAL_DAMAGE));
 		}
-	}
-
-	@Override
-	public void readAdditionalSaveData(CompoundTag nbt) {
-		super.readAdditionalSaveData(nbt);
-		nbt.putBoolean(TAG_IS_STONE, this.isStone());
-		nbt.putFloat(TAG_TOTAL_DAMAGE, this.getTotalDamage());
 	}
 
 	public boolean isStone() {
