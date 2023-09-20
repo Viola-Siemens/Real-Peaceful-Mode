@@ -37,8 +37,10 @@ public class TinyFireballEntity extends Fireball {
         if (!this.level().isClientSide) {
             Entity attackTarget = entityHitResult.getEntity();
             Entity owner = this.getOwner();
-            DamageSource damageSource = owner instanceof Player ? this.damageSources().playerAttack((Player) owner) : this.damageSources().magic();
-            attackTarget.hurt(damageSource, 3.0F);
+            DamageSource damageSource = owner instanceof Player player ?
+                    this.damageSources().playerAttack(player) :
+                    owner instanceof LivingEntity livingEntity ? this.damageSources().mobAttack(livingEntity) : this.damageSources().magic();
+            attackTarget.hurt(damageSource, 2.5F);
             if(attackTarget instanceof LivingEntity livingEntity) {
                 livingEntity.addEffect(new MobEffectInstance(RPMMobEffects.TRANCE.get(), 600));
                 if(livingEntity instanceof Mob mob) {

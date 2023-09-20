@@ -30,7 +30,9 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile {
         if (!this.level().isClientSide) {
             Entity attackTarget = entityHitResult.getEntity();
             Entity owner = this.getOwner();
-            DamageSource damageSource = owner instanceof Player ? this.damageSources().playerAttack((Player) owner) : this.damageSources().magic();
+            DamageSource damageSource = owner instanceof Player player ?
+                    this.damageSources().playerAttack(player) :
+                    owner instanceof LivingEntity livingEntity ? this.damageSources().mobAttack(livingEntity) : this.damageSources().magic();
             attackTarget.hurt(damageSource, 3.0F);
         }
     }

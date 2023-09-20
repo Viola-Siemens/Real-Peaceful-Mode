@@ -67,6 +67,7 @@
   "entity.real_peaceful_mode.zombie_tyrant": "Zombie Tyrant",
   "entity.real_peaceful_mode.skeleton_king": "Skeleton King",
   "entity.real_peaceful_mode.pink_creeper": "Pink Creeper",
+  "entity.real_peaceful_mode.husk_pharaoh": "Husk Pharaoh",
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "Zombie Senior",
   "entity.real_peaceful_mode.skeleton_skull": "Skeleton Skull",
   "entity.real_peaceful_mode.tiny_fireball": "Tiny Fireball",
@@ -392,7 +393,7 @@
   "rpm.mission.real_peaceful_mode.husk1.message6": "But it's cloudy now, which makes me feel better.",
   "rpm.mission.real_peaceful_mode.husk1.message7": "Where's mine sun? Mine goddess's leaving me again...",
   "rpm.mission.real_peaceful_mode.husk1.message8": "What are you talking about?",
-  "rpm.mission.real_peaceful_mode.husk1.message9": "Thou are thrifty, sinner. Now leave mine place, or I shall sear thou to a crisp!",
+  "rpm.mission.real_peaceful_mode.husk1.message9": "... Thou are thrifty, sinner. Now leave mine place, or I shall sear thou to a crisp!",
   "rpm.mission.real_peaceful_mode.husk1.message10": "What?",
-  "rpm.mission.real_peaceful_mode.husk1.message11": "Fine... There's no meaning to fight anymore. I'm so weak and thirsty, so I'm gonna leave."
+  "rpm.mission.real_peaceful_mode.husk1.message11": "This guy converts into a stone... Fine, there's no meaning to fight anymore. I'm so tired and thirsty, so maybe I should leave."
 }

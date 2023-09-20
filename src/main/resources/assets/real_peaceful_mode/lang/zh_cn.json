@@ -67,6 +67,7 @@
   "entity.real_peaceful_mode.zombie_tyrant": "僵尸暴君",
   "entity.real_peaceful_mode.skeleton_king": "骷髅国王",
   "entity.real_peaceful_mode.pink_creeper": "粉色苦力怕",
+  "entity.real_peaceful_mode.husk_pharaoh": "尸壳法老",
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "僵尸长者",
   "entity.real_peaceful_mode.skeleton_skull": "骷髅头",
   "entity.real_peaceful_mode.tiny_fireball": "小火球",
@@ -394,5 +395,5 @@
   "rpm.mission.real_peaceful_mode.husk1.message8": "你在说些什么啊？",
   "rpm.mission.real_peaceful_mode.husk1.message9": "怯懦小儿，汝幸甚至，今遽去此，不然，将焚汝烧作焦灰！",
   "rpm.mission.real_peaceful_mode.husk1.message10": "啥？",
-  "rpm.mission.real_peaceful_mode.husk1.message11": "好吧……再继续打下去也没什么意义了。我现在又虚弱又渴，我觉得我应该离开这里了。"
+  "rpm.mission.real_peaceful_mode.husk1.message11": "这家伙怎么变成石头了……算了，再继续打下去也没什么意义了。我现在又累又渴，或许我也该离开这里了。"
 }
