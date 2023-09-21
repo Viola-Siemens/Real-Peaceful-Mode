@@ -51,13 +51,9 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 
 	@Override
 	protected void registerGoals() {
+		this.goalSelector.addGoal(4, new RangedSkullAttackGoal(1.0D, 10, 32.0F));
 		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-		this.addBehaviourGoals();
-	}
-
-	protected void addBehaviourGoals() {
-		this.goalSelector.addGoal(4, new RangedSkullAttackGoal(1.0D, 10, 32.0F));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
 	}
@@ -226,6 +222,7 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 			return true;
 		}
 
+		@Override
 		public void tick() {
 			LivingEntity target = SkeletonKing.this.getTarget();
 			if (target != null) {

@@ -18,10 +18,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -35,6 +32,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
@@ -43,16 +41,18 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy {
 	private static final EntityDataAccessor<Boolean> DATA_STONE = SynchedEntityData.defineId(HuskPharaoh.class, EntityDataSerializers.BOOLEAN);
 
-	private static final float TRIGGER_MISSION_TOTAL_DAMAGE = 100.0F;
+	private static final float TRIGGER_MISSION_TOTAL_DAMAGE = 120.0F;
 
 	private float totalDamage = 0.0F;
 
 	public HuskPharaoh(EntityType<? extends HuskPharaoh> entityType, Level level) {
 		super(entityType, level);
+		this.xpReward = XP_REWARD_BOSS;
 	}
 
 	@Override
 	protected void registerGoals() {
+		this.goalSelector.addGoal(2, new MagnetizeTargetGoal(20));
 		this.goalSelector.addGoal(4, new RangedFireballAttackGoal(1.0D, 10, 32.0F));
 		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -69,7 +69,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes()
-				.add(Attributes.FOLLOW_RANGE, 16.0D)
+				.add(Attributes.FOLLOW_RANGE, 32.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.125F)
 				.add(Attributes.ATTACK_DAMAGE, 1.0D)
 				.add(Attributes.ARMOR, 5.0D)
@@ -90,9 +90,49 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		this.playSound(SoundEvents.FIRECHARGE_USE);
 	}
 
+	private int checkNearbyPlayers = 100;
+
+	@Override
+	public void tick() {
+		if(this.isNoAi()) {
+			if(--this.checkNearbyPlayers <= 0) {
+				this.checkNearbyPlayers = 100;
+				if (this.level() instanceof ServerLevel serverLevel) {
+					ResourceLocation missionId;
+					if(this.isStone()) {
+						missionId = new ResourceLocation(MODID, "husk3");
+					} else {
+						missionId = new ResourceLocation(MODID, "husk1");
+					}
+					serverLevel.players().stream().filter(player -> player.closerThan(this, 6.0D)).findAny().ifPresent(player -> MissionHelper.triggerMissionForPlayer(
+							missionId, SummonBlockEntity.SummonMissionType.RECEIVE,
+							player, this, player1 -> {
+								this.setIsStone(false);
+								this.heal(100.0F);
+								serverLevel.setWeatherParameters(12000, 0, false, false);
+							}
+					));
+				}
+			}
+		}
+		super.tick();
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		if (!this.level().isClientSide && this.isAlive() && this.tickCount % 100 == 0) {
+			this.heal(1.0F);
+		}
+	}
+
 	private static final ResourceLocation WEAKEN_MISSION = new ResourceLocation(MODID, "husk2");
 	@Override
 	public boolean hurt(DamageSource damageSource, float v) {
+		if(this.isStone()) {
+			return (damageSource.is(DamageTypes.FELL_OUT_OF_WORLD) || damageSource.is(DamageTypes.GENERIC) || damageSource.is(DamageTypes.GENERIC_KILL)) &&
+					super.hurt(damageSource, v);
+		}
 		Entity entity = damageSource.getEntity();
 		if(entity instanceof IMonsterHero hero) {
 			if(!IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
@@ -145,7 +185,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 
 	@Override
 	public boolean canAttack(LivingEntity livingEntity) {
-		return this.isStone() && super.canAttack(livingEntity);
+		return !this.isStone() && super.canAttack(livingEntity);
 	}
 
 	private static final String TAG_IS_STONE = "IsStone";
@@ -176,6 +216,9 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 	public void setIsStone(boolean value) {
 		this.getEntityData().set(DATA_STONE, value);
 		this.setNoAi(value);
+		if(value) {
+			this.setTarget(null);
+		}
 	}
 
 	public float getTotalDamage() {
@@ -184,6 +227,46 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 
 	public void setTotalDamage(float totalDamage) {
 		this.totalDamage = totalDamage;
+	}
+
+	class MagnetizeTargetGoal extends Goal {
+		private final int attackIntervalMin;
+		private int attackTime = -1;
+
+		public MagnetizeTargetGoal(int attackIntervalMin) {
+			this.attackIntervalMin = attackIntervalMin;
+		}
+
+		@Override
+		public boolean canUse() {
+			LivingEntity target = HuskPharaoh.this.getTarget();
+			return target != null && !target.closerThan(HuskPharaoh.this, 16.0D);
+		}
+
+		@Override
+		public boolean canContinueToUse() {
+			return HuskPharaoh.this.getTarget() != null;
+		}
+
+		@Override
+		public void stop() {
+			super.stop();
+			this.attackTime = -1;
+		}
+
+		@Override
+		public void tick() {
+			LivingEntity target = HuskPharaoh.this.getTarget();
+			if(target != null) {
+				--this.attackTime;
+				if(this.attackTime <= 0) {
+					Vec3 diff = HuskPharaoh.this.position().subtract(target.position());
+					double mag = Math.sqrt(diff.length()) / 2.0D;
+					target.move(MoverType.SELF, diff.normalize().multiply(mag, 1.0D, mag));
+					this.attackTime = this.attackIntervalMin;
+				}
+			}
+		}
 	}
 
 	class RangedFireballAttackGoal extends Goal {
@@ -231,6 +314,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 			return true;
 		}
 
+		@Override
 		public void tick() {
 			LivingEntity target = HuskPharaoh.this.getTarget();
 			if (target != null) {

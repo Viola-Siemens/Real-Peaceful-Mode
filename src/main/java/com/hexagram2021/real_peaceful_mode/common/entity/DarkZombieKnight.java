@@ -40,7 +40,7 @@ public class DarkZombieKnight extends Monster {
 	public DarkZombieKnight(EntityType<? extends DarkZombieKnight> entityType, Level level) {
 		super(entityType, level);
 		this.setBuster(this.getRandom().nextInt(3) != 0);
-		this.xpReward = 10;
+		this.xpReward = XP_REWARD_LARGE;
 	}
 
 	@Override

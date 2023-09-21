@@ -173,6 +173,14 @@ public class PinkCreeperEntity extends PathfinderMob {
 		super.tick();
 	}
 
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		if (!this.level().isClientSide && this.isAlive() && this.tickCount % 20 == 0) {
+			this.heal(1.0F);
+		}
+	}
+
 	public void setLikedPlayer(@Nullable UUID player) {
 		this.likedPlayer = player;
 	}
