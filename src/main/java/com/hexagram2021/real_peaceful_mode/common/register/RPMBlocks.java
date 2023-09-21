@@ -183,6 +183,11 @@ public class RPMBlocks {
 				Block::new
 		);
 
+		public static final BlockEntry<Block> SILTSTONE = new BlockEntry<>(
+				"siltstone", () -> BlockBehaviour.Properties.copy(Blocks.SANDSTONE).mapColor(MapColor.DIRT),
+				Block::new
+		);
+
 		public static final BlockEntry<Block> INFESTED_GLOWING_CRYSTAL = new BlockEntry<>(
 				"infested_glowing_crystal", () -> BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
 				.instrument(NoteBlockInstrument.BASEDRUM).strength(-1.0F, 3600000.0F).noLootTable(),
@@ -208,6 +213,7 @@ public class RPMBlocks {
 			RPMItems.ItemEntry.register(CALCITE_WALL.getId().getPath(), () -> new BlockItem(CALCITE_WALL.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(POLISHED_CALCITE.getId().getPath(), () -> new BlockItem(POLISHED_CALCITE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CUT_CALCITE.getId().getPath(), () -> new BlockItem(CUT_CALCITE.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(SILTSTONE.getId().getPath(), () -> new BlockItem(SILTSTONE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(INFESTED_GLOWING_CRYSTAL.getId().getPath(), () -> new BlockItem(INFESTED_GLOWING_CRYSTAL.get(), new Item.Properties()));
 		}
 	}

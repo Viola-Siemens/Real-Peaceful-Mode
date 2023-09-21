@@ -14,6 +14,7 @@ public final class RPMStructurePieceTypes {
 	public static final StructurePieceType PINK_CREEPER_TYPE = register("pink_creeper", PinkCreeperPieces.PinkCreeperPiece::new);
 	public static final StructurePieceType ZOMBIE_FORT_TYPE = register("zombie_fort", ZombieFortPieces.ZombieFortPiece::new);
 	public static final StructurePieceType SKELETON_PALACE_TYPE = register("skeleton_palace", SkeletonPalacePieces.SkeletonPalacePiece::new);
+	public static final StructurePieceType PHARAOH_ALTAR_TYPE = register("pharaoh_altar", PharaohAltarPieces.PharaohAltarPiece::new);
 
 	private RPMStructurePieceTypes() {
 	}
