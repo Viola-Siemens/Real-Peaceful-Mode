@@ -52,8 +52,8 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(2, new MagnetizeTargetGoal(20));
-		this.goalSelector.addGoal(4, new RangedFireballAttackGoal(1.0D, 10, 32.0F));
+		this.goalSelector.addGoal(2, new MagnetizeTargetGoal(40));
+		this.goalSelector.addGoal(4, new RangedFireballAttackGoal(1.0D, 20, 32.0F));
 		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
