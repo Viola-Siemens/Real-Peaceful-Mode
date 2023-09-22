@@ -2,7 +2,7 @@
   "parent": "minecraft:block/outer_stairs",
   "textures": {
     "bottom": "real_peaceful_mode:block/siltstone_bottom",
-    "top": "real_peaceful_mode:block/siltstone",
-    "side": "real_peaceful_mode:block/siltstone_top"
+    "top": "real_peaceful_mode:block/siltstone_top",
+    "side": "real_peaceful_mode:block/siltstone"
   }
 }
