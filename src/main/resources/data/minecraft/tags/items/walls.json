@@ -3,6 +3,7 @@
   "values": [
     "real_peaceful_mode:tuff_brick_wall",
     "real_peaceful_mode:cracked_tuff_brick_wall",
-    "real_peaceful_mode:calcite_wall"
+    "real_peaceful_mode:calcite_wall",
+    "real_peaceful_mode:siltstone_wall"
   ]
 }

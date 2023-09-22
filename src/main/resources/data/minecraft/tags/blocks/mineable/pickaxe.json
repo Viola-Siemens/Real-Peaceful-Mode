@@ -15,6 +15,9 @@
     "real_peaceful_mode:polished_calcite",
     "real_peaceful_mode:cut_calcite",
     "real_peaceful_mode:siltstone",
+    "real_peaceful_mode:siltstone_slab",
+    "real_peaceful_mode:siltstone_stairs",
+    "real_peaceful_mode:siltstone_wall",
     "real_peaceful_mode:refinement_table",
     "real_peaceful_mode:purifier"
   ]

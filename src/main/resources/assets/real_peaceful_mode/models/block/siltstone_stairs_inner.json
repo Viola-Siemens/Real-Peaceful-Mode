@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "real_peaceful_mode:block/siltstone_bottom",
+    "top": "real_peaceful_mode:block/siltstone",
+    "side": "real_peaceful_mode:block/siltstone_top"
+  }
+}

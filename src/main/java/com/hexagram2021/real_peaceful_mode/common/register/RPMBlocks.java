@@ -187,6 +187,9 @@ public class RPMBlocks {
 				"siltstone", () -> BlockBehaviour.Properties.copy(Blocks.SANDSTONE).mapColor(MapColor.DIRT),
 				Block::new
 		);
+		public static final BlockEntry<StairBlock> SILTSTONE_STAIRS = registerStairs(SILTSTONE);
+		public static final BlockEntry<SlabBlock> SILTSTONE_SLAB = registerSlab(SILTSTONE);
+		public static final BlockEntry<WallBlock> SILTSTONE_WALL = registerWall(SILTSTONE);
 
 		public static final BlockEntry<Block> INFESTED_GLOWING_CRYSTAL = new BlockEntry<>(
 				"infested_glowing_crystal", () -> BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
@@ -214,6 +217,9 @@ public class RPMBlocks {
 			RPMItems.ItemEntry.register(POLISHED_CALCITE.getId().getPath(), () -> new BlockItem(POLISHED_CALCITE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CUT_CALCITE.getId().getPath(), () -> new BlockItem(CUT_CALCITE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(SILTSTONE.getId().getPath(), () -> new BlockItem(SILTSTONE.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(SILTSTONE_STAIRS.getId().getPath(), () -> new BlockItem(SILTSTONE_STAIRS.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(SILTSTONE_SLAB.getId().getPath(), () -> new BlockItem(SILTSTONE_SLAB.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(SILTSTONE_WALL.getId().getPath(), () -> new BlockItem(SILTSTONE_WALL.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(INFESTED_GLOWING_CRYSTAL.getId().getPath(), () -> new BlockItem(INFESTED_GLOWING_CRYSTAL.get(), new Item.Properties()));
 		}
 	}
