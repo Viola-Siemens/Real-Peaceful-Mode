@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "real_peaceful_mode:siltstone"
+  },
+  "result": "real_peaceful_mode:smooth_siltstone",
+  "experience": 0.3,
+  "cookingtime": 200
+}

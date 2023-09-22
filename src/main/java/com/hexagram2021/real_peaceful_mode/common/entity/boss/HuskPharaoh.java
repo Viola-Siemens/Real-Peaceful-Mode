@@ -52,7 +52,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(2, new MagnetizeTargetGoal(40));
+		this.goalSelector.addGoal(2, new MagnetizeTargetGoal(20));
 		this.goalSelector.addGoal(4, new RangedFireballAttackGoal(1.0D, 20, 32.0F));
 		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -115,6 +115,13 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 				}
 			}
 		}
+		if(this.isStone()) {
+			if(!this.level().getLevelData().isRaining()) {
+				this.setIsStone(false);
+			}
+		} else if(this.level().getLevelData().isRaining()) {
+			this.setIsStone(true);
+		}
 		super.tick();
 	}
 
@@ -157,6 +164,15 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 
 		return (damageSource.is(DamageTypes.FELL_OUT_OF_WORLD) || damageSource.is(DamageTypes.GENERIC) || damageSource.is(DamageTypes.GENERIC_KILL)) &&
 				super.hurt(damageSource, v);
+	}
+
+	@Override
+	public void die(DamageSource damageSource) {
+		if (damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
+			this.heal(100.0F);
+			return;
+		}
+		super.die(damageSource);
 	}
 
 	@Override
@@ -261,7 +277,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 				--this.attackTime;
 				if(this.attackTime <= 0) {
 					Vec3 diff = HuskPharaoh.this.position().subtract(target.position());
-					double mag = Math.sqrt(diff.length()) / 2.0D;
+					double mag = Math.sqrt(diff.length()) / 4.0D;
 					target.move(MoverType.SELF, diff.normalize().multiply(mag, 1.0D, mag));
 					this.attackTime = this.attackIntervalMin;
 				}

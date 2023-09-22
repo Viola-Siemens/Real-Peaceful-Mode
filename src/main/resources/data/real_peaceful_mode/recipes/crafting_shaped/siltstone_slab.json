@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "real_peaceful_mode:siltstone"
+    }
+  },
+  "result": {
+    "item": "real_peaceful_mode:siltstone_slab",
+    "count": 6
+  }
+}

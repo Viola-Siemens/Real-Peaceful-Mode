@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "real_peaceful_mode:siltstone"
+  },
+  "result": "real_peaceful_mode:siltstone_slab",
+  "count": 2
+}

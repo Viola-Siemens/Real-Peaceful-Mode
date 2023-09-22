@@ -13,7 +13,14 @@ public class HuskPharaohModel<T extends HuskPharaoh> extends HumanoidModel<T> {
 
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-		if(!entity.isStone()) {
+		if(entity.isStone()) {
+			this.leftArm.xRot = -Mth.HALF_PI * 1.05F;
+			this.leftArm.yRot = 0.0F;
+			this.leftArm.zRot = 0.0F;
+			this.rightArm.xRot = -Mth.HALF_PI * 1.45F;
+			this.rightArm.yRot = 0.0F;
+			this.rightArm.zRot = 0.0F;
+		} else {
 			this.animateArms(entity.isAggressive(), ageInTicks);
 		}
 	}

@@ -102,7 +102,7 @@ public class ZombieTyrant extends Mob implements Enemy {
 		Entity entity = damageSource.getEntity();
 		if(entity instanceof IMonsterHero hero) {
 			if(!IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
-				this.heal(10.0F);
+				this.heal(20.0F);
 				return super.hurt(damageSource, v / 5.0F);
 			}
 			return super.hurt(damageSource, v);
@@ -139,6 +139,10 @@ public class ZombieTyrant extends Mob implements Enemy {
 	
 	@Override
 	public void die(DamageSource damageSource) {
+		if(damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
+			this.heal(100.0F);
+			return;
+		}
 		if(this.level() instanceof ServerLevel serverLevel) {
 			MissionHelper.triggerMissionForPlayers(
 					new ResourceLocation(MODID, "zombie3"), SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
