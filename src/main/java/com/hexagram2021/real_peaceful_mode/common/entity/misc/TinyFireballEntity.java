@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.misc;
 
+import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMobEffects;
@@ -13,8 +14,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+
+import javax.annotation.Nullable;
 
 public class TinyFireballEntity extends Fireball {
 
@@ -49,6 +57,47 @@ public class TinyFireballEntity extends Fireball {
                 if(livingEntity instanceof Mob mob) {
                     mob.setTarget(null);
                 }
+            }
+        }
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Nullable
+    public static BlockState getSiltedBlockState(BlockState origin) {
+        BlockState newBlock = null;
+        if (origin.is(Blocks.SANDSTONE)) {
+            newBlock = RPMBlocks.Decoration.SILTSTONE.defaultBlockState();
+        } else if (origin.is(Blocks.SANDSTONE_SLAB)) {
+            newBlock = RPMBlocks.Decoration.SILTSTONE_SLAB.defaultBlockState();
+        } else if (origin.is(Blocks.SANDSTONE_STAIRS)) {
+            newBlock = RPMBlocks.Decoration.SILTSTONE_STAIRS.defaultBlockState();
+        } else if (origin.is(Blocks.SANDSTONE_WALL)) {
+            newBlock = RPMBlocks.Decoration.SILTSTONE_WALL.defaultBlockState();
+        } else if (origin.is(Blocks.SMOOTH_SANDSTONE)) {
+            newBlock = RPMBlocks.Decoration.SMOOTH_SILTSTONE.defaultBlockState();
+        } else if (origin.is(Blocks.SMOOTH_SANDSTONE_SLAB)) {
+            newBlock = RPMBlocks.Decoration.SMOOTH_SILTSTONE_SLAB.defaultBlockState();
+        } else if (origin.is(Blocks.SMOOTH_SANDSTONE_STAIRS)) {
+            newBlock = RPMBlocks.Decoration.SMOOTH_SILTSTONE_STAIRS.defaultBlockState();
+        }
+        if(newBlock != null) {
+            for(Property property: origin.getProperties()) {
+                if(newBlock.hasProperty(property)) {
+                    newBlock = newBlock.setValue(property, origin.getValue(property));
+                }
+            }
+        }
+        return newBlock;
+    }
+
+    @Override
+    protected void onHitBlock(BlockHitResult blockHitResult) {
+        super.onHitBlock(blockHitResult);
+        if(!this.level().isClientSide) {
+            BlockState origin = this.level().getBlockState(blockHitResult.getBlockPos());
+            BlockState newBlock = getSiltedBlockState(origin);
+            if (newBlock != null) {
+                this.level().setBlock(blockHitResult.getBlockPos(), newBlock, Block.UPDATE_ALL);
             }
         }
     }

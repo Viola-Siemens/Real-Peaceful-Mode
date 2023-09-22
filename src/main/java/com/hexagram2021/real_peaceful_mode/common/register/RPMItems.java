@@ -113,7 +113,7 @@ public class RPMItems {
 
                     @Override
                     public boolean isValidRepairItem(ItemStack scepter, ItemStack material) {
-                        return material.is(Items.SANDSTONE) || super.isValidRepairItem(scepter, material);
+                        return material.is(RPMBlocks.Decoration.SILTSTONE.asItem()) || super.isValidRepairItem(scepter, material);
                     }
                 }
         );

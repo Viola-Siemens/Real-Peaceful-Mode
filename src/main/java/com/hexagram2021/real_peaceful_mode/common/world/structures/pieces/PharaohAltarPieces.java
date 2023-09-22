@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.world.structures.pieces;
 
-import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
+import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -10,11 +10,9 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
@@ -62,7 +60,7 @@ public class PharaohAltarPieces {
 		protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox sbb) {
 		}
 
-		public static final double SILT_PERCENTAGE = 0.2D;
+		public static final double SILT_PERCENTAGE = 0.15D;
 
 		@Override
 		public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource random,
@@ -74,37 +72,16 @@ public class PharaohAltarPieces {
 					for(int y = 0; y < curBoundingBox.getYSpan(); ++y) {
 						BlockState blockstate = this.getBlock(level, x, y, z, boundingBox);
 						if(random.nextDouble() < SILT_PERCENTAGE) {
-							silt(blockstate, level, x, y, z, boundingBox, random);
+							silt(blockstate, level, x, y, z, boundingBox);
 						}
 					}
 				}
 			}
 		}
 
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		private void silt(BlockState blockstate, WorldGenLevel level, int x, int y, int z, BoundingBox boundingBox, RandomSource random) {
-			BlockState newBlock = null;
-			if (blockstate.is(Blocks.SANDSTONE)) {
-				newBlock = RPMBlocks.Decoration.SILTSTONE.defaultBlockState();
-			} else if (blockstate.is(Blocks.SANDSTONE_SLAB)) {
-				newBlock = RPMBlocks.Decoration.SILTSTONE_SLAB.defaultBlockState();
-			} else if (blockstate.is(Blocks.SANDSTONE_STAIRS)) {
-				newBlock = RPMBlocks.Decoration.SILTSTONE_STAIRS.defaultBlockState();
-			} else if (blockstate.is(Blocks.SANDSTONE_WALL)) {
-				newBlock = RPMBlocks.Decoration.SILTSTONE_WALL.defaultBlockState();
-			} else if (blockstate.is(Blocks.SMOOTH_SANDSTONE)) {
-				newBlock = RPMBlocks.Decoration.SMOOTH_SILTSTONE.defaultBlockState();
-			} else if (blockstate.is(Blocks.SMOOTH_SANDSTONE_SLAB)) {
-				newBlock = RPMBlocks.Decoration.SMOOTH_SILTSTONE_SLAB.defaultBlockState();
-			} else if (blockstate.is(Blocks.SMOOTH_SANDSTONE_STAIRS)) {
-				newBlock = RPMBlocks.Decoration.SMOOTH_SILTSTONE_STAIRS.defaultBlockState();
-			}
+		private void silt(BlockState blockstate, WorldGenLevel level, int x, int y, int z, BoundingBox boundingBox) {
+			BlockState newBlock = TinyFireballEntity.getSiltedBlockState(blockstate);
 			if(newBlock != null) {
-				for(Property property: blockstate.getProperties()) {
-					if(newBlock.hasProperty(property)) {
-						newBlock = newBlock.setValue(property, blockstate.getValue(property));
-					}
-				}
 				this.placeBlock(level, newBlock, x, y, z, boundingBox);
 			}
 		}
