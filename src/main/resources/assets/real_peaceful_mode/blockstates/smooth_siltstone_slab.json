@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "real_peaceful_mode:block/smooth_siltstone_slab"
+    },
+    "type=double": {
+      "model": "real_peaceful_mode:block/smooth_siltstone"
+    },
+    "type=top": {
+      "model": "real_peaceful_mode:block/smooth_siltstone_slab_top"
+    }
+  }
+}

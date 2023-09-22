@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "real_peaceful_mode:block/smooth_siltstone_top",
+    "top": "real_peaceful_mode:block/smooth_siltstone_top",
+    "side": "real_peaceful_mode:block/smooth_siltstone_top"
+  }
+}
