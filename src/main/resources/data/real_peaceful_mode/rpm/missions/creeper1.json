@@ -71,5 +71,7 @@
       "key": "rpm.mission.real_peaceful_mode.creeper1.message17",
       "speaker": "player"
     }
-  ]
+  ],
+  "loot_table": "real_peaceful_mode:missions/single_creeper_spirit",
+  "loot_before": true
 }

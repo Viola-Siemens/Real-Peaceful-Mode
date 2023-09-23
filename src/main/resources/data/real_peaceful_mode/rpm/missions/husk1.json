@@ -1,0 +1,53 @@
+{
+  "requires": [
+    "real_peaceful_mode:zombie3"
+  ],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message1",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message2",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message3",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message4",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message5",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message6",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message7",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message8",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message9",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message10",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.husk1.message11",
+      "speaker": "player"
+    }
+  ]
+}

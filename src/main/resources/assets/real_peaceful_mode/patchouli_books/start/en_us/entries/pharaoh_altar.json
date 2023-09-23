@@ -1,0 +1,17 @@
+{
+  "name": "structure.real_peaceful_mode.pharaoh_altar",
+  "category": "real_peaceful_mode:structure",
+  "icon": "real_peaceful_mode:husk_wish",
+  "sortnum": 4,
+  "pages": [
+    "structure.real_peaceful_mode.pharaoh_altar",
+    {
+      "type": "patchouli:image",
+      "text": "book.real_peaceful_mode.start.pharaoh_altar",
+      "border": true,
+      "images": [
+        "real_peaceful_mode:textures/book/pharaoh_altar.png"
+      ]
+    }
+  ]
+}

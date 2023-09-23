@@ -169,6 +169,9 @@ public class RPMItems {
         public static ItemEntry<Item> CREEPERS_WISH = ItemEntry.register(
                 "creepers_wish", () -> new DebugWishItem(EntityType.CREEPER, new Item.Properties())
         );
+        public static ItemEntry<Item> HUSKS_WISH = ItemEntry.register(
+                "husks_wish", () -> new DebugWishItem(EntityType.HUSK, new Item.Properties())
+        );
 
         public static ItemEntry<SpawnEggItem> DARK_ZOMBIE_KNIGHT_SPAWN_EGG = ItemEntry.register(
                 "dark_zombie_knight_spawn_egg", () -> new ForgeSpawnEggItem(

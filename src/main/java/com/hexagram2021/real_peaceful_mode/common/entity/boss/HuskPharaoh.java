@@ -97,15 +97,9 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		if(this.isNoAi()) {
 			if(--this.checkNearbyPlayers <= 0) {
 				this.checkNearbyPlayers = 100;
-				if (this.level() instanceof ServerLevel serverLevel) {
-					ResourceLocation missionId;
-					if(this.isStone()) {
-						missionId = new ResourceLocation(MODID, "husk3");
-					} else {
-						missionId = new ResourceLocation(MODID, "husk1");
-					}
+				if (this.isStone() && this.level() instanceof ServerLevel serverLevel) {
 					serverLevel.players().stream().filter(player -> player.closerThan(this, 6.0D)).findAny().ifPresent(player -> MissionHelper.triggerMissionForPlayer(
-							missionId, SummonBlockEntity.SummonMissionType.RECEIVE,
+							new ResourceLocation(MODID, "husk3"), SummonBlockEntity.SummonMissionType.RECEIVE,
 							player, this, player1 -> {
 								this.setIsStone(false);
 								this.heal(100.0F);
@@ -133,6 +127,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		}
 	}
 
+	private static final ResourceLocation FIGHT_MISSION = new ResourceLocation(MODID, "husk1");
 	private static final ResourceLocation WEAKEN_MISSION = new ResourceLocation(MODID, "husk2");
 	@Override
 	public boolean hurt(DamageSource damageSource, float v) {
@@ -147,12 +142,13 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 				if(v > 0) {
 					this.totalDamage += v * 100.0F / (TRIGGER_MISSION_TOTAL_DAMAGE * 2.0F - this.totalDamage);
 					if(this.totalDamage >= TRIGGER_MISSION_TOTAL_DAMAGE) {
+						this.totalDamage = 0.0F;
 						this.setIsStone(true);
 						if(this.level() instanceof ServerLevel serverLevel) {
 							serverLevel.setWeatherParameters(0, 12000, true, false);
 						}
 						MissionHelper.triggerMissionForPlayer(
-								new ResourceLocation(MODID, "husk1"), SummonBlockEntity.SummonMissionType.FINISH,
+								FIGHT_MISSION, SummonBlockEntity.SummonMissionType.FINISH,
 								(ServerPlayer)entity, this, player -> {}
 						);
 					}
@@ -169,7 +165,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 	@Override
 	public void die(DamageSource damageSource) {
 		if (damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
-			this.heal(100.0F);
+			this.setHealth(100.0F);
 			return;
 		}
 		super.die(damageSource);
@@ -256,7 +252,8 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		@Override
 		public boolean canUse() {
 			LivingEntity target = HuskPharaoh.this.getTarget();
-			return target != null && !target.closerThan(HuskPharaoh.this, 16.0D);
+			return ((target instanceof IMonsterHero hero && IMonsterHero.underMission(hero.getPlayerMissions(), FIGHT_MISSION)) || target instanceof Mob) &&
+					!target.closerThan(HuskPharaoh.this, 16.0D);
 		}
 
 		@Override

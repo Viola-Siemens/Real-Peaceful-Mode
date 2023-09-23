@@ -60,6 +60,7 @@
   "item.real_peaceful_mode.zombies_wish": "Zombie's Wish",
   "item.real_peaceful_mode.skeletons_wish": "Skeleton's Wish",
   "item.real_peaceful_mode.creepers_wish": "Creeper's Wish",
+  "item.real_peaceful_mode.husks_wish": "Husk's Wish",
   "item.real_peaceful_mode.dark_zombie_knight_spawn_egg": "Dark Zombie Knight Spawn Egg",
   "item.real_peaceful_mode.start": "Real Peaceful Mode",
 
@@ -67,6 +68,7 @@
   "book.real_peaceful_mode.start.zombie_fort": "The Zombie Fort is located in plains, sunflower plains, meadows, or forest biomes. The monarch of zombies stays in the fort, ruling the zombie race - he seems to be so prestigious that all zombies support him.",
   "book.real_peaceful_mode.start.skeleton_palace": "The Skeleton Palace is located in savanna, windswept savanna, or savanna plateau biomes, and the king of the skeleton lives in the palace. However, it seems to be no news about him in recent years for no reason.",
   "book.real_peaceful_mode.start.creeper_town": "The Creeper Town is located in the flower forests, birch forests, or old growth birch forests. Creepers live happily in this town.",
+  "book.real_peaceful_mode.start.pharaoh_altar": "The Pharaoh Altar is located in the desert. It is said that a pharaoh lives in the altar, but nobody has really seen him - but only his statues.",
 
   "entity.minecraft.villager.real_peaceful_mode.senior": "Senior",
   "entity.minecraft.villager.real_peaceful_mode.botanist": "Botanist",
@@ -87,6 +89,7 @@
   "structure.real_peaceful_mode.zombie_fort": "Zombie Fort",
   "structure.real_peaceful_mode.skeleton_palace": "Skeleton Palace",
   "structure.real_peaceful_mode.creeper_town": "Creeper Town",
+  "structure.real_peaceful_mode.pharaoh_altar": "Pharaoh Altar",
 
   "container.culture_table": "Culture Table",
 
@@ -111,6 +114,7 @@
   "message.real_peaceful_mode.zombies_wish.success": "Zombies are friendly to you now.",
   "message.real_peaceful_mode.skeletons_wish.success": "Skeletons are friendly to you now.",
   "message.real_peaceful_mode.creepers_wish.success": "Creepers are friendly to you now.",
+  "message.real_peaceful_mode.husks_wish.success": "Husks are friendly to you now.",
   "message.real_peaceful_mode.receive_mission": "Receive new mission %s.",
   "message.real_peaceful_mode.finish_mission": "Successfully finish mission %s!",
   "message.real_peaceful_mode.reward_monster": "Congratulations to %s for completing the wishes of %s. They will never regard you as enemies from now on.",

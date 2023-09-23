@@ -60,6 +60,7 @@
   "item.real_peaceful_mode.zombies_wish": "僵尸的愿望",
   "item.real_peaceful_mode.skeletons_wish": "骷髅的愿望",
   "item.real_peaceful_mode.creepers_wish": "苦力怕的愿望",
+  "item.real_peaceful_mode.husks_wish": "尸壳的愿望",
   "item.real_peaceful_mode.dark_zombie_knight_spawn_egg": "僵尸黑骑士刷怪蛋",
   "item.real_peaceful_mode.start": "真正的和平模式",
 
@@ -67,6 +68,7 @@
   "book.real_peaceful_mode.start.zombie_fort": "僵尸城堡坐落于平原、向日葵平原、草甸或森林群系，僵尸的君主在城堡内，统治着僵尸这个种族——似乎他的威望非常高，百姓都很拥护他。",
   "book.real_peaceful_mode.start.skeleton_palace": "骷髅宫殿坐落于热带草原、风袭热带草原或热带高原群系，骷髅的君主居住在宫殿内，然而不知为何，近年来似乎没什么他的消息。",
   "book.real_peaceful_mode.start.creeper_town": "苦力怕小镇坐落于繁花森林、桦木森林或原始桦木森林群系，苦力怕们愉快地生活在这个小镇中。",
+  "book.real_peaceful_mode.start.pharaoh_altar": "法老圣坛坐落于沙漠中，相传有一位法老居住在圣坛中，不过没有人真正见过他——只见到了他的石像。",
 
   "entity.minecraft.villager.real_peaceful_mode.senior": "村民长老",
   "entity.minecraft.villager.real_peaceful_mode.botanist": "植物学家",
@@ -87,6 +89,7 @@
   "structure.real_peaceful_mode.zombie_fort": "僵尸城堡",
   "structure.real_peaceful_mode.skeleton_palace": "骷髅宫殿",
   "structure.real_peaceful_mode.creeper_town": "苦力怕小镇",
+  "structure.real_peaceful_mode.pharaoh_altar": "法老圣坛",
 
   "container.culture_table": "组培台",
 
@@ -111,6 +114,7 @@
   "message.real_peaceful_mode.zombies_wish.success": "僵尸们不再攻击你了。",
   "message.real_peaceful_mode.skeletons_wish.success": "骷髅们不再攻击你了。",
   "message.real_peaceful_mode.creepers_wish.success": "苦力怕们不再攻击你了。",
+  "message.real_peaceful_mode.husks_wish.success": "尸壳们不再攻击你了。",
   "message.real_peaceful_mode.receive_mission": "您收到了新任务%s。",
   "message.real_peaceful_mode.finish_mission": "您成功完成任务%s！",
   "message.real_peaceful_mode.reward_monster": "恭喜%s完成了%s的所有委托。从此这些怪物将不再将您视为敌人了！",
@@ -392,7 +396,7 @@
   "rpm.mission.real_peaceful_mode.creeper3.message25": "我怎么能忘记我最好的朋友！我当然会的。",
   "rpm.mission.real_peaceful_mode.creeper3.message26": "谢谢。我会留在这里等着你的。",
 
-  "rpm.mission.real_peaceful_mode.husk1.message1": "何等卑劣罪者，至寡人之处？",
+  "rpm.mission.real_peaceful_mode.husk1.message1": "何等罪者，至寡人之处？",
   "rpm.mission.real_peaceful_mode.husk1.message2": "哦，我天……不好意思，我为和平而来，我这就离开。",
   "rpm.mission.real_peaceful_mode.husk1.message3": "何敢？汝以为汝当全身而退于此地？寡人必败之！",
   "rpm.mission.real_peaceful_mode.husk1.message4": "什么？这家伙看起来好棘手。虽然我击败了僵尸暴君，但对付这家伙我完全没有信心。",
