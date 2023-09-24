@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": [
+    {
+      "item": "real_peaceful_mode:alum_block"
+    }
+  ],
+  "result": "real_peaceful_mode:pac"
+}

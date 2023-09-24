@@ -22,6 +22,8 @@
     "real_peaceful_mode:smooth_siltstone_slab",
     "real_peaceful_mode:smooth_siltstone_stairs",
     "real_peaceful_mode:refinement_table",
-    "real_peaceful_mode:purifier"
+    "real_peaceful_mode:purifier",
+    "real_peaceful_mode:alunite_ore",
+    "real_peaceful_mode:alunite_block"
   ]
 }

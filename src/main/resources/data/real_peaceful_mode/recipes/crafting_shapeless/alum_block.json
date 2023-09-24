@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "real_peaceful_mode:alum"
+    },
+    {
+      "item": "real_peaceful_mode:alum"
+    },
+    {
+      "item": "real_peaceful_mode:alum"
+    },
+    {
+      "item": "real_peaceful_mode:alum"
+    },
+    {
+      "item": "real_peaceful_mode:alum"
+    },
+    {
+      "item": "real_peaceful_mode:alum"
+    },
+    {
+      "item": "real_peaceful_mode:husk_spirit_bead"
+    },
+    {
+      "item": "real_peaceful_mode:husk_spirit_bead"
+    }
+  ],
+  "result": {
+    "item": "real_peaceful_mode:alum_block",
+    "count": 1
+  }
+}

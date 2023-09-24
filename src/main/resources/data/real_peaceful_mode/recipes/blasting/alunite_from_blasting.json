@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "group": "alunite",
+  "ingredient": {
+    "item": "real_peaceful_mode:alunite_ore"
+  },
+  "result": "real_peaceful_mode:alunite"
+}

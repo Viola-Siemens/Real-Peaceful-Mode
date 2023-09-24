@@ -1,7 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.client;
 
 import com.hexagram2021.real_peaceful_mode.client.models.DarkZombieKnightModel;
-import com.hexagram2021.real_peaceful_mode.client.models.HuskWorkmanModel;
 import com.hexagram2021.real_peaceful_mode.client.models.SkeletonKingModel;
 import com.hexagram2021.real_peaceful_mode.client.models.ZombieTyrantModel;
 import com.hexagram2021.real_peaceful_mode.client.renderers.*;

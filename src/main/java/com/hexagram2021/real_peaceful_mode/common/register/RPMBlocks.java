@@ -34,6 +34,7 @@ import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.get
 public class RPMBlocks {
 	public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
 
+	@SuppressWarnings("unused")
 	public static final class TechnicalBlocks {
 		public static final BlockEntry<SummonBlock> SUMMON_BLOCK = new BlockEntry<>(
 				"summon_block", () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
@@ -85,6 +86,22 @@ public class RPMBlocks {
 			RPMItems.ItemEntry.register(REFINEMENT_TABLE.getId().getPath(), () -> new BlockItem(REFINEMENT_TABLE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CULTURE_TABLE.getId().getPath(), () -> new BlockItem(CULTURE_TABLE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(PURIFIER.getId().getPath(), () -> new BlockItem(PURIFIER.get(), new Item.Properties()));
+		}
+	}
+
+	public static final class Ore {
+		public static final BlockEntry<Block> ALUNITE_ORE = new BlockEntry<>(
+				"alunite_ore", () -> BlockBehaviour.Properties.copy(Blocks.GOLD_ORE), Block::new
+		);
+		public static final BlockEntry<Block> ALUNITE_BLOCK = new BlockEntry<>(
+				"alunite_block", () -> BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK), Block::new
+		);
+
+		private Ore() {}
+
+		private static void init() {
+			RPMItems.ItemEntry.register(ALUNITE_ORE.getId().getPath(), () -> new BlockItem(ALUNITE_ORE.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(ALUNITE_BLOCK.getId().getPath(), () -> new BlockItem(ALUNITE_BLOCK.get(), new Item.Properties()));
 		}
 	}
 
@@ -248,6 +265,7 @@ public class RPMBlocks {
 
 		TechnicalBlocks.init();
 		WorkStation.init();
+		Ore.init();
 		Decoration.init();
 	}
 
