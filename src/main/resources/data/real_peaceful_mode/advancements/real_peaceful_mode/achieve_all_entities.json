@@ -24,7 +24,7 @@
         "mission": {
           "entity_namespace": "minecraft",
           "hero_count": {
-            "min": 3
+            "min": 4
           }
         }
       },

@@ -116,6 +116,6 @@
       "speaker": "npc"
     }
   ],
-  "loot_table": "real_peaceful_mode:missions/single_creeper_spirit",
+  "loot_table": "real_peaceful_mode:missions/two_creeper_spirit",
   "loot_before": false
 }

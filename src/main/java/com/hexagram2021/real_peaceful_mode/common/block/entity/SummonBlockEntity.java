@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.block.entity;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
@@ -25,12 +26,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 import static net.minecraft.world.level.block.Block.UPDATE_ALL;
 
 public class SummonBlockEntity extends BlockEntity {
 	public static final String TAG_SUMMON_ENTITY = "summon";
 	public static final String TAG_MISSION = "mission";
+	public static final String TAG_EXTRA_CONDITION = "extra_condition";
 	public static final String TAG_MISSION_TYPE = "mission_type";
 	public static final String TAG_DISTANCE = "distance";
 
@@ -41,6 +44,9 @@ public class SummonBlockEntity extends BlockEntity {
 
 	@Nullable
 	private MissionManager.Mission mission;
+
+	@Nullable
+	private String extraCondition;
 
 	private SummonMissionType type = SummonMissionType.RECEIVE;
 
@@ -84,7 +90,7 @@ public class SummonBlockEntity extends BlockEntity {
 			return;
 		}
 		blockEntity.lastCheckTick = CHECK_TICK;
-		if(level instanceof ServerLevel serverLevel && (blockEntity.mission != null || blockEntity.summonTag != null)) {
+		if(level instanceof ServerLevel serverLevel && (blockEntity.mission != null || blockEntity.summonTag != null) && blockEntity.checkExtraCondition(serverLevel)) {
 			List<ServerPlayer> nearbyPlayers = serverLevel.players().stream()
 					.filter(player -> player.position().closerThan(blockPos.getCenter(), blockEntity.distance) &&
 									!player.getAbilities().instabuild &&
@@ -127,6 +133,19 @@ public class SummonBlockEntity extends BlockEntity {
 		return null;
 	}
 
+	private static final Map<String, BiFunction<ServerLevel, BlockPos, Boolean>> EXTRA_CONDITIONS = Maps.newHashMap();
+
+	public static void registerExtraCondition(String conditionName, BiFunction<ServerLevel, BlockPos, Boolean> condition) {
+		EXTRA_CONDITIONS.put(conditionName, condition);
+	}
+
+	private boolean checkExtraCondition(ServerLevel level) {
+		if(this.extraCondition == null) {
+			return true;
+		}
+		return EXTRA_CONDITIONS.getOrDefault(this.extraCondition, (l, p) -> false).apply(level, this.worldPosition);
+	}
+
 	@Override
 	protected void saveAdditional(CompoundTag nbt) {
 		super.saveAdditional(nbt);
@@ -135,6 +154,9 @@ public class SummonBlockEntity extends BlockEntity {
 		}
 		if(this.mission != null) {
 			nbt.putString(TAG_MISSION, this.mission.id().toString());
+		}
+		if(this.extraCondition != null) {
+			nbt.putString(TAG_EXTRA_CONDITION, this.extraCondition);
 		}
 		nbt.putInt(TAG_DISTANCE, this.distance);
 		nbt.putString(TAG_MISSION_TYPE, this.type.getSerializedName());
@@ -148,6 +170,9 @@ public class SummonBlockEntity extends BlockEntity {
 		}
 		if(nbt.contains(TAG_MISSION, Tag.TAG_STRING)) {
 			this.mission = ForgeEventHandler.getMissionManager().getMission(new ResourceLocation(nbt.getString(TAG_MISSION))).orElse(null);
+		}
+		if(nbt.contains(TAG_EXTRA_CONDITION, Tag.TAG_STRING)) {
+			this.extraCondition = nbt.getString(TAG_EXTRA_CONDITION);
 		}
 		if(nbt.contains(TAG_DISTANCE, Tag.TAG_INT)) {
 			this.distance = nbt.getInt(TAG_DISTANCE);

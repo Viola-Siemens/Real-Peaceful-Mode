@@ -7,6 +7,7 @@
 
   "block.real_peaceful_mode.summon_block": "Summon Block",
   "block.real_peaceful_mode.continuous_summon_block": "Continuous Summon Block",
+  "block.real_peaceful_mode.dirty_water": "Dirty Water",
   "block.real_peaceful_mode.refinement_table": "Refinement Table",
   "block.real_peaceful_mode.culture_table": "Culture Table",
   "block.real_peaceful_mode.purifier": "Purifier",
@@ -35,6 +36,7 @@
   "block.real_peaceful_mode.smooth_siltstone_slab": "Smooth Siltstone Slab",
   "block.real_peaceful_mode.smooth_siltstone_stairs": "Smooth Siltstone Stairs",
   "block.real_peaceful_mode.infested_glowing_crystal": "Infested Glowing Crystal",
+  "item.real_peaceful_mode.pac": "PAC",
   "item.real_peaceful_mode.tuff_brick": "Tuff Brick",
   "item.real_peaceful_mode.experiment_flower": "Experiment Flower",
   "item.real_peaceful_mode.explosion_blocker": "Explosion Blocker",
@@ -164,6 +166,16 @@
   "mission.real_peaceful_mode.creeper3.name": "A Difficult Challenge",
   "mission.real_peaceful_mode.creeper3.description": "Wait for the pink creepers at creeper's town. You'd better let her go alone.",
   "mission.real_peaceful_mode.creeper3.after": "Congratulations! You have already completed the missions given by the creepers.",
+
+  "mission.real_peaceful_mode.husk1.name": "Pharaoh's Altar",
+  "mission.real_peaceful_mode.husk1.description": "Try your best to defeat the husk pharaoh.",
+  "mission.real_peaceful_mode.husk1.after": "What a hard struggle! But where can you find water source?",
+  "mission.real_peaceful_mode.husk2.name": "Flocculant",
+  "mission.real_peaceful_mode.husk2.description": "Obtain a PAC and give it to the husk workman.",
+  "mission.real_peaceful_mode.husk2.after": "Wax the pharaoh's stone statues, and defeat him!",
+  "mission.real_peaceful_mode.husk3.name": "Last Fight on the Altar",
+  "mission.real_peaceful_mode.husk3.description": "Defeat the husk pharaoh.",
+  "mission.real_peaceful_mode.husk3.after": "Congratulations! You have already completed the missions given by the husks.",
 
   "advancements.real_peaceful_mode.root.title": "Real Peaceful Mode",
   "advancements.real_peaceful_mode.root.description": "This world is full of cruelty. We are blessed and cursed.",
@@ -399,7 +411,7 @@
   "rpm.mission.real_peaceful_mode.husk1.message1": "So, whom's the next sinner coming to mine place?",
   "rpm.mission.real_peaceful_mode.husk1.message2": "Oh, my... I'm sorry, I come for peace and I will leave right now.",
   "rpm.mission.real_peaceful_mode.husk1.message3": "How dare thou? Thou regard thou just run aroint from mine place? I be will dispatch thou!",
-  "rpm.mission.real_peaceful_mode.husk1.message4": "What? This guy looks really tricky. Although I defeated the tyrant of zombie before, I still feel no confidence about this fight.",
+  "rpm.mission.real_peaceful_mode.husk1.message4": "What? This guy looks really tough. Although I defeated the tyrant of zombie before, I still feel no confidence about this fight.",
 
   "rpm.mission.real_peaceful_mode.husk1.message5": "What a hard struggle! Why does this guy still look unhurt? I'm so hot and thirsty...",
   "rpm.mission.real_peaceful_mode.husk1.message6": "But it's cloudy now, which makes me feel better.",
@@ -407,5 +419,40 @@
   "rpm.mission.real_peaceful_mode.husk1.message8": "What are you talking about?",
   "rpm.mission.real_peaceful_mode.husk1.message9": "... Thou are thrifty, sinner. Now leave mine place, or I shall sear thou to a crisp!",
   "rpm.mission.real_peaceful_mode.husk1.message10": "What?",
-  "rpm.mission.real_peaceful_mode.husk1.message11": "This guy converts into a stone... Fine, there's no meaning to fight anymore. I'm so tired and thirsty, so maybe I should leave."
+  "rpm.mission.real_peaceful_mode.husk1.message11": "This guy converts into a stone... Fine, there's no meaning to fight anymore. I'm so tired and thirsty, so maybe I should leave and find water sources.",
+
+  "rpm.mission.real_peaceful_mode.husk2.message1": "Please... My family haven't drunk any clean water for weeks. We may die for this...",
+  "rpm.mission.real_peaceful_mode.husk2.message2": "Hello, uh, I just heard about your dilemma. Maybe I can help you, sir.",
+  "rpm.mission.real_peaceful_mode.husk2.message3": "Oh, god. Player? Wait... Are you the warrior who defeated the tyrant of zombies?",
+  "rpm.mission.real_peaceful_mode.husk2.message4": "Yes, and with zombies' help.",
+  "rpm.mission.real_peaceful_mode.husk2.message5": "Help us, warrior... Our pharaoh controls the water supply of us, imposes a heavy tax on us, and kills everyone who tries to run away.",
+  "rpm.mission.real_peaceful_mode.husk2.message6": "You know how difficult it is to raise crops in the desert? But now I just need clean water...",
+  "rpm.mission.real_peaceful_mode.husk2.message7": "Don't worry, I will help you. You have already dig a well, what can I do for you?",
+  "rpm.mission.real_peaceful_mode.husk2.message8": "I don't know how to purify the water. I know villagers in desert are able to make it clean, but I'm afraid they frown upon my presence there.",
+  "rpm.mission.real_peaceful_mode.husk2.message9": "Sure. I'll help you out.",
+
+  "rpm.mission.real_peaceful_mode.husk2.message10": "I made this flocculant to purify the water.",
+  "rpm.mission.real_peaceful_mode.husk2.message11": "Thanks, my hero! How does it work?",
+  "rpm.mission.real_peaceful_mode.husk2.message12": "Simple. Throw it into the water, and it will make sediment subside.",
+  "rpm.mission.real_peaceful_mode.husk2.message13": "I see it! Thank you very much for saving us. I will tell everyone about what you do today. By the way, have you seen the pharaoh of us?",
+  "rpm.mission.real_peaceful_mode.husk2.message14": "It is him who asks us to kill all human beings in this desert, but we don't like murdering. I believe you can defeat him, and bring peace and free to us.",
+  "rpm.mission.real_peaceful_mode.husk2.message15": "What should I do?",
+  "rpm.mission.real_peaceful_mode.husk2.message16": "All his power comes from the sun. When the sun fall, or it becomes cloudy, the pharaoh will convert into a hard stone.",
+  "rpm.mission.real_peaceful_mode.husk2.message17": "This is your chance - use something to wax him to cut off the energy supply of the sun.",
+  "rpm.mission.real_peaceful_mode.husk2.message18": "Thanks for your advice.",
+  "rpm.mission.real_peaceful_mode.husk2.message19": "It's me who should be thankful to you. We hope you can set us free from the pharaoh's tyranny.",
+
+  "rpm.mission.real_peaceful_mode.husk3.message1": "That's it. I've waxed the stone already.",
+  "rpm.mission.real_peaceful_mode.husk3.message2": "What? Where's mine power?",
+  "rpm.mission.real_peaceful_mode.husk3.message3": "Oh, so you finally wake up for the last fight, cowardly pharaoh?",
+  "rpm.mission.real_peaceful_mode.husk3.message4": "Thou't still beat me without the sun power!",
+  "rpm.mission.real_peaceful_mode.husk3.message5": "Stop resisting! As a monarch of husks, what have you done for them? They are living hard lives. Don't you know that?",
+  "rpm.mission.real_peaceful_mode.husk3.message6": "What care I about what lives they are living, because I am the pharaoh whom hath supreme power and wealth!",
+  "rpm.mission.real_peaceful_mode.husk3.message7": "Fine, the negotiation broke down. You will pay for your foolish!",
+
+  "rpm.mission.real_peaceful_mode.husk3.message8": "Why... Why am I defeated... by a player?",
+  "rpm.mission.real_peaceful_mode.husk3.message9": "Because you are selfish, stupid and complacent. You do not know why your people really want.",
+  "rpm.mission.real_peaceful_mode.husk3.message10": "What they want... Should they betray me, I shall dispatch 'em...",
+  "rpm.mission.real_peaceful_mode.husk3.message11": "You are such a fool to the end. That's why your people don't like you. They are yearning for peace, and eager to live on their own.",
+  "rpm.mission.real_peaceful_mode.husk3.message12": "What are you holding? A scepter? Well, it looks like you don't need it anymore."
 }

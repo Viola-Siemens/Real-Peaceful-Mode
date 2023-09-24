@@ -8,6 +8,7 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 public class RPMModelLayers {
 	public static final ModelLayerLocation DARK_ZOMBIE_KNIGHT = register("dark_zombie_knight");
 	public static final ModelLayerLocation PINK_CREEPER = register("pink_creeper");
+	public static final ModelLayerLocation HUSK_WORKMAN = register("husk_workman");
 	public static final ModelLayerLocation DARK_ZOMBIE_KNIGHT_INNER_ARMOR = registerInnerArmor("dark_zombie_knight");
 	public static final ModelLayerLocation DARK_ZOMBIE_KNIGHT_OUTER_ARMOR = registerOuterArmor("dark_zombie_knight");
 	public static final ModelLayerLocation ZOMBIE_TYRANT = register("zombie_tyrant");

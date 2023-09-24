@@ -69,6 +69,9 @@ public class RPMItems {
         public static ItemEntry<Item> CRYSTAL_SKULL = ItemEntry.register(
                 "crystal_skull", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1))
         );
+        public static ItemEntry<Item> PAC = ItemEntry.register(
+                "pac", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(16))
+        );
         public static ItemEntry<Item> TUFF_BRICK = ItemEntry.register(
                 "tuff_brick", () -> new Item(new Item.Properties())
         );

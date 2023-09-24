@@ -16,6 +16,7 @@ public class PinkCreeperRenderer extends MobRenderer<PinkCreeperEntity, CreeperM
 		super(context, new CreeperModel<>(context.bakeLayer(RPMModelLayers.PINK_CREEPER)), 0.5F);
 	}
 
+	@Override
 	public ResourceLocation getTextureLocation(PinkCreeperEntity entity) {
 		return TEXTURE_LOCATION;
 	}

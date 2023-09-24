@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.HuskWorkmanEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.SkeletonKing;
@@ -24,6 +25,10 @@ public class RPMEntities {
             .sized(0.6F, 1.7F)
             .clientTrackingRange(8)
             .build(new ResourceLocation(MODID, "pink_creeper").toString());
+    public static final EntityType<HuskWorkmanEntity> HUSK_WORKMAN = EntityType.Builder.of(HuskWorkmanEntity::new, MobCategory.MONSTER)
+            .sized(0.6F, 1.95F)
+            .clientTrackingRange(8)
+            .build(new ResourceLocation(MODID, "husk_workman").toString());
     public static final EntityType<ZombieTyrant> ZOMBIE_TYRANT = EntityType.Builder.of(ZombieTyrant::new, MobCategory.MONSTER)
             .sized(0.9F, 2.0F)
             .clientTrackingRange(10)
@@ -51,6 +56,7 @@ public class RPMEntities {
         event.register(Registries.ENTITY_TYPE, helper -> {
             helper.register(new ResourceLocation(MODID, "dark_zombie_knight"), DARK_ZOMBIE_KNIGHT);
             helper.register(new ResourceLocation(MODID, "pink_creeper"), PINK_CREEPER);
+            helper.register(new ResourceLocation(MODID, "husk_workman"), HUSK_WORKMAN);
             helper.register(new ResourceLocation(MODID, "zombie_tyrant"), ZOMBIE_TYRANT);
             helper.register(new ResourceLocation(MODID, "skeleton_king"), SKELETON_KING);
             helper.register(new ResourceLocation(MODID, "husk_pharaoh"), HUSK_PHARAOH);

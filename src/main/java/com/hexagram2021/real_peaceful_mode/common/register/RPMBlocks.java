@@ -2,6 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.block.ContinuousSummonBlock;
 import com.hexagram2021.real_peaceful_mode.common.block.CultureTableBlock;
+import com.hexagram2021.real_peaceful_mode.common.block.DirtyWaterBlock;
 import com.hexagram2021.real_peaceful_mode.common.block.SummonBlock;
 import com.hexagram2021.real_peaceful_mode.common.block.skull.RPMSkullTypes;
 import net.minecraft.core.Direction;
@@ -45,6 +46,12 @@ public class RPMBlocks {
 				.noCollission().noLootTable()
 				.isValidSpawn((blockState, level, blockPos, entityType) -> false)
 				.noParticlesOnBreak().pushReaction(PushReaction.BLOCK), ContinuousSummonBlock::new
+		);
+
+		public static final BlockEntry<DirtyWaterBlock> DIRTY_WATER = new BlockEntry<>(
+				"dirty_water", () -> BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_PURPLE).strength(0.25F)
+				.sound(SoundType.POWDER_SNOW).dynamicShape()
+				.isRedstoneConductor((blockState, level, pos) -> false), DirtyWaterBlock::new
 		);
 
 		private TechnicalBlocks() {}

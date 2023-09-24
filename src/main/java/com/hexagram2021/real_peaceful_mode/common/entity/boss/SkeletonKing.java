@@ -146,6 +146,7 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 						new ResourceLocation(MODID, "skeleton3"), SummonBlockEntity.SummonMissionType.RECEIVE, serverPlayer,
 						this, player1 -> player1.getItemInHand(hand).shrink(1)
 				);
+				return InteractionResult.CONSUME;
 			}
 			if (itemInHand.is(Items.SOUL_SOIL) && itemInHand.getCount() >= 64) {
 				MissionHelper.triggerMissionForPlayer(
@@ -155,6 +156,7 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 							this.getMainHandItem().setCount(0);
 						}
 				);
+				return InteractionResult.CONSUME;
 			}
 			return InteractionResult.PASS;
 		}

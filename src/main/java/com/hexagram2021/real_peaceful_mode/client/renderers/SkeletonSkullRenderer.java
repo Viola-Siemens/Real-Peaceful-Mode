@@ -34,10 +34,12 @@ public class SkeletonSkullRenderer extends EntityRenderer<SkeletonSkullEntity> {
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
+    @Override
     protected int getBlockLightLevel(SkeletonSkullEntity entity, BlockPos blockPos) {
         return 15;
     }
 
+    @Override
     public void render(SkeletonSkullEntity entity, float f, float partialTick, PoseStack transform, MultiBufferSource multiBufferSource, int uv2) {
         transform.pushPose();
         transform.scale(-1.0F, -1.0F, 1.0F);
@@ -50,6 +52,7 @@ public class SkeletonSkullRenderer extends EntityRenderer<SkeletonSkullEntity> {
         super.render(entity, f, partialTick, transform, multiBufferSource, uv2);
     }
 
+    @Override
     public ResourceLocation getTextureLocation(SkeletonSkullEntity entity) {
         return TEXTURE_LOCATION;
     }

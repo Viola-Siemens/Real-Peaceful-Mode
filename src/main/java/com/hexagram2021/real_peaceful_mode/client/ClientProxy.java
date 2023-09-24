@@ -74,6 +74,7 @@ public class ClientProxy extends CommonProxy {
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(RPMEntities.DARK_ZOMBIE_KNIGHT, DarkZombieKnightRenderer::new);
         event.registerEntityRenderer(RPMEntities.PINK_CREEPER, PinkCreeperRenderer::new);
+        event.registerEntityRenderer(RPMEntities.HUSK_WORKMAN, HuskWorkmanRenderer::new);
         event.registerEntityRenderer(RPMEntities.ZOMBIE_TYRANT, ZombieTyrantRenderer::new);
         event.registerEntityRenderer(RPMEntities.SKELETON_KING, SkeletonKingRenderer::new);
         event.registerEntityRenderer(RPMEntities.HUSK_PHARAOH, HuskPharaohRenderer::new);
