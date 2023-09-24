@@ -32,6 +32,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
@@ -320,7 +321,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 	LazyOptional<? extends IItemHandler>[] handlers =
 			SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 
-	@Override
+	@Override @NotNull
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
 		if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER) {
 			if (facing == Direction.UP)

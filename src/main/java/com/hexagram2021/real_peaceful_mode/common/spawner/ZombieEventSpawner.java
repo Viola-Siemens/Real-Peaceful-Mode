@@ -11,7 +11,6 @@ import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Function3;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

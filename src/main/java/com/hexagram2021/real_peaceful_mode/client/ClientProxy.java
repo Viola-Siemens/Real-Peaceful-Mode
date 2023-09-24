@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.client;
 
 import com.hexagram2021.real_peaceful_mode.client.models.DarkZombieKnightModel;
+import com.hexagram2021.real_peaceful_mode.client.models.HuskWorkmanModel;
 import com.hexagram2021.real_peaceful_mode.client.models.SkeletonKingModel;
 import com.hexagram2021.real_peaceful_mode.client.models.ZombieTyrantModel;
 import com.hexagram2021.real_peaceful_mode.client.renderers.*;
@@ -61,6 +62,7 @@ public class ClientProxy extends CommonProxy {
     public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT, DarkZombieKnightModel::createBodyLayer);
         event.registerLayerDefinition(RPMModelLayers.PINK_CREEPER, () -> CreeperModel.createBodyLayer(CubeDeformation.NONE));
+        event.registerLayerDefinition(RPMModelLayers.HUSK_WORKMAN, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_INNER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(0.5F));
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_OUTER_ARMOR, () -> DarkZombieKnightModel.createArmorLayer(1.0F));
         event.registerLayerDefinition(RPMModelLayers.ZOMBIE_TYRANT, ZombieTyrantModel::createBodyLayer);
