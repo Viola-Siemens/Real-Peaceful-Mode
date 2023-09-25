@@ -96,12 +96,12 @@ public class ZombieTyrant extends Mob implements Enemy {
 		super.readAdditionalSaveData(nbt);
 	}
 
-	private static final ResourceLocation WEAKEN_MISSION = new ResourceLocation(MODID, "zombie2");
+	private static final ResourceLocation LAST_MISSION = new ResourceLocation(MODID, "zombie3");
 	@Override
 	public boolean hurt(DamageSource damageSource, float v) {
 		Entity entity = damageSource.getEntity();
 		if(entity instanceof IMonsterHero hero) {
-			if(!IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
+			if(!IMonsterHero.underMission(hero.getPlayerMissions(), LAST_MISSION)) {
 				this.heal(20.0F);
 				return super.hurt(damageSource, v / 5.0F);
 			}
@@ -139,13 +139,13 @@ public class ZombieTyrant extends Mob implements Enemy {
 	
 	@Override
 	public void die(DamageSource damageSource) {
-		if(damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
+		if(damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.underMission(hero.getPlayerMissions(), LAST_MISSION)) {
 			this.setHealth(100.0F);
 			return;
 		}
 		if(this.level() instanceof ServerLevel serverLevel) {
 			MissionHelper.triggerMissionForPlayers(
-					new ResourceLocation(MODID, "zombie3"), SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
+					LAST_MISSION, SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
 					player -> player.closerThan(this, 32.0D), this, player -> {}
 			);
 			this.level().getEntitiesOfClass(DarkZombieKnight.class, this.getBoundingBox().inflate(16.0D), EntitySelector.ENTITY_STILL_ALIVE).forEach(knight -> knight.setTarget(null));

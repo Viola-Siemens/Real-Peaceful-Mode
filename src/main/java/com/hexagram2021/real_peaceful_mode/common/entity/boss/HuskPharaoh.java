@@ -125,7 +125,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		}
 	}
 
-	private static final ResourceLocation WEAKEN_MISSION = new ResourceLocation(MODID, "husk2");
+	private static final ResourceLocation LAST_MISSION = new ResourceLocation(MODID, "husk3");
 	@Override
 	public boolean hurt(DamageSource damageSource, float v) {
 		if(this.isStone()) {
@@ -134,7 +134,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		}
 		Entity entity = damageSource.getEntity();
 		if(entity instanceof IMonsterHero hero) {
-			if(!IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
+			if(!IMonsterHero.underMission(hero.getPlayerMissions(), LAST_MISSION)) {
 				this.heal(10.0F);
 				if(v > 0) {
 					this.totalDamage += v * 100.0F / (TRIGGER_MISSION_TOTAL_DAMAGE * 2.0F - this.totalDamage);
@@ -160,7 +160,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		if(this.isStone() && itemInHand.is(Items.HONEYCOMB)) {
 			if(player instanceof ServerPlayer serverPlayer) {
 				MissionHelper.triggerMissionForPlayer(
-						new ResourceLocation(MODID, "husk3"), SummonBlockEntity.SummonMissionType.RECEIVE, serverPlayer,
+						LAST_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE, serverPlayer,
 						this, player1 -> {
 							player1.getItemInHand(hand).shrink(1);
 							this.setIsWeaken(true);
@@ -184,7 +184,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 
 	@Override
 	public void die(DamageSource damageSource) {
-		if (damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), WEAKEN_MISSION)) {
+		if (damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.underMission(hero.getPlayerMissions(), LAST_MISSION) && !this.isWeaken()) {
 			this.setHealth(100.0F);
 			return;
 		}

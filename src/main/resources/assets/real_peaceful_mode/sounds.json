@@ -55,6 +55,20 @@
     ],
     "subtitle": "subtitles.entity.skeleton_king.death"
   },
+  "entity.husk_pharaoh.ambient": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:husk_pharaoh/ambient"
+    ],
+    "subtitle": "subtitles.entity.husk_pharaoh.ambient"
+  },
+  "entity.husk_pharaoh.death": {
+    "category": "entity",
+    "sounds": [
+      "real_peaceful_mode:husk_pharaoh/death"
+    ],
+    "subtitle": "subtitles.entity.husk_pharaoh.death"
+  },
   "entity.dark_zombie_knight.ambient": {
     "category": "entity",
     "sounds": [
