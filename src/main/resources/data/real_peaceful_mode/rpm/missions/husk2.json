@@ -81,7 +81,5 @@
       "key": "rpm.mission.real_peaceful_mode.husk2.message19",
       "speaker": "npc"
     }
-  ],
-  "loot_table": "real_peaceful_mode:missions/single_husk_spirit",
-  "loot_before": true
+  ]
 }

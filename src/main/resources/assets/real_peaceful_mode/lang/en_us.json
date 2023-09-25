@@ -218,6 +218,11 @@
   "book.real_peaceful_mode.slime.content2": "",
   "book.real_peaceful_mode.slime.content3": "",
 
+  "book.real_peaceful_mode.husk.title": "How to Purify Water",
+  "book.real_peaceful_mode.husk.content1": "The water in the desert is often too silty to drink, so we need to purify it. Some pioneers invented water purifier to filtrate the water source, which we can use at home. But this method is not suitable for purifying water outside, or making the water clean in a well. ",
+  "book.real_peaceful_mode.husk.content2": "Then we discovered that PAC, a kind of flocculant, can make sediment in the water subside. PAC is also easy to make - collect the alunite from alunite ore shallowly underground, make a alunite block, then smelt it in a blast furnace. The high degree of safety and low ",
+  "book.real_peaceful_mode.husk.content3": "dosage of PAC make it the best choice for outdoor water purification.",
+
   "rpm.mission.real_peaceful_mode.zombie1.message1": "What a magnificent fort! But there's an awful smell exuded from the deep of it. What could it be?",
   "rpm.mission.real_peaceful_mode.zombie1.message2": "Who the freak is bothering me when I'm sleeping?",
   "rpm.mission.real_peaceful_mode.zombie1.message3": "Who's that?",

@@ -190,8 +190,7 @@ public class Villages {
 				));
 				trades.get(4).add(new RPMTrades.EmeraldForItems(Items.SEA_LANTERN, 5, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_4_BUY));
 				trades.get(5).add(new RPMTrades.ItemsForEmeralds(RPMBlocks.WorkStation.REFINEMENT_TABLE, 16, 1, ONLY_SUPPLY_ONCE, XP_LEVEL_5_TRADE));
-			}
-			if(BOTANIST.equals(currentVillagerProfession)) {
+			} else if(BOTANIST.equals(currentVillagerProfession)) {
 				trades.get(1).add(new RPMTrades.WrittenBookForBead(
 						Component.translatable("book.real_peaceful_mode.creeper.title"),
 						Component.translatable("entity.minecraft.villager.real_peaceful_mode.botanist"),
@@ -222,6 +221,29 @@ public class Villages {
 				trades.get(4).add(new RPMTrades.EmeraldForItems(Items.SLIME_BALL, 24, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_4_BUY));
 				trades.get(5).add(new RPMTrades.ItemsForEmeralds(Items.GRASS_BLOCK, 1, 4, DEFAULT_SUPPLY, XP_LEVEL_5_TRADE));
 				trades.get(5).add(new RPMTrades.ItemsForEmeralds(Items.FLOWER_BANNER_PATTERN, 3, 1, UNCOMMON_ITEMS_SUPPLY, XP_LEVEL_5_TRADE));
+			} else if(PLUMBER.equals(currentVillagerProfession)) {
+				trades.get(1).add(new RPMTrades.WrittenBookForBead(
+						Component.translatable("book.real_peaceful_mode.husk.title"),
+						Component.translatable("entity.minecraft.villager.real_peaceful_mode.plumber"),
+						RPMItems.SpiritBeads.HUSK_SPIRIT_BEAD, 1,
+						ONLY_SUPPLY_ONCE,
+						XP_LEVEL_1_SELL,
+						Component.translatable("book.real_peaceful_mode.husk.content1"),
+						Component.translatable("book.real_peaceful_mode.husk.content2"),
+						Component.translatable("book.real_peaceful_mode.husk.content3")
+				));
+				trades.get(1).add(new RPMTrades.EmeraldForItems(Items.SAND, 24, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_1_BUY));
+				trades.get(2).add(new RPMTrades.WrittenBookForBead(
+						Component.translatable("book.real_peaceful_mode.drowned.title"),
+						Component.translatable("entity.minecraft.villager.real_peaceful_mode.plumber"),
+						RPMItems.SpiritBeads.DROWNED_SPIRIT_BEAD, 1,
+						ONLY_SUPPLY_ONCE,
+						XP_LEVEL_2_SELL,
+						Component.translatable("book.real_peaceful_mode.drowned.content1"),
+						Component.translatable("book.real_peaceful_mode.drowned.content2"),
+						Component.translatable("book.real_peaceful_mode.drowned.content3")
+				));
+				trades.get(2).add(new RPMTrades.ItemsForEmeralds(Items.WATER_BUCKET, 2, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_2_SELL));
 			}
 		}
 	}

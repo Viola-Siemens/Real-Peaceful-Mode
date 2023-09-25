@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "real_peaceful_mode:alum"
+    }
+  },
+  "result": {
+    "item": "real_peaceful_mode:alum_block"
+  }
+}

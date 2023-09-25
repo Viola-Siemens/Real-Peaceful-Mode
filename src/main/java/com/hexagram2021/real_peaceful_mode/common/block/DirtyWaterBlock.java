@@ -9,10 +9,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -45,20 +47,40 @@ public class DirtyWaterBlock extends Block {
 		return Shapes.empty();
 	}
 
+	private static ItemStack getLoot(RandomSource random) {
+		return new ItemStack(switch (random.nextInt(16)) {
+			case 0 -> Items.GOLD_NUGGET;
+			case 1 -> Items.IRON_NUGGET;
+			case 2, 3, 4, 5, 6 -> Items.GRAVEL;
+			default -> Items.SAND;
+		});
+	}
+
 	@Override
 	public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
 		if(level instanceof ServerLevel serverLevel && entity instanceof ItemEntity itemEntity) {
 			ItemStack itemStack = itemEntity.getItem();
 			if(itemStack.is(RPMItems.Materials.PAC.get())) {
-				for(int x = -2; x <= 2; ++x) {
-					for(int z = -2; z <= 2; ++z) {
-						for(int y = -2; y < 2; ++y) {
+				int count = 0;
+				for(int x = -4; x <= 4; ++x) {
+					for(int z = -4; z <= 4; ++z) {
+						for(int y = -4; y <= 2; ++y) {
 							BlockPos current = blockPos.offset(x, y, z);
 							if(serverLevel.getBlockState(current).is(this)) {
 								serverLevel.setBlock(current, Blocks.WATER.defaultBlockState(), UPDATE_ALL);
+								++count;
 							}
 						}
 					}
+				}
+				while(count >= 5) {
+					ItemStack loot = getLoot(serverLevel.getRandom());
+					serverLevel.addFreshEntity(new ItemEntity(serverLevel, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), loot));
+					count -= 5;
+				}
+				if(serverLevel.getRandom().nextInt(5) < count) {
+					ItemStack loot = getLoot(serverLevel.getRandom());
+					serverLevel.addFreshEntity(new ItemEntity(serverLevel, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), loot));
 				}
 				level.getEntities(itemEntity, itemEntity.getBoundingBox().inflate(16.0D)).stream()
 						.filter(e -> e instanceof HuskWorkmanEntity).map(e -> (HuskWorkmanEntity) e).findAny()
