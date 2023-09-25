@@ -12,6 +12,7 @@ public class RPMStructureSetKeys {
 	public static final ResourceKey<StructureSet> CRYSTAL_SKULL_ISLANDS = createKey("crystal_skull_islands");
 	public static final ResourceKey<StructureSet> ABANDONED_MAGIC_POOLS = createKey("abandoned_magic_pools");
 	public static final ResourceKey<StructureSet> PINK_CREEPERS = createKey("pink_creepers");
+	public static final ResourceKey<StructureSet> HUSK_WELL = createKey("husk_wells");
 	public static final ResourceKey<StructureSet> ZOMBIE_FORTS = createKey("zombie_forts");
 	public static final ResourceKey<StructureSet> SKELETON_PALACES = createKey("skeleton_palaces");
 	public static final ResourceKey<StructureSet> CREEPER_TOWNS = createKey("creeper_towns");

@@ -8,10 +8,10 @@
   ],
   "key": {
     "#": {
-      "item": "real_peaceful_mode:alum"
+      "item": "real_peaceful_mode:alunite"
     }
   },
   "result": {
-    "item": "real_peaceful_mode:alum_block"
+    "item": "real_peaceful_mode:alunite_block"
   }
 }

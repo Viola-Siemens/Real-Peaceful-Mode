@@ -2,6 +2,7 @@
   "parent": "minecraft:block/block",
   "render_type": "translucent",
   "textures": {
+    "dirty_water": "real_peaceful_mode:block/dirty_water",
     "glass_top": "real_peaceful_mode:block/culture_table_glass",
     "glass_side": "real_peaceful_mode:block/purifier_glass",
     "glass2": "real_peaceful_mode:block/purifier_glass_top",
@@ -37,8 +38,8 @@
       }
     },
     {
-      "from": [3, 9, 3],
-      "to": [13, 10, 13],
+      "from": [3, 9.001, 3],
+      "to": [13, 10.001, 13],
       "faces": {
         "north": {"uv": [0, 0, 10, 1],  "texture": "#rock"},
         "east":  {"uv": [0, 0, 10, 1],  "texture": "#rock"},
@@ -49,8 +50,8 @@
       }
     },
     {
-      "from": [4, 8, 4],
-      "to": [12, 9, 12],
+      "from": [4, 8.001, 4],
+      "to": [12, 9.001, 12],
       "faces": {
         "north": {"uv": [4, 8, 12, 9],  "texture": "#coarse_sand"},
         "east":  {"uv": [4, 8, 12, 9],  "texture": "#coarse_sand"},
@@ -61,8 +62,8 @@
       }
     },
     {
-      "from": [5, 7, 5],
-      "to": [11, 8, 11],
+      "from": [5, 7.001, 5],
+      "to": [11, 8.001, 11],
       "faces": {
         "north": {"uv": [5, 7, 11, 8],  "texture": "#fine_sand"},
         "east":  {"uv": [5, 7, 11, 8],  "texture": "#fine_sand"},
@@ -73,8 +74,8 @@
       }
     },
     {
-      "from": [6, 6, 6],
-      "to": [10, 7, 10],
+      "from": [6, 6.001, 6],
+      "to": [10, 7.001, 10],
       "faces": {
         "north": {"uv": [6, 6, 10, 7],  "texture": "#coal"},
         "east":  {"uv": [6, 6, 10, 7],  "texture": "#coal"},
@@ -85,8 +86,8 @@
       }
     },
     {
-      "from": [7, 5, 7],
-      "to": [9, 6, 9],
+      "from": [7, 5.001, 7],
+      "to": [9, 6.001, 9],
       "faces": {
         "north": {"uv": [7, 5, 9, 6], "texture": "#coal"},
         "east":  {"uv": [7, 5, 9, 6], "texture": "#coal"},

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "real_peaceful_mode:alunite_ore",
+  "step": "underground_ores"
+}

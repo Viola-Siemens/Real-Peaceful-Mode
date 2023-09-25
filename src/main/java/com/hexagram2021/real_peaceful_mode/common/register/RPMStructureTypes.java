@@ -16,6 +16,7 @@ public final class RPMStructureTypes {
 	public static final RegistryObject<StructureType<CrystalSkullIslandFeature>> CRYSTAL_SKULL_ISLAND = register("crystal_skull_island", () -> CrystalSkullIslandFeature.CODEC);
 	public static final RegistryObject<StructureType<AbandonedMagicPoolFeature>> ABANDONED_MAGIC_POOL = register("abandoned_magic_pool", () -> AbandonedMagicPoolFeature.CODEC);
 	public static final RegistryObject<StructureType<PinkCreeperFeature>> PINK_CREEPER = register("pink_creeper", () -> PinkCreeperFeature.CODEC);
+	public static final RegistryObject<StructureType<HuskWellFeature>> HUSK_WELL = register("husk_well", () -> HuskWellFeature.CODEC);
 	public static final RegistryObject<StructureType<ZombieFortFeature>> ZOMBIE_FORT = register("zombie_fort", () -> ZombieFortFeature.CODEC);
 	public static final RegistryObject<StructureType<SkeletonPalaceFeature>> SKELETON_PALACE = register("skeleton_palace", () -> SkeletonPalaceFeature.CODEC);
 	public static final RegistryObject<StructureType<PharaohAltarFeature>> PHARAOH_ALTAR = register("pharaoh_altar", () -> PharaohAltarFeature.CODEC);

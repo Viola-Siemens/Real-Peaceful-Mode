@@ -5,14 +5,14 @@
       "chunk_count": 5,
       "other_set": "minecraft:villages"
     },
-    "salt": 2058114514,
+    "salt": 656962286,
     "separation": 10,
     "spacing": 32,
     "spread_type": "triangular"
   },
   "structures": [
     {
-      "structure": "real_peaceful_mode:pharaoh_altar",
+      "structure": "real_peaceful_mode:husk_well",
       "weight": 1
     }
   ]
