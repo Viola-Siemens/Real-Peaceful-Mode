@@ -245,6 +245,13 @@ public class Villages {
 						Component.translatable("book.real_peaceful_mode.drowned.content3")
 				));
 				trades.get(2).add(new RPMTrades.ItemsForEmeralds(Items.WATER_BUCKET, 2, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_2_SELL));
+				trades.get(3).add(new RPMTrades.ItemsForEmeralds(Items.CHARCOAL, 1, 4, DEFAULT_SUPPLY, XP_LEVEL_3_SELL));
+				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.CHARCOAL, 16, 1, DEFAULT_SUPPLY, XP_LEVEL_3_BUY));
+				trades.get(3).add(new RPMTrades.EmeraldForItems(RPMBlocks.Decoration.CHIPPINGS, 25, 1, DEFAULT_SUPPLY, XP_LEVEL_3_BUY));
+				trades.get(3).add(new RPMTrades.EmeraldForItems(Items.GLASS_PANE, 11, 1, COMMON_ITEMS_SUPPLY, XP_LEVEL_3_BUY));
+				trades.get(4).add(new RPMTrades.EmeraldForItems(RPMBlocks.Ore.ALUNITE_BLOCK, 3, 1, DEFAULT_SUPPLY, XP_LEVEL_4_BUY));
+				trades.get(4).add(new RPMTrades.ItemsForEmeralds(RPMItems.Materials.ALUNITE, 1, 3, UNCOMMON_ITEMS_SUPPLY, XP_LEVEL_4_SELL));
+				trades.get(5).add(new RPMTrades.EmeraldForItems(Items.BUCKET, 6, 2, UNCOMMON_ITEMS_SUPPLY, XP_LEVEL_5_TRADE));
 			}
 		}
 	}

@@ -215,14 +215,19 @@
   "book.real_peaceful_mode.creeper.content3": "花、绒球葱或兰花来#生产转基因花朵#，并再次#找到那位粉色的苦力怕#，那么用于阻止苦力怕爆炸的爆炸阻滞剂将会更容易制作。",
 
   "book.real_peaceful_mode.slime.title": "黏糊糊的植性怪物",
-  "book.real_peaceful_mode.slime.content1": "",
-  "book.real_peaceful_mode.slime.content2": "",
-  "book.real_peaceful_mode.slime.content3": "",
+  "book.real_peaceful_mode.slime.content1": "史莱姆这种生物并没有很久远的进化过程，起初它是一种会分泌黏液的植物，黏液中包裹着许多的种子；动物们沾上这些携带种子的黏液后，等待黏液风干，种子便会脱落，在事宜的地方生根发芽。然而大约在一千年前，这种植物却迅速变异，",
+  "book.real_peaceful_mode.slime.content2": "开始拥有微弱的自我意识，在阴暗湿润的地下和沼泽生长着，吞噬着路过的小体型生物为它提供养分。它们虽然不再完全称得上是植物，但仍然通过黏液包裹种子的方式扩散繁殖，而且母体死亡后，子代会迅速再生。然而柔软的外壳、时刻暴露",
+  "book.real_peaceful_mode.slime.content3": "自身要害的结构使得它们的活动范围并不与人类有过多的重叠。",
 
   "book.real_peaceful_mode.husk.title": "如何净化水源",
   "book.real_peaceful_mode.husk.content1": "沙漠中的水源往往富含大量泥沙而无法引用，因此我们需要净化它们。一些先驱们发明了净水器，通过过滤的方式完成净水，使得我们可以在家中喝上纯净的水源。但对于净化外面的水源，或是使水井中的水变得清澈，这个方法并不合适。接着，",
   "book.real_peaceful_mode.husk.content2": "我们发现了一种高效的絮凝剂——聚合氯化铝（简称聚铝），可以使水中的悬浊物沉淀下来。聚铝的合成方法也非常简单——在地下浅层采集明矾石矿收集明矾石，然后合成明矾石块，最后在高炉中熔炼它便能得到聚铝。聚铝的高度安全性和低投放量",
   "book.real_peaceful_mode.husk.content3": "使得它成为了户外净水的不二之选。",
+
+  "book.real_peaceful_mode.drowned.title": "海神的夙愿",
+  "book.real_peaceful_mode.drowned.content1": "海神，是大海的龙王，也是以太龙最为疼爱的长子。然而海神却离奇地失踪了，随后短短几年，以太龙也撒手人寰。海神的离去，使得Minecraft世界的海洋发生了翻天覆地的变化，海洋国度的原著居民们渐渐消失了，溺尸与守卫者们取而代之",
+  "book.real_peaceful_mode.drowned.content2": "地出现了；许多航海的商船离奇地沉没了，在海上夜行也变得十分危险。不过我坚定地相信，海神依旧活着，或许他仍在茫茫海洋中的某处，用他的方式守护着海洋的稳定，才没有让一切变得更糟。我猜测，溺尸和守卫者是某种邪恶力量的产物，",
+  "book.real_peaceful_mode.drowned.content3": "它们或许曾是海洋的原住民，也或许是神秘力量派来侵略海洋的雇佣兵，总之，如果能够在深海中找到海神，一切都会迎刃而解。海神的龙鳞散落在深海各处，也许这些龙鳞会为你的旅途提供帮助。",
 
   "rpm.mission.real_peaceful_mode.zombie1.message1": "多么宏大的城堡啊！不过城堡深处散发着令人作呕的气味，里面会有什么呢？",
   "rpm.mission.real_peaceful_mode.zombie1.message2": "何等刁民胆敢在朕睡觉时打扰朕休息？",

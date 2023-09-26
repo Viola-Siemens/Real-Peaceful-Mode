@@ -215,14 +215,19 @@
   "book.real_peaceful_mode.creeper.content3": "one could use the culture table to #produce a transgenic flower# that may be made from tulips, torchflowers, alliums or blue orchids, and #find the pink creeper# again, the explosion blocker, which will prevent creepers from exploding, will be easily made.",
 
   "book.real_peaceful_mode.slime.title": "The Sticky Vegetal Monster",
-  "book.real_peaceful_mode.slime.content1": "",
-  "book.real_peaceful_mode.slime.content2": "",
-  "book.real_peaceful_mode.slime.content3": "",
+  "book.real_peaceful_mode.slime.content1": "Slime does not have a long history of evolution. It was originally a plant that secreted mucus, which their seeds were wrapped in. When animals were stained with the mucus, after it goes dry, and the seeds were fallen off and take root in suitable places. However, about ",
+  "book.real_peaceful_mode.slime.content2": "a thousand years ago, this plant mutated rapidly and began to have a weak awareness. They grew in the dark and moist underground and swamps, devouring passing small creatures to provide them with nutrients. Although they are no longer completely plants, they still spread ",
+  "book.real_peaceful_mode.slime.content3": "and reproduce by covering their seeds with mucus. After the death of the mother, the offspring will quickly regenerate. Their soft shells and structures exposing their vitals indicated that there's no overlapping between slimes and humans.",
 
   "book.real_peaceful_mode.husk.title": "How to Purify Water",
   "book.real_peaceful_mode.husk.content1": "The water in the desert is often too silty to drink, so we need to purify it. Some pioneers invented water purifier to filtrate the water source, which we can use at home. But this method is not suitable for purifying water outside, or making the water clean in a well. ",
   "book.real_peaceful_mode.husk.content2": "Then we discovered that PAC, a kind of flocculant, can make sediment in the water subside. PAC is also easy to make - collect the alunite from alunite ore shallowly underground, make a alunite block, then smelt it in a blast furnace. The high degree of safety and low ",
   "book.real_peaceful_mode.husk.content3": "dosage of PAC make it the best choice for outdoor water purification.",
+
+  "book.real_peaceful_mode.drowned.title": "The Sea-God's Long-Cherished Wish",
+  "book.real_peaceful_mode.drowned.content1": "The sea-god, the dragon king of the ocean, was the most beloved and eldest son of the Aether Dragon. However, he disappeared mysteriously just a few years before the Aether Dragon passed away, which caused earth-shaking changes in the oceans of the Minecraft world. ",
+  "book.real_peaceful_mode.drowned.content2": "The aborigines of the ocean kingdom gradually disappeared, while drowned and guardians appeared; many merchant ships sank in mysterious circumstances, and it was really dangerous to travel on the sea at night. But I firmly believe that the sea-god is still alive, maybe",
+  "book.real_peaceful_mode.drowned.content3": "using his way to protect the stability of the sea somewhere in the vast ocean. In short, if the sea-god can be found in the deep oceans, everything will be fine. The dragon scales are scattered throughout the oceans, which I think may help you on your journey.",
 
   "rpm.mission.real_peaceful_mode.zombie1.message1": "What a magnificent fort! But there's an awful smell exuded from the deep of it. What could it be?",
   "rpm.mission.real_peaceful_mode.zombie1.message2": "Who the freak is bothering me when I'm sleeping?",
