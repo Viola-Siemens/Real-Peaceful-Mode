@@ -12,6 +12,54 @@
       },
       {
         "model": "real_peaceful_mode:block/chippings4"
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings1",
+        "y": 90
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings2",
+        "y": 90
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings3",
+        "y": 90
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings4",
+        "y": 90
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings1",
+        "y": 180
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings2",
+        "y": 180
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings3",
+        "y": 180
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings4",
+        "y": 180
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings1",
+        "y": 270
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings2",
+        "y": 270
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings3",
+        "y": 270
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings4",
+        "y": 270
       }
     ]
   }
