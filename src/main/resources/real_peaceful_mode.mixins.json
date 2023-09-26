@@ -9,6 +9,7 @@
     "BlockEntityTypeAccess",
     "HeroGiftsTaskAccess",
     "LivingEntityMixin",
+    "MeleeAttackGoalMixin",
     "NoteBlockInstrumentMixin",
     "PlayerListMixin",
     "ServerLevelMixin",

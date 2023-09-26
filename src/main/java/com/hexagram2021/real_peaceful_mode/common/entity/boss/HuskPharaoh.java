@@ -2,6 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.entity.boss;
 
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
@@ -30,9 +31,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -187,6 +186,18 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		if (damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.underMission(hero.getPlayerMissions(), LAST_MISSION) && !this.isWeaken()) {
 			this.setHealth(100.0F);
 			return;
+		}
+		if(this.level() instanceof ServerLevel serverLevel) {
+			MissionHelper.triggerMissionForPlayers(
+					LAST_MISSION, SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
+					player -> player.closerThan(this, 32.0D), this, player -> {}
+			);
+			this.level().getEntitiesOfClass(Husk.class, this.getBoundingBox().inflate(32.0D), EntitySelector.ENTITY_STILL_ALIVE)
+					.forEach(husk -> {
+						if(husk instanceof IFriendlyMonster monster) {
+							monster.setDance(true);
+						}
+					});
 		}
 		super.die(damageSource);
 	}
