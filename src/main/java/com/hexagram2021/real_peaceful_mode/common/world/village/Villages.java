@@ -58,16 +58,17 @@ public class Villages {
 	}
 
 	public static void addAllStructuresToPool(RegistryAccess registryAccess) {
-		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_refinery_1"), 4, null, registryAccess);
+		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_refinery_1"), 3, null, registryAccess);
 		addToPool(new ResourceLocation("village/plains/houses"), new ResourceLocation(MODID, "village/plains/houses/plains_refinery_1"), 4, ProcessorLists.MOSSIFY_10_PERCENT, registryAccess);
 		addToPool(new ResourceLocation("village/savanna/houses"), new ResourceLocation(MODID, "village/savanna/houses/savanna_refinery_1"), 4, null, registryAccess);
 		addToPool(new ResourceLocation("village/snowy/houses"), new ResourceLocation(MODID, "village/snowy/houses/snowy_refinery_1"), 4, null, registryAccess);
 		addToPool(new ResourceLocation("village/taiga/houses"), new ResourceLocation(MODID, "village/taiga/houses/taiga_refinery_1"), 4, null, registryAccess);
-		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_botanist_1"), 4, null, registryAccess);
+		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_botanist_1"), 3, null, registryAccess);
 		addToPool(new ResourceLocation("village/plains/houses"), new ResourceLocation(MODID, "village/plains/houses/plains_botanist_1"), 4, null, registryAccess);
 		addToPool(new ResourceLocation("village/savanna/houses"), new ResourceLocation(MODID, "village/savanna/houses/savanna_botanist_1"), 4, null, registryAccess);
 		addToPool(new ResourceLocation("village/snowy/houses"), new ResourceLocation(MODID, "village/snowy/houses/snowy_botanist_1"), 4, null, registryAccess);
 		addToPool(new ResourceLocation("village/taiga/houses"), new ResourceLocation(MODID, "village/taiga/houses/taiga_botanist_1"), 4, null, registryAccess);
+		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_plumber_1"), 4, null, registryAccess);
 	}
 
 	@SuppressWarnings("SameParameterValue")

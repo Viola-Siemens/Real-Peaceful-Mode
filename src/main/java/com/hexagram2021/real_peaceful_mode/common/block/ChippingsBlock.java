@@ -3,8 +3,10 @@ package com.hexagram2021.real_peaceful_mode.common.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -18,6 +20,11 @@ public class ChippingsBlock extends Block {
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return Block.box(4.0D, 0.0D, 4.0D, 12.0D, 1.0D, 12.0D);
+	}
+
+	@Override
+	public BlockState updateShape(BlockState blockState, Direction direction, BlockState other, LevelAccessor level, BlockPos blockPos, BlockPos otherPos) {
+		return !this.canSurvive(blockState, level, blockPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(blockState, direction, other, level, blockPos, otherPos);
 	}
 
 	@Override
