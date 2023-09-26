@@ -37,8 +37,8 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile {
         }
     }
 
-    protected void onHit(HitResult p_37628_) {
-        super.onHit(p_37628_);
+    protected void onHit(HitResult result) {
+        super.onHit(result);
         if (!this.level().isClientSide) {
             this.discard();
         }
@@ -48,7 +48,7 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile {
         return false;
     }
 
-    public boolean hurt(DamageSource p_37616_, float p_37617_) {
+    public boolean hurt(DamageSource damageSource, float v) {
         return false;
     }
 

@@ -78,7 +78,7 @@ public class CultureTableBlock extends AbstractFurnaceBlock {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState p_51309_, BlockGetter p_51310_, BlockPos p_51311_, CollisionContext p_51312_) {
+	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
 	}
 }

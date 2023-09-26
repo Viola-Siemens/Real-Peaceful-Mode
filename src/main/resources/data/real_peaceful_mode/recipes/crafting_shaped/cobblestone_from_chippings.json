@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "real_peaceful_mode:chippings"
+    }
+  },
+  "result": {
+    "item": "minecraft:cobblestone"
+  }
+}

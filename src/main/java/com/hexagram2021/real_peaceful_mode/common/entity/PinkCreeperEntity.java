@@ -103,7 +103,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(DamageSource p_32309_) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return SoundEvents.CREEPER_HURT;
 	}
 

@@ -1,9 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
-import com.hexagram2021.real_peaceful_mode.common.block.ContinuousSummonBlock;
-import com.hexagram2021.real_peaceful_mode.common.block.CultureTableBlock;
-import com.hexagram2021.real_peaceful_mode.common.block.DirtyWaterBlock;
-import com.hexagram2021.real_peaceful_mode.common.block.SummonBlock;
+import com.hexagram2021.real_peaceful_mode.common.block.*;
 import com.hexagram2021.real_peaceful_mode.common.block.skull.RPMSkullTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -228,6 +225,12 @@ public class RPMBlocks {
 				Block::new
 		);
 
+		public static final BlockEntry<ChippingsBlock> CHIPPINGS = new BlockEntry<>(
+				"chippings", () -> BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
+				.instrument(NoteBlockInstrument.BASEDRUM).strength(1.0F),
+				ChippingsBlock::new
+		);
+
 		private Decoration() {}
 
 		private static void init() {
@@ -255,6 +258,7 @@ public class RPMBlocks {
 			RPMItems.ItemEntry.register(SMOOTH_SILTSTONE_STAIRS.getId().getPath(), () -> new BlockItem(SMOOTH_SILTSTONE_STAIRS.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(SMOOTH_SILTSTONE_SLAB.getId().getPath(), () -> new BlockItem(SMOOTH_SILTSTONE_SLAB.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(INFESTED_GLOWING_CRYSTAL.getId().getPath(), () -> new BlockItem(INFESTED_GLOWING_CRYSTAL.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CHIPPINGS.getId().getPath(), () -> new BlockItem(CHIPPINGS.get(), new Item.Properties()));
 		}
 	}
 

@@ -122,7 +122,7 @@ public class DirtyWaterBlock extends Block {
 	}
 
 	@Override
-	public boolean isPathfindable(BlockState blockState, BlockGetter level, BlockPos blockPos, PathComputationType p_154261_) {
+	public boolean isPathfindable(BlockState blockState, BlockGetter level, BlockPos blockPos, PathComputationType context) {
 		return false;
 	}
 }

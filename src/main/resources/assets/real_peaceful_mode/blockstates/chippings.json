@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "real_peaceful_mode:block/chippings1"
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings2"
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings3"
+      },
+      {
+        "model": "real_peaceful_mode:block/chippings4"
+      }
+    ]
+  }
+}

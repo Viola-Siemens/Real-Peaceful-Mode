@@ -1,7 +1,7 @@
 {
   "name": "structure.real_peaceful_mode.pharaoh_altar",
   "category": "real_peaceful_mode:structure",
-  "icon": "real_peaceful_mode:husk_wish",
+  "icon": "real_peaceful_mode:husks_wish",
   "sortnum": 4,
   "pages": [
     "structure.real_peaceful_mode.pharaoh_altar",
