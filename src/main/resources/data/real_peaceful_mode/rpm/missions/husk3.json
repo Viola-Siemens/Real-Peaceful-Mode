@@ -3,6 +3,7 @@
     "real_peaceful_mode:husk1",
     "real_peaceful_mode:husk2"
   ],
+  "reward": "minecraft:husk",
   "messages": [
     {
       "key": "rpm.mission.real_peaceful_mode.husk3.message1",

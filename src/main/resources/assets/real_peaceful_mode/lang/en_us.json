@@ -115,6 +115,8 @@
   "subtitles.entity.zombie_tyrant.spell": "Zombie Tyrant summons knights",
   "subtitles.entity.skeleton_king.ambient": "Skeleton King rattles",
   "subtitles.entity.skeleton_king.death": "Skeleton King dies",
+  "subtitles.entity.husk_pharaoh.ambient": "Husk Pharaoh groans",
+  "subtitles.entity.husk_pharaoh.death": "Husk Pharaoh dies",
 
   "enchantment.real_peaceful_mode.cracking": "Cracking",
 
@@ -176,7 +178,7 @@
   "mission.real_peaceful_mode.husk1.description": "Try your best to defeat the husk pharaoh.",
   "mission.real_peaceful_mode.husk1.after": "What a hard struggle! But where can you find water source?",
   "mission.real_peaceful_mode.husk2.name": "Flocculant",
-  "mission.real_peaceful_mode.husk2.description": "Obtain a PAC and give it to the husk workman.",
+  "mission.real_peaceful_mode.husk2.description": "Obtain something able to purify the water and give it to the husk workman. You may need to find a plumber villager first.",
   "mission.real_peaceful_mode.husk2.after": "Wax the pharaoh's stone statues, and defeat him!",
   "mission.real_peaceful_mode.husk3.name": "Last Fight on the Altar",
   "mission.real_peaceful_mode.husk3.description": "Defeat the husk pharaoh.",

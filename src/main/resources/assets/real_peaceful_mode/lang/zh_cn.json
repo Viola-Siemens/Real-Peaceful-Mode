@@ -115,6 +115,8 @@
   "subtitles.entity.zombie_tyrant.spell": "僵尸暴君：召唤骑士",
   "subtitles.entity.skeleton_king.ambient": "骷髅国王：咯咯声",
   "subtitles.entity.skeleton_king.death": "骷髅国王：死亡",
+  "subtitles.entity.husk_pharaoh.ambient": "尸壳法老：低吼",
+  "subtitles.entity.husk_pharaoh.death": "尸壳法老：死亡",
 
   "enchantment.real_peaceful_mode.cracking": "爆裂",
 
@@ -176,7 +178,7 @@
   "mission.real_peaceful_mode.husk1.description": "尽可能得去击败尸壳法老。",
   "mission.real_peaceful_mode.husk1.after": "多么艰难的战斗。不过去哪可以找到水源呢？",
   "mission.real_peaceful_mode.husk2.name": "絮凝剂",
-  "mission.real_peaceful_mode.husk2.description": "获得聚铝絮凝剂并交给尸壳工人。",
+  "mission.real_peaceful_mode.husk2.description": "获得可以净化水源的某个物品，并交给尸壳工人。你可能需要先找到一位水管工村民。",
   "mission.real_peaceful_mode.husk2.after": "在法老的石像上涂蜡，然后击败他！",
   "mission.real_peaceful_mode.husk3.name": "圣坛决战",
   "mission.real_peaceful_mode.husk3.description": "击败尸壳法老。",
@@ -412,7 +414,7 @@
   "rpm.mission.real_peaceful_mode.creeper3.message14": "很高兴看到你平安归来。你还好吗？",
   "rpm.mission.real_peaceful_mode.creeper3.message15": "嗯……",
   "rpm.mission.real_peaceful_mode.creeper3.message16": "怎么了？药没效果吗？",
-  "rpm.mission.real_peaceful_mode.creeper3.message17": "效果很好，爬行者们也不会再爆炸了。",
+  "rpm.mission.real_peaceful_mode.creeper3.message17": "效果很好，苦力怕们也不会再爆炸了。",
   "rpm.mission.real_peaceful_mode.creeper3.message18": "所以……你被他们欺负了吗？",
   "rpm.mission.real_peaceful_mode.creeper3.message19": "（抽泣）",
   "rpm.mission.real_peaceful_mode.creeper3.message20": "对不起，我本该和你一起走的。",
