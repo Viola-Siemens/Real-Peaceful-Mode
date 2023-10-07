@@ -11,10 +11,14 @@ import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
 import com.hexagram2021.real_peaceful_mode.common.register.*;
 import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
 import com.hexagram2021.real_peaceful_mode.mixin.BlockEntityTypeAccess;
+import com.hexagram2021.real_peaceful_mode.server.commands.RPMCommands;
+import com.mojang.brigadier.CommandDispatcher;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -89,5 +93,9 @@ public class RPMContent {
 		event.put(RPMEntities.ZOMBIE_TYRANT, ZombieTyrant.createAttributes().build());
 		event.put(RPMEntities.SKELETON_KING, SkeletonKing.createAttributes().build());
 		event.put(RPMEntities.HUSK_PHARAOH, HuskPharaoh.createAttributes().build());
+	}
+
+	public static void registerCommands(RegisterCommandsEvent event) {
+		event.getDispatcher().register(RPMCommands.register());
 	}
 }

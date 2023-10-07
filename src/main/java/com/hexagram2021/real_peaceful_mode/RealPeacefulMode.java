@@ -28,6 +28,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
@@ -77,6 +78,7 @@ public class RealPeacefulMode {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		MinecraftForge.EVENT_BUS.addListener(this::tagsUpdated);
 		MinecraftForge.EVENT_BUS.addListener(this::serverAboutToStart);
+		MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
 		DeferredWorkQueue queue = DeferredWorkQueue.lookup(Optional.of(ModLoadingStage.CONSTRUCT)).orElseThrow();
 		Consumer<Runnable> runLater = job -> queue.enqueueWork(
@@ -89,6 +91,7 @@ public class RealPeacefulMode {
 
 		bus.addListener(this::setup);
 		MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
+		MinecraftForge.EVENT_BUS.addListener(RPMContent::registerCommands);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
@@ -121,6 +124,10 @@ public class RealPeacefulMode {
 	}
 
 	public void serverAboutToStart(ServerAboutToStartEvent event) {
+		RandomEventSpawnerHelper.clearRandomEventSpawners();
+	}
+
+	public void serverStarting(ServerStartingEvent event) {
 		rpmSpawners = new AbstractEventSpawner<?>[] {
 				new ZombieEventSpawner(),
 				new SkeletonEventSpawner()

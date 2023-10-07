@@ -4,8 +4,6 @@ import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstance;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
-import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
-import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.hexagram2021.real_peaceful_mode.network.ClientboundMissionMessagePacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -101,35 +99,17 @@ public class PlayerMissions {
 			return;
 		}
 
-		mission.formers().stream().filter(id -> !IMonsterHero.missionDisabled(id) && !IMonsterHero.completeMission(this, id)).findAny().ifPresentOrElse(
-				id -> RPMLogger.debug("Ignore receive mission %s for not finishing mission %s.".formatted(mission.id(), id)),
-				() -> {
-					MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messages());
-					OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
-							new MissionMessageMenu(counter, instance, () -> {
-								this.player.sendSystemMessage(Component.translatable(
-										"message.real_peaceful_mode.receive_mission",
-										ComponentUtils.wrapInSquareBrackets(
-												Component.translatable(getMissionDescriptionId(mission))
-														.withStyle(ChatFormatting.GREEN)
-														.withStyle((style -> style.withHoverEvent(
-																new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(getMissionInformationId(mission)))
-														)))
-										)
-								));
-								this.activeMissions.add(mission.id());
-								mission.tryGetLoot(this.player, Objects.requireNonNull(this.player.getServer()).getLootData(), false);
-								toDoExtra.accept(this.player);
-							}), Component.translatable("title.real_peaceful_mode.menu.mission")
-					));
-					if(id.isPresent()) {
-						RealPeacefulMode.packetHandler.send(
-								PacketDistributor.PLAYER.with(() -> this.player),
-								new ClientboundMissionMessagePacket(instance, id.getAsInt())
-						);
-					}
-				}
-		);
+		MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messages());
+		OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
+				new MissionMessageMenu(counter, instance, () ->
+						this.afterReceiveMission(mission, toDoExtra)), Component.translatable("title.real_peaceful_mode.menu.mission")
+		));
+		if(id.isPresent()) {
+			RealPeacefulMode.packetHandler.send(
+					PacketDistributor.PLAYER.with(() -> this.player),
+					new ClientboundMissionMessagePacket(instance, id.getAsInt())
+			);
+		}
 	}
 
 	public void finishMission(MissionManager.Mission mission, @Nullable LivingEntity npc, Consumer<ServerPlayer> toDoExtra) {
@@ -139,24 +119,8 @@ public class PlayerMissions {
 
 		MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messagesAfter());
 		OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
-				new MissionMessageMenu(counter, instance, () -> {
-					this.player.sendSystemMessage(Component.translatable(
-							"message.real_peaceful_mode.finish_mission",
-							ComponentUtils.wrapInSquareBrackets(
-									Component.translatable(getMissionDescriptionId(mission))
-											.withStyle(ChatFormatting.GREEN)
-											.withStyle((style -> style.withHoverEvent(
-													new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(getMissionInformationId(mission)))
-											)))
-							)
-					));
-					this.activeMissions.remove(mission.id());
-					if(!mission.isRandomEvent()) {
-						this.finishedMissions.add(mission.id());
-					}
-					mission.finish(this.player, Objects.requireNonNull(this.player.getServer()).getLootData());
-					toDoExtra.accept(this.player);
-				}), Component.translatable("title.real_peaceful_mode.menu.mission")
+				new MissionMessageMenu(counter, instance, () ->
+						this.afterFinishMission(mission, toDoExtra)), Component.translatable("title.real_peaceful_mode.menu.mission")
 		));
 		if(id.isPresent()) {
 			RealPeacefulMode.packetHandler.send(
@@ -174,6 +138,41 @@ public class PlayerMissions {
 		this.activeMissions.remove(id);
 	}
 
+	public void afterReceiveMission(MissionManager.Mission mission, Consumer<ServerPlayer> toDoExtra) {
+		this.player.sendSystemMessage(Component.translatable(
+				"message.real_peaceful_mode.receive_mission",
+				ComponentUtils.wrapInSquareBrackets(
+						Component.translatable(getMissionDescriptionId(mission))
+								.withStyle(ChatFormatting.GREEN)
+								.withStyle((style -> style.withHoverEvent(
+										new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(getMissionInformationId(mission)))
+								)))
+				)
+		));
+		this.activeMissions.add(mission.id());
+		mission.tryGetLoot(this.player, Objects.requireNonNull(this.player.getServer()).getLootData(), false);
+		toDoExtra.accept(this.player);
+	}
+
+	public void afterFinishMission(MissionManager.Mission mission, Consumer<ServerPlayer> toDoExtra) {
+		this.player.sendSystemMessage(Component.translatable(
+				"message.real_peaceful_mode.finish_mission",
+				ComponentUtils.wrapInSquareBrackets(
+						Component.translatable(getMissionDescriptionId(mission))
+								.withStyle(ChatFormatting.GREEN)
+								.withStyle((style -> style.withHoverEvent(
+										new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(getMissionAfterId(mission)))
+								)))
+				)
+		));
+		this.activeMissions.remove(mission.id());
+		if(!mission.isRandomEvent()) {
+			this.finishedMissions.add(mission.id());
+		}
+		mission.finish(this.player, Objects.requireNonNull(this.player.getServer()).getLootData());
+		toDoExtra.accept(this.player);
+	}
+
 	public static String getMissionDescriptionId(MissionManager.Mission mission) {
 		ResourceLocation id = mission.id();
 		return "mission.%s.%s.name".formatted(id.getNamespace(), id.getPath());
@@ -182,5 +181,10 @@ public class PlayerMissions {
 	public static String getMissionInformationId(MissionManager.Mission mission) {
 		ResourceLocation id = mission.id();
 		return "mission.%s.%s.description".formatted(id.getNamespace(), id.getPath());
+	}
+
+	public static String getMissionAfterId(MissionManager.Mission mission) {
+		ResourceLocation id = mission.id();
+		return "mission.%s.%s.after".formatted(id.getNamespace(), id.getPath());
 	}
 }

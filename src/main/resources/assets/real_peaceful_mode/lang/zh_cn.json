@@ -99,6 +99,17 @@
   "structure.real_peaceful_mode.creeper_town": "苦力怕小镇",
   "structure.real_peaceful_mode.pharaoh_altar": "法老圣坛",
 
+  "commands.real_peaceful_mode.mission.failed.not_hero": "执行命令失败：实体%s无法接收或完成任务。",
+  "commands.real_peaceful_mode.mission.failed.not_exist": "执行命令失败：不存在ID为“%s”的任务。",
+  "commands.real_peaceful_mode.mission.failed.already_grant": "执行命令失败：实体%s已经接收或完成了任务“%s”，或是其前置任务未完成。",
+
+  "commands.real_peaceful_mode.mission.list.row": "%s %s %s",
+  "commands.real_peaceful_mode.mission.list.no": "未开始",
+  "commands.real_peaceful_mode.mission.list.disabled": "已禁用",
+  "commands.real_peaceful_mode.mission.list.locked": "未解锁",
+  "commands.real_peaceful_mode.mission.list.under": "进行中",
+  "commands.real_peaceful_mode.mission.list.finished": "已完成",
+
   "container.culture_table": "组培台",
 
   "real_peaceful_mode.keyinfo.mission_screen": "显示任务列表",
