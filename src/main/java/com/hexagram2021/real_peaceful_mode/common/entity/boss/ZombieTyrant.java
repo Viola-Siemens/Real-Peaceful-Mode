@@ -8,12 +8,16 @@ import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -35,10 +39,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 
+import javax.annotation.Nullable;
+
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class ZombieTyrant extends Mob implements Enemy {
 	private static final EntityDataAccessor<Integer> DATA_SPELL_COUNTER = SynchedEntityData.defineId(ZombieTyrant.class, EntityDataSerializers.INT);
+
+	private final ServerBossEvent bossEvent = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.GREEN, BossEvent.BossBarOverlay.PROGRESS);
 	
 	public ZombieTyrant(EntityType<? extends ZombieTyrant> entityType, Level level) {
 		super(entityType, level);
@@ -67,7 +75,7 @@ public class ZombieTyrant extends Mob implements Enemy {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.getEntityData().define(DATA_SPELL_COUNTER, 0);
+		this.entityData.define(DATA_SPELL_COUNTER, 0);
 	}
 
 	public int getSpelling() {
@@ -94,6 +102,33 @@ public class ZombieTyrant extends Mob implements Enemy {
 	@Override
 	public void readAdditionalSaveData(CompoundTag nbt) {
 		super.readAdditionalSaveData(nbt);
+		if (this.hasCustomName()) {
+			this.bossEvent.setName(this.getDisplayName());
+		}
+	}
+
+	@Override
+	public void setCustomName(@Nullable Component component) {
+		super.setCustomName(component);
+		this.bossEvent.setName(this.getDisplayName());
+	}
+
+	@Override
+	protected void customServerAiStep() {
+		super.customServerAiStep();
+		this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+	}
+
+	@Override
+	public void startSeenByPlayer(ServerPlayer serverPlayer) {
+		super.startSeenByPlayer(serverPlayer);
+		this.bossEvent.addPlayer(serverPlayer);
+	}
+
+	@Override
+	public void stopSeenByPlayer(ServerPlayer serverPlayer) {
+		super.stopSeenByPlayer(serverPlayer);
+		this.bossEvent.removePlayer(serverPlayer);
 	}
 
 	private static final ResourceLocation LAST_MISSION = new ResourceLocation(MODID, "zombie3");
@@ -114,7 +149,6 @@ public class ZombieTyrant extends Mob implements Enemy {
 
 	@Override
 	public void checkDespawn() {
-
 	}
 
 	@Override

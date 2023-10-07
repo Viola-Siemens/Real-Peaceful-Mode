@@ -5,17 +5,33 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public interface IFriendlyMonster {
-	boolean preventAttack(@Nullable LivingEntity target);
+	String TAG_DANCING = "RPM_Dancing";
+
+	EntityType<?> getType();
+	Level level();
+
+	default boolean preventAttack(@Nullable LivingEntity target) {
+		return this.level().players().stream().anyMatch(player -> {
+			if(player instanceof IMonsterHero hero) {
+				return hero.isHero(this.getType()) && (target instanceof AbstractVillager || (target != null && hero.isHero(target.getType())));
+			}
+			return false;
+		});
+	}
 
 	boolean isDancing();
 	void setDance(boolean dancing);
@@ -41,5 +57,6 @@ public interface IFriendlyMonster {
 
 	interface Data {
 		EntityDataAccessor<Boolean> DATA_ZOMBIE_DANCE = SynchedEntityData.defineId(Zombie.class, EntityDataSerializers.BOOLEAN);
+		EntityDataAccessor<Boolean> DATA_SKELETON_DANCE = SynchedEntityData.defineId(Skeleton.class, EntityDataSerializers.BOOLEAN);
 	}
 }

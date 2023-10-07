@@ -10,14 +10,17 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -39,6 +42,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
@@ -46,6 +50,8 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy {
 	private static final EntityDataAccessor<Boolean> DATA_STONE = SynchedEntityData.defineId(HuskPharaoh.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_WEAKEN = SynchedEntityData.defineId(HuskPharaoh.class, EntityDataSerializers.BOOLEAN);
+
+	private final ServerBossEvent bossEvent = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.GREEN, BossEvent.BossBarOverlay.PROGRESS);
 
 	private static final float TRIGGER_MISSION_TOTAL_DAMAGE = 120.0F;
 
@@ -255,6 +261,34 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		if(nbt.contains(TAG_TOTAL_DAMAGE, Tag.TAG_FLOAT)) {
 			this.setTotalDamage(nbt.getFloat(TAG_TOTAL_DAMAGE));
 		}
+
+		if (this.hasCustomName()) {
+			this.bossEvent.setName(this.getDisplayName());
+		}
+	}
+
+	@Override
+	public void setCustomName(@Nullable Component component) {
+		super.setCustomName(component);
+		this.bossEvent.setName(this.getDisplayName());
+	}
+
+	@Override
+	protected void customServerAiStep() {
+		super.customServerAiStep();
+		this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+	}
+
+	@Override
+	public void startSeenByPlayer(ServerPlayer serverPlayer) {
+		super.startSeenByPlayer(serverPlayer);
+		this.bossEvent.addPlayer(serverPlayer);
+	}
+
+	@Override
+	public void stopSeenByPlayer(ServerPlayer serverPlayer) {
+		super.stopSeenByPlayer(serverPlayer);
+		this.bossEvent.removePlayer(serverPlayer);
 	}
 
 	public boolean isStone() {

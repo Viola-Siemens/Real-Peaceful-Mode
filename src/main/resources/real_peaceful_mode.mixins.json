@@ -14,11 +14,13 @@
     "PlayerListMixin",
     "ServerLevelMixin",
     "ServerPlayerMixin",
+    "SkeletonEntityMixin",
     "StructureTemplatePoolAccess",
     "ZombieEntityMixin"
   ],
   "minVersion": "0.8",
   "client": [
-    "AbstractZombieModelMixin"
+    "AbstractZombieModelMixin",
+    "SkeletonModelMixin"
   ]
 }

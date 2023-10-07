@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 import java.util.OptionalInt;
+import java.util.function.Consumer;
 
 public class PlayerMissions {
 	private ServerPlayer player;
@@ -95,7 +96,7 @@ public class PlayerMissions {
 		this.finishedMissions.addAll(other.finishedMissions);
 	}
 
-	public void receiveNewMission(MissionManager.Mission mission, @Nullable LivingEntity npc) {
+	public void receiveNewMission(MissionManager.Mission mission, @Nullable LivingEntity npc, Consumer<ServerPlayer> toDoExtra) {
 		if (this.player instanceof FakePlayer) {
 			return;
 		}
@@ -118,6 +119,7 @@ public class PlayerMissions {
 								));
 								this.activeMissions.add(mission.id());
 								mission.tryGetLoot(this.player, Objects.requireNonNull(this.player.getServer()).getLootData(), false);
+								toDoExtra.accept(this.player);
 							}), Component.translatable("title.real_peaceful_mode.menu.mission")
 					));
 					if(id.isPresent()) {
@@ -130,7 +132,7 @@ public class PlayerMissions {
 		);
 	}
 
-	public void finishMission(MissionManager.Mission mission, @Nullable LivingEntity npc) {
+	public void finishMission(MissionManager.Mission mission, @Nullable LivingEntity npc, Consumer<ServerPlayer> toDoExtra) {
 		if (this.player instanceof FakePlayer) {
 			return;
 		}
@@ -153,6 +155,7 @@ public class PlayerMissions {
 						this.finishedMissions.add(mission.id());
 					}
 					mission.finish(this.player, Objects.requireNonNull(this.player.getServer()).getLootData());
+					toDoExtra.accept(this.player);
 				}), Component.translatable("title.real_peaceful_mode.menu.mission")
 		));
 		if(id.isPresent()) {

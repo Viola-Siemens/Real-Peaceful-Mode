@@ -114,16 +114,17 @@ public class RealPeacefulMode {
 		Villages.addAllStructuresToPool(event.getRegistryAccess());
 	}
 
-	private static final AbstractEventSpawner<?>[] rpmSpawners = new AbstractEventSpawner<?>[] {
-			new ZombieEventSpawner(),
-			new SkeletonEventSpawner()
-	};
+	private static AbstractEventSpawner<?>[] rpmSpawners = new AbstractEventSpawner<?>[0];
 
 	public static boolean isInteractItem(Holder<Item> item, EntityType<?> entityType) {
 		return Arrays.stream(rpmSpawners).anyMatch(spawner -> spawner.getMonsterType().equals(entityType) && spawner.isInteractItem(item));
 	}
 
 	public void serverAboutToStart(ServerAboutToStartEvent event) {
+		rpmSpawners = new AbstractEventSpawner<?>[] {
+				new ZombieEventSpawner(),
+				new SkeletonEventSpawner()
+		};
 		Arrays.stream(rpmSpawners).forEach(RandomEventSpawnerHelper::registerRandomEventSpawner);
 	}
 

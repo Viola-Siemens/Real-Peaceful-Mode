@@ -97,9 +97,10 @@ public class RPMFluids {
 							serverLevel.explode(itemEntity, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 0.5F, Level.ExplosionInteraction.NONE);
 
 							int distance = 16;
+							serverLevel.getPlayers(player -> player.closerThan(itemEntity, distance)).forEach(player -> player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 160)));
 							MissionHelper.triggerMissionForPlayers(
 									new ResourceLocation(MODID, "zombie2"), SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
-									player -> player.closerThan(itemEntity, distance), null, player -> player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 160))
+									player -> player.closerThan(itemEntity, distance), null, player -> {}
 							);
 							itemEntity.discard();
 						}

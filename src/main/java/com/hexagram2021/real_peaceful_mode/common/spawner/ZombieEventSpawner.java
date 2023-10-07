@@ -36,6 +36,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
@@ -63,13 +64,15 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 						}
 						ItemStack currentHelmet = zombie.getItemBySlot(EquipmentSlot.HEAD);
 						if(itemStack.is(Tags.Items.ARMORS_HELMETS) && itemStack.getMaxDamage() - itemStack.getDamageValue() > currentHelmet.getMaxDamage() - currentHelmet.getDamageValue()) {
+							zombie.clearFire();
+							zombie.setItemSlot(EquipmentSlot.HEAD, itemStack.copy());
+							itemStack.shrink(1);
 							MissionHelper.triggerMissionForPlayer(
 									ZOMBIE_HELMET_MISSION, SummonBlockEntity.SummonMissionType.FINISH, player,
 									zombie, player1 -> {
-										zombie.setItemSlot(EquipmentSlot.HEAD, itemStack.copy());
-										itemStack.shrink(1);
 										monster.setRandomEventNpcAction(null);
 										monster.setNpcExtraTickAction(null);
+										monster.setDance(true);
 									}
 							);
 							return true;
@@ -79,7 +82,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 					monster.setNpcExtraTickAction(MOB_SWEAT);
 				}
 				ItemStack helmet = new ItemStack(Items.LEATHER_HELMET);
-				helmet.setDamageValue(20);
+				helmet.setDamageValue(25);
 				zombie.setItemSlot(EquipmentSlot.HEAD, helmet);
 				level.addFreshEntity(zombie);
 				return true;
@@ -108,7 +111,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 				darkZombieKnight.setBuster(false);
 				zombieHorse.setYRot(360.0F - yRot);
 				zombieHorse.moveTo(blockPos.getCenter());
-				zombieHorse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(zombieHorse.getRandom().nextDouble() * 0.1D + 0.25D);
+				Objects.requireNonNull(zombieHorse.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(zombieHorse.getRandom().nextDouble() * 0.1D + 0.25D);
 				darkZombieKnight.startRiding(zombieHorse);
 				darkZombieKnight.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.Weapons.GOLDEN_PIKE));
 
@@ -149,6 +152,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 										itemStack.shrink(1);
 										monster.setRandomEventNpcAction(null);
 										monster.setNpcExtraTickAction(null);
+										monster.setDance(true);
 									}
 							);
 							return true;

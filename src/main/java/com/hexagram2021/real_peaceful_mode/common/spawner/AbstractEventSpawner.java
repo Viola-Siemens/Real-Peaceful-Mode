@@ -63,8 +63,11 @@ public abstract class AbstractEventSpawner<T extends LivingEntity> implements Cu
 		return 0;
 	}
 
-	//player: should be the hero of getMonsterType()
-	//return: true if spawn successfully, false if not.
+	/**
+	 * @param level		dimension of the random event.
+	 * @param player	the player chosen to trigger the random event.
+	 * @return			true if event is successfully triggered, false if not.
+	 */
 	protected abstract boolean spawnEventNpc(ServerLevel level, ServerPlayer player);
 
 	public abstract EntityType<T> getMonsterType();

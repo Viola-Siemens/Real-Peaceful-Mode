@@ -63,6 +63,7 @@
   "item.real_peaceful_mode.diamond_pike": "钻石长枪",
   "item.real_peaceful_mode.netherite_pike": "下界合金长枪",
   "item.real_peaceful_mode.white_mustache": "白胡子",
+  "item.real_peaceful_mode.skeleton_arm": "骷髅的胳膊",
   "item.real_peaceful_mode.zombies_wish": "僵尸的愿望",
   "item.real_peaceful_mode.skeletons_wish": "骷髅的愿望",
   "item.real_peaceful_mode.creepers_wish": "苦力怕的愿望",
@@ -343,10 +344,12 @@
   "rpm.mission.real_peaceful_mode.event.skeleton_arm.message1": "嘿，骷髅，你的右胳膊怎么了？",
   "rpm.mission.real_peaceful_mode.event.skeleton_arm.message2": "我也不知道，我刚刚还在睡觉，醒来之后就发现我少了根胳膊。",
   "rpm.mission.real_peaceful_mode.event.skeleton_arm.message3": "请您帮我找到我的胳膊，没有它之后，我连东西都拿不起来，更别说保护自己了。",
-  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message4": "好的，或许你的胳膊就落在你刚刚睡觉的哪个地方的附近。我会去找找的。",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message4": "好的，或许你的胳膊就落在你刚刚睡觉的哪个地方的附近。",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message5": "我觉得很可能是被狐狸或者狼叼走了。如果是这样的话，请不要伤害它们。",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message6": "没问题，我会去找找的。",
 
-  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message5": "我找到你的胳膊了，居然是被一只狐狸叼走了。",
-  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message6": "太好了，这是一点小意思，请您务必收下。十分感谢您，骑士大人！",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message7": "我找到你的胳膊了，居然是被一只狐狸叼走了。",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message8": "太好了，这是一点小意思，请您务必收下。十分感谢您，骑士大人！",
 
   "rpm.mission.real_peaceful_mode.creeper1.message1": "一座破旧的小镇？这里的一切似乎都失去了生机。",
   "rpm.mission.real_peaceful_mode.creeper1.message2": "……",

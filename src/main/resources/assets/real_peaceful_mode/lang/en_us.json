@@ -62,6 +62,7 @@
   "item.real_peaceful_mode.golden_pike": "Golden Pike",
   "item.real_peaceful_mode.diamond_pike": "Diamond Pike",
   "item.real_peaceful_mode.netherite_pike": "Netherite Pike",
+  "item.real_peaceful_mode.skeleton_arm": "Skeleton Arm",
   "item.real_peaceful_mode.white_mustache": "White Mustache",
   "item.real_peaceful_mode.zombies_wish": "Zombie's Wish",
   "item.real_peaceful_mode.skeletons_wish": "Skeleton's Wish",
@@ -343,10 +344,12 @@
   "rpm.mission.real_peaceful_mode.event.skeleton_arm.message1": "Hello, skeleton. What happens to your right arm?",
   "rpm.mission.real_peaceful_mode.event.skeleton_arm.message2": "I don't know. I was just sleeping nearby. As I woke up, I found my arm's missing.",
   "rpm.mission.real_peaceful_mode.event.skeleton_arm.message3": "Please help me find my arm. I can't hold anything or protect myself without it.",
-  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message4": "Sure, maybe it's lying some place not far away from where you was sleeping. I'm going to search for it.",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message4": "Sure, maybe it's lying some place not far away from where you was sleeping.",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message5": "I think it might be taken away by foxes or wolves. If so, please don't hurt them.",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message6": "OK. I'm going to search for it.",
 
-  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message5": "I found your right arm in a fox's mouth. Here you are.",
-  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message6": "Yes! Here's some award for you. I'm really thankful to you, my hero!",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message7": "I found your right arm in a fox's mouth. Here you are.",
+  "rpm.mission.real_peaceful_mode.event.skeleton_arm.message8": "Yes! Here's some award for you. I'm really thankful to you, my hero!",
 
   "rpm.mission.real_peaceful_mode.creeper1.message1": "A dilapidated town? Everything seems to lose its vitality here.",
   "rpm.mission.real_peaceful_mode.creeper1.message2": "...",

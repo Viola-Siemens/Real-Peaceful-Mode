@@ -46,7 +46,7 @@ public class DarkZombieKnight extends Monster {
 	@Override
 	public void defineSynchedData() {
 		super.defineSynchedData();
-		this.getEntityData().define(DATA_ATTACK_PLAYER_AFTER_TYRANT_DEATH, false);
+		this.entityData.define(DATA_ATTACK_PLAYER_AFTER_TYRANT_DEATH, false);
 	}
 
 	public void setBuster(boolean buster) {

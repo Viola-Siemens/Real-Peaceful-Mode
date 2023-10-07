@@ -19,15 +19,23 @@
     {
       "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message4",
       "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message5",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message6",
+      "speaker": "player"
     }
   ],
   "messagesAfter": [
     {
-      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message5",
+      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message7",
       "speaker": "player"
     },
     {
-      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message6",
+      "key": "rpm.mission.real_peaceful_mode.event.skeleton_arm.message8",
       "speaker": "npc"
     }
   ],
