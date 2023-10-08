@@ -384,7 +384,7 @@ public class RPMCommands {
 			throw FAIL_TO_SPAWN_EVENT.create(missionName, luckyDog.getDisplayName());
 		}
 
-		RPMLogger.info("Successfully spawn random event for %s.".formatted(luckyDog.getDisplayName()));
+		RPMLogger.info("Successfully spawn random event for %s.".formatted(luckyDog.getDisplayName().getString()));
 		if(player != null) {
 			player.sendSystemMessage(Component.translatable("commands.real_peaceful_mode.event.spawned", missionName));
 		}

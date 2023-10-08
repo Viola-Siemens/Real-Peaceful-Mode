@@ -95,7 +95,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 			EntityType<?> rewardEntityType = ForgeRegistries.ENTITY_TYPES.getValue(reward);
 			if(rewardEntityType == null) {
 				rewardEntityType = EntityType.PLAYER;
-			} else {
+			} else if(rewardEntityType != EntityType.PLAYER) {
 				friendlyMonstersBuilder.add(rewardEntityType);
 			}
 			ResourceLocation rewardLootTable = new ResourceLocation(GsonHelper.getAsString(json, "loot_table", BuiltInLootTables.EMPTY.toString()));

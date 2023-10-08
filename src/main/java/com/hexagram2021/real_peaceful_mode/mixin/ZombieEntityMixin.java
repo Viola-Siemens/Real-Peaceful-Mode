@@ -81,7 +81,7 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 		if(this.fightForPlayer && target instanceof Player) {
 			return true;
 		}
-		return IFriendlyMonster.super.preventAttack(target);
+		return IFriendlyMonster.preventAttack(this.level(), this.getType(), target);
 	}
 
 	@Override

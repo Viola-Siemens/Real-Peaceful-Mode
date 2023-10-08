@@ -21,13 +21,12 @@ import java.util.function.Consumer;
 public interface IFriendlyMonster {
 	String TAG_DANCING = "RPM_Dancing";
 
-	EntityType<?> getType();
-	Level level();
+	boolean preventAttack(@Nullable LivingEntity target);
 
-	default boolean preventAttack(@Nullable LivingEntity target) {
-		return this.level().players().stream().anyMatch(player -> {
+	static boolean preventAttack(Level level, EntityType<?> entityType, @Nullable LivingEntity target) {
+		return level.players().stream().anyMatch(player -> {
 			if(player instanceof IMonsterHero hero) {
-				return hero.isHero(this.getType()) && (target instanceof AbstractVillager || (target != null && hero.isHero(target.getType())));
+				return hero.isHero(entityType) && (target instanceof AbstractVillager || (target != null && hero.isHero(target.getType())));
 			}
 			return false;
 		});
