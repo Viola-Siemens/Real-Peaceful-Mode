@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.mission;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.gson.*;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
@@ -24,16 +25,14 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class MissionManager extends SimpleJsonResourceReloadListener {
 	private static final Gson GSON = (new GsonBuilder()).create();
 
 	private Map<ResourceLocation, Mission> missionsByName = ImmutableMap.of();
+	private Set<EntityType<?>> friendlyMonsters = ImmutableSet.of();
 
 	public MissionManager() {
 		super(GSON, "rpm/missions");
@@ -42,6 +41,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 	@Override
 	protected void apply(Map<ResourceLocation, JsonElement> missions, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
 		ImmutableMap.Builder<ResourceLocation, Mission> builder = ImmutableMap.builder();
+		ImmutableSet.Builder<EntityType<?>> friendlyMonstersBuilder = ImmutableSet.builder();
 		for(Map.Entry<ResourceLocation, JsonElement> entry: missions.entrySet()) {
 			ResourceLocation id = entry.getKey();
 			if (id.getPath().startsWith("_")) {
@@ -54,7 +54,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 					continue;
 				}
 				JsonObject jsonObject = GsonHelper.convertToJsonObject(entry.getValue(), "top element");
-				Mission mission = Mission.fromJson(id, jsonObject);
+				Mission mission = Mission.fromJson(friendlyMonstersBuilder, id, jsonObject);
 				builder.put(id, mission);
 			} catch (IllegalArgumentException | JsonParseException exception) {
 				RPMLogger.error("Parsing error loading mission %s.".formatted(id));
@@ -62,6 +62,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 			}
 		}
 		this.missionsByName = builder.build();
+		this.friendlyMonsters = friendlyMonstersBuilder.build();
 	}
 
 	public record Mission(ResourceLocation id,
@@ -76,7 +77,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 			}
 		}
 
-		private static Mission fromJson(ResourceLocation id, JsonObject json) {
+		private static Mission fromJson(ImmutableSet.Builder<EntityType<?>> friendlyMonstersBuilder, ResourceLocation id, JsonObject json) {
 			List<Mission.Message> messages = Lists.newArrayList();
 			List<Mission.Message> messagesAfter = Lists.newArrayList();
 			JsonArray messageArray = GsonHelper.getAsJsonArray(json, "messages");
@@ -92,10 +93,15 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 			}
 			ResourceLocation reward = new ResourceLocation(GsonHelper.getAsString(json, "reward", "minecraft:player"));
 			EntityType<?> rewardEntityType = ForgeRegistries.ENTITY_TYPES.getValue(reward);
+			if(rewardEntityType == null) {
+				rewardEntityType = EntityType.PLAYER;
+			} else {
+				friendlyMonstersBuilder.add(rewardEntityType);
+			}
 			ResourceLocation rewardLootTable = new ResourceLocation(GsonHelper.getAsString(json, "loot_table", BuiltInLootTables.EMPTY.toString()));
 			boolean lootBefore = GsonHelper.getAsBoolean(json, "loot_before", false);
 			boolean isRandomEvent = GsonHelper.getAsBoolean(json, "random_event", false);
-			return new Mission(id, messages, messagesAfter, formers, rewardEntityType == null ? EntityType.PLAYER : rewardEntityType, rewardLootTable, lootBefore, isRandomEvent);
+			return new Mission(id, messages, messagesAfter, formers, rewardEntityType, rewardLootTable, lootBefore, isRandomEvent);
 		}
 
 		public void tryGetLoot(ServerPlayer player, LootDataManager lootTables, boolean finished) {
@@ -160,5 +166,9 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 
 	public Collection<Mission> getAllMissions() {
 		return this.missionsByName.values();
+	}
+
+	public Stream<EntityType<?>> getAllFriendlyMonsters() {
+		return this.friendlyMonsters.stream();
 	}
 }

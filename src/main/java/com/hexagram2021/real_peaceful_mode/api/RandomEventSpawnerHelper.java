@@ -7,7 +7,7 @@ import org.jetbrains.annotations.ApiStatus;
 import java.util.Set;
 
 public class RandomEventSpawnerHelper {
-	public static final Set<AbstractEventSpawner<?>> spawners = Sets.newIdentityHashSet();
+	private static final Set<AbstractEventSpawner<?>> spawners = Sets.newIdentityHashSet();
 
 	/**
 	 * Subscribe ServerStartingEvent and call this in its handler function.
@@ -21,5 +21,10 @@ public class RandomEventSpawnerHelper {
 	@ApiStatus.Internal
 	public static void clearRandomEventSpawners() {
 		spawners.clear();
+	}
+
+	@ApiStatus.Internal
+	public static Set<AbstractEventSpawner<?>> getAllRandomEventSpawners() {
+		return spawners;
 	}
 }

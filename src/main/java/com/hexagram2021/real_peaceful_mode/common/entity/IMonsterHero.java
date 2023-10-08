@@ -31,4 +31,8 @@ public interface IMonsterHero {
 	static boolean missionDisabled(ResourceLocation mission) {
 		return RPMCommonConfig.DISABLE_MISSIONS.get().contains(mission.toString());
 	}
+
+	static boolean eventDisabledFor(ResourceLocation entityType) {
+		return RPMCommonConfig.DISABLE_EVENTS.get().contains(entityType.toString());
+	}
 }

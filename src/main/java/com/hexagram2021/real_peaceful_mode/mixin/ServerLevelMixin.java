@@ -34,7 +34,7 @@ public class ServerLevelMixin {
 									 ChunkProgressListener progressListener, boolean debug, long seed, List<CustomSpawner> customSpawners,
 									 boolean tickTime, RandomSequences randomSequences, CallbackInfo ci) {
 		this.customSpawners = ImmutableList.<CustomSpawner>builder().addAll(this.customSpawners).addAll(
-				RandomEventSpawnerHelper.spawners.stream().filter(spawner -> spawner.dimension().equals(dimension)).toList()
+				RandomEventSpawnerHelper.getAllRandomEventSpawners().stream().filter(spawner -> spawner.dimension().equals(dimension)).toList()
 		).build();
 	}
 }

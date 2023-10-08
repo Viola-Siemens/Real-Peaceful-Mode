@@ -2,11 +2,14 @@ package com.hexagram2021.real_peaceful_mode.common.spawner;
 
 import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.mojang.datafixers.util.Function3;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,6 +17,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -64,6 +68,7 @@ public abstract class AbstractEventSpawner<T extends LivingEntity> implements Cu
 	}
 
 	/**
+	 * @see 			AbstractEventSpawner#spawnEventFor(ServerLevel, ServerPlayer, Function3, Consumer)
 	 * @param level		dimension of the random event.
 	 * @param player	the player chosen to trigger the random event.
 	 * @return			true if event is successfully triggered, false if not.
@@ -79,4 +84,36 @@ public abstract class AbstractEventSpawner<T extends LivingEntity> implements Cu
 	protected abstract ResourceLocation getMissionId();
 
 	public abstract boolean isInteractItem(Holder<Item> item);
+
+	/**
+	 * API for spawn random event by command. Override it if needed.
+	 * @param level		dimension of the random event.
+	 * @param player	the player chosen to trigger the random event.
+	 * @param missionId	the id of mission
+	 * @return			true if event is successfully triggered, false if not.
+	 */
+	public boolean spawnEventFor(ServerLevel level, ServerPlayer player, ResourceLocation missionId) {
+		if(missionId.equals(this.getMissionId())) {
+			return this.spawnEventNpc(level, player);
+		}
+		return false;
+	}
+
+	public boolean spawnEventFor(ServerLevel level, ServerPlayer player, Function3<ServerLevel, BlockPos, Float, Boolean> missionContent, Consumer<BlockPos> toDo) {
+		float angle = player.getYRot() * Mth.PI / 180.0F;
+		Vec3 pos = player.position().subtract(-Mth.sin(angle) * 16, 0, Mth.cos(angle) * 16);
+		BlockPos blockPos = new BlockPos((int) pos.x, (int) pos.y - 5, (int) pos.z);
+		if(level.getBlockState(blockPos).isAir()) {
+			return false;
+		}
+		for(int y = 1; y < 10; ++y) {
+			BlockPos tryPos = blockPos.above(y);
+			if(level.getBlockState(tryPos).isAir()) {
+				boolean ret = missionContent.apply(level, tryPos, player.getYRot());
+				toDo.accept(tryPos);
+				return ret;
+			}
+		}
+		return false;
+	}
 }
