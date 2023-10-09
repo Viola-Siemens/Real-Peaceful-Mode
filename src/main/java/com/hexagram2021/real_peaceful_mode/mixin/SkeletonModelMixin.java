@@ -18,7 +18,7 @@ public abstract class SkeletonModelMixin<T extends Mob & RangedAttackMob> {
 	public void setRPMDanceAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
 		SkeletonModel<T> current = (SkeletonModel<T>) (Object) this;
 		if(entity instanceof IFriendlyMonster monster && monster.isDancing()) {
-			float xRot = -0.4F;
+			float xRot = -0.8F;
 			float noise = Mth.sin(ageInTicks * Mth.PI / 40.0F) * 0.05F;
 			current.leftArm.xRot = -Mth.HALF_PI + xRot + noise;
 			current.rightArm.xRot = -Mth.HALF_PI + xRot - noise;

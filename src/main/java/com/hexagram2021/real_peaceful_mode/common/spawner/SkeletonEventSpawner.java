@@ -85,6 +85,7 @@ public class SkeletonEventSpawner extends AbstractEventSpawner<Skeleton> {
 										if(skeleton instanceof IRightArmDetachable rightArmDetachable) {
 											rightArmDetachable.setRightArmDetached(false);
 										}
+										itemStack.shrink(1);
 										monster.setRandomEventNpcAction(null);
 										monster.setNpcExtraTickAction(null);
 										monster.setDance(true);

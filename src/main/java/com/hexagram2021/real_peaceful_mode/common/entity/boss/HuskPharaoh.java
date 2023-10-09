@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.boss;
 
+import com.google.common.collect.Sets;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
@@ -44,6 +45,8 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
@@ -276,19 +279,24 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 	@Override
 	protected void customServerAiStep() {
 		super.customServerAiStep();
+
+		if(this.level() instanceof ServerLevel serverLevel) {
+			Set<ServerPlayer> set = Sets.newHashSet(this.bossEvent.getPlayers());
+			List<ServerPlayer> list = serverLevel.getPlayers(player -> player.isAlive() && player.closerThan(this, 32.0D));
+			for(ServerPlayer player : list) {
+				if (!set.contains(player)) {
+					this.bossEvent.addPlayer(player);
+				}
+			}
+
+			for(ServerPlayer player : set) {
+				if (!list.contains(player)) {
+					this.bossEvent.removePlayer(player);
+				}
+			}
+		}
+
 		this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
-	}
-
-	@Override
-	public void startSeenByPlayer(ServerPlayer serverPlayer) {
-		super.startSeenByPlayer(serverPlayer);
-		this.bossEvent.addPlayer(serverPlayer);
-	}
-
-	@Override
-	public void stopSeenByPlayer(ServerPlayer serverPlayer) {
-		super.stopSeenByPlayer(serverPlayer);
-		this.bossEvent.removePlayer(serverPlayer);
 	}
 
 	public boolean isStone() {
