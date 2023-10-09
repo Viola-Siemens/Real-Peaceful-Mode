@@ -19,8 +19,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -94,6 +96,13 @@ public class SkeletonEventSpawner extends AbstractEventSpawner<Skeleton> {
 					});
 					monster.setNpcExtraTickAction(MOB_SWEAT);
 				}
+				ItemStack helmet = new ItemStack(Items.LEATHER_HELMET);
+				if(helmet.getItem() instanceof DyeableLeatherItem dyeable) {
+					dyeable.setColor(helmet, 0x4b4a4a);
+				}
+				skeleton.setItemSlot(EquipmentSlot.HEAD, helmet);
+				level.addFreshEntity(skeleton);
+				level.addFreshEntity(fox);
 				return true;
 			})
 	);
