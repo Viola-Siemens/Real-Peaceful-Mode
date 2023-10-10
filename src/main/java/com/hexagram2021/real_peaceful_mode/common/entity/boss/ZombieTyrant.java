@@ -202,6 +202,12 @@ public class ZombieTyrant extends Mob implements Enemy {
 		super.die(damageSource);
 	}
 
+	@Override
+	public void stopSeenByPlayer(ServerPlayer player) {
+		super.stopSeenByPlayer(player);
+		this.bossEvent.removePlayer(player);
+	}
+
 	class SummonKnightsGoal extends Goal {
 		private int nextAttackTickCount;
 		private int warmUpTickCount;

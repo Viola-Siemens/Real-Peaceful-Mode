@@ -5,7 +5,6 @@ import com.hexagram2021.real_peaceful_mode.common.entity.IRightArmDetachable;
 import com.hexagram2021.real_peaceful_mode.common.entity.goal.MonsterDanceGoal;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,9 +28,6 @@ import java.util.function.Consumer;
 public abstract class SkeletonEntityMixin extends Monster implements IFriendlyMonster, IRightArmDetachable {
 	private static final String TAG_MISSING_ARM = "RPM_MissingArm";
 
-	@SuppressWarnings("WrongEntityDataParameterClass")
-	private static final EntityDataAccessor<Boolean> DATA_SKELETON_DANCE = SynchedEntityData.defineId(Skeleton.class, EntityDataSerializers.BOOLEAN);
-
 	@Nullable
 	private BiFunction<ServerPlayer, ItemStack, Boolean> npcInteractAction = null;
 	@Nullable
@@ -41,10 +37,16 @@ public abstract class SkeletonEntityMixin extends Monster implements IFriendlyMo
 		super(entityType, level);
 	}
 
+	@SuppressWarnings("WrongEntityDataParameterClass")
+	@Inject(method = "<clinit>", at = @At(value = "TAIL"))
+	private static void defineEntityDataAccessor(CallbackInfo ci) {
+		Data.DATA_SKELETON_DANCE = SynchedEntityData.defineId(Skeleton.class, EntityDataSerializers.BOOLEAN);
+		Data.DATA_SKELETON_RIGHT_ARM_DETACHED = SynchedEntityData.defineId(Skeleton.class, EntityDataSerializers.BOOLEAN);
+	}
+
 	@Inject(method = "defineSynchedData", at = @At(value = "TAIL"))
 	public void defineDanceData(CallbackInfo ci) {
 		this.entityData.define(Data.DATA_SKELETON_DANCE, false);
-		this.entityData.define(DATA_SKELETON_DANCE, false);
 	}
 
 	@SuppressWarnings("ConstantConditions")
@@ -74,12 +76,12 @@ public abstract class SkeletonEntityMixin extends Monster implements IFriendlyMo
 
 	@Override
 	public boolean isRightArmDetached() {
-		return this.entityData.get(DATA_SKELETON_DANCE);
+		return this.entityData.get(Data.DATA_SKELETON_RIGHT_ARM_DETACHED);
 	}
 
 	@Override
 	public void setRightArmDetached(boolean detached) {
-		this.entityData.set(DATA_SKELETON_DANCE, detached);
+		this.entityData.set(Data.DATA_SKELETON_RIGHT_ARM_DETACHED, detached);
 	}
 
 	@Override

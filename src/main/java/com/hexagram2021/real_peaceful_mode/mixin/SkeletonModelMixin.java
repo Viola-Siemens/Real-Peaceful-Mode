@@ -19,9 +19,12 @@ public abstract class SkeletonModelMixin<T extends Mob & RangedAttackMob> {
 		SkeletonModel<T> current = (SkeletonModel<T>) (Object) this;
 		if(entity instanceof IFriendlyMonster monster && monster.isDancing()) {
 			float xRot = -0.8F;
+			float yRot = -0.5F;
 			float noise = Mth.sin(ageInTicks * Mth.PI / 40.0F) * 0.05F;
 			current.leftArm.xRot = -Mth.HALF_PI + xRot + noise;
 			current.rightArm.xRot = -Mth.HALF_PI + xRot - noise;
+			current.leftArm.yRot = yRot;
+			current.rightArm.yRot = -yRot;
 		}
 		if(entity instanceof IRightArmDetachable rightArmDetachable) {
 			current.rightArm.skipDraw = rightArmDetachable.isRightArmDetached();

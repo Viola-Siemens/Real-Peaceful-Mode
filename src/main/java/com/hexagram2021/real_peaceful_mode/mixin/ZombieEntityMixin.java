@@ -5,6 +5,8 @@ import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.goal.MonsterDanceGoal;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,6 +41,12 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 
 	protected ZombieEntityMixin(EntityType<? extends Monster> entityType, Level level) {
 		super(entityType, level);
+	}
+
+	@SuppressWarnings("WrongEntityDataParameterClass")
+	@Inject(method = "<clinit>", at = @At(value = "TAIL"))
+	private static void defineEntityDataAccessor(CallbackInfo ci) {
+		Data.DATA_ZOMBIE_DANCE = SynchedEntityData.defineId(Zombie.class, EntityDataSerializers.BOOLEAN);
 	}
 
 	@Inject(method = "defineSynchedData", at = @At(value = "TAIL"))

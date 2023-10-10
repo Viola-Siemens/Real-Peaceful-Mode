@@ -299,6 +299,12 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
 	}
 
+	@Override
+	public void stopSeenByPlayer(ServerPlayer player) {
+		super.stopSeenByPlayer(player);
+		this.bossEvent.removePlayer(player);
+	}
+
 	public boolean isStone() {
 		return this.getEntityData().get(DATA_STONE);
 	}
