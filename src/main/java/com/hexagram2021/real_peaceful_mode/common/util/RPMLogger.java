@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 @SuppressWarnings("unused")
 public class RPMLogger {
 	public static boolean debugMode = true;
+	@SuppressWarnings("NotNullFieldNotInitialized")
 	public static Logger logger;
 
 	public static void log(Level logLevel, Object object) {

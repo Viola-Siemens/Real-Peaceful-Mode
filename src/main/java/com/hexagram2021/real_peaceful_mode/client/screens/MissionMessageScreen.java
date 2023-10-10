@@ -15,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 	private int messageIndex = 0;
 	private int deltaIndex = 0;
 
+	@Nullable
 	private List<FormattedCharSequence> cachedText;
 
 	public MissionMessageScreen(MissionMessageMenu menu, Inventory inventory, Component title) {

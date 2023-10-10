@@ -18,6 +18,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public class ForgeEventHandler {
+	@SuppressWarnings("NotNullFieldNotInitialized")
 	private static MissionManager missionManager;
 
 	@SubscribeEvent

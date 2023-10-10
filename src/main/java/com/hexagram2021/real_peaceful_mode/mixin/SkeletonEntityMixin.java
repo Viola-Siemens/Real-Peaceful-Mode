@@ -47,6 +47,7 @@ public abstract class SkeletonEntityMixin extends Monster implements IFriendlyMo
 	@Inject(method = "defineSynchedData", at = @At(value = "TAIL"))
 	public void defineDanceData(CallbackInfo ci) {
 		this.entityData.define(Data.DATA_SKELETON_DANCE, false);
+		this.entityData.define(Data.DATA_SKELETON_RIGHT_ARM_DETACHED, false);
 	}
 
 	@SuppressWarnings("ConstantConditions")

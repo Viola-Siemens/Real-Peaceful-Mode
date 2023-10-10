@@ -26,6 +26,7 @@ import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.get
 public class ServerPlayerMixin implements IMonsterHero {
 	private final Map<ResourceLocation, Integer> helpedMonsters = Maps.newHashMap();
 
+	@SuppressWarnings("NotNullFieldNotInitialized")
 	private PlayerMissions playerMissions;
 
 	@Inject(method = "<init>", at = @At(value = "TAIL"))

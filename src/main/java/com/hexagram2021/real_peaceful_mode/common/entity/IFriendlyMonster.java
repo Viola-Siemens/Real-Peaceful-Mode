@@ -50,6 +50,7 @@ public interface IFriendlyMonster {
 		}
 	}
 
+	@SuppressWarnings("NotNullFieldNotInitialized")
 	final class Data {
 		public static EntityDataAccessor<Boolean> DATA_ZOMBIE_DANCE;
 		public static EntityDataAccessor<Boolean> DATA_SKELETON_DANCE;
