@@ -71,16 +71,23 @@ public class HuskWorkmanEntity extends PathfinderMob {
 
 	private int checkNearbyPlayers = 100;
 
+	private static final ResourceLocation FIND_ME_MISSION = new ResourceLocation(MODID, "husk2");
+
 	@Override
 	public void tick() {
 		if(this.isNoAi()) {
 			if(--this.checkNearbyPlayers <= 0) {
 				this.checkNearbyPlayers = 100;
 				if (this.level() instanceof ServerLevel serverLevel) {
-						serverLevel.players().stream().filter(player -> player.closerThan(this, 6.0D)).findAny().ifPresent(player -> MissionHelper.triggerMissionForPlayer(
-								new ResourceLocation(MODID, "husk2"), SummonBlockEntity.SummonMissionType.RECEIVE,
-								player, this, player1 -> this.setNoAi(false)
-						));
+						serverLevel.players().stream().filter(player -> player.closerThan(this, 6.0D)).findAny().ifPresent(player -> {
+							if(player instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), FIND_ME_MISSION)) {
+								this.setNoAi(false);
+								MissionHelper.triggerMissionForPlayer(
+										FIND_ME_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE,
+										player, this, player1 -> {}
+								);
+							}
+						});
 				}
 			}
 		}
@@ -93,7 +100,7 @@ public class HuskWorkmanEntity extends PathfinderMob {
 		if(itemInHand.is(RPMItems.Materials.PAC.get())) {
 			if(player instanceof ServerPlayer serverPlayer) {
 				MissionHelper.triggerMissionForPlayer(
-						new ResourceLocation(MODID, "husk2"), SummonBlockEntity.SummonMissionType.FINISH, serverPlayer,
+						FIND_ME_MISSION, SummonBlockEntity.SummonMissionType.FINISH, serverPlayer,
 						this, player1 -> player1.getItemInHand(hand).shrink(1)
 				);
 				return InteractionResult.CONSUME;

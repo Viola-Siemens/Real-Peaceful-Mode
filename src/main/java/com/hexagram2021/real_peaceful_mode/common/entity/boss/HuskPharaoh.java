@@ -167,12 +167,10 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		ItemStack itemInHand = player.getItemInHand(hand);
 		if(this.isStone() && itemInHand.is(Items.HONEYCOMB)) {
 			if(player instanceof ServerPlayer serverPlayer) {
+				this.setIsWeaken(true);
 				MissionHelper.triggerMissionForPlayer(
 						LAST_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE, serverPlayer,
-						this, player1 -> {
-							player1.getItemInHand(hand).shrink(1);
-							this.setIsWeaken(true);
-						}
+						this, player1 -> player1.getItemInHand(hand).shrink(1)
 				);
 				return InteractionResult.CONSUME;
 			}
