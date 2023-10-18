@@ -14,6 +14,7 @@ public class RPMModelLayers {
 	public static final ModelLayerLocation ZOMBIE_TYRANT = register("zombie_tyrant");
 	public static final ModelLayerLocation SKELETON_KING = register("skeleton_king");
 	public static final ModelLayerLocation HUSK_PHARAOH = register("husk_pharaoh");
+	public static final ModelLayerLocation SEA_DRAGON = register("sea_dragon");
 	public static final ModelLayerLocation DARK_ZOMBIE_KNIGHT_SKULL = register("dark_zombie_knight_skull");
 	public static final ModelLayerLocation SKELETON_SKULL = register("skeleton_skull");
 

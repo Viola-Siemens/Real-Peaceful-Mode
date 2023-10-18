@@ -1,0 +1,34 @@
+name: New Feature Request
+description: What features would you like to add in Emerald Craft?
+title: "[Enhancement]: "
+labels: [ "Enhancement" ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your supporting!
+  - type: checkboxes
+    id: feature-type
+    attributes:
+      label: Feature Type
+      description: What type of the feature would you describe?
+      options:
+      - label: Texture for Blocks or Entities
+      - label: Missions and Translation
+      - label: Recipes and GUI
+      - label: Professions and Trades of Villagers
+      - label: Features
+      - label: Structures
+      - label: Useful Blocks and Items
+      - label: Entities
+      - label: Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description of the feature
+      description: What can Real Peaceful Mode mod do for you?
+      placeholder: Feel free to describe what you thought :)
+    validations:
+      required: true

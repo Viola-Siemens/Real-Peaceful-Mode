@@ -1,0 +1,114 @@
+name: 问题报告（zh_cn version of Bug Report for those who are not able to read English）
+description: 不严重的模组问题可以在这里汇报。崩溃及严重问题请移步崩溃报告。
+title: "[Bug]: "
+labels: [ "Bug Minor" ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **请在报告前做以下尝试，并告诉我是否问题复现了**
+        
+        - 删除配置文件以重置配置。
+        
+        - 只安装真正的和平模式和它的前置模组。
+        
+        - 告诉我最小可复现冲突集——即如果您同时安装 real_peaceful_mode（真正的和平模式）、immersiveengineering（沉浸工程）和patchouli（帕秋莉手册）会发生这个问题，那么无论您是否安装了其它mod，只要引起相同的问题，最小可复现冲突集就是这三个mod。
+  - type: input
+    id: mod-version
+    attributes:
+      label: 真正的和平模式的版本
+      description: |
+        您在使用哪个版本的真正的和平模式？
+        您可以在进入游戏前的主菜单的Mods中找到Real Peaceful Mode，也可以根据您下载的文件名（如果没有修改过）来判断模组版本。
+      placeholder: 如：1.20.1-0.1.1
+    validations:
+      required: true
+  - type: input
+    id: patchouli-version
+    attributes:
+      label: 帕秋莉手册的版本
+      description: |
+        您在使用哪个版本的帕秋莉手册？
+        真正的和平模式使用了帕秋莉手册作为可选前置。如果您没有使用帕秋莉手册，请填写"N/A"（不含引号）。
+      placeholder: 如：1.20.1-81
+    validations:
+      required: true
+  - type: input
+    id: minecraft-version
+    attributes:
+      label: Minecraft的版本
+      description: |
+        您在使用哪个版本的Minecraft？
+        Minecraft，即MC，也即我的世界，真正的和平模式是拓展了Minecraft玩法的模组。
+      placeholder: 如：1.20.1
+    validations:
+      required: true
+  - type: dropdown
+    id: mod-loader
+    attributes:
+      label: 模组加载器
+      description: |
+        您使用了何种模组加载器来启动真正的和平模式？
+        最常见的模组加载器包括Forge、Fabric和Quilt等，目前真正的和平模式只有Forge版，请使用Forge启动。
+      options:
+        - Forge
+        - Fabric
+    validations:
+      required: true
+  - type: input
+    id: mod-loader-version
+    attributes:
+      label: 模组加载器的版本
+      description: |
+        您在使用哪个版本的模组加载器？
+        您可以在 .minecraft/versions 目录下找到您的加载器版本。
+      placeholder: 如：47.2.0
+    validations:
+      required: true
+  - type: dropdown
+    id: bug-type
+    attributes:
+      label: 问题类型
+      description: 您更倾向于认为它是哪种问题？
+      options:
+        - 战利品表缺失（如方块挖掘没有掉落物等）
+        - 渲染错误或贴图缺失（如方块出现紫黑色、液体出现蓝黑色缺省贴图）
+        - 任务与文本翻译（如玩家与NPC的对话内容或执行逻辑）
+        - 配方和GUI（GUI即玩家与特定方块和实体交互的菜单界面）
+        - 村民交易（交易列表和物品）
+        - 结构与地物（如自然生成的群系特征、树木、建筑等）
+        - 方块和物品的使用（如食物无法食用、药水无法投掷等）
+        - 实体（包括模组添加的各种生物）
+        - 其它（请在下方清晰描述）
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 发生了什么？
+      description: 如何复现问题？如果是世界生成引起的问题请精确到种子和坐标。
+      placeholder: |
+        告诉我您看到了什么，以及为了复现还需要安装了什么mod。如果仅安装真正的和平模式就可以引起问题请不要写其它模组。
+        您可以在 .minecraft/versions/<Minecraft与加载器版本>/mods （如果启动器开启了版本隔离）或 .minecraft/mods （如果没有开启版本隔离）中找到您安装的其它mod。
+    validations:
+      required: true
+  - type: textarea
+    id: debug-log
+    attributes:
+      label: debug.log
+      description: 如果您并没能描述清楚如何复现，请上传您的debug.log文件。推荐使用 https://gist.github.com/ 然后在这里留下链接。
+      placeholder: 上传您的debug.log，或者使用 https://gist.github.com/ ！debug.log可以用启动器导出。
+    validations:
+      required: false
+  - type: dropdown
+    id: isolate-mod
+    attributes:
+      label: 您是否尝试隔离真正的和平模式？
+      description: |
+        仅仅运行真正的和平模式和它的前置之后，是否发生了同样的问题？
+      options:
+        - 是的，我尝试了仅仅加载真正的和平模式和它的前置并且发生了同样的问题。
+        - 不是，我尝试了仅仅加载真正的和平模式和它的前置但没有发生同样的问题。
+        - 我没有尝试隔离。（请尝试后再提交！）
+    validations:
+      required: true

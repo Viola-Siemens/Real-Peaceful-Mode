@@ -1,0 +1,25 @@
+name: Compat Request
+description: Make this mod compatible with another mod. For example, add recipes or loot tables.
+title: "[Compat]: "
+labels: [ "Mod Compat" ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your supporting!
+  - type: input
+    id: mod-name
+    attributes:
+      label: Mod Name
+      description: The name of your mod. You can also leave a link here.
+      placeholder: ex. Ocean World
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description of your mod
+      description: What can Real Peaceful Mode mod do for your mod?
+      placeholder: You can ask for recipes, loot tables, decoration blocks for ores, structure templates, and any other things.
+    validations:
+      required: true

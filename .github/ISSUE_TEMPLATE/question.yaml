@@ -1,0 +1,35 @@
+name: Question
+description: What kind of information would you like to ask?
+title: "[Question]: "
+labels: [ "Question" ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your supporting!
+  - type: checkboxes
+    id: question-type
+    attributes:
+      label: Question Type
+      description: What type of the feature would you describe?
+      options:
+      - label: Texture for Blocks or Entities
+      - label: Missions and Translation
+      - label: Recipes and GUI
+      - label: Professions and Trades of Villagers
+      - label: Features
+      - label: Structures
+      - label: Blocks and Items
+      - label: Entities
+      - label: Progress of Mod Development
+      - label: Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description of the Question
+      description: What's puzzling you?
+      placeholder: Feel free to describe what you thought :)
+    validations:
+      required: true
