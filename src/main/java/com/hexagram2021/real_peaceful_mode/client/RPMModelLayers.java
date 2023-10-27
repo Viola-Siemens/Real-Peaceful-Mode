@@ -17,6 +17,7 @@ public class RPMModelLayers {
 	public static final ModelLayerLocation SEA_DRAGON = register("sea_dragon");
 	public static final ModelLayerLocation DARK_ZOMBIE_KNIGHT_SKULL = register("dark_zombie_knight_skull");
 	public static final ModelLayerLocation SKELETON_SKULL = register("skeleton_skull");
+	public static final ModelLayerLocation FLAME_CRYSTAL = register("flame_crystal");
 
 	private static ModelLayerLocation register(String name) {
 		return register(new ResourceLocation(MODID, name), "main");

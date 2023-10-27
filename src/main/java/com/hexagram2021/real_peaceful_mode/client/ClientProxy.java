@@ -69,6 +69,7 @@ public class ClientProxy extends CommonProxy {
         event.registerLayerDefinition(RPMModelLayers.HUSK_PHARAOH, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL, SkullModel::createHumanoidHeadLayer);
         event.registerLayerDefinition(RPMModelLayers.SKELETON_SKULL, SkeletonSkullRenderer::createSkullLayer);
+        event.registerLayerDefinition(RPMModelLayers.FLAME_CRYSTAL, FlameCrystalRenderer::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -81,5 +82,6 @@ public class ClientProxy extends CommonProxy {
         event.registerEntityRenderer(RPMEntities.HUSK_PHARAOH, HuskPharaohRenderer::new);
         event.registerEntityRenderer(RPMEntities.SKELETON_SKULL, SkeletonSkullRenderer::new);
         event.registerEntityRenderer(RPMEntities.TINY_FIREBALL, TinyFireballRenderer::new);
+        event.registerEntityRenderer(RPMEntities.FLAME_CRYSTAL, FlameCrystalRenderer::new);
     }
 }

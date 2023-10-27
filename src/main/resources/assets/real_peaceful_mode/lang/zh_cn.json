@@ -39,6 +39,7 @@
   "block.real_peaceful_mode.smooth_siltstone_slab": "平滑粉砂岩台阶",
   "block.real_peaceful_mode.smooth_siltstone_stairs": "平滑粉砂岩楼梯",
   "block.real_peaceful_mode.infested_glowing_crystal": "被虫蚀的发光水晶",
+  "block.real_peaceful_mode.pharaoh_banner": "法老旗帜",
   "item.real_peaceful_mode.alunite": "明矾石",
   "item.real_peaceful_mode.pac": "聚铝絮凝剂",
   "item.real_peaceful_mode.tuff_brick": "凝灰岩砖",
@@ -89,6 +90,7 @@
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "僵尸长者",
   "entity.real_peaceful_mode.skeleton_skull": "骷髅头",
   "entity.real_peaceful_mode.tiny_fireball": "小火球",
+  "entity.real_peaceful_mode.flame_crystal": "火团",
 
   "effect.real_peaceful_mode.trance": "恍惚",
 

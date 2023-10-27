@@ -30,6 +30,10 @@ public class TinyFireballEntity extends Fireball {
         super(entityType, level);
     }
 
+    public TinyFireballEntity(Level level, double posX, double posY, double posZ, double vecX, double vecY, double vecZ) {
+        super(RPMEntities.TINY_FIREBALL, posX, posY, posZ, vecX, vecY, vecZ, level);
+    }
+
     public TinyFireballEntity(Level level, LivingEntity owner, double vecX, double vecY, double vecZ) {
         super(RPMEntities.TINY_FIREBALL, owner, vecX, vecY, vecZ, level);
     }
@@ -48,7 +52,7 @@ public class TinyFireballEntity extends Fireball {
             DamageSource damageSource = owner instanceof Player player ?
                     this.damageSources().playerAttack(player) :
                     owner instanceof LivingEntity livingEntity ? this.damageSources().mobAttack(livingEntity) : this.damageSources().magic();
-            attackTarget.hurt(damageSource, 2.5F);
+            attackTarget.hurt(damageSource, 3.0F);
             if(attackTarget instanceof LivingEntity livingEntity) {
                 livingEntity.addEffect(new MobEffectInstance(RPMMobEffects.TRANCE.get(), 600));
                 if(livingEntity.isOnFire()) {
@@ -79,6 +83,8 @@ public class TinyFireballEntity extends Fireball {
             newBlock = RPMBlocks.Decoration.SMOOTH_SILTSTONE_SLAB.defaultBlockState();
         } else if (origin.is(Blocks.SMOOTH_SANDSTONE_STAIRS)) {
             newBlock = RPMBlocks.Decoration.SMOOTH_SILTSTONE_STAIRS.defaultBlockState();
+        } else if (origin.is(Blocks.GRASS_BLOCK)) {
+            newBlock = Blocks.DIRT.defaultBlockState();
         }
         if(newBlock != null) {
             for(Property property: origin.getProperties()) {
@@ -116,7 +122,7 @@ public class TinyFireballEntity extends Fireball {
     }
 
     @Override
-    public boolean hurt(DamageSource damageSource, float value) {
+    public boolean hurt(DamageSource damageSource, float v) {
         return false;
     }
 

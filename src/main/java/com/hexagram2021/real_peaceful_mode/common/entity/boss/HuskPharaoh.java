@@ -5,6 +5,7 @@ import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.entity.misc.FlameEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
@@ -68,6 +69,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(2, new MagnetizeTargetGoal(20));
+		this.goalSelector.addGoal(3, new SummonFlameCrystalGoal(300, 16));
 		this.goalSelector.addGoal(4, new RangedFireballAttackGoal(1.0D, 20, 32.0F));
 		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -85,7 +87,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes()
-				.add(Attributes.FOLLOW_RANGE, 32.0D)
+				.add(Attributes.FOLLOW_RANGE, 48.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.125F)
 				.add(Attributes.ATTACK_DAMAGE, 1.0D)
 				.add(Attributes.ARMOR, 5.0D)
@@ -361,10 +363,62 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 				--this.attackTime;
 				if(this.attackTime <= 0) {
 					Vec3 diff = HuskPharaoh.this.position().subtract(target.position());
-					double mag = Math.sqrt(diff.length()) / 4.0D;
-					target.move(MoverType.SELF, diff.normalize().multiply(mag, 1.0D, mag));
+					double mag = Math.sqrt(diff.length()) / 2.0D;
+					target.setDeltaMovement(diff.normalize().multiply(mag, 0.25D, mag).add(target.getDeltaMovement()));
 					this.attackTime = this.attackIntervalMin;
 				}
+			}
+		}
+	}
+
+	class SummonFlameCrystalGoal extends Goal {
+		private final int attackInterval;
+		private final float attackRadius;
+		private int attackTime = 600;
+
+		public SummonFlameCrystalGoal(int attackInterval, float attackRadius) {
+			this.attackInterval = attackInterval;
+			this.attackRadius = attackRadius;
+		}
+
+		@Override
+		public boolean canUse() {
+			return HuskPharaoh.this.getTarget() != null && HuskPharaoh.this.getTarget().closerThan(HuskPharaoh.this, this.attackRadius);
+		}
+
+		@Override
+		public boolean canContinueToUse() {
+			return this.canUse() || !HuskPharaoh.this.getNavigation().isDone();
+		}
+
+		@Override
+		public void start() {
+			super.start();
+			HuskPharaoh.this.setAggressive(true);
+		}
+
+		@Override
+		public void stop() {
+			super.stop();
+			HuskPharaoh.this.setAggressive(false);
+			this.attackTime = 600;
+		}
+
+		@Override
+		public boolean requiresUpdateEveryTick() {
+			return true;
+		}
+
+		@Override
+		public void tick() {
+			--this.attackTime;
+
+			if(this.attackTime <= 0) {
+				if(HuskPharaoh.this.level().getEntitiesOfClass(FlameEntity.class, HuskPharaoh.this.getBoundingBox().inflate(16.0D)).size() < 5) {
+					FlameEntity flameEntity = new FlameEntity(HuskPharaoh.this.level(), HuskPharaoh.this.blockPosition().above(), 12.0F);
+					HuskPharaoh.this.level().addFreshEntity(flameEntity);
+				}
+				this.attackTime = this.attackInterval + HuskPharaoh.this.getRandom().nextInt(30);
 			}
 		}
 	}

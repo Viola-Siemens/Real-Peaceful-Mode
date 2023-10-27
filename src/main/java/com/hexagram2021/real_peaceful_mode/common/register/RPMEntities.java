@@ -6,6 +6,7 @@ import com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.SkeletonKing;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
+import com.hexagram2021.real_peaceful_mode.common.entity.misc.FlameEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
 import net.minecraft.core.registries.Registries;
@@ -51,6 +52,11 @@ public class RPMEntities {
             .clientTrackingRange(4)
             .updateInterval(6)
             .build(new ResourceLocation(MODID, "tiny_fireball").toString());
+    public static final EntityType<FlameEntity> FLAME_CRYSTAL = EntityType.Builder.<FlameEntity>of(FlameEntity::new, MobCategory.MISC)
+            .sized(1.25F, 1.25F)
+            .clientTrackingRange(16)
+            .updateInterval(Integer.MAX_VALUE)
+            .build(new ResourceLocation(MODID, "flame_crystal").toString());
 
     public static void init(RegisterEvent event) {
         event.register(Registries.ENTITY_TYPE, helper -> {
@@ -62,6 +68,7 @@ public class RPMEntities {
             helper.register(new ResourceLocation(MODID, "husk_pharaoh"), HUSK_PHARAOH);
             helper.register(new ResourceLocation(MODID, "skeleton_skull"), SKELETON_SKULL);
             helper.register(new ResourceLocation(MODID, "tiny_fireball"), TINY_FIREBALL);
+            helper.register(new ResourceLocation(MODID, "flame_crystal"), FLAME_CRYSTAL);
         });
     }
 }

@@ -75,20 +75,18 @@ public class HuskWorkmanEntity extends PathfinderMob {
 
 	@Override
 	public void tick() {
-		if(this.isNoAi()) {
-			if(--this.checkNearbyPlayers <= 0) {
-				this.checkNearbyPlayers = 100;
-				if (this.level() instanceof ServerLevel serverLevel) {
-						serverLevel.players().stream().filter(player -> player.closerThan(this, 6.0D)).findAny().ifPresent(player -> {
-							if(player instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), FIND_ME_MISSION)) {
-								this.setNoAi(false);
-								MissionHelper.triggerMissionForPlayer(
-										FIND_ME_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE,
-										player, this, player1 -> {}
-								);
-							}
-						});
-				}
+		if(--this.checkNearbyPlayers <= 0) {
+			this.checkNearbyPlayers = 100;
+			if (this.level() instanceof ServerLevel serverLevel) {
+				serverLevel.players().stream().filter(player -> player.closerThan(this, 6.0D)).findAny().ifPresent(player -> {
+					if(player instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), FIND_ME_MISSION)) {
+						this.setNoAi(false);
+						MissionHelper.triggerMissionForPlayer(
+								FIND_ME_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE,
+								player, this, player1 -> {}
+						);
+					}
+				});
 			}
 		}
 		super.tick();

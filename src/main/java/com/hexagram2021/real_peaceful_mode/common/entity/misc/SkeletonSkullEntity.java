@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.misc;
 
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -25,6 +26,22 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile {
         return false;
     }
 
+    private static float getHurtDamage(float targetHealth) {
+        if(targetHealth < 60.0F) {
+            return 3.5F;
+        }if(targetHealth < 80.0F) {
+            float diff = targetHealth - 60.0F;
+            return 0.0025F * diff * diff + 3.5F;
+        }
+        if(targetHealth < 400.0F) {
+            return targetHealth * 0.05F;
+        }
+        if(targetHealth < 10000.0F) {
+            return 2.0F * Mth.sqrt(targetHealth) - 20.0F;
+        }
+        return 200.0F - 40000.0F / (targetHealth - 8000.0F);
+    }
+
     protected void onHitEntity(EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
         if (!this.level().isClientSide) {
@@ -33,7 +50,8 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile {
             DamageSource damageSource = owner instanceof Player player ?
                     this.damageSources().playerAttack(player) :
                     owner instanceof LivingEntity livingEntity ? this.damageSources().mobAttack(livingEntity) : this.damageSources().magic();
-            attackTarget.hurt(damageSource, 3.0F);
+            float targetHealth = attackTarget instanceof LivingEntity livingEntity ? livingEntity.getHealth() : 0.0F;
+            attackTarget.hurt(damageSource, getHurtDamage(targetHealth));
         }
     }
 

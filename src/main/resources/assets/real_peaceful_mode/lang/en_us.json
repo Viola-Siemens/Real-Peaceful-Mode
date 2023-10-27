@@ -39,6 +39,7 @@
   "block.real_peaceful_mode.smooth_siltstone_slab": "Smooth Siltstone Slab",
   "block.real_peaceful_mode.smooth_siltstone_stairs": "Smooth Siltstone Stairs",
   "block.real_peaceful_mode.infested_glowing_crystal": "Infested Glowing Crystal",
+  "block.real_peaceful_mode.pharaoh_banner": "Pharaoh Banner",
   "item.real_peaceful_mode.alunite": "Alunite",
   "item.real_peaceful_mode.pac": "PAC",
   "item.real_peaceful_mode.tuff_brick": "Tuff Brick",
@@ -89,6 +90,7 @@
   "entity.minecraft.zombie.special.real_peaceful_mode.senior": "Zombie Senior",
   "entity.real_peaceful_mode.skeleton_skull": "Skeleton Skull",
   "entity.real_peaceful_mode.tiny_fireball": "Tiny Fireball",
+  "entity.real_peaceful_mode.flame_crystal": "Floating Flame",
 
   "effect.real_peaceful_mode.trance": "Trance",
 

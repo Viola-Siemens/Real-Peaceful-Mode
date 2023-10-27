@@ -10,9 +10,11 @@ public class RandomEventSpawnerHelper {
 	private static final Set<AbstractEventSpawner<?>> spawners = Sets.newIdentityHashSet();
 
 	/**
-	 * Subscribe ServerStartingEvent and call this in its handler function.
+	 * Subscribe RegisterRandomEventSpawnerEvent and call this in its handler function.
 	 * @param s		the new spawner to be added.
+	 * @see         com.hexagram2021.real_peaceful_mode.api.event.RegisterRandomEventSpawnerEvent
 	 */
+	@ApiStatus.Internal
 	public static void registerRandomEventSpawner(AbstractEventSpawner<?> s) {
 		spawners.add(s);
 	}

@@ -1,6 +1,8 @@
 package com.hexagram2021.real_peaceful_mode.client;
 
 import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
+import com.hexagram2021.real_peaceful_mode.api.RandomEventSpawnerHelper;
+import com.hexagram2021.real_peaceful_mode.api.event.RegisterRandomEventSpawnerEvent;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMKeys;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMobEffects;
 import com.hexagram2021.real_peaceful_mode.network.GetMissionsPacket;
@@ -10,8 +12,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ViewportEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -19,6 +23,12 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientEventHandler {
+	@SubscribeEvent
+	public static void onClientPlayerLogging(ClientPlayerNetworkEvent.LoggingIn event) {
+		RandomEventSpawnerHelper.clearRandomEventSpawners();
+		MinecraftForge.EVENT_BUS.post(new RegisterRandomEventSpawnerEvent(Dist.CLIENT));
+	}
+
 	@SubscribeEvent
 	public static void onKeyboardInput(InputEvent.Key event) {
 		LocalPlayer player = Minecraft.getInstance().player;
