@@ -22,6 +22,7 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile {
         super(RPMEntities.SKELETON_SKULL, owner, vecX, vecY, vecZ, level);
     }
 
+    @Override
     public boolean isOnFire() {
         return false;
     }
