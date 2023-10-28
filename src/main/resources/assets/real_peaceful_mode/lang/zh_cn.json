@@ -72,6 +72,15 @@
   "item.real_peaceful_mode.dark_zombie_knight_spawn_egg": "僵尸黑骑士刷怪蛋",
   "item.real_peaceful_mode.start": "真正的和平模式",
 
+  "item.real_peaceful_mode.huge_spirit_bead.description": "一个融合了不同生物魂珠而炼成的大魂珠。或许这是通往另一个维度大门的钥匙？",
+  "item.real_peaceful_mode.zombie_spirit_bead.description": "据僵尸们所说，他们可以生产一种灵魂一样的东西叫做“人魄”，并通过它生产魂珠。但是它闻起来有点恶心。",
+  "item.real_peaceful_mode.skeleton_spirit_bead.description": "这护身符一样的小球很可能是由生物骨头制成的，它散发着骷髅的神秘力量。",
+  "item.real_peaceful_mode.creeper_spirit_bead.description": "它似乎是由苦力怕的大量孢子聚集压制而成的。",
+  "item.real_peaceful_mode.slime_spirit_bead.description": "一个非常粘的小球——感觉就像更浓稠的黏液球。",
+  "item.real_peaceful_mode.guardian_spirit_bead.description": "这个坚硬的小球很可能是由海晶石制成的，并注入了来自深海的能量。",
+  "item.real_peaceful_mode.husk_spirit_bead.description": "这个魂珠也是由“人魄”制成的，不过摸起来比僵尸的魂珠更干燥。",
+  "item.real_peaceful_mode.drowned_spirit_bead.description": "这个魂珠也是由“人魄”制成的，不过摸起来比僵尸的魂珠更湿润。",
+
   "book.real_peaceful_mode.start": "欢迎来到这个梦幻而现实的世界。你或许需要寻找和搭建藏身所来躲避怪物们的攻击，去杀戮或者被杀，但是你有没有想过，为什么怪物们会攻击你呢？去探寻真相吧！",
   "book.real_peaceful_mode.start.zombie_fort": "僵尸城堡坐落于平原、向日葵平原、草甸或森林群系，僵尸的君主在城堡内，统治着僵尸这个种族——似乎他的威望非常高，百姓都很拥护他。",
   "book.real_peaceful_mode.start.skeleton_palace": "骷髅宫殿坐落于热带草原、风袭热带草原或热带高原群系，骷髅的君主居住在宫殿内，然而不知为何，近年来似乎没什么他的消息。",

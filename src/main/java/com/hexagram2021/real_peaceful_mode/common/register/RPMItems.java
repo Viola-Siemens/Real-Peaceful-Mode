@@ -5,6 +5,7 @@ import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntit
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
 import com.hexagram2021.real_peaceful_mode.common.item.DebugWishItem;
 import com.hexagram2021.real_peaceful_mode.common.item.ScepterItem;
+import com.hexagram2021.real_peaceful_mode.common.item.SpiritBeadItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -41,8 +42,8 @@ public class RPMItems {
 	}
 
 	public static class SpiritBeads {
-		public static final ItemEntry<Item> HUGE_SPIRIT_BEAD = ItemEntry.register(
-				"huge_spirit_bead", () -> new Item(new Item.Properties()) {
+		public static final ItemEntry<SpiritBeadItem> HUGE_SPIRIT_BEAD = ItemEntry.register(
+				"huge_spirit_bead", () -> new SpiritBeadItem(null, new Item.Properties()) {
 					@Override
 					public boolean isFoil(ItemStack itemStack) {
 						return true;
@@ -50,13 +51,13 @@ public class RPMItems {
 				}
 		);
 
-		public static final ItemEntry<Item> ZOMBIE_SPIRIT_BEAD = ItemEntry.register("zombie_spirit_bead", () -> new Item(new Item.Properties()));
-		public static final ItemEntry<Item> SKELETON_SPIRIT_BEAD = ItemEntry.register("skeleton_spirit_bead", () -> new Item(new Item.Properties()));
-		public static final ItemEntry<Item> CREEPER_SPIRIT_BEAD = ItemEntry.register("creeper_spirit_bead", () -> new Item(new Item.Properties()));
-		public static final ItemEntry<Item> SLIME_SPIRIT_BEAD = ItemEntry.register("slime_spirit_bead", () -> new Item(new Item.Properties()));
-		public static final ItemEntry<Item> GUARDIAN_SPIRIT_BEAD = ItemEntry.register("guardian_spirit_bead", () -> new Item(new Item.Properties()));
-		public static final ItemEntry<Item> HUSK_SPIRIT_BEAD = ItemEntry.register("husk_spirit_bead", () -> new Item(new Item.Properties()));
-		public static final ItemEntry<Item> DROWNED_SPIRIT_BEAD = ItemEntry.register("drowned_spirit_bead", () -> new Item(new Item.Properties()));
+		public static final ItemEntry<SpiritBeadItem> ZOMBIE_SPIRIT_BEAD = ItemEntry.register("zombie_spirit_bead", () -> new SpiritBeadItem(EntityType.ZOMBIE, new Item.Properties()));
+		public static final ItemEntry<SpiritBeadItem> SKELETON_SPIRIT_BEAD = ItemEntry.register("skeleton_spirit_bead", () -> new SpiritBeadItem(EntityType.SKELETON, new Item.Properties()));
+		public static final ItemEntry<SpiritBeadItem> CREEPER_SPIRIT_BEAD = ItemEntry.register("creeper_spirit_bead", () -> new SpiritBeadItem(EntityType.CREEPER, new Item.Properties()));
+		public static final ItemEntry<SpiritBeadItem> SLIME_SPIRIT_BEAD = ItemEntry.register("slime_spirit_bead", () -> new SpiritBeadItem(EntityType.SLIME, new Item.Properties()));
+		public static final ItemEntry<SpiritBeadItem> GUARDIAN_SPIRIT_BEAD = ItemEntry.register("guardian_spirit_bead", () -> new SpiritBeadItem(EntityType.GUARDIAN, new Item.Properties()));
+		public static final ItemEntry<SpiritBeadItem> HUSK_SPIRIT_BEAD = ItemEntry.register("husk_spirit_bead", () -> new SpiritBeadItem(EntityType.HUSK, new Item.Properties()));
+		public static final ItemEntry<SpiritBeadItem> DROWNED_SPIRIT_BEAD = ItemEntry.register("drowned_spirit_bead", () -> new SpiritBeadItem(EntityType.DROWNED, new Item.Properties()));
 
 		private SpiritBeads() {
 		}

@@ -72,6 +72,15 @@
   "item.real_peaceful_mode.dark_zombie_knight_spawn_egg": "Dark Zombie Knight Spawn Egg",
   "item.real_peaceful_mode.start": "Real Peaceful Mode",
 
+  "item.real_peaceful_mode.huge_spirit_bead.description": "A huge bead that combines all the spirit beads from variant mobs. Maybe this is a key to another dimension?",
+  "item.real_peaceful_mode.zombie_spirit_bead.description": "Made by zombies from \"Poul\", which is said to come from a soul-like item produced by them. But it smells really awful.",
+  "item.real_peaceful_mode.skeleton_spirit_bead.description": "It is likely that this amulet-like pellet is made from bones, and emitting mystical power of skeletons.",
+  "item.real_peaceful_mode.creeper_spirit_bead.description": "It seems that it is made from a great amount of spores by creepers.",
+  "item.real_peaceful_mode.slime_spirit_bead.description": "A really sticky pellet - it feels like a thicker slime ball.",
+  "item.real_peaceful_mode.guardian_spirit_bead.description": "This hard pellet is most likely to be made from prismarine, and injected into energy of the deep ocean.",
+  "item.real_peaceful_mode.husk_spirit_bead.description": "This bead is made from \"Poul\", too. But it feels drier than the zombies' beads.",
+  "item.real_peaceful_mode.drowned_spirit_bead.description": "This bead is made from \"Poul\", too. But it feels wetter than the zombies' beads.",
+
   "book.real_peaceful_mode.start": "Welcome to the magical and realistic world. You may have to hide to avoid attacking by monsters, kill or get killed, but do you know why they keep attacking you? Go and find it out!",
   "book.real_peaceful_mode.start.zombie_fort": "The Zombie Fort is located in plains, sunflower plains, meadows, or forest biomes. The monarch of zombies stays in the fort, ruling the zombie race - he seems to be so prestigious that all zombies support him.",
   "book.real_peaceful_mode.start.skeleton_palace": "The Skeleton Palace is located in savanna, windswept savanna, or savanna plateau biomes, and the king of the skeleton lives in the palace. However, it seems to be no news about him in recent years for no reason.",
