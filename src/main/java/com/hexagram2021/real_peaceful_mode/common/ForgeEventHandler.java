@@ -3,13 +3,19 @@ package com.hexagram2021.real_peaceful_mode.common;
 import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.entity.capability.ConvertibleItemEntityHandler;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMCapabilities;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMItemTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,6 +54,13 @@ public class ForgeEventHandler {
 				//event.setCancellationResult(InteractionResult.SUCCESS);
 				//event.setCanceled(true);
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onAttachCapability(AttachCapabilitiesEvent<Entity> event) {
+		if(event.getObject() instanceof ItemEntity) {
+			event.addCapability(RPMCapabilities.ID_ITEM_ENTITY_CONVERTIBLE, new ConvertibleItemEntityHandler(1200));
 		}
 	}
 

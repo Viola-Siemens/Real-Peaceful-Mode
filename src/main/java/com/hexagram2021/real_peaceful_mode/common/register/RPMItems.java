@@ -3,24 +3,31 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
+import com.hexagram2021.real_peaceful_mode.common.item.ConvertibleSpiritBeadItem;
 import com.hexagram2021.real_peaceful_mode.common.item.DebugWishItem;
 import com.hexagram2021.real_peaceful_mode.common.item.ScepterItem;
 import com.hexagram2021.real_peaceful_mode.common.item.SpiritBeadItem;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
@@ -41,6 +48,10 @@ public class RPMItems {
 		DebugItems.init();
 	}
 
+	public static void runLater() {
+		SpiritBeads.runLater();
+	}
+
 	public static class SpiritBeads {
 		public static final ItemEntry<SpiritBeadItem> HUGE_SPIRIT_BEAD = ItemEntry.register(
 				"huge_spirit_bead", () -> new SpiritBeadItem(null, new Item.Properties()) {
@@ -51,18 +62,35 @@ public class RPMItems {
 				}
 		);
 
-		public static final ItemEntry<SpiritBeadItem> ZOMBIE_SPIRIT_BEAD = ItemEntry.register("zombie_spirit_bead", () -> new SpiritBeadItem(EntityType.ZOMBIE, new Item.Properties()));
+		public static final ItemEntry<ConvertibleSpiritBeadItem> ZOMBIE_SPIRIT_BEAD = ItemEntry.register("zombie_spirit_bead", () -> new ConvertibleSpiritBeadItem(EntityType.ZOMBIE, new Item.Properties()));
 		public static final ItemEntry<SpiritBeadItem> SKELETON_SPIRIT_BEAD = ItemEntry.register("skeleton_spirit_bead", () -> new SpiritBeadItem(EntityType.SKELETON, new Item.Properties()));
 		public static final ItemEntry<SpiritBeadItem> CREEPER_SPIRIT_BEAD = ItemEntry.register("creeper_spirit_bead", () -> new SpiritBeadItem(EntityType.CREEPER, new Item.Properties()));
 		public static final ItemEntry<SpiritBeadItem> SLIME_SPIRIT_BEAD = ItemEntry.register("slime_spirit_bead", () -> new SpiritBeadItem(EntityType.SLIME, new Item.Properties()));
 		public static final ItemEntry<SpiritBeadItem> GUARDIAN_SPIRIT_BEAD = ItemEntry.register("guardian_spirit_bead", () -> new SpiritBeadItem(EntityType.GUARDIAN, new Item.Properties()));
-		public static final ItemEntry<SpiritBeadItem> HUSK_SPIRIT_BEAD = ItemEntry.register("husk_spirit_bead", () -> new SpiritBeadItem(EntityType.HUSK, new Item.Properties()));
-		public static final ItemEntry<SpiritBeadItem> DROWNED_SPIRIT_BEAD = ItemEntry.register("drowned_spirit_bead", () -> new SpiritBeadItem(EntityType.DROWNED, new Item.Properties()));
+		public static final ItemEntry<ConvertibleSpiritBeadItem> HUSK_SPIRIT_BEAD = ItemEntry.register("husk_spirit_bead", () -> new ConvertibleSpiritBeadItem(EntityType.HUSK, new Item.Properties()));
+		public static final ItemEntry<ConvertibleSpiritBeadItem> DROWNED_SPIRIT_BEAD = ItemEntry.register("drowned_spirit_bead", () -> new ConvertibleSpiritBeadItem(EntityType.DROWNED, new Item.Properties()));
 
 		private SpiritBeads() {
 		}
 
 		public static void init() {
+		}
+
+		public static void runLater() {
+			Function<ItemEntity, Boolean> wetCondition = entity -> entity.isEyeInFluidType(ForgeMod.WATER_TYPE.get());
+			Function<ItemEntity, Boolean> dryCondition = entity -> {
+				if(entity.isEyeInFluidType(ForgeMod.WATER_TYPE.get())) {
+					return false;
+				}
+				Holder<Biome> biome = entity.level().getBiome(entity.blockPosition());
+				return biome.is(Tags.Biomes.IS_HOT) && biome.is(Tags.Biomes.IS_DRY) && entity.level().canSeeSky(entity.blockPosition());
+			};
+
+			ZOMBIE_SPIRIT_BEAD.get()
+					.addConvertItem(wetCondition, DROWNED_SPIRIT_BEAD)
+					.addConvertItem(dryCondition, HUSK_SPIRIT_BEAD);
+			HUSK_SPIRIT_BEAD.get().addConvertItem(wetCondition, ZOMBIE_SPIRIT_BEAD);
+			DROWNED_SPIRIT_BEAD.get().addConvertItem(dryCondition, ZOMBIE_SPIRIT_BEAD);
 		}
 	}
 

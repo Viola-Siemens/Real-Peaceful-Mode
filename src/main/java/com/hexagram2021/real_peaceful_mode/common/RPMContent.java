@@ -24,13 +24,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegisterEvent;
 
 import java.util.Set;
-import java.util.function.Consumer;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RPMContent {
-	public static void modConstruction(IEventBus bus, Consumer<Runnable> runLater) {
+	public static void modConstruction(IEventBus bus) {
 		ModsCompatManager.compatModLoaded();
 
 		initTags();
@@ -49,6 +48,7 @@ public class RPMContent {
 
 	private static void initTags() {
 		RPMBlockTags.init();
+		RPMItemTags.init();
 		RPMBiomeTags.init();
 		RPMStructureTags.init();
 		RPMStructureKeys.init();
@@ -60,6 +60,8 @@ public class RPMContent {
 		ModVanillaCompat.setup();
 		appendBlocksToBlockEntities();
 		registerSummonBlockExtraConditions();
+
+		RPMItems.runLater();
 	}
 
 	private static void appendBlocksToBlockEntities() {

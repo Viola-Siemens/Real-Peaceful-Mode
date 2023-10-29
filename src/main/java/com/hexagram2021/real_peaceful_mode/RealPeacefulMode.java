@@ -30,7 +30,9 @@ import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.*;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -41,8 +43,6 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.Arrays;
-import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -80,11 +80,7 @@ public class RealPeacefulMode {
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
 		MinecraftForge.EVENT_BUS.addListener(this::registerRandomEventSpawners);
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
-		DeferredWorkQueue queue = DeferredWorkQueue.lookup(Optional.of(ModLoadingStage.CONSTRUCT)).orElseThrow();
-		Consumer<Runnable> runLater = job -> queue.enqueueWork(
-				ModLoadingContext.get().getActiveContainer(), job
-		);
-		RPMContent.modConstruction(bus, runLater);
+		RPMContent.modConstruction(bus);
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, bootstrapErrorToXCPInDev(() -> ClientProxy::modConstruction));
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, RPMCommonConfig.getConfig());
