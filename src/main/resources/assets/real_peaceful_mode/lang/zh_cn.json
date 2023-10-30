@@ -59,6 +59,7 @@
   "item.real_peaceful_mode.skeleton_scepter": "骷髅权杖",
   "item.real_peaceful_mode.pharaoh_scepter": "法老权杖",
   "item.real_peaceful_mode.tiny_flame": "小火花",
+  "item.real_peaceful_mode.tiny_soul_flame": "小灵魂火花",
   "item.real_peaceful_mode.iron_pike": "铁制长枪",
   "item.real_peaceful_mode.golden_pike": "金制长枪",
   "item.real_peaceful_mode.diamond_pike": "钻石长枪",
@@ -150,7 +151,9 @@
   "subtitles.entity.husk_pharaoh.death": "尸壳法老：死亡",
 
   "enchantment.real_peaceful_mode.cracking": "爆裂",
+  "enchantment.real_peaceful_mode.cracking.desc": "使得弹射物能够破坏一些易碎的方块。",
   "enchantment.real_peaceful_mode.undead_flame": "亡灵鬼火",
+  "enchantment.real_peaceful_mode.undead_flame.desc": "增加权杖发射的弹射物带来的伤害，并使得被击中的生物受到火焰伤害。",
 
   "message.real_peaceful_mode.zombies_wish.success": "僵尸们不再攻击你了。",
   "message.real_peaceful_mode.skeletons_wish.success": "骷髅们不再攻击你了。",

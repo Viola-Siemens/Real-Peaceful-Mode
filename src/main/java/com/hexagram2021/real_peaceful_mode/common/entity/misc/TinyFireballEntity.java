@@ -142,7 +142,11 @@ public class TinyFireballEntity extends Fireball implements ICrackable {
     @Override
     public ItemStack getItem() {
         ItemStack itemstack = this.getItemRaw();
-        return itemstack.isEmpty() ? new ItemStack(RPMItems.Weapons.TINY_FLAME) : itemstack;
+        return itemstack.isEmpty() ? getItem(this.isOnFire()) : itemstack;
+    }
+
+    private static ItemStack getItem(boolean onFire) {
+        return onFire ? new ItemStack(RPMItems.Weapons.TINY_SOUL_FLAME) : new ItemStack(RPMItems.Weapons.TINY_FLAME);
     }
 
     @Override

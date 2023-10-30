@@ -59,6 +59,7 @@
   "item.real_peaceful_mode.skeleton_scepter": "Skeleton Scepter",
   "item.real_peaceful_mode.pharaoh_scepter": "Pharaoh Scepter",
   "item.real_peaceful_mode.tiny_flame": "Tiny Flame",
+  "item.real_peaceful_mode.tiny_soul_flame": "Tiny Soul Flame",
   "item.real_peaceful_mode.iron_pike": "Iron Pike",
   "item.real_peaceful_mode.golden_pike": "Golden Pike",
   "item.real_peaceful_mode.diamond_pike": "Diamond Pike",
@@ -150,7 +151,9 @@
   "subtitles.entity.husk_pharaoh.death": "Husk Pharaoh dies",
 
   "enchantment.real_peaceful_mode.cracking": "Cracking",
+  "enchantment.real_peaceful_mode.cracking.desc": "Make projectiles easy to crack some breakable blocks.",
   "enchantment.real_peaceful_mode.undead_flame": "Undead Flame",
+  "enchantment.real_peaceful_mode.undead_flame.desc": "Increase the damage of projectiles that launch by scepters, and apply fire damages to the mobs they hit.",
 
   "message.real_peaceful_mode.zombies_wish.success": "Zombies are friendly to you now.",
   "message.real_peaceful_mode.skeletons_wish.success": "Skeletons are friendly to you now.",

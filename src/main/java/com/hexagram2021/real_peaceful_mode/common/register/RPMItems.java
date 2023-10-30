@@ -168,6 +168,9 @@ public class RPMItems {
 		public static ItemEntry<FireChargeItem> TINY_FLAME = ItemEntry.register(
 				"tiny_flame", () -> new FireChargeItem(new Item.Properties())
 		);
+		public static ItemEntry<FireChargeItem> TINY_SOUL_FLAME = ItemEntry.register(
+				"tiny_soul_flame", () -> new FireChargeItem(new Item.Properties())
+		);
 
 		private Weapons() {
 		}
