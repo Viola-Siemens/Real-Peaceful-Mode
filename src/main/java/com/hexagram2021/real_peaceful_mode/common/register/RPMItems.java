@@ -125,7 +125,7 @@ public class RPMItems {
 		public static ItemEntry<ScepterItem<SkeletonSkullEntity>> SKELETON_SCEPTER = ItemEntry.register(
 				"skeleton_scepter", () -> new ScepterItem<>(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).durability(1396)) {
 					@Override
-					public SkeletonSkullEntity createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
+					protected SkeletonSkullEntity createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
 						SkeletonSkullEntity skull = new SkeletonSkullEntity(level, owner, directionX, directionY, directionZ);
 						skull.setPos(owner.getX(), owner.getY() + owner.getEyeHeight(), owner.getZ());
 						return skull;
@@ -140,7 +140,7 @@ public class RPMItems {
 		public static ItemEntry<ScepterItem<TinyFireballEntity>> PHARAOH_SCEPTER = ItemEntry.register(
 				"pharaoh_scepter", () -> new ScepterItem<>(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).durability(1280)) {
 					@Override
-					public TinyFireballEntity createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
+					protected TinyFireballEntity createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
 						TinyFireballEntity fireball = new TinyFireballEntity(level, owner, directionX, directionY, directionZ);
 						fireball.setPos(owner.getX(), owner.getY() + owner.getEyeHeight(), owner.getZ());
 						return fireball;

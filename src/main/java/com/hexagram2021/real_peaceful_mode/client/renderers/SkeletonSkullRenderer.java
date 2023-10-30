@@ -58,7 +58,9 @@ public class SkeletonSkullRenderer extends EntityRenderer<SkeletonSkullEntity> {
         this.model.renderToBuffer(transform, vertexconsumer, uv2, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         transform.popPose();
         super.render(entity, f, partialTick, transform, multiBufferSource, uv2);
-        renderSoulFlame(this.entityRenderDispatcher, transform, multiBufferSource, entity);
+        if(entity.isOnFire()) {
+            renderSoulFlame(this.entityRenderDispatcher, transform, multiBufferSource, entity);
+        }
     }
 
     @Override

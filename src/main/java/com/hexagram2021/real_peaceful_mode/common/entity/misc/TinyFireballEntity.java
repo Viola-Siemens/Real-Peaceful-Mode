@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.misc;
 
+import com.hexagram2021.real_peaceful_mode.common.entity.ICrackable;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
@@ -24,7 +25,8 @@ import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 
-public class TinyFireballEntity extends Fireball {
+public class TinyFireballEntity extends Fireball implements ICrackable {
+    private boolean crackable;
 
     public TinyFireballEntity(EntityType<? extends TinyFireballEntity> entityType, Level level) {
         super(entityType, level);
@@ -39,7 +41,7 @@ public class TinyFireballEntity extends Fireball {
     }
 
     @Override
-    public boolean isOnFire() {
+    public boolean displayFireAnimation() {
         return false;
     }
 
@@ -52,7 +54,12 @@ public class TinyFireballEntity extends Fireball {
             DamageSource damageSource = owner instanceof Player player ?
                     this.damageSources().playerAttack(player) :
                     owner instanceof LivingEntity livingEntity ? this.damageSources().mobAttack(livingEntity) : this.damageSources().magic();
-            attackTarget.hurt(damageSource, 3.0F);
+            float damage = 3.0F;
+            if(this.isOnFire()) {
+                damage += 1.0F;
+                attackTarget.setSecondsOnFire(10);
+            }
+            attackTarget.hurt(damageSource, damage);
             if(attackTarget instanceof LivingEntity livingEntity) {
                 livingEntity.addEffect(new MobEffectInstance(RPMMobEffects.TRANCE.get(), 600));
                 if(livingEntity.isOnFire()) {
@@ -106,6 +113,7 @@ public class TinyFireballEntity extends Fireball {
                 this.level().setBlock(blockHitResult.getBlockPos(), newBlock, Block.UPDATE_ALL);
             }
         }
+        ICrackable.onHitBlock(blockHitResult, this);
     }
 
     @Override
@@ -135,5 +143,15 @@ public class TinyFireballEntity extends Fireball {
     public ItemStack getItem() {
         ItemStack itemstack = this.getItemRaw();
         return itemstack.isEmpty() ? new ItemStack(RPMItems.Weapons.TINY_FLAME) : itemstack;
+    }
+
+    @Override
+    public void setCrackable(boolean crackable) {
+        this.crackable = crackable;
+    }
+
+    @Override
+    public boolean getCrackable() {
+        return this.crackable;
     }
 }

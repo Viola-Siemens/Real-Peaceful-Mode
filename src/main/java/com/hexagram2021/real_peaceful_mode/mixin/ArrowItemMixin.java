@@ -17,6 +17,8 @@ public class ArrowItemMixin {
 	@Inject(method = "createArrow", at = @At(value = "RETURN"))
 	public void addRPMEnchantments(Level level, ItemStack arrowItemStack, LivingEntity user, CallbackInfoReturnable<AbstractArrow> cir) {
 		int crackingLevel = user.getMainHandItem().getEnchantmentLevel(RPMEnchantments.CRACKING.get());
-		((ICrackable)(cir.getReturnValue())).setCrackable(crackingLevel > 1 || user.getRandom().nextBoolean());
+		if(crackingLevel > 0) {
+			((ICrackable) (cir.getReturnValue())).setCrackable(crackingLevel > 1 || user.getRandom().nextBoolean());
+		}
 	}
 }

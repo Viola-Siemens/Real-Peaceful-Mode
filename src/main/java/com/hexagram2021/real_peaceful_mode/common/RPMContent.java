@@ -53,6 +53,8 @@ public class RPMContent {
 		RPMStructureTags.init();
 		RPMStructureKeys.init();
 		RPMStructureSetKeys.init();
+
+		RPMEnchantmentCategories.init();
 	}
 
 	public static void init() {
