@@ -70,7 +70,7 @@ public class SkeletonEventSpawner extends AbstractEventSpawner<Skeleton> {
 				fox.getNavigation().stop();
 				fox.getMoveControl().setWantedPosition(fox.getX(), fox.getY(), fox.getZ(), 0.0D);
 				if(skeleton instanceof IFriendlyMonster monster) {
-					monster.setRandomEventNpcAction((player, itemStack) -> {
+					monster.rpm$setRandomEventNpcAction((player, itemStack) -> {
 						if(itemStack.isEmpty()) {
 							MissionHelper.triggerMissionForPlayer(
 									SKELETON_ARM_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE, player,
@@ -86,16 +86,16 @@ public class SkeletonEventSpawner extends AbstractEventSpawner<Skeleton> {
 											rightArmDetachable.setRightArmDetached(false);
 										}
 										itemStack.shrink(1);
-										monster.setRandomEventNpcAction(null);
-										monster.setNpcExtraTickAction(null);
-										monster.setDance(true);
+										monster.rpm$setRandomEventNpcAction(null);
+										monster.rpm$setNpcExtraTickAction(null);
+										monster.rpm$setDance(true);
 									}
 							);
 							return true;
 						}
 						return false;
 					});
-					monster.setNpcExtraTickAction(MOB_SWEAT);
+					monster.rpm$setNpcExtraTickAction(MOB_SWEAT);
 				}
 				ItemStack helmet = new ItemStack(Items.LEATHER_HELMET);
 				if(helmet.getItem() instanceof DyeableLeatherItem dyeable) {

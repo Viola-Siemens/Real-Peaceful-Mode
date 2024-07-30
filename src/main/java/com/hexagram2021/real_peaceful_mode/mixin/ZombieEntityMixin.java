@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -29,15 +30,20 @@ import java.util.function.Consumer;
 
 @Mixin(Zombie.class)
 public abstract class ZombieEntityMixin extends Monster implements IFriendlyMonster {
+	@Unique
 	private static final String TAG_FIGHT_FOR_PLAYER = "RPM_FightForPlayer";
-	private boolean fightForPlayer = false;
+	@Unique
+	private boolean rpm$fightForPlayer = false;
+	@Unique
 	@Nullable
-	private Goal attackDarkZombieKnightSelector = null;
+	private Goal rpm$attackDarkZombieKnightSelector = null;
 
+	@Unique
 	@Nullable
-	private BiFunction<ServerPlayer, ItemStack, Boolean> npcInteractAction = null;
+	private BiFunction<ServerPlayer, ItemStack, Boolean> rpm$npcInteractAction = null;
+	@Unique
 	@Nullable
-	private Consumer<Mob> npcTickAction = null;
+	private Consumer<Mob> rpm$npcTickAction = null;
 
 	protected ZombieEntityMixin(EntityType<? extends Monster> entityType, Level level) {
 		super(entityType, level);
@@ -45,81 +51,81 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 
 	@SuppressWarnings("WrongEntityDataParameterClass")
 	@Inject(method = "<clinit>", at = @At(value = "TAIL"))
-	private static void defineEntityDataAccessor(CallbackInfo ci) {
+	private static void rpm$defineEntityDataAccessor(CallbackInfo ci) {
 		Data.DATA_ZOMBIE_DANCE = SynchedEntityData.defineId(Zombie.class, EntityDataSerializers.BOOLEAN);
 	}
 
 	@Inject(method = "defineSynchedData", at = @At(value = "TAIL"))
-	public void defineDanceData(CallbackInfo ci) {
+	public void rpm$defineDanceData(CallbackInfo ci) {
 		this.entityData.define(Data.DATA_ZOMBIE_DANCE, false);
 	}
 
 	@Inject(method = "addBehaviourGoals", at = @At(value = "TAIL"))
-	public void addRPMExtraGoals(CallbackInfo ci) {
+	public void rpm$addRPMExtraGoals(CallbackInfo ci) {
 		this.goalSelector.addGoal(1, new MonsterDanceGoal<>(this));
 	}
 
 	@Inject(method = "readAdditionalSaveData", at = @At(value = "TAIL"))
-	public void getRPMZombieAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
-		this.fightForPlayer = nbt.contains(TAG_FIGHT_FOR_PLAYER, Tag.TAG_BYTE) && nbt.getBoolean(TAG_FIGHT_FOR_PLAYER);
-		if(this.fightForPlayer) {
-			if(this.attackDarkZombieKnightSelector == null) {
-				this.attackDarkZombieKnightSelector = new NearestAttackableTargetGoal<>(this, DarkZombieKnight.class, false);
+	public void rpm$getRPMZombieAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
+		this.rpm$fightForPlayer = nbt.contains(TAG_FIGHT_FOR_PLAYER, Tag.TAG_BYTE) && nbt.getBoolean(TAG_FIGHT_FOR_PLAYER);
+		if(this.rpm$fightForPlayer) {
+			if(this.rpm$attackDarkZombieKnightSelector == null) {
+				this.rpm$attackDarkZombieKnightSelector = new NearestAttackableTargetGoal<>(this, DarkZombieKnight.class, false);
 			}
-			this.targetSelector.addGoal(2, this.attackDarkZombieKnightSelector);
+			this.targetSelector.addGoal(2, this.rpm$attackDarkZombieKnightSelector);
 		} else {
-			if(this.attackDarkZombieKnightSelector != null) {
-				this.targetSelector.removeGoal(this.attackDarkZombieKnightSelector);
-				this.attackDarkZombieKnightSelector = null;
+			if(this.rpm$attackDarkZombieKnightSelector != null) {
+				this.targetSelector.removeGoal(this.rpm$attackDarkZombieKnightSelector);
+				this.rpm$attackDarkZombieKnightSelector = null;
 			}
 		}
-		this.setDance(nbt.contains(TAG_DANCING, Tag.TAG_BYTE) && nbt.getBoolean(TAG_DANCING));
+		this.rpm$setDance(nbt.contains(TAG_DANCING, Tag.TAG_BYTE) && nbt.getBoolean(TAG_DANCING));
 	}
 
 	@Inject(method = "addAdditionalSaveData", at = @At(value = "TAIL"))
-	public void addRPMZombieAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
-		if(this.fightForPlayer) {
+	public void rpm$addRPMZombieAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
+		if(this.rpm$fightForPlayer) {
 			nbt.putBoolean(TAG_FIGHT_FOR_PLAYER, true);
 		}
-		nbt.putBoolean(TAG_DANCING, this.isDancing());
+		nbt.putBoolean(TAG_DANCING, this.rpm$isDancing());
 	}
 
 	@Override
-	public boolean preventAttack(@Nullable LivingEntity target) {
-		if(this.fightForPlayer && target instanceof Player) {
+	public boolean rpm$preventAttack(@Nullable LivingEntity target) {
+		if(this.rpm$fightForPlayer && target instanceof Player) {
 			return true;
 		}
 		return IFriendlyMonster.preventAttack(this.level(), this.getType(), target);
 	}
 
 	@Override
-	public boolean isDancing() {
+	public boolean rpm$isDancing() {
 		return this.getEntityData().get(Data.DATA_ZOMBIE_DANCE);
 	}
 
 	@Override
-	public void setDance(boolean dancing) {
+	public void rpm$setDance(boolean dancing) {
 		this.getEntityData().set(Data.DATA_ZOMBIE_DANCE, dancing);
 	}
 
 
 	@Override @Nullable
-	public BiFunction<ServerPlayer, ItemStack, Boolean> getRandomEventNpcAction() {
-		return this.npcInteractAction;
+	public BiFunction<ServerPlayer, ItemStack, Boolean> rpm$getRandomEventNpcAction() {
+		return this.rpm$npcInteractAction;
 	}
 
 	@Override
-	public void setRandomEventNpcAction(@Nullable BiFunction<ServerPlayer, ItemStack, Boolean> action) {
-		this.npcInteractAction = action;
+	public void rpm$setRandomEventNpcAction(@Nullable BiFunction<ServerPlayer, ItemStack, Boolean> action) {
+		this.rpm$npcInteractAction = action;
 	}
 
 	@Override @Nullable
-	public Consumer<Mob> getNpcExtraTickAction() {
-		return this.npcTickAction;
+	public Consumer<Mob> rpm$getNpcExtraTickAction() {
+		return this.rpm$npcTickAction;
 	}
 
 	@Override
-	public void setNpcExtraTickAction(@Nullable Consumer<Mob> action) {
-		this.npcTickAction = action;
+	public void rpm$setNpcExtraTickAction(@Nullable Consumer<Mob> action) {
+		this.rpm$npcTickAction = action;
 	}
 }

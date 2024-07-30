@@ -6,7 +6,6 @@ import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.entity.capability.ConvertibleItemEntityHandler;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMCapabilities;
-import com.hexagram2021.real_peaceful_mode.common.register.RPMItemTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -36,7 +35,7 @@ public class ForgeEventHandler {
 	@SubscribeEvent
 	public void onMobInteract(PlayerInteractEvent.EntityInteract event) {
 		if (event.getTarget() instanceof IFriendlyMonster monster) {
-			BiFunction<ServerPlayer, ItemStack, Boolean> action = monster.getRandomEventNpcAction();
+			BiFunction<ServerPlayer, ItemStack, Boolean> action = monster.rpm$getRandomEventNpcAction();
 			if (action != null && event.getEntity() instanceof ServerPlayer serverPlayer) {
 				if (event.getHand() == InteractionHand.MAIN_HAND && action.apply(serverPlayer, serverPlayer.getItemInHand(event.getHand()))) {
 					event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
@@ -67,7 +66,7 @@ public class ForgeEventHandler {
 	@SubscribeEvent
 	public void onTickMob(LivingEvent.LivingTickEvent event) {
 		if (event.getEntity() instanceof Mob mob && event.getEntity() instanceof IFriendlyMonster monster) {
-			Consumer<Mob> tickAction = monster.getNpcExtraTickAction();
+			Consumer<Mob> tickAction = monster.rpm$getNpcExtraTickAction();
 			if(tickAction != null) {
 				tickAction.accept(mob);
 			}

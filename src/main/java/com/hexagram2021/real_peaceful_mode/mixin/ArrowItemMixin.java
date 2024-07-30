@@ -15,10 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ArrowItem.class)
 public class ArrowItemMixin {
 	@Inject(method = "createArrow", at = @At(value = "RETURN"))
-	public void addRPMEnchantments(Level level, ItemStack arrowItemStack, LivingEntity user, CallbackInfoReturnable<AbstractArrow> cir) {
+	public void rpm$addRPMEnchantments(Level level, ItemStack arrowItemStack, LivingEntity user, CallbackInfoReturnable<AbstractArrow> cir) {
 		int crackingLevel = user.getMainHandItem().getEnchantmentLevel(RPMEnchantments.CRACKING.get());
 		if(crackingLevel > 0) {
-			((ICrackable) (cir.getReturnValue())).setCrackable(crackingLevel > 1 || user.getRandom().nextBoolean());
+			((ICrackable) (cir.getReturnValue())).rpm$setCrackable(crackingLevel > 1 || user.getRandom().nextBoolean());
 		}
 	}
 }

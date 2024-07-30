@@ -10,25 +10,24 @@ import net.minecraft.server.players.PlayerList;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.util.Map;
 import java.util.UUID;
 
 @Mixin(PlayerList.class)
 public class PlayerListMixin implements IPlayerListWithMissions {
-	@Shadow @Final
-	private MinecraftServer server;
-
-	private final Map<UUID, PlayerMissions> missions = Maps.newHashMap();
+	@Unique
+	private final Map<UUID, PlayerMissions> rpm$missions = Maps.newHashMap();
 
 	@Override
-	public PlayerMissions getPlayerMissions(ServerPlayer player) {
+	public PlayerMissions rpm$getPlayerMissions(ServerPlayer player) {
 		UUID uuid = player.getUUID();
-		PlayerMissions playerMissions = this.missions.get(uuid);
+		PlayerMissions playerMissions = this.rpm$missions.get(uuid);
 		if (playerMissions == null) {
 			RPMLogger.debug("Add new PlayerMissions for UUID: %s".formatted(uuid.toString()));
 			playerMissions = new PlayerMissions(player);
-			this.missions.put(uuid, playerMissions);
+			this.rpm$missions.put(uuid, playerMissions);
 		} else {
 			playerMissions.setPlayer(player);
 		}

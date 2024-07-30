@@ -16,12 +16,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public interface ICrackable {
-	void setCrackable(boolean crackable);
-	boolean getCrackable();
+	void rpm$setCrackable(boolean crackable);
+	boolean rpm$getCrackable();
 
 	static <T extends Projectile & ICrackable> void onHitBlock(BlockHitResult blockHitResult, T projectile) {
 		BlockState target = projectile.level().getBlockState(blockHitResult.getBlockPos());
-		if(projectile.level() instanceof ServerLevel serverLevel && projectile.getCrackable() && target.is(RPMBlockTags.CRACKABLE)) {
+		if(projectile.level() instanceof ServerLevel serverLevel && projectile.rpm$getCrackable() && target.is(RPMBlockTags.CRACKABLE)) {
 			if(target.is(RPMBlocks.Decoration.INFESTED_GLOWING_CRYSTAL.get())) {
 				MissionHelper.triggerMissionForPlayers(
 						new ResourceLocation(MODID, "skeleton1"), SummonBlockEntity.SummonMissionType.FINISH,
@@ -31,7 +31,7 @@ public interface ICrackable {
 			}
 			serverLevel.removeBlock(blockHitResult.getBlockPos(), false);
 			serverLevel.playSound(null, blockHitResult.getBlockPos(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS);
-			projectile.setCrackable(false);
+			projectile.rpm$setCrackable(false);
 		}
 	}
 }

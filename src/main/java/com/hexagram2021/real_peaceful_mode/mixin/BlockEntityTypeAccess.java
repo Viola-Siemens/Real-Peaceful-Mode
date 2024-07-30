@@ -11,9 +11,9 @@ import java.util.Set;
 @Mixin(BlockEntityType.class)
 public interface BlockEntityTypeAccess {
 	@Accessor("validBlocks")
-	Set<Block> rpm_getValidBlocks();
+	Set<Block> rpm$getValidBlocks();
 
 	@Accessor("validBlocks")
 	@Mutable
-	void rpm_setValidBlocks(Set<Block> blocks);
+	void rpm$setValidBlocks(Set<Block> blocks);
 }

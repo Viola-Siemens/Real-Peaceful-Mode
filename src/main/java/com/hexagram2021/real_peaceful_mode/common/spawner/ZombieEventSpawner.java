@@ -54,7 +54,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 				zombie.moveTo(blockPos.getCenter());
 				zombie.setBaby(true);
 				if(zombie instanceof IFriendlyMonster monster) {
-					monster.setRandomEventNpcAction((player, itemStack) -> {
+					monster.rpm$setRandomEventNpcAction((player, itemStack) -> {
 						if(itemStack.isEmpty()) {
 							MissionHelper.triggerMissionForPlayer(
 									ZOMBIE_HELMET_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE, player,
@@ -70,16 +70,16 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 							MissionHelper.triggerMissionForPlayer(
 									ZOMBIE_HELMET_MISSION, SummonBlockEntity.SummonMissionType.FINISH, player,
 									zombie, player1 -> {
-										monster.setRandomEventNpcAction(null);
-										monster.setNpcExtraTickAction(null);
-										monster.setDance(true);
+										monster.rpm$setRandomEventNpcAction(null);
+										monster.rpm$setNpcExtraTickAction(null);
+										monster.rpm$setDance(true);
 									}
 							);
 							return true;
 						}
 						return false;
 					});
-					monster.setNpcExtraTickAction(MOB_SWEAT);
+					monster.rpm$setNpcExtraTickAction(MOB_SWEAT);
 				}
 				ItemStack helmet = new ItemStack(Items.LEATHER_HELMET);
 				helmet.setDamageValue(25);
@@ -136,7 +136,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 				darkZombieKnight.setDropChance(EquipmentSlot.OFFHAND, 2.0F);
 
 				if(zombie instanceof IFriendlyMonster monster) {
-					monster.setRandomEventNpcAction((player, itemStack) -> {
+					monster.rpm$setRandomEventNpcAction((player, itemStack) -> {
 						if(itemStack.isEmpty()) {
 							MissionHelper.triggerMissionForPlayer(
 									ZOMBIE_ROBBERY_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE, player,
@@ -150,16 +150,16 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 									zombie, player1 -> {
 										zombie.setItemSlot(EquipmentSlot.MAINHAND, itemStack.copy());
 										itemStack.shrink(1);
-										monster.setRandomEventNpcAction(null);
-										monster.setNpcExtraTickAction(null);
-										monster.setDance(true);
+										monster.rpm$setRandomEventNpcAction(null);
+										monster.rpm$setNpcExtraTickAction(null);
+										monster.rpm$setDance(true);
 									}
 							);
 							return true;
 						}
 						return false;
 					});
-					monster.setNpcExtraTickAction(MOB_SWEAT);
+					monster.rpm$setNpcExtraTickAction(MOB_SWEAT);
 				}
 
 				ItemStack helmet = new ItemStack(Items.LEATHER_HELMET);

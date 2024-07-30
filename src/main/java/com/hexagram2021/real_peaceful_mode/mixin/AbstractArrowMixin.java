@@ -7,30 +7,32 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractArrow.class)
 public abstract class AbstractArrowMixin extends Projectile implements ICrackable {
-	private boolean crackable;
+	@Unique
+	private boolean rpm$crackable;
 
 	protected AbstractArrowMixin(EntityType<? extends Projectile> entityType, Level level) {
 		super(entityType, level);
 	}
 
 	@Override
-	public void setCrackable(boolean crackable) {
-		this.crackable = crackable;
+	public void rpm$setCrackable(boolean crackable) {
+		this.rpm$crackable = crackable;
 	}
 
 	@Override
-	public boolean getCrackable() {
-		return this.crackable;
+	public boolean rpm$getCrackable() {
+		return this.rpm$crackable;
 	}
 
 	@Inject(method = "onHitBlock", at = @At(value = "TAIL"))
-	protected void tryBreakCrackableBlock(BlockHitResult hitResult, CallbackInfo ci) {
+	protected void rpm$tryBreakCrackableBlock(BlockHitResult hitResult, CallbackInfo ci) {
 		ICrackable.onHitBlock(hitResult, this);
 	}
 }

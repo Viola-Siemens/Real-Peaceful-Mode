@@ -13,7 +13,6 @@ import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.Vanishable;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -62,7 +61,7 @@ public abstract class ScepterItem<T extends AbstractHurtingProjectile & ICrackab
 	
 	protected void applyCrackable(T projectile, LivingEntity user, int crackingLevel) {
         if(crackingLevel > 0) {
-            projectile.setCrackable(crackingLevel > 1 || user.getRandom().nextBoolean());
+            projectile.rpm$setCrackable(crackingLevel > 1 || user.getRandom().nextBoolean());
         }
 	}
 

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
 	@Inject(method = "handleEntityEvent", at = @At(value = "HEAD"), cancellable = true)
-	public void addFriendlyMonsterEventHandler(byte event, CallbackInfo ci) {
+	public void rpm$addFriendlyMonsterEventHandler(byte event, CallbackInfo ci) {
 		if(this instanceof IFriendlyMonster) {
 			if(event == EntityEvent.VILLAGER_SWEAT) {
 				IFriendlyMonster.addLessParticlesAroundSelf((LivingEntity)(Object)this, ParticleTypes.SPLASH);
@@ -27,9 +27,9 @@ public class LivingEntityMixin {
 	}
 
 	@Inject(method = "canAttack(Lnet/minecraft/world/entity/LivingEntity;)Z", at = @At(value = "HEAD"), cancellable = true)
-	public void ignoreHeroOrPlayerWithMenu(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
+	public void rpm$ignoreHeroOrPlayerWithMenu(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
 		if(this instanceof IFriendlyMonster friendlyMonster) {
-			if(friendlyMonster.preventAttack(livingEntity)) {
+			if(friendlyMonster.rpm$preventAttack(livingEntity)) {
 				cir.setReturnValue(false);
 				cir.cancel();
 			}

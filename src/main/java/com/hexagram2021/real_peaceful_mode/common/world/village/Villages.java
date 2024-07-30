@@ -52,9 +52,9 @@ public class Villages {
 	public static final ResourceLocation PLUMBER = new ResourceLocation(MODID, "plumber");
 
 	public static void init() {
-		HeroGiftsTaskAccess.getGifts().put(Registers.PROF_SENIOR.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/senior_gift"));
-		HeroGiftsTaskAccess.getGifts().put(Registers.PROF_BOTANIST.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/botanist_gift"));
-		HeroGiftsTaskAccess.getGifts().put(Registers.PROF_PLUMBER.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/plumber_gift"));
+		HeroGiftsTaskAccess.rpm$getGifts().put(Registers.PROF_SENIOR.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/senior_gift"));
+		HeroGiftsTaskAccess.rpm$getGifts().put(Registers.PROF_BOTANIST.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/botanist_gift"));
+		HeroGiftsTaskAccess.rpm$getGifts().put(Registers.PROF_PLUMBER.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/plumber_gift"));
 	}
 
 	public static void addAllStructuresToPool(RegistryAccess registryAccess) {
@@ -80,8 +80,8 @@ public class Villages {
 			return;
 		}
 		StructureTemplatePoolAccess pool = (StructureTemplatePoolAccess)structureTemplatePool;
-		List<Pair<StructurePoolElement, Integer>> rawTemplates = pool.getRawTemplates() instanceof ArrayList ?
-				pool.getRawTemplates() : new ArrayList<>(pool.getRawTemplates());
+		List<Pair<StructurePoolElement, Integer>> rawTemplates = pool.rpm$getRawTemplates() instanceof ArrayList ?
+				pool.rpm$getRawTemplates() : new ArrayList<>(pool.rpm$getRawTemplates());
 
 		SinglePoolElement addedElement;
 		if(processorList == null) {
@@ -91,9 +91,9 @@ public class Villages {
 			addedElement = SinglePoolElement.single(toAdd.toString(), processorListHolder.getOrThrow(processorList)).apply(StructureTemplatePool.Projection.RIGID);
 		}
 		rawTemplates.add(Pair.of(addedElement, weight));
-		pool.getTemplates().add(addedElement);
+		pool.rpm$getTemplates().add(addedElement);
 
-		pool.setRawTemplates(rawTemplates);
+		pool.rpm$setRawTemplates(rawTemplates);
 	}
 
 	public static class Registers {

@@ -68,12 +68,12 @@ public class RPMContent {
 
 	private static void appendBlocksToBlockEntities() {
 		BlockEntityTypeAccess skullBuilderAccess = (BlockEntityTypeAccess) BlockEntityType.SKULL;
-		Set<Block> skullValidBlocks = new ObjectOpenHashSet<>(skullBuilderAccess.rpm_getValidBlocks());
+		Set<Block> skullValidBlocks = new ObjectOpenHashSet<>(skullBuilderAccess.rpm$getValidBlocks());
 
 		skullValidBlocks.add(RPMBlocks.Decoration.DARK_ZOMBIE_KNIGHT_SKULL.get());
 		skullValidBlocks.add(RPMBlocks.Decoration.DARK_ZOMBIE_KNIGHT_WALL_SKULL.get());
 
-		skullBuilderAccess.rpm_setValidBlocks(skullValidBlocks);
+		skullBuilderAccess.rpm$setValidBlocks(skullValidBlocks);
 	}
 
 	private static void registerSummonBlockExtraConditions() {

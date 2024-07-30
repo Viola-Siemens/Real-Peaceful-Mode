@@ -90,7 +90,7 @@ public class GetMissionsPacket implements IRPMPacket {
 			if(sender == null) {
 				ScreenManager.openMissionListScreen(this.activeMissions, this.finishedMissions);
 			} else {
-				PlayerMissions playerMissions = ((IPlayerListWithMissions) Objects.requireNonNull(sender.getServer()).getPlayerList()).getPlayerMissions(sender);
+				PlayerMissions playerMissions = ((IPlayerListWithMissions) Objects.requireNonNull(sender.getServer()).getPlayerList()).rpm$getPlayerMissions(sender);
 				List<MissionManager.Mission> activeMissions = playerMissions.getActiveMissions()
 						.stream().map(id -> ForgeEventHandler.getMissionManager().getMission(id))
 						.filter(Optional::isPresent).map(Optional::get)

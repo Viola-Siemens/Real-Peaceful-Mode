@@ -107,6 +107,17 @@ public class PinkCreeperEntity extends PathfinderMob {
 		return InteractionResult.PASS;
 	}
 
+	@Nullable
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return super.getAmbientSound();
+	}
+
+	@Override
+	public int getAmbientSoundInterval() {
+		return 1200 + this.random.nextInt(2400);
+	}
+
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return SoundEvents.CREEPER_HURT;

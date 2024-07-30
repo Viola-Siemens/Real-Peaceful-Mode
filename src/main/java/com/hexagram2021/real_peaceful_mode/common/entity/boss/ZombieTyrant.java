@@ -195,7 +195,7 @@ public class ZombieTyrant extends Mob implements Enemy {
 			this.level().getEntitiesOfClass(Zombie.class, this.getBoundingBox().inflate(32.0D), EntitySelector.ENTITY_STILL_ALIVE)
 					.forEach(zombie -> {
 						if(zombie instanceof IFriendlyMonster monster) {
-							monster.setDance(true);
+							monster.rpm$setDance(true);
 						}
 					});
 		}

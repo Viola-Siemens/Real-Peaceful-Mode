@@ -10,12 +10,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 
-public record MissionLoadCondition(ConditionType type, String value, boolean present) {
-	public MissionLoadCondition(ConditionType type, String value) {
+record MissionLoadCondition(ConditionType type, String value, boolean present) {
+	MissionLoadCondition(ConditionType type, String value) {
 		this(type, value, true);
 	}
 
-	public MissionLoadCondition(ConditionType type, String value, boolean present) {
+	MissionLoadCondition(ConditionType type, String value, boolean present) {
 		this.type = type;
 		this.value = value;
 		this.present = present;

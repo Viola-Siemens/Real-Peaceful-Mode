@@ -29,10 +29,10 @@ public class ServerLevelMixin {
 	private List<CustomSpawner> customSpawners;
 
 	@Inject(method = "<init>", at = @At(value = "RETURN"))
-	private void addRPMEventSpawners(MinecraftServer server, Executor executor, LevelStorageSource.LevelStorageAccess storage,
-									 ServerLevelData serverLevelData, ResourceKey<Level> dimension, LevelStem stem,
-									 ChunkProgressListener progressListener, boolean debug, long seed, List<CustomSpawner> customSpawners,
-									 boolean tickTime, RandomSequences randomSequences, CallbackInfo ci) {
+	private void rpm$addEventSpawners(MinecraftServer server, Executor executor, LevelStorageSource.LevelStorageAccess storage,
+									  ServerLevelData serverLevelData, ResourceKey<Level> dimension, LevelStem stem,
+									  ChunkProgressListener progressListener, boolean debug, long seed, List<CustomSpawner> customSpawners,
+									  boolean tickTime, RandomSequences randomSequences, CallbackInfo ci) {
 		this.customSpawners = ImmutableList.<CustomSpawner>builder().addAll(this.customSpawners).addAll(
 				RandomEventSpawnerHelper.getAllRandomEventSpawners().stream().filter(spawner -> spawner.dimension().equals(dimension)).toList()
 		).build();

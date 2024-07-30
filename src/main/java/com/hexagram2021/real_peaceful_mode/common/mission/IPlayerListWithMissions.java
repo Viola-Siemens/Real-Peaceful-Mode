@@ -6,5 +6,5 @@ import net.minecraft.world.level.storage.LevelResource;
 public interface IPlayerListWithMissions {
 	LevelResource PLAYER_MISSIONS_DIR = new LevelResource("rpm-missions");
 
-	PlayerMissions getPlayerMissions(ServerPlayer player);
+	PlayerMissions rpm$getPlayerMissions(ServerPlayer player);
 }

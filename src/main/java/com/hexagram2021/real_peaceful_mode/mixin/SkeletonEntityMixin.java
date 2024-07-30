@@ -16,6 +16,7 @@ import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,12 +27,15 @@ import java.util.function.Consumer;
 
 @Mixin(Skeleton.class)
 public abstract class SkeletonEntityMixin extends Monster implements IFriendlyMonster, IRightArmDetachable {
+	@Unique
 	private static final String TAG_MISSING_ARM = "RPM_MissingArm";
 
+	@Unique
 	@Nullable
-	private BiFunction<ServerPlayer, ItemStack, Boolean> npcInteractAction = null;
+	private BiFunction<ServerPlayer, ItemStack, Boolean> rpm$npcInteractAction = null;
+	@Unique
 	@Nullable
-	private Consumer<Mob> npcTickAction = null;
+	private Consumer<Mob> rpm$npcTickAction = null;
 
 	protected SkeletonEntityMixin(EntityType<? extends Monster> entityType, Level level) {
 		super(entityType, level);
@@ -60,18 +64,18 @@ public abstract class SkeletonEntityMixin extends Monster implements IFriendlyMo
 
 	@Inject(method = "readAdditionalSaveData", at = @At(value = "TAIL"))
 	public void getRPMSkeletonAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
-		this.setDance(nbt.contains(TAG_DANCING, Tag.TAG_BYTE) && nbt.getBoolean(TAG_DANCING));
+		this.rpm$setDance(nbt.contains(TAG_DANCING, Tag.TAG_BYTE) && nbt.getBoolean(TAG_DANCING));
 		this.setRightArmDetached(nbt.contains(TAG_MISSING_ARM, Tag.TAG_BYTE) && nbt.getBoolean(TAG_MISSING_ARM));
 	}
 
 	@Inject(method = "addAdditionalSaveData", at = @At(value = "TAIL"))
 	public void addRPMSkeletonAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
-		nbt.putBoolean(TAG_DANCING, this.isDancing());
+		nbt.putBoolean(TAG_DANCING, this.rpm$isDancing());
 		nbt.putBoolean(TAG_MISSING_ARM, this.isRightArmDetached());
 	}
 
 	@Override
-	public boolean preventAttack(@Nullable LivingEntity target) {
+	public boolean rpm$preventAttack(@Nullable LivingEntity target) {
 		return IFriendlyMonster.preventAttack(this.level(), this.getType(), target);
 	}
 
@@ -86,33 +90,33 @@ public abstract class SkeletonEntityMixin extends Monster implements IFriendlyMo
 	}
 
 	@Override
-	public boolean isDancing() {
+	public boolean rpm$isDancing() {
 		return this.getEntityData().get(Data.DATA_SKELETON_DANCE);
 	}
 
 	@Override
-	public void setDance(boolean dancing) {
+	public void rpm$setDance(boolean dancing) {
 		this.getEntityData().set(Data.DATA_SKELETON_DANCE, dancing);
 	}
 
 
 	@Override @Nullable
-	public BiFunction<ServerPlayer, ItemStack, Boolean> getRandomEventNpcAction() {
-		return this.npcInteractAction;
+	public BiFunction<ServerPlayer, ItemStack, Boolean> rpm$getRandomEventNpcAction() {
+		return this.rpm$npcInteractAction;
 	}
 
 	@Override
-	public void setRandomEventNpcAction(@Nullable BiFunction<ServerPlayer, ItemStack, Boolean> action) {
-		this.npcInteractAction = action;
+	public void rpm$setRandomEventNpcAction(@Nullable BiFunction<ServerPlayer, ItemStack, Boolean> action) {
+		this.rpm$npcInteractAction = action;
 	}
 
 	@Override @Nullable
-	public Consumer<Mob> getNpcExtraTickAction() {
-		return this.npcTickAction;
+	public Consumer<Mob> rpm$getNpcExtraTickAction() {
+		return this.rpm$npcTickAction;
 	}
 
 	@Override
-	public void setNpcExtraTickAction(@Nullable Consumer<Mob> action) {
-		this.npcTickAction = action;
+	public void rpm$setNpcExtraTickAction(@Nullable Consumer<Mob> action) {
+		this.rpm$npcTickAction = action;
 	}
 }

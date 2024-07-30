@@ -13,12 +13,12 @@ public class MonsterDanceGoal<T extends Mob & IFriendlyMonster> extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return this.monster.isDancing() && this.monster.getTarget() == null;
+		return this.monster.rpm$isDancing() && this.monster.getTarget() == null;
 	}
 
 	@Override
 	public void stop() {
-		this.monster.setDance(false);
+		this.monster.rpm$setDance(false);
 	}
 
 	@Override

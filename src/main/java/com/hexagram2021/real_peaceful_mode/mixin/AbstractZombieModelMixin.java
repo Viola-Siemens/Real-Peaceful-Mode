@@ -13,8 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class AbstractZombieModelMixin<T extends Monster> {
 	@SuppressWarnings("unchecked")
 	@Inject(method = "setupAnim(Lnet/minecraft/world/entity/monster/Monster;FFFFF)V", at = @At(value = "TAIL"))
-	public void setRPMDanceAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
-		if(entity instanceof IFriendlyMonster monster && monster.isDancing()) {
+	public void rpm$setRPMDanceAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
+		if(entity instanceof IFriendlyMonster monster && monster.rpm$isDancing()) {
 			AbstractZombieModel<T> current = (AbstractZombieModel<T>)(Object)this;
 			float xRot = -0.4F;
 			float noise = Mth.sin(ageInTicks * Mth.PI / 40.0F) * 0.05F;

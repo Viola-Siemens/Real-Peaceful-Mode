@@ -150,12 +150,12 @@ public class TinyFireballEntity extends Fireball implements ICrackable {
     }
 
     @Override
-    public void setCrackable(boolean crackable) {
+    public void rpm$setCrackable(boolean crackable) {
         this.crackable = crackable;
     }
 
     @Override
-    public boolean getCrackable() {
+    public boolean rpm$getCrackable() {
         return this.crackable;
     }
 }

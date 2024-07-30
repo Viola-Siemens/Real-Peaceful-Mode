@@ -84,7 +84,7 @@ public class MissionHelper {
 	public static void triggerMissionForPlayer(MissionManager.Mission mission, SummonBlockEntity.SummonMissionType summonMissionType,
 											   ServerPlayer player, IPlayerListWithMissions playerList, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
 		if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && checkMission(hero, summonMissionType, mission)) {
-			PlayerMissions playerMissions = playerList.getPlayerMissions(player);
+			PlayerMissions playerMissions = playerList.rpm$getPlayerMissions(player);
 			switch (summonMissionType) {
 				case RECEIVE -> playerMissions.receiveNewMission(mission, npc, additionWork);
 				case FINISH -> playerMissions.finishMission(mission, npc, additionWork);

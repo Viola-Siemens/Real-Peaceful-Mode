@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class SkeletonModelMixin<T extends Mob & RangedAttackMob> {
 	@SuppressWarnings("unchecked")
 	@Inject(method = "setupAnim(Lnet/minecraft/world/entity/Mob;FFFFF)V", at = @At(value = "TAIL"))
-	public void setRPMDanceAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
+	public void rpm$setRPMDanceAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
 		SkeletonModel<T> current = (SkeletonModel<T>) (Object) this;
-		if(entity instanceof IFriendlyMonster monster && monster.isDancing()) {
+		if(entity instanceof IFriendlyMonster monster && monster.rpm$isDancing()) {
 			float xRot = -0.8F;
 			float yRot = -0.5F;
 			float noise = Mth.sin(ageInTicks * Mth.PI / 40.0F) * 0.05F;

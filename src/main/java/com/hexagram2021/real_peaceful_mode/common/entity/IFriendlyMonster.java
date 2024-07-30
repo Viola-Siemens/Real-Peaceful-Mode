@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 public interface IFriendlyMonster {
 	String TAG_DANCING = "RPM_Dancing";
 
-	boolean preventAttack(@Nullable LivingEntity target);
+	boolean rpm$preventAttack(@Nullable LivingEntity target);
 
 	static boolean preventAttack(Level level, EntityType<?> entityType, @Nullable LivingEntity target) {
 		return level.players().stream().anyMatch(player -> {
@@ -28,18 +28,18 @@ public interface IFriendlyMonster {
 		});
 	}
 
-	boolean isDancing();
-	void setDance(boolean dancing);
+	boolean rpm$isDancing();
+	void rpm$setDance(boolean dancing);
 
 	@Nullable
-	BiFunction<ServerPlayer, ItemStack, Boolean> getRandomEventNpcAction();
+	BiFunction<ServerPlayer, ItemStack, Boolean> rpm$getRandomEventNpcAction();
 
-	void setRandomEventNpcAction(@Nullable BiFunction<ServerPlayer, ItemStack, Boolean> action);
+	void rpm$setRandomEventNpcAction(@Nullable BiFunction<ServerPlayer, ItemStack, Boolean> action);
 
 	@Nullable
-	Consumer<Mob> getNpcExtraTickAction();
+	Consumer<Mob> rpm$getNpcExtraTickAction();
 
-	void setNpcExtraTickAction(@Nullable Consumer<Mob> action);
+	void rpm$setNpcExtraTickAction(@Nullable Consumer<Mob> action);
 
 	static void addLessParticlesAroundSelf(LivingEntity mob, ParticleOptions particleOptions) {
 		for(int i = 0; i < 4; ++i) {

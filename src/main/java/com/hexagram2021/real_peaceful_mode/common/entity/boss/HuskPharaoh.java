@@ -204,7 +204,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 			this.level().getEntitiesOfClass(Husk.class, this.getBoundingBox().inflate(32.0D), EntitySelector.ENTITY_STILL_ALIVE)
 					.forEach(husk -> {
 						if(husk instanceof IFriendlyMonster monster) {
-							monster.setDance(true);
+							monster.rpm$setDance(true);
 						}
 					});
 		}

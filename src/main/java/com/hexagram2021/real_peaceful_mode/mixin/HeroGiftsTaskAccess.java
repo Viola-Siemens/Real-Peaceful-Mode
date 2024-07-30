@@ -11,7 +11,7 @@ import java.util.Map;
 @Mixin(GiveGiftToHero.class)
 public interface HeroGiftsTaskAccess  {
 	@Accessor("GIFTS")
-	static Map<VillagerProfession, ResourceLocation> getGifts() {
+	static Map<VillagerProfession, ResourceLocation> rpm$getGifts() {
 		throw new UnsupportedOperationException("Replaced by Mixin");
 	}
 }
