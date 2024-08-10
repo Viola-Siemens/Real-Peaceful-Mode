@@ -110,6 +110,7 @@
   "structure.real_peaceful_mode.skeleton_palace": "Skeleton Palace",
   "structure.real_peaceful_mode.creeper_town": "Creeper Town",
   "structure.real_peaceful_mode.pharaoh_altar": "Pharaoh Altar",
+  "structure.real_peaceful_mode.slime_maze": "Slime Maze",
 
   "commands.real_peaceful_mode.mission.failed.not_hero": "Failed to execute command: entity %s cannot receive or finish any mission.",
   "commands.real_peaceful_mode.mission.failed.not_exist": "Failed to execute command: mission for id \"%s\" not exist.",

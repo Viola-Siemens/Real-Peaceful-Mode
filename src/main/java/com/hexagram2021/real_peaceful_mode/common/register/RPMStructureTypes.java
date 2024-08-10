@@ -20,6 +20,7 @@ public final class RPMStructureTypes {
 	public static final RegistryObject<StructureType<ZombieFortFeature>> ZOMBIE_FORT = register("zombie_fort", () -> ZombieFortFeature.CODEC);
 	public static final RegistryObject<StructureType<SkeletonPalaceFeature>> SKELETON_PALACE = register("skeleton_palace", () -> SkeletonPalaceFeature.CODEC);
 	public static final RegistryObject<StructureType<PharaohAltarFeature>> PHARAOH_ALTAR = register("pharaoh_altar", () -> PharaohAltarFeature.CODEC);
+	public static final RegistryObject<StructureType<SlimeMazeFeature>> SLIME_MAZE = register("slime_maze", () -> SlimeMazeFeature.CODEC);
 
 	private RPMStructureTypes() {
 	}

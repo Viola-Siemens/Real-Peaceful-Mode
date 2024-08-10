@@ -30,7 +30,7 @@ public class CrystalSkullIslandFeature extends Structure {
 	}
 
 	@Override
-	public StructureType<?> type() {
+	public StructureType<CrystalSkullIslandFeature> type() {
 		return RPMStructureTypes.CRYSTAL_SKULL_ISLAND.get();
 	}
 }

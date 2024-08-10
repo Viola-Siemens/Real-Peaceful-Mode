@@ -110,6 +110,7 @@
   "structure.real_peaceful_mode.skeleton_palace": "骷髅宫殿",
   "structure.real_peaceful_mode.creeper_town": "苦力怕小镇",
   "structure.real_peaceful_mode.pharaoh_altar": "法老圣坛",
+  "structure.real_peaceful_mode.slime_maze": "史莱姆迷宫",
 
   "commands.real_peaceful_mode.mission.failed.not_hero": "执行命令失败：实体%s无法接收或完成任务。",
   "commands.real_peaceful_mode.mission.failed.not_exist": "执行命令失败：不存在ID为“%s”的任务。",

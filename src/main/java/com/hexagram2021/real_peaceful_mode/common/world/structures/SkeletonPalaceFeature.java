@@ -38,7 +38,7 @@ public class SkeletonPalaceFeature extends Structure {
 	}
 
 	@Override
-	public StructureType<?> type() {
+	public StructureType<SkeletonPalaceFeature> type() {
 		return RPMStructureTypes.SKELETON_PALACE.get();
 	}
 }

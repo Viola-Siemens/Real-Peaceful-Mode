@@ -38,7 +38,7 @@ public class PharaohAltarFeature extends Structure {
 	}
 
 	@Override
-	public StructureType<?> type() {
+	public StructureType<PharaohAltarFeature> type() {
 		return RPMStructureTypes.PHARAOH_ALTAR.get();
 	}
 }

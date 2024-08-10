@@ -1,0 +1,15 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1737499723,
+    "separation": 11,
+    "spacing": 24,
+    "spread_type": "triangular"
+  },
+  "structures": [
+    {
+      "structure": "real_peaceful_mode:slime_maze",
+      "weight": 1
+    }
+  ]
+}

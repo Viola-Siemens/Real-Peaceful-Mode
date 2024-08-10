@@ -38,7 +38,7 @@ public class PinkCreeperFeature extends Structure {
 	}
 
 	@Override
-	public StructureType<?> type() {
+	public StructureType<PinkCreeperFeature> type() {
 		return RPMStructureTypes.PINK_CREEPER.get();
 	}
 }

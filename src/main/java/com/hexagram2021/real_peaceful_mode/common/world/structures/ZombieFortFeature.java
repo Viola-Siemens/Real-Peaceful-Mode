@@ -38,7 +38,7 @@ public class ZombieFortFeature extends Structure {
 	}
 
 	@Override
-	public StructureType<?> type() {
+	public StructureType<ZombieFortFeature> type() {
 		return RPMStructureTypes.ZOMBIE_FORT.get();
 	}
 }

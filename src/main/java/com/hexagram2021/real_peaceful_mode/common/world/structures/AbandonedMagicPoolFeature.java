@@ -38,7 +38,7 @@ public class AbandonedMagicPoolFeature extends Structure {
 	}
 
 	@Override
-	public StructureType<?> type() {
+	public StructureType<AbandonedMagicPoolFeature> type() {
 		return RPMStructureTypes.ABANDONED_MAGIC_POOL.get();
 	}
 }
