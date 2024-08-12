@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "real_peaceful_mode:block/cobbled_sticky_stone_slab"
+    },
+    "type=double": {
+      "model": "real_peaceful_mode:block/cobbled_sticky_stone"
+    },
+    "type=top": {
+      "model": "real_peaceful_mode:block/cobbled_sticky_stone_slab_top"
+    }
+  }
+}

@@ -5,6 +5,10 @@
     "real_peaceful_mode:cracked_tuff_brick_stairs",
     "real_peaceful_mode:calcite_stairs",
     "real_peaceful_mode:siltstone_stairs",
-    "real_peaceful_mode:smooth_siltstone_stairs"
+    "real_peaceful_mode:smooth_siltstone_stairs",
+    "real_peaceful_mode:sticky_stone_stairs",
+    "real_peaceful_mode:cobbled_sticky_stone_stairs",
+    "real_peaceful_mode:sticky_stone_brick_stairs",
+    "real_peaceful_mode:cracked_sticky_stone_brick_stairs"
   ]
 }

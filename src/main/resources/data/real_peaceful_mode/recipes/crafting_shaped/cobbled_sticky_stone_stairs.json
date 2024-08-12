@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "real_peaceful_mode:cobbled_sticky_stone"
+    }
+  },
+  "result": {
+    "item": "real_peaceful_mode:cobbled_sticky_stone_stairs",
+    "count": 4
+  }
+}

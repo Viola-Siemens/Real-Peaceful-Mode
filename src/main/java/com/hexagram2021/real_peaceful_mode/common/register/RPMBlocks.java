@@ -172,7 +172,8 @@ public class RPMBlocks {
 				.instrument(RPMNoteBlockInstruments.DARK_ZOMBIE_KNIGHT).strength(1.0F).pushReaction(PushReaction.DESTROY),
 				props -> new WallSkullBlock(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, props)
 		);
-		
+
+		//tuff_bricks
 		public static final BlockEntry<Block> TUFF_BRICKS = new BlockEntry<>(
 				"tuff_bricks", () -> BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY)
 				.instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(2.0F, 6.0F),
@@ -191,6 +192,7 @@ public class RPMBlocks {
 		public static final BlockEntry<SlabBlock> CRACKED_TUFF_BRICK_SLAB = registerSlab(CRACKED_TUFF_BRICKS);
 		public static final BlockEntry<WallBlock> CRACKED_TUFF_BRICK_WALL = registerWall(CRACKED_TUFF_BRICKS);
 
+		//calcite
 		public static final BlockEntry<StairBlock> CALCITE_STAIRS = registerStairs(Blocks.CALCITE);
 		public static final BlockEntry<SlabBlock> CALCITE_SLAB = registerSlab(Blocks.CALCITE);
 		public static final BlockEntry<WallBlock> CALCITE_WALL = registerWall(Blocks.CALCITE);
@@ -204,6 +206,7 @@ public class RPMBlocks {
 				Block::new
 		);
 
+		//siltstone
 		public static final BlockEntry<Block> SILTSTONE = new BlockEntry<>(
 				"siltstone", () -> BlockBehaviour.Properties.copy(Blocks.SANDSTONE).mapColor(MapColor.DIRT),
 				Block::new
@@ -219,6 +222,41 @@ public class RPMBlocks {
 		public static final BlockEntry<StairBlock> SMOOTH_SILTSTONE_STAIRS = registerStairs(SMOOTH_SILTSTONE);
 		public static final BlockEntry<SlabBlock> SMOOTH_SILTSTONE_SLAB = registerSlab(SMOOTH_SILTSTONE);
 
+		//sticky stone
+		public static final BlockEntry<Block> STICKY_STONE = new BlockEntry<>(
+				"sticky_stone", () -> BlockBehaviour.Properties.copy(Blocks.STONE).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
+				Block::new
+		);
+		public static final BlockEntry<Block> COBBLED_STICKY_STONE = new BlockEntry<>(
+				"cobbled_sticky_stone", () -> BlockBehaviour.Properties.copy(Blocks.COBBLESTONE).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
+				Block::new
+		);
+		public static final BlockEntry<Block> SMOOTH_STICKY_STONE = new BlockEntry<>(
+				"smooth_sticky_stone", () -> BlockBehaviour.Properties.copy(Blocks.SMOOTH_STONE).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
+				Block::new
+		);
+		public static final BlockEntry<Block> STICKY_STONE_BRICKS = new BlockEntry<>(
+				"sticky_stone_bricks", () -> BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
+				Block::new
+		);
+		public static final BlockEntry<Block> CRACKED_STICKY_STONE_BRICKS = new BlockEntry<>(
+				"cracked_sticky_stone_bricks", () -> BlockBehaviour.Properties.copy(Blocks.CRACKED_STONE_BRICKS).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
+				Block::new
+		);
+		public static final BlockEntry<StairBlock> STICKY_STONE_STAIRS = registerStairs(STICKY_STONE);
+		public static final BlockEntry<SlabBlock> STICKY_STONE_SLAB = registerSlab(STICKY_STONE);
+		public static final BlockEntry<StairBlock> COBBLED_STICKY_STONE_STAIRS = registerStairs(COBBLED_STICKY_STONE);
+		public static final BlockEntry<SlabBlock> COBBLED_STICKY_STONE_SLAB = registerSlab(COBBLED_STICKY_STONE);
+		public static final BlockEntry<WallBlock> COBBLED_STICKY_STONE_WALL = registerWall(COBBLED_STICKY_STONE);
+		public static final BlockEntry<SlabBlock> SMOOTH_STICKY_STONE_SLAB = registerSlab(SMOOTH_STICKY_STONE);
+		public static final BlockEntry<StairBlock> STICKY_STONE_BRICK_STAIRS = registerStairs(STICKY_STONE_BRICKS);
+		public static final BlockEntry<SlabBlock> STICKY_STONE_BRICK_SLAB = registerSlab(STICKY_STONE_BRICKS);
+		public static final BlockEntry<WallBlock> STICKY_STONE_BRICK_WALL = registerWall(STICKY_STONE_BRICKS);
+		public static final BlockEntry<StairBlock> CRACKED_STICKY_STONE_BRICK_STAIRS = registerStairs(CRACKED_STICKY_STONE_BRICKS);
+		public static final BlockEntry<SlabBlock> CRACKED_STICKY_STONE_BRICK_SLAB = registerSlab(CRACKED_STICKY_STONE_BRICKS);
+		public static final BlockEntry<WallBlock> CRACKED_STICKY_STONE_BRICK_WALL = registerWall(CRACKED_STICKY_STONE_BRICKS);
+
+		//misc
 		public static final BlockEntry<Block> INFESTED_GLOWING_CRYSTAL = new BlockEntry<>(
 				"infested_glowing_crystal", () -> BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
 				.instrument(NoteBlockInstrument.BASEDRUM).strength(-1.0F, 3600000.0F).noLootTable(),
@@ -257,6 +295,23 @@ public class RPMBlocks {
 			RPMItems.ItemEntry.register(SMOOTH_SILTSTONE.getId().getPath(), () -> new BlockItem(SMOOTH_SILTSTONE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(SMOOTH_SILTSTONE_STAIRS.getId().getPath(), () -> new BlockItem(SMOOTH_SILTSTONE_STAIRS.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(SMOOTH_SILTSTONE_SLAB.getId().getPath(), () -> new BlockItem(SMOOTH_SILTSTONE_SLAB.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(STICKY_STONE.getId().getPath(), () -> new BlockItem(STICKY_STONE.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(COBBLED_STICKY_STONE.getId().getPath(), () -> new BlockItem(COBBLED_STICKY_STONE.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(SMOOTH_STICKY_STONE.getId().getPath(), () -> new BlockItem(SMOOTH_STICKY_STONE.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(STICKY_STONE_BRICKS.getId().getPath(), () -> new BlockItem(STICKY_STONE_BRICKS.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CRACKED_STICKY_STONE_BRICKS.getId().getPath(), () -> new BlockItem(CRACKED_STICKY_STONE_BRICKS.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(STICKY_STONE_STAIRS.getId().getPath(), () -> new BlockItem(STICKY_STONE_STAIRS.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(STICKY_STONE_SLAB.getId().getPath(), () -> new BlockItem(STICKY_STONE_SLAB.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(COBBLED_STICKY_STONE_STAIRS.getId().getPath(), () -> new BlockItem(COBBLED_STICKY_STONE_STAIRS.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(COBBLED_STICKY_STONE_SLAB.getId().getPath(), () -> new BlockItem(COBBLED_STICKY_STONE_SLAB.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(COBBLED_STICKY_STONE_WALL.getId().getPath(), () -> new BlockItem(COBBLED_STICKY_STONE_WALL.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(SMOOTH_STICKY_STONE_SLAB.getId().getPath(), () -> new BlockItem(SMOOTH_STICKY_STONE_SLAB.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(STICKY_STONE_BRICK_STAIRS.getId().getPath(), () -> new BlockItem(STICKY_STONE_BRICK_STAIRS.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(STICKY_STONE_BRICK_SLAB.getId().getPath(), () -> new BlockItem(STICKY_STONE_BRICK_SLAB.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(STICKY_STONE_BRICK_WALL.getId().getPath(), () -> new BlockItem(STICKY_STONE_BRICK_WALL.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CRACKED_STICKY_STONE_BRICK_STAIRS.getId().getPath(), () -> new BlockItem(CRACKED_STICKY_STONE_BRICK_STAIRS.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CRACKED_STICKY_STONE_BRICK_SLAB.getId().getPath(), () -> new BlockItem(CRACKED_STICKY_STONE_BRICK_SLAB.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CRACKED_STICKY_STONE_BRICK_WALL.getId().getPath(), () -> new BlockItem(CRACKED_STICKY_STONE_BRICK_WALL.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(INFESTED_GLOWING_CRYSTAL.getId().getPath(), () -> new BlockItem(INFESTED_GLOWING_CRYSTAL.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CHIPPINGS.getId().getPath(), () -> new BlockItem(CHIPPINGS.get(), new Item.Properties()));
 		}
