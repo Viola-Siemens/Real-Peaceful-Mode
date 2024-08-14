@@ -22,6 +22,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Ocelot;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -71,6 +72,9 @@ public class PinkCreeperEntity extends PathfinderMob {
 		Entity entity = damageSource.getEntity();
 		if (entity instanceof Player player && player.getUUID().equals(this.likedPlayer)) {
 			return false;
+		}
+		if(entity instanceof Creeper) {
+			return super.hurt(damageSource, v / 2.0F);
 		}
 		return super.hurt(damageSource, v);
 	}
