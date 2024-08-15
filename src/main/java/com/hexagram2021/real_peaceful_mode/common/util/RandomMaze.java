@@ -23,7 +23,7 @@ public class RandomMaze {
 		this.finalMap = new boolean[lengthPixels][lengthPixels];
 		for(int i = 0; i < lengthPixels; ++i) {
 			for(int j = 0; j < lengthPixels; ++j) {
-				this.finalMap[i][j] = (i & 1) == 1 && (j & 1) == 1;
+				this.finalMap[i][j] = isAirNode(i, j);
 			}
 		}
 		Integer[] edges = new Integer[lengthEdges];
@@ -71,5 +71,33 @@ public class RandomMaze {
 
 	public boolean isAir(int mapIndexX, int mapIndexY) {
 		return this.finalMap[mapIndexX][mapIndexY];
+	}
+
+	public static boolean isWallNode(int mapIndexX, int mapIndexY) {
+		return (mapIndexX & 1) == 0 && (mapIndexY & 1) == 0;
+	}
+
+	public static boolean isAirNode(int mapIndexX, int mapIndexY) {
+		return (mapIndexX & 1) == 1 && (mapIndexY & 1) == 1;
+	}
+
+	public boolean isDeadEnd(int mapIndexX, int mapIndexY) {
+		if(!isAirNode(mapIndexX, mapIndexY)) {
+			return false;
+		}
+		int cnt = 0;
+		if(this.isAir(mapIndexX - 1, mapIndexY)) {
+			cnt += 1;
+		}
+		if(this.isAir(mapIndexX + 1, mapIndexY)) {
+			cnt += 1;
+		}
+		if(this.isAir(mapIndexX, mapIndexY - 1)) {
+			cnt += 1;
+		}
+		if(this.isAir(mapIndexX, mapIndexY + 1)) {
+			cnt += 1;
+		}
+		return cnt == 3;
 	}
 }

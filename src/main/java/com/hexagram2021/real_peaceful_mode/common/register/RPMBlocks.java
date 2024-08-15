@@ -255,6 +255,10 @@ public class RPMBlocks {
 		public static final BlockEntry<StairBlock> CRACKED_STICKY_STONE_BRICK_STAIRS = registerStairs(CRACKED_STICKY_STONE_BRICKS);
 		public static final BlockEntry<SlabBlock> CRACKED_STICKY_STONE_BRICK_SLAB = registerSlab(CRACKED_STICKY_STONE_BRICKS);
 		public static final BlockEntry<WallBlock> CRACKED_STICKY_STONE_BRICK_WALL = registerWall(CRACKED_STICKY_STONE_BRICKS);
+		public static final BlockEntry<CrackyBlock> CRACKY_STICKY_STONE = new BlockEntry<>(
+				"cracky_sticky_stone", () -> BlockBehaviour.Properties.copy(Blocks.STONE).strength(0.4F).speedFactor(0.5F).jumpFactor(0.6F),
+				CrackyBlock::new
+		);
 
 		//misc
 		public static final BlockEntry<Block> INFESTED_GLOWING_CRYSTAL = new BlockEntry<>(
@@ -312,6 +316,7 @@ public class RPMBlocks {
 			RPMItems.ItemEntry.register(CRACKED_STICKY_STONE_BRICK_STAIRS.getId().getPath(), () -> new BlockItem(CRACKED_STICKY_STONE_BRICK_STAIRS.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CRACKED_STICKY_STONE_BRICK_SLAB.getId().getPath(), () -> new BlockItem(CRACKED_STICKY_STONE_BRICK_SLAB.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CRACKED_STICKY_STONE_BRICK_WALL.getId().getPath(), () -> new BlockItem(CRACKED_STICKY_STONE_BRICK_WALL.get(), new Item.Properties()));
+			RPMItems.ItemEntry.register(CRACKY_STICKY_STONE.getId().getPath(), () -> new BlockItem(CRACKY_STICKY_STONE.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(INFESTED_GLOWING_CRYSTAL.getId().getPath(), () -> new BlockItem(INFESTED_GLOWING_CRYSTAL.get(), new Item.Properties()));
 			RPMItems.ItemEntry.register(CHIPPINGS.getId().getPath(), () -> new BlockItem(CHIPPINGS.get(), new Item.Properties()));
 		}

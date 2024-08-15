@@ -22,11 +22,11 @@ public class SlimeMazeFeature extends Structure {
 
 	@Override
 	protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-		return Optional.of(new GenerationStub(context.chunkPos().getWorldPosition(), builder -> generatePieces(builder, context)));
+		BlockPos centerOfChunk = new BlockPos(context.chunkPos().getMinBlockX() + 10, 0, context.chunkPos().getMinBlockZ() + 14);
+		return Optional.of(new GenerationStub(centerOfChunk, builder -> generatePieces(builder, centerOfChunk, context)));
 	}
 
-	private static void generatePieces(StructurePiecesBuilder builder, GenerationContext context) {
-		BlockPos centerOfChunk = new BlockPos(context.chunkPos().getMinBlockX() + 10, 0, context.chunkPos().getMinBlockZ() + 14);
+	private static void generatePieces(StructurePiecesBuilder builder, BlockPos centerOfChunk, GenerationContext context) {
 		BlockPos blockpos = new BlockPos(
 				centerOfChunk.getX(),
 				context.chunkGenerator().getBaseHeight(

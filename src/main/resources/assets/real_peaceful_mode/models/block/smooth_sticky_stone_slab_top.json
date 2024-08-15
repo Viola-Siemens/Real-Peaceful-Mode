@@ -3,6 +3,6 @@
   "textures": {
     "bottom": "real_peaceful_mode:block/smooth_sticky_stone",
     "top": "real_peaceful_mode:block/smooth_sticky_stone",
-    "side": "real_peaceful_mode:block/smooth_sticky_stone_side"
+    "side": "real_peaceful_mode:block/smooth_sticky_stone_slab_side"
   }
 }
