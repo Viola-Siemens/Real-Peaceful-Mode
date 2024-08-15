@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.client;
 
 import com.hexagram2021.real_peaceful_mode.client.models.DarkZombieKnightModel;
+import com.hexagram2021.real_peaceful_mode.client.models.GuardSlimeModel;
 import com.hexagram2021.real_peaceful_mode.client.models.SkeletonKingModel;
 import com.hexagram2021.real_peaceful_mode.client.models.ZombieTyrantModel;
 import com.hexagram2021.real_peaceful_mode.client.renderers.*;
@@ -67,6 +68,8 @@ public class ClientProxy extends CommonProxy {
         event.registerLayerDefinition(RPMModelLayers.ZOMBIE_TYRANT, ZombieTyrantModel::createBodyLayer);
         event.registerLayerDefinition(RPMModelLayers.SKELETON_KING, SkeletonKingModel::createBodyLayer);
         event.registerLayerDefinition(RPMModelLayers.HUSK_PHARAOH, () -> LayerDefinition.create(HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F), 64, 64));
+        event.registerLayerDefinition(RPMModelLayers.GUARD_SLIME, GuardSlimeModel::createInnerBodyLayer);
+        event.registerLayerDefinition(RPMModelLayers.GUARD_SLIME_OUTER, GuardSlimeModel::createOuterBodyLayer);
         event.registerLayerDefinition(RPMModelLayers.DARK_ZOMBIE_KNIGHT_SKULL, SkullModel::createHumanoidHeadLayer);
         event.registerLayerDefinition(RPMModelLayers.SKELETON_SKULL, SkeletonSkullRenderer::createSkullLayer);
         event.registerLayerDefinition(RPMModelLayers.FLAME_CRYSTAL, FlameCrystalRenderer::createBodyLayer);
@@ -80,6 +83,7 @@ public class ClientProxy extends CommonProxy {
         event.registerEntityRenderer(RPMEntities.ZOMBIE_TYRANT, ZombieTyrantRenderer::new);
         event.registerEntityRenderer(RPMEntities.SKELETON_KING, SkeletonKingRenderer::new);
         event.registerEntityRenderer(RPMEntities.HUSK_PHARAOH, HuskPharaohRenderer::new);
+        event.registerEntityRenderer(RPMEntities.GUARD_SLIME, GuardSlimeRenderer::new);
         event.registerEntityRenderer(RPMEntities.SKELETON_SKULL, SkeletonSkullRenderer::new);
         event.registerEntityRenderer(RPMEntities.TINY_FIREBALL, TinyFireballRenderer::new);
         event.registerEntityRenderer(RPMEntities.FLAME_CRYSTAL, FlameCrystalRenderer::new);

@@ -2,12 +2,8 @@ package com.hexagram2021.real_peaceful_mode.common;
 
 import com.hexagram2021.real_peaceful_mode.api.SummonBlockEntityHelper;
 import com.hexagram2021.real_peaceful_mode.common.crafting.compat.ModsCompatManager;
-import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
-import com.hexagram2021.real_peaceful_mode.common.entity.HuskWorkmanEntity;
-import com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity;
-import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
-import com.hexagram2021.real_peaceful_mode.common.entity.boss.SkeletonKing;
-import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
+import com.hexagram2021.real_peaceful_mode.common.entity.*;
+import com.hexagram2021.real_peaceful_mode.common.entity.boss.*;
 import com.hexagram2021.real_peaceful_mode.common.register.*;
 import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
 import com.hexagram2021.real_peaceful_mode.mixin.BlockEntityTypeAccess;
@@ -95,6 +91,7 @@ public class RPMContent {
 		event.put(RPMEntities.ZOMBIE_TYRANT, ZombieTyrant.createAttributes().build());
 		event.put(RPMEntities.SKELETON_KING, SkeletonKing.createAttributes().build());
 		event.put(RPMEntities.HUSK_PHARAOH, HuskPharaoh.createAttributes().build());
+		event.put(RPMEntities.GUARD_SLIME, GuardSlime.createAttributes().build());
 	}
 
 	public static void registerCommands(RegisterCommandsEvent event) {

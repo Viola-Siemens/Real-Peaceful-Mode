@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlime;
 import com.hexagram2021.real_peaceful_mode.common.entity.HuskWorkmanEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
@@ -42,6 +43,10 @@ public class RPMEntities {
             .sized(0.6F, 1.95F)
             .clientTrackingRange(8)
             .build(new ResourceLocation(MODID, "husk_pharaoh").toString());
+    public static final EntityType<GuardSlime> GUARD_SLIME = EntityType.Builder.of(GuardSlime::new, MobCategory.MONSTER)
+            .sized(2.04F, 2.04F)
+            .clientTrackingRange(10)
+            .build(new ResourceLocation(MODID, "guard_slime").toString());
     public static final EntityType<SkeletonSkullEntity> SKELETON_SKULL = EntityType.Builder.<SkeletonSkullEntity>of(SkeletonSkullEntity::new, MobCategory.MISC)
             .sized(0.3125F, 0.3125F)
             .clientTrackingRange(8)
@@ -66,6 +71,7 @@ public class RPMEntities {
             helper.register(new ResourceLocation(MODID, "zombie_tyrant"), ZOMBIE_TYRANT);
             helper.register(new ResourceLocation(MODID, "skeleton_king"), SKELETON_KING);
             helper.register(new ResourceLocation(MODID, "husk_pharaoh"), HUSK_PHARAOH);
+            helper.register(new ResourceLocation(MODID, "guard_slime"), GUARD_SLIME);
             helper.register(new ResourceLocation(MODID, "skeleton_skull"), SKELETON_SKULL);
             helper.register(new ResourceLocation(MODID, "tiny_fireball"), TINY_FIREBALL);
             helper.register(new ResourceLocation(MODID, "flame_crystal"), FLAME_CRYSTAL);
