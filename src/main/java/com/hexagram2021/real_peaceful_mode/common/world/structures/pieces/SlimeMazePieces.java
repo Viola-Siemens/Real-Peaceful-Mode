@@ -292,8 +292,11 @@ public class SlimeMazePieces {
 		@Override
 		public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource random,
 								BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
+			//ceil and floor
 			this.generateStickyStoneBox(level, boundingBox, 0, 0, 0, WIDTH - 1, 0, LENGTH - 1, random, 0.75F);
 			this.generateStickyStoneBox(level, boundingBox, 0, HEIGHT - 1, 0, WIDTH - 1, HEIGHT - 1, LENGTH - 1, random, 0.75F);
+
+			//main
 			for(int i = 0; i < MAZE_LENGTH; ++i) {
 				for(int j = 0; j < MAZE_LENGTH; ++j) {
 					if(this.maze.isAir(2 * i, 2 * j)) {
@@ -342,6 +345,13 @@ public class SlimeMazePieces {
 					this.generateStickyStoneBox(level, boundingBox, WIDTH - 1, 1, 3 * j + 1, WIDTH - 1, 3, 3 * j + 2, random, 0.75F);
 				}
 			}
+			if(this.maze.isAir(2 * MAZE_LENGTH, 2 * MAZE_LENGTH)) {
+				this.generateBox(level, boundingBox, WIDTH - 1, 1, LENGTH - 1, WIDTH - 1, 3, LENGTH - 1, CAVE_AIR, CAVE_AIR, false);
+			} else {
+				this.generateStickyStoneBox(level, boundingBox, WIDTH - 1, 1, LENGTH - 1, WIDTH - 1, 3, LENGTH - 1, random, 0.75F);
+			}
+
+			//torch;
 			for(int i = 0; i < MAZE_LENGTH; i += 4) {
 				for(int j = 0; j < MAZE_LENGTH; j += 4) {
 					if(!this.maze.isAir(2 * i + 1, 2 * j)) {

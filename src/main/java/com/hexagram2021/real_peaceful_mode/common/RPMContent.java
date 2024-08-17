@@ -10,10 +10,14 @@ import com.hexagram2021.real_peaceful_mode.mixin.BlockEntityTypeAccess;
 import com.hexagram2021.real_peaceful_mode.server.commands.RPMCommands;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -94,7 +98,14 @@ public class RPMContent {
 		event.put(RPMEntities.GUARD_SLIME, GuardSlime.createAttributes().build());
 	}
 
+
+	@SubscribeEvent
+	public static void registerEntitySpawnPlacement(SpawnPlacementRegisterEvent event) {
+		event.register(RPMEntities.DARK_ZOMBIE_KNIGHT, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkAnyLightMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(RPMEntities.GUARD_SLIME, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GuardSlime::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+	}
+
 	public static void registerCommands(RegisterCommandsEvent event) {
-		event.getDispatcher().register(RPMCommands.register());
+		event.getDispatcher().register(RPMCommands.register(event.getBuildContext()));
 	}
 }

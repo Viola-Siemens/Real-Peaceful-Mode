@@ -11,8 +11,11 @@ import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
 import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper;
+import com.hexagram2021.real_peaceful_mode.server.utils.GenerateCommandUtils;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.Dynamic2CommandExceptionType;
@@ -20,17 +23,22 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.commands.arguments.blocks.BlockStateArgument;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.server.command.EnumArgument;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;
@@ -38,11 +46,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.getRegistryName;
 
+@SuppressWarnings("WrongTypeInTranslationArgs")
 public class RPMCommands {
 	private static final String MISSION_ID_ARGUMENT = "mission_id";
 	private static final String SHOW_DIALOG_ARGUMENT = "show_dialog";
 	private static final String NPC_ARGUMENT = "npc";
 	private static final String PLAYER_ARGUMENT = "player";
+	private static final String MAZE_DIRECTION_ARGUMENT = "direction";
+	private static final String MAZE_LENGTH_ARGUMENT = "length";
+	private static final String MAZE_ROAD_WIDTH = "road_width";
+	private static final String MAZE_WALL_WIDTH = "wall_width";
+	private static final String MAZE_WALL_BLOCK = "wall_block";
+	private static final String MAZE_SEED = "seed";
+	private static final String MAZE_START_POSITION = "start_position";
 
 	private static final SuggestionProvider<CommandSourceStack> SUGGEST_MISSION_IDS = (context, builder) ->
 			SharedSuggestionProvider.suggestResource(ForgeEventHandler.getMissionManager().getAllMissionIds(), builder);
@@ -57,7 +73,7 @@ public class RPMCommands {
 					builder
 			);
 
-	public static LiteralArgumentBuilder<CommandSourceStack> register() {
+	public static LiteralArgumentBuilder<CommandSourceStack> register(CommandBuildContext buildContext) {
 		return Commands.literal("rpm").then(
 				Commands.literal("mission").then(
 						Commands.literal("receive").requires(stack -> stack.hasPermission(2)).then(
@@ -164,6 +180,72 @@ public class RPMCommands {
 												context.getSource().getPlayer(),
 												ResourceLocationArgument.getId(context, MISSION_ID_ARGUMENT)
 										))
+						)
+				)
+		).then(
+				Commands.literal("generate").then(
+						Commands.literal("maze").requires(stack -> stack.hasPermission(2)).then(
+								Commands.argument(MAZE_DIRECTION_ARGUMENT, EnumArgument.enumArgument(Direction.class))
+										.then(
+												Commands.argument(MAZE_LENGTH_ARGUMENT, IntegerArgumentType.integer(3, 256))
+														.then(
+																Commands.argument(MAZE_ROAD_WIDTH, IntegerArgumentType.integer(1, 16))
+																		.then(
+																				Commands.argument(MAZE_WALL_WIDTH, IntegerArgumentType.integer(1, 16))
+																						.then(
+																								Commands.argument(MAZE_WALL_BLOCK, BlockStateArgument.block(buildContext))
+																										.executes(context -> GenerateCommandUtils.maze(
+																												context.getSource().getPlayerOrException(),
+																												context.getSource().getLevel(),
+																												context.getArgument(MAZE_DIRECTION_ARGUMENT, Direction.class),
+																												IntegerArgumentType.getInteger(context, MAZE_LENGTH_ARGUMENT),
+																												IntegerArgumentType.getInteger(context, MAZE_ROAD_WIDTH),
+																												IntegerArgumentType.getInteger(context, MAZE_WALL_WIDTH),
+																												BlockStateArgument.getBlock(context, MAZE_WALL_BLOCK),
+																												context.getSource().getLevel().random.nextLong()
+																										)).then(
+																												Commands.argument(MAZE_SEED, LongArgumentType.longArg())
+																														.executes(context -> GenerateCommandUtils.maze(
+																																context.getSource().getPlayerOrException(),
+																																context.getSource().getLevel(),
+																																context.getArgument(MAZE_DIRECTION_ARGUMENT, Direction.class),
+																																IntegerArgumentType.getInteger(context, MAZE_LENGTH_ARGUMENT),
+																																IntegerArgumentType.getInteger(context, MAZE_ROAD_WIDTH),
+																																IntegerArgumentType.getInteger(context, MAZE_WALL_WIDTH),
+																																BlockStateArgument.getBlock(context, MAZE_WALL_BLOCK),
+																																LongArgumentType.getLong(context, MAZE_SEED)
+																														)).then(
+																																Commands.argument(MAZE_START_POSITION, BlockPosArgument.blockPos())
+																																		.executes(context -> GenerateCommandUtils.maze(
+																																				context.getSource().getPlayer(),
+																																				context.getSource().getLevel(),
+																																				context.getArgument(MAZE_DIRECTION_ARGUMENT, Direction.class),
+																																				IntegerArgumentType.getInteger(context, MAZE_LENGTH_ARGUMENT),
+																																				IntegerArgumentType.getInteger(context, MAZE_ROAD_WIDTH),
+																																				IntegerArgumentType.getInteger(context, MAZE_WALL_WIDTH),
+																																				BlockStateArgument.getBlock(context, MAZE_WALL_BLOCK),
+																																				LongArgumentType.getLong(context, MAZE_SEED),
+																																				BlockPosArgument.getLoadedBlockPos(context, MAZE_START_POSITION)
+																																		))
+																														)
+																										).then(
+																												Commands.argument(MAZE_START_POSITION, BlockPosArgument.blockPos())
+																														.executes(context -> GenerateCommandUtils.maze(
+																																context.getSource().getPlayer(),
+																																context.getSource().getLevel(),
+																																context.getArgument(MAZE_DIRECTION_ARGUMENT, Direction.class),
+																																IntegerArgumentType.getInteger(context, MAZE_LENGTH_ARGUMENT),
+																																IntegerArgumentType.getInteger(context, MAZE_ROAD_WIDTH),
+																																IntegerArgumentType.getInteger(context, MAZE_WALL_WIDTH),
+																																BlockStateArgument.getBlock(context, MAZE_WALL_BLOCK),
+																																context.getSource().getLevel().random.nextLong(),
+																																BlockPosArgument.getLoadedBlockPos(context, MAZE_START_POSITION)
+																														))
+																										)
+																						)
+																		)
+														)
+										)
 						)
 				)
 		);

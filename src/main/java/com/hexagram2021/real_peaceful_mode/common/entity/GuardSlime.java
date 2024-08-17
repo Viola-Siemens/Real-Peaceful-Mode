@@ -1,12 +1,17 @@
 package com.hexagram2021.real_peaceful_mode.common.entity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 
 import java.util.Objects;
 
@@ -28,7 +33,17 @@ public class GuardSlime extends Slime {
 		return super.getAttackDamage() + 1.0F;
 	}
 
+	@Override
+	protected boolean shouldDespawnInPeaceful() {
+		return false;
+	}
+
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes().add(Attributes.ARMOR, 4.0D);
+	}
+
+	public static boolean checkSpawnRules(EntityType<? extends GuardSlime> entityType, ServerLevelAccessor level, MobSpawnType spawnType,
+										  BlockPos blockPos, RandomSource random) {
+		return level.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(level, blockPos, random) && checkMobSpawnRules(entityType, level, spawnType, blockPos, random);
 	}
 }

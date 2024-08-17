@@ -210,10 +210,21 @@ public class RPMItems {
 		public static ItemEntry<Item> HUSKS_WISH = ItemEntry.register(
 				"husks_wish", () -> new DebugWishItem(EntityType.HUSK, new Item.Properties())
 		);
+		public static ItemEntry<Item> SLIMES_WISH = ItemEntry.register(
+				"slimes_wish", () -> new DebugWishItem(EntityType.SLIME, new Item.Properties())
+		);
+		public static ItemEntry<Item> DROWNEDS_WISH = ItemEntry.register(
+				"drowneds_wish", () -> new DebugWishItem(EntityType.DROWNED, new Item.Properties())
+		);
 
 		public static ItemEntry<SpawnEggItem> DARK_ZOMBIE_KNIGHT_SPAWN_EGG = ItemEntry.register(
 				"dark_zombie_knight_spawn_egg", () -> new ForgeSpawnEggItem(
 						() -> RPMEntities.DARK_ZOMBIE_KNIGHT, 0x084616, 0x3cbc12, new Item.Properties()
+				)
+		);
+		public static ItemEntry<SpawnEggItem> GUARD_SLIME_SPAWN_EGG = ItemEntry.register(
+				"guard_slime_spawn_egg", () -> new ForgeSpawnEggItem(
+						() -> RPMEntities.GUARD_SLIME, 0x90d4a6, 0xe2e9e4, new Item.Properties()
 				)
 		);
 
