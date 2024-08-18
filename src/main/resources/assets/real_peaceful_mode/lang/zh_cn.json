@@ -95,6 +95,10 @@
   "item.real_peaceful_mode.guard_slime_spawn_egg": "守卫史莱姆刷怪蛋",
   "item.real_peaceful_mode.start": "真正的和平模式",
 
+  "item.real_peaceful_mode.skeleton_scepter.description": "右键发射远程攻击的骷髅头。",
+  "item.real_peaceful_mode.pharaoh_scepter.description": "右键发射使敌人恍惚的小火花，或者粉砂化砂岩类的方块。",
+  "item.real_peaceful_mode.slime_scepter.description": "右键可以实现石头类方块和粘石类方块的相互转化，左键可以挖掘粘石类方块，或近战攻击敌人并对其施加黏着效果。",
+
   "item.real_peaceful_mode.huge_spirit_bead.description": "一个融合了不同生物魂珠而炼成的大魂珠。或许这是通往另一个维度大门的钥匙？",
   "item.real_peaceful_mode.zombie_spirit_bead.description": "据僵尸们所说，他们可以生产一种灵魂一样的东西叫做“人魄”，并通过它生产魂珠。但是它闻起来有点恶心。",
   "item.real_peaceful_mode.skeleton_spirit_bead.description": "这护身符一样的小球很可能是由生物骨头制成的，它散发着骷髅的神秘力量。",

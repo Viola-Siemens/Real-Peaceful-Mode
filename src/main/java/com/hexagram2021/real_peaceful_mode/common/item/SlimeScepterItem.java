@@ -1,10 +1,14 @@
 package com.hexagram2021.real_peaceful_mode.common.item;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import com.hexagram2021.real_peaceful_mode.api.BlockConversionRegistry;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMobEffects;
+import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -12,20 +16,35 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 @SuppressWarnings("deprecation")
 public class SlimeScepterItem extends Item implements Vanishable {
+	private final Multimap<Attribute, AttributeModifier> defaultModifiers;
+
 	public SlimeScepterItem(Properties props) {
 		super(props);
+		ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", 1.0D, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", -1.0D, AttributeModifier.Operation.ADDITION));
+		this.defaultModifiers = builder.build();
 	}
 
 	@Override
@@ -110,9 +129,25 @@ public class SlimeScepterItem extends Item implements Vanishable {
 		return material.is(RPMBlocks.Decoration.STICKY_STONE.asItem()) || super.isValidRepairItem(scepter, material);
 	}
 
+	@Override
+	public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+		super.appendHoverText(itemStack, level, components, flag);
+		components.add(Component.translatable(this.getDescriptionId() + ".description").withStyle(ChatFormatting.GRAY));
+	}
+
+	@Override
+	public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
+		return slot == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getDefaultAttributeModifiers(slot);
+	}
+
 	//Forge
 	@Override
 	public boolean isCorrectToolForDrops(ItemStack itemStack, BlockState state) {
 		return BlockConversionRegistry.UNSTICKABLES.containsKey(state.getBlock());
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		return enchantment.category.equals(EnchantmentCategory.DIGGER) || super.canApplyAtEnchantingTable(stack, enchantment);
 	}
 }

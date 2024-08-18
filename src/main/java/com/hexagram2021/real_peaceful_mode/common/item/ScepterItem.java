@@ -2,6 +2,8 @@ package com.hexagram2021.real_peaceful_mode.common.item;
 
 import com.hexagram2021.real_peaceful_mode.common.entity.ICrackable;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEnchantments;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -12,10 +14,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.function.Predicate;
 
 public abstract class ScepterItem<T extends AbstractHurtingProjectile & ICrackable> extends ProjectileWeaponItem implements Vanishable {
@@ -50,6 +55,12 @@ public abstract class ScepterItem<T extends AbstractHurtingProjectile & ICrackab
 		level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
 		player.awardStat(Stats.ITEM_USED.get(this));
 		return InteractionResultHolder.consume(scepter);
+	}
+
+	@Override
+	public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+		super.appendHoverText(itemStack, level, components, flag);
+		components.add(Component.translatable(this.getDescriptionId() + ".description").withStyle(ChatFormatting.GRAY));
 	}
 
 	protected abstract T createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ);

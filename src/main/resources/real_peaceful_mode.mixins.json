@@ -7,6 +7,7 @@
     "AbstractArrowMixin",
     "ArrowItemMixin",
     "BlockEntityTypeAccess",
+    "DamageEnchantmentMixin",
     "HeroGiftsTaskAccess",
     "LivingEntityMixin",
     "MeleeAttackGoalMixin",

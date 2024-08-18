@@ -95,6 +95,10 @@
   "item.real_peaceful_mode.guard_slime_spawn_egg": "Guard Slime Spawn Egg",
   "item.real_peaceful_mode.start": "Real Peaceful Mode",
 
+  "item.real_peaceful_mode.skeleton_scepter.description": "Right click to launch skeleton skull for range attack.",
+  "item.real_peaceful_mode.pharaoh_scepter.description": "Right click to launch tiny flame, which will apply Trance effect to the target, or siltify sandstone-related blocks.",
+  "item.real_peaceful_mode.slime_scepter.description": "Right click to stickify or unstickify stone-related blocks. Left click to mine sticky stone-related blocks, or perform melee attack and apply glue effect to the target.",
+
   "item.real_peaceful_mode.huge_spirit_bead.description": "A huge bead that combines all the spirit beads from variant mobs. Maybe this is a key to another dimension?",
   "item.real_peaceful_mode.zombie_spirit_bead.description": "Made by zombies from \"Poul\", which is said to come from a soul-like item produced by them. But it smells really awful.",
   "item.real_peaceful_mode.skeleton_spirit_bead.description": "It is likely that this amulet-like pellet is made from bones, and emitting mystical power of skeletons.",
