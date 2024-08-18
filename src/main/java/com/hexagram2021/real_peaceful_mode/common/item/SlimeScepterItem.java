@@ -62,6 +62,7 @@ public class SlimeScepterItem extends Item implements Vanishable {
 		}
 
 		if(newBlockState != null) {
+			level.setBlock(blockPos, newBlockState, Block.UPDATE_ALL);
 			if (player instanceof ServerPlayer serverPlayer) {
 				CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, blockPos, handItem);
 				if(deltaDamage <= 0) {
