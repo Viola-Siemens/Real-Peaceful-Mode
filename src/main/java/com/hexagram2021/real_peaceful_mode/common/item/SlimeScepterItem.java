@@ -6,6 +6,8 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMMobEffects;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -65,6 +67,7 @@ public class SlimeScepterItem extends Item implements Vanishable {
 			level.setBlock(blockPos, newBlockState, Block.UPDATE_ALL);
 			if (player instanceof ServerPlayer serverPlayer) {
 				CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, blockPos, handItem);
+				level.playSound(player, blockPos, SoundEvents.SLIME_BLOCK_BREAK, SoundSource.BLOCKS);
 				if(deltaDamage <= 0) {
 					deltaDamage = Math.max(deltaDamage, -handItem.getDamageValue());
 					handItem.setDamageValue(handItem.getDamageValue() + deltaDamage);
@@ -79,7 +82,7 @@ public class SlimeScepterItem extends Item implements Vanishable {
 
 	@Override
 	public float getDestroySpeed(ItemStack itemStack, BlockState blockState) {
-		return this.isCorrectToolForDrops(itemStack, blockState) ? 100.0F : 1.0F;
+		return this.isCorrectToolForDrops(itemStack, blockState) ? 200.0F : 1.0F;
 	}
 
 	@Override
@@ -88,7 +91,7 @@ public class SlimeScepterItem extends Item implements Vanishable {
 
 		if(user instanceof Player player && !player.getCooldowns().isOnCooldown(this)) {
 			enemy.addEffect(new MobEffectInstance(RPMMobEffects.GLUE.get(), 40), user);
-			player.getCooldowns().addCooldown(this, 60);
+			player.getCooldowns().addCooldown(this, 40);
 		}
 		return true;
 	}

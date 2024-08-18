@@ -2,10 +2,20 @@ package com.hexagram2021.real_peaceful_mode.common.effect;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
 
 public class GlueEffect extends MobEffect {
 	public GlueEffect() {
-		super(MobEffectCategory.HARMFUL, 0x6858d0);
+		super(MobEffectCategory.HARMFUL, 0x68d058);
 	}
-	//TODO: make mobs stuck to its position.
+
+	@Override
+	public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
+		livingEntity.setDeltaMovement(0.0D, 0.0D, 0.0D);
+	}
+
+	@Override
+	public boolean isDurationEffectTick(int duration, int amplifier) {
+		return true;
+	}
 }

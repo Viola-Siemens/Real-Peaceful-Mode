@@ -126,6 +126,7 @@
   "entity.real_peaceful_mode.flame_crystal": "Floating Flame",
 
   "effect.real_peaceful_mode.trance": "Trance",
+  "effect.real_peaceful_mode.glue": "Glue",
 
   "structure.real_peaceful_mode.all_structures": "Monsters' Buildings",
   "structure.real_peaceful_mode.all_structures.description": "You can talk with monsters here, and receive missions given by them.",
