@@ -3,10 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
-import com.hexagram2021.real_peaceful_mode.common.item.ConvertibleSpiritBeadItem;
-import com.hexagram2021.real_peaceful_mode.common.item.DebugWishItem;
-import com.hexagram2021.real_peaceful_mode.common.item.ScepterItem;
-import com.hexagram2021.real_peaceful_mode.common.item.SpiritBeadItem;
+import com.hexagram2021.real_peaceful_mode.common.item.*;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -151,6 +148,9 @@ public class RPMItems {
 						return material.is(RPMBlocks.Decoration.SILTSTONE.asItem()) || super.isValidRepairItem(scepter, material);
 					}
 				}
+		);
+		public static ItemEntry<SlimeScepterItem> SLIME_SCEPTER = ItemEntry.register(
+				"slime_scepter", () -> new SlimeScepterItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).durability(1280))
 		);
 		public static ItemEntry<SwordItem> IRON_PIKE = ItemEntry.register(
 				"iron_pike", () -> new SwordItem(Tiers.IRON, 4, -3.0F, new Item.Properties().stacksTo(1))
