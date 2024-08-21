@@ -2,9 +2,9 @@ package com.hexagram2021.real_peaceful_mode.server.commands;
 
 import com.google.common.collect.ImmutableSet;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.api.RandomEventSpawnerHelper;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
@@ -80,7 +80,7 @@ public class RPMCommands {
 								Commands.argument(MISSION_ID_ARGUMENT, ResourceLocationArgument.id()).suggests(SUGGEST_MISSION_IDS)
 										.executes(context -> grant(
 												context.getSource().getPlayerOrException(),
-												SummonBlockEntity.SummonMissionType.RECEIVE,
+												MissionType.RECEIVE,
 												ResourceLocationArgument.getId(context, MISSION_ID_ARGUMENT),
 												false, null
 										))
@@ -88,7 +88,7 @@ public class RPMCommands {
 												Commands.argument(SHOW_DIALOG_ARGUMENT, BoolArgumentType.bool())
 														.executes(context -> grant(
 																context.getSource().getPlayerOrException(),
-																SummonBlockEntity.SummonMissionType.RECEIVE,
+																MissionType.RECEIVE,
 																ResourceLocationArgument.getId(context, MISSION_ID_ARGUMENT),
 																BoolArgumentType.getBool(context, SHOW_DIALOG_ARGUMENT), null
 														))
@@ -97,7 +97,7 @@ public class RPMCommands {
 												Commands.argument(NPC_ARGUMENT, EntityArgument.entity())
 														.executes(context -> grant(
 																context.getSource().getPlayerOrException(),
-																SummonBlockEntity.SummonMissionType.RECEIVE,
+																MissionType.RECEIVE,
 																ResourceLocationArgument.getId(context, MISSION_ID_ARGUMENT),
 																true, EntityArgument.getEntity(context, NPC_ARGUMENT)
 														))
@@ -108,7 +108,7 @@ public class RPMCommands {
 								Commands.argument(MISSION_ID_ARGUMENT, ResourceLocationArgument.id()).suggests(SUGGEST_MISSION_IDS)
 										.executes(context -> grant(
 												context.getSource().getPlayerOrException(),
-												SummonBlockEntity.SummonMissionType.FINISH,
+												MissionType.FINISH,
 												ResourceLocationArgument.getId(context, MISSION_ID_ARGUMENT),
 												false, null
 										))
@@ -116,7 +116,7 @@ public class RPMCommands {
 												Commands.argument(SHOW_DIALOG_ARGUMENT, BoolArgumentType.bool())
 														.executes(context -> grant(
 																context.getSource().getPlayerOrException(),
-																SummonBlockEntity.SummonMissionType.FINISH,
+																MissionType.FINISH,
 																ResourceLocationArgument.getId(context, MISSION_ID_ARGUMENT),
 																BoolArgumentType.getBool(context, SHOW_DIALOG_ARGUMENT), null
 														))
@@ -125,7 +125,7 @@ public class RPMCommands {
 												Commands.argument(NPC_ARGUMENT, EntityArgument.entity())
 														.executes(context -> grant(
 																context.getSource().getPlayerOrException(),
-																SummonBlockEntity.SummonMissionType.FINISH,
+																MissionType.FINISH,
 																ResourceLocationArgument.getId(context, MISSION_ID_ARGUMENT),
 																true, EntityArgument.getEntity(context, NPC_ARGUMENT)
 														))
@@ -276,7 +276,7 @@ public class RPMCommands {
 			(missionName, name) -> Component.translatable("commands.real_peaceful_mode.event.failed.spawn_event", missionName, name)
 	);
 
-	private static int grant(ServerPlayer player, SummonBlockEntity.SummonMissionType type, ResourceLocation missionId, boolean dialog, @Nullable Entity npc) throws CommandSyntaxException {
+	private static int grant(ServerPlayer player, MissionType type, ResourceLocation missionId, boolean dialog, @Nullable Entity npc) throws CommandSyntaxException {
 		if(player instanceof IMonsterHero hero) {
 			MissionManager.Mission mission = ForgeEventHandler.getMissionManager().getMission(missionId).orElseThrow(() -> MISSION_NOT_EXIST.create(missionId.toString()));
 			Component missionName = Component.translatable(PlayerMissions.getMissionDescriptionId(mission))
@@ -329,7 +329,7 @@ public class RPMCommands {
 					component = Component.translatable("commands.real_peaceful_mode.mission.list.finished");
 				} else if(IMonsterHero.underMission(playerMissions, id)) {
 					component = Component.translatable("commands.real_peaceful_mode.mission.list.under");
-				} else if(!MissionHelper.checkMission(hero, SummonBlockEntity.SummonMissionType.RECEIVE, mission)) {
+				} else if(!MissionHelper.checkMission(hero, MissionType.RECEIVE, mission)) {
 					component = Component.translatable("commands.real_peaceful_mode.mission.list.locked");
 				} else {
 					component = Component.translatable("commands.real_peaceful_mode.mission.list.no");

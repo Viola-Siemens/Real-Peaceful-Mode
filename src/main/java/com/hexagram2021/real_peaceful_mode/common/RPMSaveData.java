@@ -2,8 +2,8 @@ package com.hexagram2021.real_peaceful_mode.common;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.saveddata.SavedData;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class RPMSaveData extends SavedData {
 	@Nullable
@@ -18,9 +18,8 @@ public class RPMSaveData extends SavedData {
 		this();
 	}
 
-	@NotNull
 	@Override
-	public CompoundTag save(@NotNull CompoundTag nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		return nbt;
 	}
 

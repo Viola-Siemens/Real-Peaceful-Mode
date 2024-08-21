@@ -3,7 +3,7 @@
     "type": "minecraft:random_spread",
     "exclusion_zone": {
       "chunk_count": 5,
-      "other_set": "minecraft:villages"
+      "other_set": "real_peaceful_mode:pharaoh_altars"
     },
     "salt": 656962286,
     "separation": 10,

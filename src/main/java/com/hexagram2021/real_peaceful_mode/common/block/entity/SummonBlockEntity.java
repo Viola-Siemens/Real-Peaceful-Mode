@@ -1,8 +1,9 @@
 package com.hexagram2021.real_peaceful_mode.common.block.entity;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
@@ -22,15 +23,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiFunction;
 
 import static net.minecraft.world.level.block.Block.UPDATE_ALL;
 
-public class SummonBlockEntity extends BlockEntity {
+public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 	public static final String TAG_SUMMON_ENTITY = "summon";
 	public static final String TAG_MISSION = "mission";
 	public static final String TAG_EXTRA_CONDITION = "extra_condition";
@@ -43,44 +42,26 @@ public class SummonBlockEntity extends BlockEntity {
 	private CompoundTag summonTag;
 
 	@Nullable
-	private MissionManager.Mission mission;
-
-	@Nullable
 	private String extraCondition;
 
-	private SummonMissionType type = SummonMissionType.RECEIVE;
+	@Nullable
+	private SummonBlockMission triggerableMission;
 
 	private int distance = 16;
 
 	private int lastCheckTick = CHECK_TICK;
-
-	public enum SummonMissionType {
-		RECEIVE,
-		FINISH;
-
-		public static final Map<String, SummonMissionType> TYPE_BY_NAME;
-
-		public String getSerializedName() {
-			return this.name().toLowerCase(Locale.ROOT);
-		}
-
-		static {
-			ImmutableMap.Builder<String, SummonMissionType> builder = ImmutableMap.builder();
-			Arrays.stream(values()).forEach(type -> builder.put(type.getSerializedName(), type));
-			TYPE_BY_NAME = builder.build();
-		}
-	}
 
 	public SummonBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(RPMBlockEntities.SUMMON_BLOCK.get(), blockPos, blockState);
 	}
 
 	public SummonBlockEntity(BlockPos blockPos, BlockState blockState,
-							 @Nullable CompoundTag summonTag, @Nullable MissionManager.Mission mission, SummonMissionType type, int distance) {
+							 @Nullable CompoundTag summonTag, @Nullable MissionManager.Mission mission, MissionType type, int distance) {
 		this(blockPos, blockState);
 		this.summonTag = summonTag;
-		this.mission = mission;
-		this.type = type;
+		if(mission != null) {
+			this.triggerableMission = new SummonBlockMission(mission, type);
+		}
 		this.distance = distance;
 	}
 
@@ -90,18 +71,31 @@ public class SummonBlockEntity extends BlockEntity {
 			return;
 		}
 		blockEntity.lastCheckTick = CHECK_TICK;
-		if(level instanceof ServerLevel serverLevel && (blockEntity.mission != null || blockEntity.summonTag != null) && blockEntity.checkExtraCondition(serverLevel)) {
-			List<ServerPlayer> nearbyPlayers = serverLevel.players().stream()
-					.filter(player -> player.position().closerThan(blockPos.getCenter(), blockEntity.distance) &&
-									!player.getAbilities().instabuild &&
-									MissionHelper.checkMission((IMonsterHero)player, blockEntity.type, blockEntity.mission)
-					).toList();
+		if(level instanceof ServerLevel serverLevel && blockEntity.checkExtraCondition(serverLevel)) {
+			SummonBlockMission mission = blockEntity.getTriggerableMission();
+			List<ServerPlayer> nearbyPlayers;
+			if(mission != null) {
+				nearbyPlayers = serverLevel.players().stream()
+						.filter(
+								player -> player.position().closerThan(blockPos.getCenter(), blockEntity.distance) &&
+										!player.getAbilities().instabuild &&
+										MissionHelper.checkMission((IMonsterHero) player, mission.type, mission.mission)
+						).toList();
+			} else if(blockEntity.summonTag != null) {
+				nearbyPlayers = serverLevel.players().stream()
+						.filter(
+								player -> player.position().closerThan(blockPos.getCenter(), blockEntity.distance) &&
+										!player.getAbilities().instabuild
+						).toList();
+			} else {
+				return;
+			}
 			if (!nearbyPlayers.isEmpty()) {
 				LivingEntity npc = blockEntity.summon(serverLevel);
 				serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), UPDATE_ALL);
-				if(blockEntity.mission != null) {
+				if(mission != null) {
 					MissionHelper.triggerMissionForPlayers(
-							blockEntity.mission, blockEntity.type, nearbyPlayers,
+							mission.mission, mission.type, nearbyPlayers,
 							(IPlayerListWithMissions) serverLevel.getServer().getPlayerList(), npc, p -> {}
 					);
 				}
@@ -152,14 +146,14 @@ public class SummonBlockEntity extends BlockEntity {
 		if(this.summonTag != null) {
 			nbt.put(TAG_SUMMON_ENTITY, this.summonTag.copy());
 		}
-		if(this.mission != null) {
-			nbt.putString(TAG_MISSION, this.mission.id().toString());
+		if(this.triggerableMission != null) {
+			nbt.putString(TAG_MISSION, this.triggerableMission.mission.id().toString());
+			nbt.putString(TAG_MISSION_TYPE, this.triggerableMission.type.getSerializedName());
 		}
 		if(this.extraCondition != null) {
 			nbt.putString(TAG_EXTRA_CONDITION, this.extraCondition);
 		}
 		nbt.putInt(TAG_DISTANCE, this.distance);
-		nbt.putString(TAG_MISSION_TYPE, this.type.getSerializedName());
 	}
 
 	@Override
@@ -168,16 +162,49 @@ public class SummonBlockEntity extends BlockEntity {
 		if(nbt.contains(TAG_SUMMON_ENTITY, Tag.TAG_COMPOUND)) {
 			this.summonTag = nbt.getCompound(TAG_SUMMON_ENTITY).copy();
 		}
+
+		MissionManager.Mission mission = null;
 		if(nbt.contains(TAG_MISSION, Tag.TAG_STRING)) {
-			this.mission = ForgeEventHandler.getMissionManager().getMission(new ResourceLocation(nbt.getString(TAG_MISSION))).orElse(null);
+			mission = ForgeEventHandler.getMissionManager().getMission(new ResourceLocation(nbt.getString(TAG_MISSION))).orElse(null);
 		}
+		if(mission != null) {
+			this.triggerableMission = new SummonBlockMission(
+					mission,
+					MissionType.TYPE_BY_NAME.getOrDefault(nbt.getString(TAG_MISSION_TYPE), MissionType.RECEIVE)
+			);
+		}
+
 		if(nbt.contains(TAG_EXTRA_CONDITION, Tag.TAG_STRING)) {
 			this.extraCondition = nbt.getString(TAG_EXTRA_CONDITION);
 		}
 		if(nbt.contains(TAG_DISTANCE, Tag.TAG_INT)) {
 			this.distance = nbt.getInt(TAG_DISTANCE);
 		}
-		this.type = SummonMissionType.TYPE_BY_NAME.getOrDefault(nbt.getString(TAG_MISSION_TYPE), SummonMissionType.RECEIVE);
+	}
+
+	@Override @Nullable
+	public SummonBlockMission getTriggerableMission() {
+		return this.triggerableMission;
+	}
+
+	public static class SummonBlockMission implements IMissionProvider.TriggerableMission<SummonBlockEntity> {
+		final MissionManager.Mission mission;
+		final MissionType type;
+
+		SummonBlockMission(MissionManager.Mission mission, MissionType type) {
+			this.mission = mission;
+			this.type = type;
+		}
+
+		@Override
+		public boolean tryTrigger(ServerLevel serverLevel, SummonBlockEntity outer) {
+			return false;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.mission.id() + "/" + this.type.getSerializedName();
+		}
 	}
 }
 //{summon: {id: "zombie"}, id: "real_peaceful_mode:summon_block", mission_type: "receive", mission: "real_peaceful_mode:zombie1"}

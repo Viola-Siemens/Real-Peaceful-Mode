@@ -1,8 +1,9 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.boss;
 
 import com.google.common.collect.Sets;
+import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.FlameEntity;
@@ -51,7 +52,7 @@ import java.util.Set;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy {
+public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy, IMissionProvider {
 	private static final EntityDataAccessor<Boolean> DATA_STONE = SynchedEntityData.defineId(HuskPharaoh.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_WEAKEN = SynchedEntityData.defineId(HuskPharaoh.class, EntityDataSerializers.BOOLEAN);
 
@@ -108,20 +109,20 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		this.playSound(SoundEvents.FIRECHARGE_USE);
 	}
 
-	public static boolean conditionToStone(ServerLevel serverLevel, BlockPos blockPos) {
-		return serverLevel.getLevelData().isRaining() || serverLevel.getBrightness(LightLayer.SKY, blockPos) <= 0;
+	public static boolean conditionToStone(Level level, BlockPos blockPos) {
+		return level.getLevelData().isRaining() || level.getBrightness(LightLayer.SKY, blockPos) <= 0;
 	}
 
 	@Override
 	public void tick() {
 		if(this.level() instanceof ServerLevel serverLevel) {
-			boolean flag = !this.isWeaken() && conditionToStone(serverLevel, this.blockPosition());
-			if (this.isStone()) {
-				if (!flag) {
-					this.setIsStone(false);
+			HuskPharaohMissions mission = this.getTriggerableMission();
+			if(mission != null) {
+				if(!this.isStone()) {
+					mission.tryTrigger(serverLevel, this);
 				}
-			} else if (flag) {
-				convertIntoStoneAndTriggerMission(serverLevel);
+			} else if (this.isStone()) {
+				this.setIsStone(false);
 			}
 		}
 		super.tick();
@@ -135,7 +136,14 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		}
 	}
 
-	private static final ResourceLocation LAST_MISSION = new ResourceLocation(MODID, "husk3");
+	@Override @Nullable
+	public HuskPharaohMissions getTriggerableMission() {
+		if(!this.isWeaken() && conditionToStone(this.level(), this.blockPosition())) {
+			return HuskPharaohMissions.CONVERT_INTO_STONE;
+		}
+		return null;
+	}
+
 	@Override
 	public boolean hurt(DamageSource damageSource, float v) {
 		if(this.isStone()) {
@@ -144,14 +152,14 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		}
 		Entity entity = damageSource.getEntity();
 		if(entity instanceof IMonsterHero hero) {
-			if(!IMonsterHero.underMission(hero.getPlayerMissions(), LAST_MISSION)) {
+			if(!IMonsterHero.underMission(hero.getPlayerMissions(), HuskPharaohMissions.WAX_ME.missionId())) {
 				this.heal(10.0F);
 				if(v > 0) {
 					this.totalDamage += v * 100.0F / (TRIGGER_MISSION_TOTAL_DAMAGE * 2.0F - this.totalDamage);
 					if(!this.isWeaken() && this.totalDamage >= TRIGGER_MISSION_TOTAL_DAMAGE) {
 						if(this.level() instanceof ServerLevel serverLevel) {
 							serverLevel.setWeatherParameters(0, 12000, true, false);
-							convertIntoStoneAndTriggerMission(serverLevel);
+							HuskPharaohMissions.CONVERT_INTO_STONE.tryTrigger(serverLevel, this);
 						}
 					}
 				}
@@ -171,7 +179,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 			if(player instanceof ServerPlayer serverPlayer) {
 				this.setIsWeaken(true);
 				MissionHelper.triggerMissionForPlayer(
-						LAST_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE, serverPlayer,
+						HuskPharaohMissions.WAX_ME.missionId(), HuskPharaohMissions.WAX_ME.type(), serverPlayer,
 						this, player1 -> player1.getItemInHand(hand).shrink(1)
 				);
 				return InteractionResult.CONSUME;
@@ -181,24 +189,17 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		return InteractionResult.PASS;
 	}
 
-	private void convertIntoStoneAndTriggerMission(ServerLevel serverLevel) {
-		this.totalDamage = 0.0F;
-		this.setIsStone(true);
-		MissionHelper.triggerMissionForPlayers(
-				new ResourceLocation(MODID, "husk1"), SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
-				player -> this.closerThan(player, 16.0D), this, player -> {}
-		);
-	}
-
 	@Override
 	public void die(DamageSource damageSource) {
-		if (damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.underMission(hero.getPlayerMissions(), LAST_MISSION) && !this.isWeaken()) {
+		if (damageSource.getEntity() instanceof IMonsterHero hero &&
+				!IMonsterHero.underMission(hero.getPlayerMissions(), HuskPharaohMissions.KILL_ME.missionId()) &&
+				!this.isWeaken()) {
 			this.setHealth(100.0F);
 			return;
 		}
 		if(this.level() instanceof ServerLevel serverLevel) {
 			MissionHelper.triggerMissionForPlayers(
-					LAST_MISSION, SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
+					HuskPharaohMissions.KILL_ME.missionId(), HuskPharaohMissions.KILL_ME.type(), serverLevel,
 					player -> player.closerThan(this, 32.0D), this, player -> {}
 			);
 			this.level().getEntitiesOfClass(Husk.class, this.getBoundingBox().inflate(32.0D), EntitySelector.ENTITY_STILL_ALIVE)
@@ -489,6 +490,49 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 					this.attackTime = this.attackIntervalMin;
 				}
 			}
+		}
+	}
+
+	public enum HuskPharaohMissions implements IMissionProvider.TriggerableMission<HuskPharaoh> {
+		CONVERT_INTO_STONE("husk1", MissionType.FINISH) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, HuskPharaoh outer) {
+				outer.totalDamage = 0.0F;
+				outer.setIsStone(true);
+				MissionHelper.triggerMissionForPlayers(
+						this.missionId, this.type, serverLevel,
+						player -> outer.closerThan(player, 16.0D), outer, player -> {}
+				);
+				return true;
+			}
+		},
+		WAX_ME("husk3", MissionType.RECEIVE),
+		KILL_ME("husk3", MissionType.FINISH);
+
+		final ResourceLocation missionId;
+		final MissionType type;
+
+		HuskPharaohMissions(String mission, MissionType type) {
+			this.missionId = new ResourceLocation(MODID, mission);
+			this.type = type;
+		}
+
+		public ResourceLocation missionId() {
+			return missionId;
+		}
+
+		public MissionType type() {
+			return type;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.missionId + "/" + this.type.getSerializedName();
+		}
+
+		@Override
+		public boolean tryTrigger(ServerLevel serverLevel, HuskPharaoh outer) {
+			return false;
 		}
 	}
 }

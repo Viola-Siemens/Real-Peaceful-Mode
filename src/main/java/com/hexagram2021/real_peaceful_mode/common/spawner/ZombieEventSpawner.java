@@ -2,7 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.spawner;
 
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
@@ -57,7 +57,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 					monster.rpm$setRandomEventNpcAction((player, itemStack) -> {
 						if(itemStack.isEmpty()) {
 							MissionHelper.triggerMissionForPlayer(
-									ZOMBIE_HELMET_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE, player,
+									ZOMBIE_HELMET_MISSION, MissionType.RECEIVE, player,
 									zombie, player1 -> {}
 							);
 							return true;
@@ -68,7 +68,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 							zombie.setItemSlot(EquipmentSlot.HEAD, itemStack.copy());
 							itemStack.shrink(1);
 							MissionHelper.triggerMissionForPlayer(
-									ZOMBIE_HELMET_MISSION, SummonBlockEntity.SummonMissionType.FINISH, player,
+									ZOMBIE_HELMET_MISSION, MissionType.FINISH, player,
 									zombie, player1 -> {
 										monster.rpm$setRandomEventNpcAction(null);
 										monster.rpm$setNpcExtraTickAction(null);
@@ -139,14 +139,14 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 					monster.rpm$setRandomEventNpcAction((player, itemStack) -> {
 						if(itemStack.isEmpty()) {
 							MissionHelper.triggerMissionForPlayer(
-									ZOMBIE_ROBBERY_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE, player,
+									ZOMBIE_ROBBERY_MISSION, MissionType.RECEIVE, player,
 									zombie, player1 -> {}
 							);
 							return true;
 						}
 						if(ItemStack.isSameItemSameTags(itemStack, money)) {
 							MissionHelper.triggerMissionForPlayer(
-									ZOMBIE_ROBBERY_MISSION, SummonBlockEntity.SummonMissionType.FINISH, player,
+									ZOMBIE_ROBBERY_MISSION, MissionType.FINISH, player,
 									zombie, player1 -> {
 										zombie.setItemSlot(EquipmentSlot.MAINHAND, itemStack.copy());
 										itemStack.shrink(1);

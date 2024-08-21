@@ -1,7 +1,8 @@
 package com.hexagram2021.real_peaceful_mode.common.entity;
 
+import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureKeys;
 import net.minecraft.core.BlockPos;
@@ -28,13 +29,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-public class PinkCreeperEntity extends PathfinderMob {
+public class PinkCreeperEntity extends PathfinderMob implements IMissionProvider {
 	@Nullable
 	private UUID likedPlayer;
 
@@ -81,7 +82,6 @@ public class PinkCreeperEntity extends PathfinderMob {
 
 	@Override
 	public void checkDespawn() {
-
 	}
 
 	@Override
@@ -111,8 +111,7 @@ public class PinkCreeperEntity extends PathfinderMob {
 		return InteractionResult.PASS;
 	}
 
-	@Nullable
-	@Override
+	@Override @Nullable
 	protected SoundEvent getAmbientSound() {
 		return super.getAmbientSound();
 	}
@@ -132,74 +131,41 @@ public class PinkCreeperEntity extends PathfinderMob {
 		return SoundEvents.CREEPER_DEATH;
 	}
 
+	@Override @Nullable
+	public PinkCreeperEntity.PinkCreeperMissions getTriggerableMission() {
+		if(this.isNoAi()) {
+			return PinkCreeperMissions.MEET_FIRST_TIME;
+		}
+		if(this.likedPlayer == null) {
+			return PinkCreeperMissions.MAKE_EXPLOSION_BLOCKER;
+		}
+		if(this.receiveMissionTick == -1) {
+			if(this.getRestrictRadius() < 0) {
+				return PinkCreeperMissions.LEAD_ME_TO_TOWN;
+			}
+		} else if(this.receiveMissionTick == -2) {
+			if(this.getRestrictRadius() < 0) {
+				return PinkCreeperMissions.COME_BACK_AFTER_DISTRIBUTION;
+			}
+		}
+		return null;
+	}
+
 	private int checkNearbyPlayers = 100;
 	private static final ItemStack CREEPER3_TRIGGER_ITEM = new ItemStack(RPMItems.Materials.EXPLOSION_BLOCKER);
 
-	private static final ResourceLocation FIND_ME_MISSION = new ResourceLocation(MODID, "creeper2");
-	private static final ResourceLocation FINAL_MISSION = new ResourceLocation(MODID, "creeper3");
-
 	@Override
 	public void tick() {
-		if(this.isNoAi()) {
-			if(--this.checkNearbyPlayers <= 0) {
-				this.checkNearbyPlayers = 100;
-				if (this.level() instanceof ServerLevel serverLevel) {
-						serverLevel.players().stream().filter(player -> player.closerThan(this, 6.0D)).findAny().ifPresent(player -> {
-							if(player instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), FIND_ME_MISSION)) {
-								this.setNoAi(false);
-								this.setLikedPlayer(player.getUUID());
-								MissionHelper.triggerMissionForPlayer(
-										FIND_ME_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE,
-										player, this, player1 -> {
-										}
-								);
-							}
-						});
-				}
-			}
-		} else if(this.likedPlayer != null) {
-			if(--this.checkNearbyPlayers <= 0) {
-				this.checkNearbyPlayers = 100;
-				if (this.level() instanceof ServerLevel serverLevel) {
-					if(this.receiveMissionTick == -1) {
-						BlockPos blockPos = this.blockPosition();
-						if(serverLevel.structureManager().getStructureWithPieceAt(blockPos, RPMStructureKeys.CREEPER_TOWN).isValid()) {
-							MissionHelper.triggerMissionForPlayers(
-									FIND_ME_MISSION, SummonBlockEntity.SummonMissionType.FINISH,
-									serverLevel, player -> player.closerThan(this, 16.0D), this, player -> this.setLikedPlayer(null)
-							);
-							this.restrictTo(blockPos, 16);
-						}
-					} else if(this.receiveMissionTick == -2) {
-						Player player = serverLevel.getPlayerByUUID(this.likedPlayer);
-						if(player != null && player.closerThan(this, 8.0D)) {
-							MissionHelper.triggerMissionForPlayers(
-									FINAL_MISSION, SummonBlockEntity.SummonMissionType.FINISH,
-									serverLevel, player1 -> player1.closerThan(this, 16.0D), this, player1 -> this.setLikedPlayer(null)
-							);
-							this.restrictTo(player.blockPosition(), 16);
-						}
-					}
-				}
-			}
-		} else {
-			if(--this.checkNearbyPlayers <= 0) {
-				this.checkNearbyPlayers = 100;
-				if (this.level() instanceof ServerLevel serverLevel) {
-					serverLevel.players().stream().filter(player -> player.closerThan(this, 8.0D) && player.getInventory().contains(CREEPER3_TRIGGER_ITEM)).findAny().ifPresent(player -> {
-						if(player instanceof IMonsterHero hero &&
-								IMonsterHero.isAtMissionsBetween(hero.getPlayerMissions(), FIND_ME_MISSION, FINAL_MISSION)) {
-							this.setNoAi(false);
-							this.setLikedPlayer(player.getUUID());
-							MissionHelper.triggerMissionForPlayer(
-									FINAL_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE,
-									player, this, player1 -> this.receiveMissionTick = this.tickCount
-							);
-						}
-					});
+		if(--this.checkNearbyPlayers <= 0) {
+			this.checkNearbyPlayers = 100;
+			if (this.level() instanceof ServerLevel serverLevel) {
+				PinkCreeperMissions mission = this.getTriggerableMission();
+				if(mission != null) {
+					mission.tryTrigger(serverLevel, this);
 				}
 			}
 		}
+
 		super.tick();
 	}
 
@@ -323,5 +289,96 @@ public class PinkCreeperEntity extends PathfinderMob {
 				PinkCreeperEntity.this.getNavigation().moveTo(this.player, 1.0D);
 			}
 		}
+	}
+
+	public enum PinkCreeperMissions implements IMissionProvider.TriggerableMission<PinkCreeperEntity> {
+		MEET_FIRST_TIME("creeper2", MissionType.RECEIVE) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, PinkCreeperEntity outer) {
+				return serverLevel.players().stream()
+						.filter(
+								player -> player.closerThan(outer, 6.0D) &&
+										player instanceof IMonsterHero hero &&
+										!IMonsterHero.completeMission(hero.getPlayerMissions(), this.missionId)
+						).findAny().map(player -> {
+							outer.setNoAi(false);
+							outer.setLikedPlayer(player.getUUID());
+							MissionHelper.triggerMissionForPlayer(
+									this.missionId, this.type,
+									player, outer, player1 -> {
+									}
+							);
+							return true;
+						}).orElse(false);
+			}
+		},
+		LEAD_ME_TO_TOWN("creeper2", MissionType.FINISH) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, PinkCreeperEntity outer) {
+				BlockPos blockPos = outer.blockPosition();
+				if(serverLevel.structureManager().getStructureWithPieceAt(blockPos, RPMStructureKeys.CREEPER_TOWN).isValid()) {
+					MissionHelper.triggerMissionForPlayers(
+							this.missionId, this.type,
+							serverLevel, player -> player.closerThan(outer, 32.0D), outer, player -> outer.setLikedPlayer(null)
+					);
+					outer.restrictTo(blockPos, 16);
+					return true;
+				}
+				return false;
+			}
+		},
+		MAKE_EXPLOSION_BLOCKER("creeper3", MissionType.RECEIVE) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, PinkCreeperEntity outer) {
+				return serverLevel.players().stream()
+						.filter(player -> player.closerThan(outer, 8.0D) && player.getInventory().contains(CREEPER3_TRIGGER_ITEM))
+						.findAny().map(player -> {
+					if(player instanceof IMonsterHero hero &&
+							IMonsterHero.isAtMissionsBetween(hero.getPlayerMissions(), LEAD_ME_TO_TOWN.missionId, this.missionId)) {
+						outer.setNoAi(false);
+						outer.setLikedPlayer(player.getUUID());
+						outer.clearRestriction();
+						MissionHelper.triggerMissionForPlayer(
+								this.missionId, MissionType.RECEIVE,
+								player, outer, player1 -> outer.receiveMissionTick = outer.tickCount
+						);
+						return true;
+					}
+					return false;
+				}).orElse(false);
+			}
+		},
+		COME_BACK_AFTER_DISTRIBUTION("creeper3", MissionType.FINISH) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, PinkCreeperEntity outer) {
+				assert outer.likedPlayer != null;
+				Player liked = serverLevel.getPlayerByUUID(outer.likedPlayer);
+				if(liked != null && liked.closerThan(outer, 8.0D)) {
+					MissionHelper.triggerMissionForPlayers(
+							this.missionId, this.type,
+							serverLevel, player -> player.closerThan(outer, 16.0D), outer, player -> outer.setLikedPlayer(null)
+					);
+					outer.restrictTo(liked.blockPosition(), 16);
+					return true;
+				}
+				return false;
+			}
+		};
+
+		final ResourceLocation missionId;
+		final MissionType type;
+
+		PinkCreeperMissions(String mission, MissionType type) {
+			this.missionId = new ResourceLocation(MODID, mission);
+			this.type = type;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.missionId + "/" + this.type.getSerializedName();
+		}
+
+		@Override
+		public abstract boolean tryTrigger(ServerLevel serverLevel, PinkCreeperEntity outer);
 	}
 }

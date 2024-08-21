@@ -1,7 +1,8 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.boss;
 
+import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
@@ -30,14 +31,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.UUID;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAttackMob {
+public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAttackMob, IMissionProvider {
 	private int remainingPersistentAngerTime;
 
 	@Nullable
@@ -137,20 +138,25 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 		return super.hurt(damageSource, v);
 	}
 
+	@Override @Nullable
+	public SkeletonKingMissions getTriggerableMission() {
+		return null;
+	}
+
 	@Override
 	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
 		if(player instanceof ServerPlayer serverPlayer) {
 			if (itemInHand.is(RPMItems.Materials.CRYSTAL_SKULL.get())) {
 				MissionHelper.triggerMissionForPlayer(
-						new ResourceLocation(MODID, "skeleton3"), SummonBlockEntity.SummonMissionType.RECEIVE, serverPlayer,
+						SkeletonKingMissions.GIVE_ME_CRYSTAL_SKULL.missionId(), SkeletonKingMissions.GIVE_ME_CRYSTAL_SKULL.type(), serverPlayer,
 						this, player1 -> player1.getItemInHand(hand).shrink(1)
 				);
 				return InteractionResult.CONSUME;
 			}
 			if (itemInHand.is(Items.SOUL_SOIL) && itemInHand.getCount() >= 64) {
 				MissionHelper.triggerMissionForPlayer(
-						new ResourceLocation(MODID, "skeleton3"), SummonBlockEntity.SummonMissionType.FINISH, serverPlayer,
+						SkeletonKingMissions.GIVE_ME_SOUL_SOIL.missionId(), SkeletonKingMissions.GIVE_ME_SOUL_SOIL.type(), serverPlayer,
 						this, player1 -> {
 							player1.getItemInHand(hand).shrink(64);
 							this.getMainHandItem().setCount(0);
@@ -245,6 +251,37 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 					this.attackTime = this.attackIntervalMin;
 				}
 			}
+		}
+	}
+
+	public enum SkeletonKingMissions implements IMissionProvider.TriggerableMission<SkeletonKing> {
+		GIVE_ME_CRYSTAL_SKULL("skeleton3", MissionType.RECEIVE),
+		GIVE_ME_SOUL_SOIL("skeleton3", MissionType.FINISH);
+
+		final ResourceLocation missionId;
+		final MissionType type;
+
+		SkeletonKingMissions(String mission, MissionType type) {
+			this.missionId = new ResourceLocation(MODID, mission);
+			this.type = type;
+		}
+
+		public ResourceLocation missionId() {
+			return missionId;
+		}
+
+		public MissionType type() {
+			return type;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.missionId + "/" + this.type.getSerializedName();
+		}
+
+		@Override
+		public boolean tryTrigger(ServerLevel serverLevel, SkeletonKing outer) {
+			return false;
 		}
 	}
 }

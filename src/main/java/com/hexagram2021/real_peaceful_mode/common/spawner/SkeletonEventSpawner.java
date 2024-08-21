@@ -2,7 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.spawner;
 
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IRightArmDetachable;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
@@ -73,14 +73,14 @@ public class SkeletonEventSpawner extends AbstractEventSpawner<Skeleton> {
 					monster.rpm$setRandomEventNpcAction((player, itemStack) -> {
 						if(itemStack.isEmpty()) {
 							MissionHelper.triggerMissionForPlayer(
-									SKELETON_ARM_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE, player,
+									SKELETON_ARM_MISSION, MissionType.RECEIVE, player,
 									skeleton, player1 -> {}
 							);
 							return true;
 						}
 						if(itemStack.is(RPMItems.DebugItems.SKELETON_ARM.get())) {
 							MissionHelper.triggerMissionForPlayer(
-									SKELETON_ARM_MISSION, SummonBlockEntity.SummonMissionType.FINISH, player,
+									SKELETON_ARM_MISSION, MissionType.FINISH, player,
 									skeleton, player1 -> {
 										if(skeleton instanceof IRightArmDetachable rightArmDetachable) {
 											rightArmDetachable.setRightArmDetached(false);

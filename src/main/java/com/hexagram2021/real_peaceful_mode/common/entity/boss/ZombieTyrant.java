@@ -1,8 +1,9 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.boss;
 
 import com.google.common.collect.Sets;
+import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
@@ -18,6 +19,7 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -41,13 +43,12 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
-
 import java.util.List;
 import java.util.Set;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-public class ZombieTyrant extends Mob implements Enemy {
+public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 	private static final EntityDataAccessor<Integer> DATA_SPELL_COUNTER = SynchedEntityData.defineId(ZombieTyrant.class, EntityDataSerializers.INT);
 
 	private final ServerBossEvent bossEvent = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.GREEN, BossEvent.BossBarOverlay.PROGRESS);
@@ -140,14 +141,13 @@ public class ZombieTyrant extends Mob implements Enemy {
 		this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
 	}
 
-	private static final ResourceLocation LAST_MISSION = new ResourceLocation(MODID, "zombie3");
 	@Override
 	public boolean hurt(DamageSource damageSource, float v) {
 		Entity entity = damageSource.getEntity();
 		if(entity instanceof IMonsterHero hero) {
-			if(!IMonsterHero.underMission(hero.getPlayerMissions(), LAST_MISSION)) {
-				this.heal(20.0F);
-				return super.hurt(damageSource, v / 5.0F);
+			if(!IMonsterHero.underMission(hero.getPlayerMissions(), ZombieTyrantMissions.KILL_ME.missionId())) {
+				this.heal(10.0F);
+				return super.hurt(damageSource, (Mth.sqrt(v + 1.0F) - 1.0F) / 5.0F);
 			}
 			return super.hurt(damageSource, v);
 		}
@@ -179,25 +179,23 @@ public class ZombieTyrant extends Mob implements Enemy {
 	protected SoundEvent getDeathSound() {
 		return RPMSounds.ZOMBIE_TYRANT_DEATH;
 	}
+
+	@Override
+	public ZombieTyrantMissions getTriggerableMission() {
+		return ZombieTyrantMissions.KILL_ME;
+	}
 	
 	@Override
 	public void die(DamageSource damageSource) {
-		if(damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.underMission(hero.getPlayerMissions(), LAST_MISSION)) {
-			this.setHealth(100.0F);
-			return;
-		}
 		if(this.level() instanceof ServerLevel serverLevel) {
-			MissionHelper.triggerMissionForPlayers(
-					LAST_MISSION, SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
-					player -> player.closerThan(this, 32.0D), this, player -> {}
-			);
-			this.level().getEntitiesOfClass(DarkZombieKnight.class, this.getBoundingBox().inflate(16.0D), EntitySelector.ENTITY_STILL_ALIVE).forEach(knight -> knight.setTarget(null));
-			this.level().getEntitiesOfClass(Zombie.class, this.getBoundingBox().inflate(32.0D), EntitySelector.ENTITY_STILL_ALIVE)
-					.forEach(zombie -> {
-						if(zombie instanceof IFriendlyMonster monster) {
-							monster.rpm$setDance(true);
-						}
-					});
+			if(damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.underMission(hero.getPlayerMissions(), ZombieTyrantMissions.KILL_ME.missionId())) {
+				this.setHealth(100.0F);
+				return;
+			}
+			ZombieTyrantMissions mission = this.getTriggerableMission();
+			if(mission != null) {
+				mission.tryTrigger(serverLevel, this);
+			}
 		}
 		super.die(damageSource);
 	}
@@ -270,5 +268,49 @@ public class ZombieTyrant extends Mob implements Enemy {
 		protected SoundEvent getSpellSound() {
 			return RPMSounds.ZOMBIE_TYRANT_SPELL;
 		}
+	}
+
+	public enum ZombieTyrantMissions implements IMissionProvider.TriggerableMission<ZombieTyrant> {
+		KILL_ME("zombie3", MissionType.FINISH) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, ZombieTyrant outer) {
+				MissionHelper.triggerMissionForPlayers(
+						this.missionId, this.type, serverLevel,
+						player -> player.closerThan(outer, 32.0D), outer, player -> {}
+				);
+				outer.level().getEntitiesOfClass(DarkZombieKnight.class, outer.getBoundingBox().inflate(16.0D), EntitySelector.ENTITY_STILL_ALIVE).forEach(knight -> knight.setTarget(null));
+				outer.level().getEntitiesOfClass(Zombie.class, outer.getBoundingBox().inflate(32.0D), EntitySelector.ENTITY_STILL_ALIVE)
+						.forEach(zombie -> {
+							if(zombie instanceof IFriendlyMonster monster) {
+								monster.rpm$setDance(true);
+							}
+						});
+				return true;
+			}
+		};
+
+		final ResourceLocation missionId;
+		final MissionType type;
+
+		ZombieTyrantMissions(String mission, MissionType type) {
+			this.missionId = new ResourceLocation(MODID, mission);
+			this.type = type;
+		}
+
+		public ResourceLocation missionId() {
+			return missionId;
+		}
+
+		public MissionType type() {
+			return type;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.missionId + "/" + this.type.getSerializedName();
+		}
+
+		@Override
+		public abstract boolean tryTrigger(ServerLevel serverLevel, ZombieTyrant outer);
 	}
 }

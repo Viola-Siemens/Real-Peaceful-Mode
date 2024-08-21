@@ -1,7 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.entity;
 
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockTags;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +24,7 @@ public interface ICrackable {
 		if(projectile.level() instanceof ServerLevel serverLevel && projectile.rpm$getCrackable() && target.is(RPMBlockTags.CRACKABLE)) {
 			if(target.is(RPMBlocks.Decoration.INFESTED_GLOWING_CRYSTAL.get())) {
 				MissionHelper.triggerMissionForPlayers(
-						new ResourceLocation(MODID, "skeleton1"), SummonBlockEntity.SummonMissionType.FINISH,
+						new ResourceLocation(MODID, "skeleton1"), MissionType.FINISH,
 						serverLevel, player -> player.closerThan(projectile, 32.0D), null, player -> {}
 				);
 				ExperienceOrb.award(serverLevel, blockHitResult.getBlockPos().getCenter(), 80);

@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.block.entity;
 
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.block.CultureTableBlock;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.CultureTableMenu;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
@@ -33,7 +34,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
@@ -200,7 +202,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 			if(cnt >= 2) {
 				this.items.set(SLOT_RESULT, new ItemStack(RPMItems.Materials.EXPERIMENT_FLOWER));
 				MissionHelper.triggerMissionForPlayers(
-						new ResourceLocation(MODID, "creeper1"), SummonBlockEntity.SummonMissionType.FINISH,
+						new ResourceLocation(MODID, "creeper1"), MissionType.FINISH,
 						serverLevel, player -> player.position().closerThan(this.getBlockPos().getCenter(), 32.0D),
 						null, player -> {}
 				);

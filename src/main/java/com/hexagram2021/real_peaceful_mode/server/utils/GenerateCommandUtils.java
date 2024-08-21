@@ -133,9 +133,9 @@ public final class GenerateCommandUtils {
 			}
 		}
 		if(maze.isAir(2 * length, 2 * length)) {
-			generateBox(serverLevel, PLACE_AIR, startPos, fullLength - 1, 0, fullLength - 1, fullLength - 1, 3, fullLength - 1, xp, zp);
+			generateBox(serverLevel, PLACE_AIR, startPos, fullLength - 1, 0, fullLength - 1, fullLength, 3, fullLength, xp, zp);
 		} else {
-			generateBox(serverLevel, placeWall, startPos, fullLength - 1, 0, fullLength - 1, fullLength - 1, 3, fullLength - 1, xp, zp);
+			generateBox(serverLevel, placeWall, startPos, fullLength - 1, 0, fullLength - 1, fullLength, 3, fullLength, xp, zp);
 		}
 
 		RPMLogger.info("Successfully generate maze at (%d, %d, %d).".formatted(startPos.getX(), startPos.getY(), startPos.getZ()));

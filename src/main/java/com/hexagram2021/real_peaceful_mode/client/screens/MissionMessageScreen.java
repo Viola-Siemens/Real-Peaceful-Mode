@@ -15,8 +15,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
@@ -39,7 +39,7 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 
 	private void loadCachedText() {
 		List<MissionManager.Mission.Message> messages = this.menu.getMission().messages();
-		if(messages.size() > 0) {
+		if(messages.size() > this.messageIndex) {
 			this.cachedText = this.font.split(Component.translatable(messages.get(this.messageIndex).messageKey()), 140);
 		}
 	}

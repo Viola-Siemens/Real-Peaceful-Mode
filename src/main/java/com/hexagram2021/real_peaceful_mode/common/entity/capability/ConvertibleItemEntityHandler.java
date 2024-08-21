@@ -8,7 +8,8 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class ConvertibleItemEntityHandler implements ICapabilityProvider, INBTSerializable<Tag> {
 	private final ItemEntityConvertible itemEntityConvertible;

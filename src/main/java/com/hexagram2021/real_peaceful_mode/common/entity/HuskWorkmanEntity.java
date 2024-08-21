@@ -1,7 +1,8 @@
 package com.hexagram2021.real_peaceful_mode.common.entity;
 
+import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-public class HuskWorkmanEntity extends PathfinderMob {
+public class HuskWorkmanEntity extends PathfinderMob implements IMissionProvider {
 	public HuskWorkmanEntity(EntityType<? extends HuskWorkmanEntity> entityType, Level level) {
 		super(entityType, level);
 	}
@@ -69,24 +70,25 @@ public class HuskWorkmanEntity extends PathfinderMob {
 		return SoundEvents.HUSK_DEATH;
 	}
 
-	private int checkNearbyPlayers = 100;
+	@Override
+	public HuskWorkmanMissions getTriggerableMission() {
+		if(this.isNoAi()) {
+			return HuskWorkmanMissions.MEET_FIRST_TIME;
+		}
+		return null;
+	}
 
-	private static final ResourceLocation FIND_ME_MISSION = new ResourceLocation(MODID, "husk2");
+	private int checkNearbyPlayers = 100;
 
 	@Override
 	public void tick() {
 		if(--this.checkNearbyPlayers <= 0) {
 			this.checkNearbyPlayers = 100;
 			if (this.level() instanceof ServerLevel serverLevel) {
-				serverLevel.players().stream().filter(player -> player.closerThan(this, 6.0D)).findAny().ifPresent(player -> {
-					if(player instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), FIND_ME_MISSION)) {
-						this.setNoAi(false);
-						MissionHelper.triggerMissionForPlayer(
-								FIND_ME_MISSION, SummonBlockEntity.SummonMissionType.RECEIVE,
-								player, this, player1 -> {}
-						);
-					}
-				});
+				HuskWorkmanMissions mission = this.getTriggerableMission();
+				if(mission != null) {
+					mission.tryTrigger(serverLevel, this);
+				}
 			}
 		}
 		super.tick();
@@ -98,7 +100,7 @@ public class HuskWorkmanEntity extends PathfinderMob {
 		if(itemInHand.is(RPMItems.Materials.PAC.get())) {
 			if(player instanceof ServerPlayer serverPlayer) {
 				MissionHelper.triggerMissionForPlayer(
-						FIND_ME_MISSION, SummonBlockEntity.SummonMissionType.FINISH, serverPlayer,
+						HuskWorkmanMissions.GET_PAC.missionId(), HuskWorkmanMissions.GET_PAC.type(), serverPlayer,
 						this, player1 -> player1.getItemInHand(hand).shrink(1)
 				);
 				return InteractionResult.CONSUME;
@@ -114,5 +116,54 @@ public class HuskWorkmanEntity extends PathfinderMob {
 		if (!this.level().isClientSide && this.isAlive() && this.tickCount % 20 == 0) {
 			this.heal(1.0F);
 		}
+	}
+
+	public enum HuskWorkmanMissions implements IMissionProvider.TriggerableMission<HuskWorkmanEntity> {
+		MEET_FIRST_TIME("husk2", MissionType.RECEIVE) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, HuskWorkmanEntity outer) {
+				return serverLevel.players().stream().filter(player -> player.closerThan(outer, 6.0D)).findAny().map(player -> {
+					if(player instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), this.missionId)) {
+						outer.setNoAi(false);
+						MissionHelper.triggerMissionForPlayer(
+								this.missionId, this.type,
+								player, outer, player1 -> {}
+						);
+						return true;
+					}
+					return false;
+				}).orElse(false);
+			}
+		},
+		GET_PAC("husk2", MissionType.FINISH) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, HuskWorkmanEntity outer) {
+				return false;
+			}
+		};
+
+		final ResourceLocation missionId;
+		final MissionType type;
+
+		HuskWorkmanMissions(String mission, MissionType type) {
+			this.missionId = new ResourceLocation(MODID, mission);
+			this.type = type;
+		}
+
+		public ResourceLocation missionId() {
+			return missionId;
+		}
+
+		public MissionType type() {
+			return type;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.missionId + "/" + this.type.getSerializedName();
+		}
+
+		@Override
+		public abstract boolean tryTrigger(ServerLevel serverLevel, HuskWorkmanEntity outer);
 	}
 }

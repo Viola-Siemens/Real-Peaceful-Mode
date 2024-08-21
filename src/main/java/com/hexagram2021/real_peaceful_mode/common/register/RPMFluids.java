@@ -1,7 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.fluid.MagicPoolWaterFluid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -99,7 +99,7 @@ public class RPMFluids {
 							int distance = 16;
 							serverLevel.getPlayers(player -> player.closerThan(itemEntity, distance)).forEach(player -> player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 160)));
 							MissionHelper.triggerMissionForPlayers(
-									new ResourceLocation(MODID, "zombie2"), SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
+									new ResourceLocation(MODID, "zombie2"), MissionType.FINISH, serverLevel,
 									player -> player.closerThan(itemEntity, distance), null, player -> {}
 							);
 							itemEntity.discard();

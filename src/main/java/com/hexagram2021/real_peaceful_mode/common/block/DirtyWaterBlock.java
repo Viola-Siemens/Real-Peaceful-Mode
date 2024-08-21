@@ -1,12 +1,10 @@
 package com.hexagram2021.real_peaceful_mode.common.block;
 
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
-import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.HuskWorkmanEntity;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -26,8 +24,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 @SuppressWarnings("deprecation")
 public class DirtyWaterBlock extends Block {
@@ -83,9 +79,9 @@ public class DirtyWaterBlock extends Block {
 					serverLevel.addFreshEntity(new ItemEntity(serverLevel, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), loot));
 				}
 				level.getEntities(itemEntity, itemEntity.getBoundingBox().inflate(16.0D)).stream()
-						.filter(e -> e instanceof HuskWorkmanEntity).map(e -> (HuskWorkmanEntity) e).findAny()
+						.filter(e -> e instanceof HuskWorkmanEntity).findAny().map(e -> (HuskWorkmanEntity) e)
 						.ifPresent(huskWorkman -> MissionHelper.triggerMissionForPlayers(
-								new ResourceLocation(MODID, "husk2"), SummonBlockEntity.SummonMissionType.FINISH, serverLevel,
+								HuskWorkmanEntity.HuskWorkmanMissions.GET_PAC.missionId(), HuskWorkmanEntity.HuskWorkmanMissions.GET_PAC.type(), serverLevel,
 								player -> huskWorkman.closerThan(player, 16.0D), huskWorkman, player -> {}
 						));
 				itemEntity.discard();

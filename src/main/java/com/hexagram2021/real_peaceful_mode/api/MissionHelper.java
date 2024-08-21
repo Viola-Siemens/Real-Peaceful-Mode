@@ -30,7 +30,7 @@ public class MissionHelper {
 	 *
 	 * @see com.hexagram2021.real_peaceful_mode.common.register.RPMFluids#DARK_MAGIC_POOL_WATER_FLUID
 	 * @see com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant#die
-	 * @see com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity.SummonMissionType
+	 * @see MissionType
 	 *
 	 * @param missionId				Mission ID (for example, "real_peaceful_mode:zombie3") of the triggered mission.
 	 * @param summonMissionType		RECEIVE for receiving a new mission, FINISH for finishing a mission.
@@ -43,7 +43,7 @@ public class MissionHelper {
 	 *                          the mission are monologue of player.
 	 * @param additionWork			Additional works to do with each related players.
 	 */
-	public static void triggerMissionForPlayers(ResourceLocation missionId, SummonBlockEntity.SummonMissionType summonMissionType,
+	public static void triggerMissionForPlayers(ResourceLocation missionId, MissionType summonMissionType,
 												ServerLevel serverLevel, Predicate<ServerPlayer> predicate, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
 		ForgeEventHandler.getMissionManager().getMission(missionId).ifPresent(mission -> triggerMissionForPlayers(
 				mission, summonMissionType, serverLevel.getPlayers(predicate),
@@ -55,7 +55,7 @@ public class MissionHelper {
 	/**
 	 * API for custom mods to trigger mission on/off for a single player.
 	 *
-	 * @see com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity#tick
+	 * @see com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity.PinkCreeperMissions#MEET_FIRST_TIME
 	 *
 	 * @param missionId				Mission ID (for example, "real_peaceful_mode:zombie3") of the triggered mission.
 	 * @param summonMissionType		RECEIVE for receiving a new mission, FINISH for finishing a mission.
@@ -64,7 +64,7 @@ public class MissionHelper {
 	 *                          the mission are monologue of player.
 	 * @param additionWork			Additional works to do with the player when trigger the mission.
 	 */
-	public static void triggerMissionForPlayer(ResourceLocation missionId, SummonBlockEntity.SummonMissionType summonMissionType,
+	public static void triggerMissionForPlayer(ResourceLocation missionId, MissionType summonMissionType,
 											   ServerPlayer player, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
 		ForgeEventHandler.getMissionManager().getMission(missionId).ifPresent(mission -> triggerMissionForPlayer(
 				mission, summonMissionType, player,
@@ -75,13 +75,13 @@ public class MissionHelper {
 
 	//You don't need to call this api lol.
 	@ApiStatus.Internal
-	public static void triggerMissionForPlayers(MissionManager.Mission mission, SummonBlockEntity.SummonMissionType summonMissionType,
+	public static void triggerMissionForPlayers(MissionManager.Mission mission, MissionType summonMissionType,
 												List<ServerPlayer> players, IPlayerListWithMissions playerList, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
 		players.forEach(player -> triggerMissionForPlayer(mission, summonMissionType, player, playerList, npc, additionWork));
 	}
 
 	@ApiStatus.Internal
-	public static void triggerMissionForPlayer(MissionManager.Mission mission, SummonBlockEntity.SummonMissionType summonMissionType,
+	public static void triggerMissionForPlayer(MissionManager.Mission mission, MissionType summonMissionType,
 											   ServerPlayer player, IPlayerListWithMissions playerList, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
 		if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && checkMission(hero, summonMissionType, mission)) {
 			PlayerMissions playerMissions = playerList.rpm$getPlayerMissions(player);
@@ -92,8 +92,20 @@ public class MissionHelper {
 		}
 	}
 
+	public static boolean checkMission(IMonsterHero hero, MissionType type, ResourceLocation missionId) {
+		return ForgeEventHandler.getMissionManager().getMission(missionId).map(mission -> checkMission(
+				hero, type, mission
+		)).orElse(false);
+	}
+
+	public static boolean checkMissionLesser(IMonsterHero hero, MissionType type, ResourceLocation missionId) {
+		return ForgeEventHandler.getMissionManager().getMission(missionId).map(mission -> checkMissionLesser(
+				hero, type, mission
+		)).orElse(false);
+	}
+
 	@ApiStatus.Internal
-	public static boolean checkMission(IMonsterHero hero, SummonBlockEntity.SummonMissionType type, @Nullable MissionManager.Mission mission) {
+	public static boolean checkMission(IMonsterHero hero, MissionType type, @Nullable MissionManager.Mission mission) {
 		PlayerMissions playerMissions = hero.getPlayerMissions();
 		if(mission == null) {
 			return true;
@@ -102,8 +114,32 @@ public class MissionHelper {
 		if(IMonsterHero.missionDisabled(missionId)) {
 			return false;
 		}
-		if (type == SummonBlockEntity.SummonMissionType.RECEIVE) {
+		if (type == MissionType.RECEIVE) {
 			if(IMonsterHero.underMission(playerMissions, missionId) || IMonsterHero.completeMission(playerMissions, missionId)) {
+				return false;
+			}
+			for(ResourceLocation former: mission.formers()) {
+				if(!IMonsterHero.missionDisabled(former) && !IMonsterHero.completeMission(playerMissions, former)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return IMonsterHero.underMission(playerMissions, missionId);
+	}
+
+	@ApiStatus.Internal
+	public static boolean checkMissionLesser(IMonsterHero hero, MissionType type, @Nullable MissionManager.Mission mission) {
+		PlayerMissions playerMissions = hero.getPlayerMissions();
+		if(mission == null) {
+			return true;
+		}
+		ResourceLocation missionId = mission.id();
+		if(IMonsterHero.missionDisabled(missionId)) {
+			return false;
+		}
+		if (type == MissionType.RECEIVE) {
+			if(IMonsterHero.completeMission(playerMissions, missionId)) {
 				return false;
 			}
 			for(ResourceLocation former: mission.formers()) {
