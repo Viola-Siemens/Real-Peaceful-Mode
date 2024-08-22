@@ -5,6 +5,7 @@ import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.SkeletonSkullEntity;
+import com.hexagram2021.real_peaceful_mode.common.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.resources.ResourceLocation;
@@ -131,7 +132,7 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 	@Override
 	public boolean hurt(DamageSource damageSource, float v) {
 		Entity entity = damageSource.getEntity();
-		if(entity instanceof IMonsterHero hero && hero.isHero(EntityType.SKELETON)) {
+		if(entity instanceof IMonsterHero hero && hero.rpm$isHero(EntityType.SKELETON)) {
 			return false;
 		}
 
@@ -254,7 +255,7 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 		}
 	}
 
-	public enum SkeletonKingMissions implements IMissionProvider.TriggerableMission<SkeletonKing> {
+	public enum SkeletonKingMissions implements IMissionProvider.TriggerableMission<SkeletonKing>, IMissionStack {
 		GIVE_ME_CRYSTAL_SKULL("skeleton3", MissionType.RECEIVE),
 		GIVE_ME_SOUL_SOIL("skeleton3", MissionType.FINISH);
 
@@ -266,10 +267,12 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 			this.type = type;
 		}
 
+		@Override
 		public ResourceLocation missionId() {
 			return missionId;
 		}
 
+		@Override
 		public MissionType type() {
 			return type;
 		}

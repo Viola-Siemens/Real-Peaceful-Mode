@@ -1,7 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.client.screens;
 
 import com.google.common.collect.ImmutableList;
-import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -39,15 +39,15 @@ public class MissionListScreen extends Screen {
 
 	public static final ResourceLocation BG_LOCATION = new ResourceLocation(MODID, "textures/gui/mission_list.png");
 
-	private final List<MissionManager.Mission> activeMissions;
-	private final List<MissionManager.Mission> finishedMissions;
+	private final List<Mission> activeMissions;
+	private final List<Mission> finishedMissions;
 
-	private List<Tuple<MissionManager.Mission, Boolean>> shadows;
+	private List<Tuple<Mission, Boolean>> shadows;
 
 	@Nullable
 	private List<FormattedCharSequence> noMissionText = null;
 
-	public MissionListScreen(List<MissionManager.Mission> activeMissions, List<MissionManager.Mission> finishedMissions) {
+	public MissionListScreen(List<Mission> activeMissions, List<Mission> finishedMissions) {
 		super(Component.translatable("title.real_peaceful_mode.menu.mission_list"));
 		this.activeMissions = activeMissions;
 		this.finishedMissions = finishedMissions;
@@ -135,7 +135,7 @@ public class MissionListScreen extends Screen {
 				Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
 				this.showFinished = !this.showFinished;
 				if(this.showFinished) {
-					ImmutableList.Builder<Tuple<MissionManager.Mission, Boolean>> builder = ImmutableList.builder();
+					ImmutableList.Builder<Tuple<Mission, Boolean>> builder = ImmutableList.builder();
 					builder.addAll(this.activeMissions.stream().map(mission -> new Tuple<>(mission, true)).collect(Collectors.toList()));
 					builder.addAll(this.finishedMissions.stream().map(mission -> new Tuple<>(mission, false)).collect(Collectors.toList()));
 					this.shadows = builder.build();

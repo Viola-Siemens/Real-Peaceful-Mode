@@ -3,7 +3,7 @@ package com.hexagram2021.real_peaceful_mode.client;
 import com.hexagram2021.real_peaceful_mode.client.screens.MissionListScreen;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMission;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
-import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public final class ScreenManager {
-	public static void openMissionListScreen(List<MissionManager.Mission> activeMissions, List<MissionManager.Mission> finishedMissions) {
+	public static void openMissionListScreen(List<Mission> activeMissions, List<Mission> finishedMissions) {
 		Minecraft.getInstance().setScreen(new MissionListScreen(activeMissions, finishedMissions));
 	}
 

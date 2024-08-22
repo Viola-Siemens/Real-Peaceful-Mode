@@ -5,7 +5,7 @@ import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.client.ScreenManager;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
-import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
 import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -23,15 +23,15 @@ import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.get
 
 public class GetMissionsPacket implements IRPMPacket {
 	private final PacketType type;
-	private final List<MissionManager.Mission> activeMissions;
-	private final List<MissionManager.Mission> finishedMissions;
+	private final List<Mission> activeMissions;
+	private final List<Mission> finishedMissions;
 
 	public GetMissionsPacket() {
 		this.type = PacketType.REQUEST;
 		this.activeMissions = List.of();
 		this.finishedMissions = List.of();
 	}
-	public GetMissionsPacket(List<MissionManager.Mission> activeMissions, List<MissionManager.Mission> finishedMissions) {
+	public GetMissionsPacket(List<Mission> activeMissions, List<Mission> finishedMissions) {
 		this.type = PacketType.RESPONSE;
 		this.activeMissions = activeMissions;
 		this.finishedMissions = finishedMissions;
@@ -48,7 +48,7 @@ public class GetMissionsPacket implements IRPMPacket {
 			ResourceLocation loot = readerBuf.readResourceLocation();
 			boolean lootBefore = readerBuf.readBoolean();
 			boolean isRandomEvent = readerBuf.readBoolean();
-			return new MissionManager.Mission(id, List.of(), List.of(), List.of(), entityType, loot, lootBefore, isRandomEvent);
+			return new Mission(id, List.of(), List.of(), List.of(), entityType, loot, lootBefore, isRandomEvent);
 		});
 		this.finishedMissions = buf.readCollection(Lists::newArrayListWithCapacity, readerBuf -> {
 			ResourceLocation id = readerBuf.readResourceLocation();
@@ -59,7 +59,7 @@ public class GetMissionsPacket implements IRPMPacket {
 			ResourceLocation loot = readerBuf.readResourceLocation();
 			boolean lootBefore = readerBuf.readBoolean();
 			boolean isRandomEvent = readerBuf.readBoolean();
-			return new MissionManager.Mission(id, List.of(), List.of(), List.of(), entityType, loot, lootBefore, isRandomEvent);
+			return new Mission(id, List.of(), List.of(), List.of(), entityType, loot, lootBefore, isRandomEvent);
 		});
 	}
 
@@ -91,11 +91,11 @@ public class GetMissionsPacket implements IRPMPacket {
 				ScreenManager.openMissionListScreen(this.activeMissions, this.finishedMissions);
 			} else {
 				PlayerMissions playerMissions = ((IPlayerListWithMissions) Objects.requireNonNull(sender.getServer()).getPlayerList()).rpm$getPlayerMissions(sender);
-				List<MissionManager.Mission> activeMissions = playerMissions.getActiveMissions()
+				List<Mission> activeMissions = playerMissions.getActiveMissions()
 						.stream().map(id -> ForgeEventHandler.getMissionManager().getMission(id))
 						.filter(Optional::isPresent).map(Optional::get)
 						.toList();
-				List<MissionManager.Mission> finishedMissions = playerMissions.getFinishedMissions()
+				List<Mission> finishedMissions = playerMissions.getFinishedMissions()
 						.stream().map(id -> ForgeEventHandler.getMissionManager().getMission(id))
 						.filter(Optional::isPresent).map(Optional::get)
 						.toList();

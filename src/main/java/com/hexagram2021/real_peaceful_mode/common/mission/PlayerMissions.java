@@ -94,7 +94,7 @@ public class PlayerMissions {
 		this.finishedMissions.addAll(other.finishedMissions);
 	}
 
-	public void receiveNewMission(MissionManager.Mission mission, @Nullable LivingEntity npc, Consumer<ServerPlayer> toDoExtra) {
+	public void receiveNewMission(Mission mission, @Nullable LivingEntity npc, Consumer<ServerPlayer> toDoExtra) {
 		if (this.player instanceof FakePlayer) {
 			return;
 		}
@@ -112,7 +112,7 @@ public class PlayerMissions {
 		}
 	}
 
-	public void finishMission(MissionManager.Mission mission, @Nullable LivingEntity npc, Consumer<ServerPlayer> toDoExtra) {
+	public void finishMission(Mission mission, @Nullable LivingEntity npc, Consumer<ServerPlayer> toDoExtra) {
 		if (this.player instanceof FakePlayer) {
 			return;
 		}
@@ -138,7 +138,7 @@ public class PlayerMissions {
 		this.activeMissions.remove(id);
 	}
 
-	public void afterReceiveMission(MissionManager.Mission mission, Consumer<ServerPlayer> toDoExtra) {
+	public void afterReceiveMission(Mission mission, Consumer<ServerPlayer> toDoExtra) {
 		this.player.sendSystemMessage(Component.translatable(
 				"message.real_peaceful_mode.receive_mission",
 				ComponentUtils.wrapInSquareBrackets(
@@ -154,7 +154,7 @@ public class PlayerMissions {
 		toDoExtra.accept(this.player);
 	}
 
-	public void afterFinishMission(MissionManager.Mission mission, Consumer<ServerPlayer> toDoExtra) {
+	public void afterFinishMission(Mission mission, Consumer<ServerPlayer> toDoExtra) {
 		this.player.sendSystemMessage(Component.translatable(
 				"message.real_peaceful_mode.finish_mission",
 				ComponentUtils.wrapInSquareBrackets(
@@ -173,17 +173,17 @@ public class PlayerMissions {
 		toDoExtra.accept(this.player);
 	}
 
-	public static String getMissionDescriptionId(MissionManager.Mission mission) {
+	public static String getMissionDescriptionId(Mission mission) {
 		ResourceLocation id = mission.id();
 		return "mission.%s.%s.name".formatted(id.getNamespace(), id.getPath());
 	}
 
-	public static String getMissionInformationId(MissionManager.Mission mission) {
+	public static String getMissionInformationId(Mission mission) {
 		ResourceLocation id = mission.id();
 		return "mission.%s.%s.description".formatted(id.getNamespace(), id.getPath());
 	}
 
-	public static String getMissionAfterId(MissionManager.Mission mission) {
+	public static String getMissionAfterId(Mission mission) {
 		ResourceLocation id = mission.id();
 		return "mission.%s.%s.after".formatted(id.getNamespace(), id.getPath());
 	}

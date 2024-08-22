@@ -7,7 +7,7 @@ import com.hexagram2021.real_peaceful_mode.api.RandomEventSpawnerHelper;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
-import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
 import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper;
@@ -64,7 +64,7 @@ public class RPMCommands {
 			SharedSuggestionProvider.suggestResource(ForgeEventHandler.getMissionManager().getAllMissionIds(), builder);
 	private static final SuggestionProvider<CommandSourceStack> SUGGEST_EVENT_MISSION_IDS = (context, builder) ->
 			SharedSuggestionProvider.suggestResource(
-					ForgeEventHandler.getMissionManager().getAllMissions().stream().filter(MissionManager.Mission::isRandomEvent).map(MissionManager.Mission::id),
+					ForgeEventHandler.getMissionManager().getAllMissions().stream().filter(Mission::isRandomEvent).map(Mission::id),
 					builder
 			);
 	private static final SuggestionProvider<CommandSourceStack> SUGGEST_FRIENDLY_MONSTER_IDS = (context, builder) ->
@@ -278,7 +278,7 @@ public class RPMCommands {
 
 	private static int grant(ServerPlayer player, MissionType type, ResourceLocation missionId, boolean dialog, @Nullable Entity npc) throws CommandSyntaxException {
 		if(player instanceof IMonsterHero hero) {
-			MissionManager.Mission mission = ForgeEventHandler.getMissionManager().getMission(missionId).orElseThrow(() -> MISSION_NOT_EXIST.create(missionId.toString()));
+			Mission mission = ForgeEventHandler.getMissionManager().getMission(missionId).orElseThrow(() -> MISSION_NOT_EXIST.create(missionId.toString()));
 			Component missionName = Component.translatable(PlayerMissions.getMissionDescriptionId(mission))
 					.withStyle(ChatFormatting.GREEN)
 					.withStyle((style -> style.withHoverEvent(
@@ -294,8 +294,8 @@ public class RPMCommands {
 				);
 			} else {
 				switch (type) {
-					case RECEIVE -> hero.getPlayerMissions().afterReceiveMission(mission, player1 -> {});
-					case FINISH -> hero.getPlayerMissions().afterFinishMission(mission, player1 -> {});
+					case RECEIVE -> hero.rpm$getPlayerMissions().afterReceiveMission(mission, player1 -> {});
+					case FINISH -> hero.rpm$getPlayerMissions().afterFinishMission(mission, player1 -> {});
 				}
 			}
 			return Command.SINGLE_SUCCESS;
@@ -305,8 +305,8 @@ public class RPMCommands {
 
 	private static int showMissionList(ServerPlayer player, int showType) throws CommandSyntaxException {
 		if(player instanceof IMonsterHero hero) {
-			PlayerMissions playerMissions = hero.getPlayerMissions();
-			ForgeEventHandler.getMissionManager().getAllMissions().stream().sorted(Comparator.comparing(MissionManager.Mission::id)).forEach(mission -> {
+			PlayerMissions playerMissions = hero.rpm$getPlayerMissions();
+			ForgeEventHandler.getMissionManager().getAllMissions().stream().sorted(Comparator.comparing(Mission::id)).forEach(mission -> {
 				ResourceLocation id = mission.id();
 				Component missionName = Component.translatable(PlayerMissions.getMissionDescriptionId(mission))
 						.withStyle(ChatFormatting.GREEN)
@@ -342,7 +342,7 @@ public class RPMCommands {
 	}
 
 	private static int disableMission(@Nullable ServerPlayer player, ResourceLocation missionId) throws CommandSyntaxException {
-		MissionManager.Mission mission = ForgeEventHandler.getMissionManager().getMission(missionId).orElseThrow(() -> MISSION_NOT_EXIST.create(missionId.toString()));
+		Mission mission = ForgeEventHandler.getMissionManager().getMission(missionId).orElseThrow(() -> MISSION_NOT_EXIST.create(missionId.toString()));
 		Component missionName = Component.translatable(PlayerMissions.getMissionDescriptionId(mission))
 				.withStyle(ChatFormatting.GREEN)
 				.withStyle((style -> style.withHoverEvent(
@@ -367,7 +367,7 @@ public class RPMCommands {
 	}
 
 	private static int enableMission(@Nullable ServerPlayer player, ResourceLocation missionId) throws CommandSyntaxException {
-		MissionManager.Mission mission = ForgeEventHandler.getMissionManager().getMission(missionId).orElseThrow(() -> MISSION_NOT_EXIST.create(missionId.toString()));
+		Mission mission = ForgeEventHandler.getMissionManager().getMission(missionId).orElseThrow(() -> MISSION_NOT_EXIST.create(missionId.toString()));
 		Component missionName = Component.translatable(PlayerMissions.getMissionDescriptionId(mission))
 				.withStyle(ChatFormatting.GREEN)
 				.withStyle((style -> style.withHoverEvent(
@@ -443,7 +443,7 @@ public class RPMCommands {
 	}
 
 	private static int spawnEvent(@Nullable ServerPlayer player, ServerPlayer luckyDog, ResourceLocation missionId) throws CommandSyntaxException {
-		MissionManager.Mission mission = ForgeEventHandler.getMissionManager().getMission(missionId).orElseThrow(() -> MISSION_NOT_EXIST.create(missionId.toString()));
+		Mission mission = ForgeEventHandler.getMissionManager().getMission(missionId).orElseThrow(() -> MISSION_NOT_EXIST.create(missionId.toString()));
 		if(!mission.isRandomEvent()) {
 			throw RANDOM_EVENT_NOT_EXIST.create(missionId.toString());
 		}

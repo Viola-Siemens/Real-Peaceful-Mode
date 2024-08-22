@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.entity;
 import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
+import com.hexagram2021.real_peaceful_mode.common.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -118,12 +119,12 @@ public class HuskWorkmanEntity extends PathfinderMob implements IMissionProvider
 		}
 	}
 
-	public enum HuskWorkmanMissions implements IMissionProvider.TriggerableMission<HuskWorkmanEntity> {
+	public enum HuskWorkmanMissions implements IMissionProvider.TriggerableMission<HuskWorkmanEntity>, IMissionStack {
 		MEET_FIRST_TIME("husk2", MissionType.RECEIVE) {
 			@Override
 			public boolean tryTrigger(ServerLevel serverLevel, HuskWorkmanEntity outer) {
 				return serverLevel.players().stream().filter(player -> player.closerThan(outer, 6.0D)).findAny().map(player -> {
-					if(player instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.getPlayerMissions(), this.missionId)) {
+					if(player instanceof IMonsterHero hero && !IMonsterHero.completeMission(hero.rpm$getPlayerMissions(), this.missionId)) {
 						outer.setNoAi(false);
 						MissionHelper.triggerMissionForPlayer(
 								this.missionId, this.type,
@@ -150,10 +151,12 @@ public class HuskWorkmanEntity extends PathfinderMob implements IMissionProvider
 			this.type = type;
 		}
 
+		@Override
 		public ResourceLocation missionId() {
 			return missionId;
 		}
 
+		@Override
 		public MissionType type() {
 			return type;
 		}

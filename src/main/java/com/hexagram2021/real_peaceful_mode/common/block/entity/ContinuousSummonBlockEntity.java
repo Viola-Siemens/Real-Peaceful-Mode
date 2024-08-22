@@ -2,7 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.block.entity;
 
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
-import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
 import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -33,7 +33,7 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 	private CompoundTag summonTag;
 
 	@Nullable
-	private MissionManager.Mission mission;
+	private Mission mission;
 
 	private int distance = 16;
 
@@ -46,7 +46,7 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 	}
 
 	public ContinuousSummonBlockEntity(BlockPos blockPos, BlockState blockState,
-									   @Nullable CompoundTag summonTag, @Nullable MissionManager.Mission mission, int interval, int distance) {
+									   @Nullable CompoundTag summonTag, @Nullable Mission mission, int interval, int distance) {
 		this(blockPos, blockState);
 		this.summonTag = summonTag;
 		this.mission = mission;
@@ -129,8 +129,8 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 		this.interval = nbt.getInt(TAG_INTERVAL);
 	}
 
-	private static boolean checkMission(IMonsterHero hero, @Nullable MissionManager.Mission mission) {
-		PlayerMissions playerMissions = hero.getPlayerMissions();
+	private static boolean checkMission(IMonsterHero hero, @Nullable Mission mission) {
+		PlayerMissions playerMissions = hero.rpm$getPlayerMissions();
 		if(mission == null) {
 			return false;
 		}
@@ -138,8 +138,8 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 		return IMonsterHero.underMission(playerMissions, missionId);
 	}
 
-	private static boolean checkBlockReplace(IMonsterHero hero, @Nullable MissionManager.Mission mission) {
-		PlayerMissions playerMissions = hero.getPlayerMissions();
+	private static boolean checkBlockReplace(IMonsterHero hero, @Nullable Mission mission) {
+		PlayerMissions playerMissions = hero.rpm$getPlayerMissions();
 		if(mission == null) {
 			return false;
 		}

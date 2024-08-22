@@ -3,8 +3,9 @@ package com.hexagram2021.real_peaceful_mode.api;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.mission.Former;
 import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
-import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
 import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -75,13 +76,13 @@ public class MissionHelper {
 
 	//You don't need to call this api lol.
 	@ApiStatus.Internal
-	public static void triggerMissionForPlayers(MissionManager.Mission mission, MissionType summonMissionType,
+	public static void triggerMissionForPlayers(Mission mission, MissionType summonMissionType,
 												List<ServerPlayer> players, IPlayerListWithMissions playerList, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
 		players.forEach(player -> triggerMissionForPlayer(mission, summonMissionType, player, playerList, npc, additionWork));
 	}
 
 	@ApiStatus.Internal
-	public static void triggerMissionForPlayer(MissionManager.Mission mission, MissionType summonMissionType,
+	public static void triggerMissionForPlayer(Mission mission, MissionType summonMissionType,
 											   ServerPlayer player, IPlayerListWithMissions playerList, @Nullable LivingEntity npc, Consumer<ServerPlayer> additionWork) {
 		if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && checkMission(hero, summonMissionType, mission)) {
 			PlayerMissions playerMissions = playerList.rpm$getPlayerMissions(player);
@@ -105,8 +106,8 @@ public class MissionHelper {
 	}
 
 	@ApiStatus.Internal
-	public static boolean checkMission(IMonsterHero hero, MissionType type, @Nullable MissionManager.Mission mission) {
-		PlayerMissions playerMissions = hero.getPlayerMissions();
+	public static boolean checkMission(IMonsterHero hero, MissionType type, @Nullable Mission mission) {
+		PlayerMissions playerMissions = hero.rpm$getPlayerMissions();
 		if(mission == null) {
 			return true;
 		}
@@ -118,8 +119,8 @@ public class MissionHelper {
 			if(IMonsterHero.underMission(playerMissions, missionId) || IMonsterHero.completeMission(playerMissions, missionId)) {
 				return false;
 			}
-			for(ResourceLocation former: mission.formers()) {
-				if(!IMonsterHero.missionDisabled(former) && !IMonsterHero.completeMission(playerMissions, former)) {
+			for(Former former: mission.formers()) {
+				if(!former.checkComplete(playerMissions)) {
 					return false;
 				}
 			}
@@ -129,8 +130,8 @@ public class MissionHelper {
 	}
 
 	@ApiStatus.Internal
-	public static boolean checkMissionLesser(IMonsterHero hero, MissionType type, @Nullable MissionManager.Mission mission) {
-		PlayerMissions playerMissions = hero.getPlayerMissions();
+	public static boolean checkMissionLesser(IMonsterHero hero, MissionType type, @Nullable Mission mission) {
+		PlayerMissions playerMissions = hero.rpm$getPlayerMissions();
 		if(mission == null) {
 			return true;
 		}
@@ -142,8 +143,8 @@ public class MissionHelper {
 			if(IMonsterHero.completeMission(playerMissions, missionId)) {
 				return false;
 			}
-			for(ResourceLocation former: mission.formers()) {
-				if(!IMonsterHero.missionDisabled(former) && !IMonsterHero.completeMission(playerMissions, former)) {
+			for(Former former: mission.formers()) {
+				if(!former.checkComplete(playerMissions)) {
 					return false;
 				}
 			}

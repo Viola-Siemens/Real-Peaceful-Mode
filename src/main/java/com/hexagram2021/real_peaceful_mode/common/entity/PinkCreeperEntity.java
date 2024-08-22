@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.entity;
 import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
+import com.hexagram2021.real_peaceful_mode.common.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureKeys;
 import net.minecraft.core.BlockPos;
@@ -291,7 +292,7 @@ public class PinkCreeperEntity extends PathfinderMob implements IMissionProvider
 		}
 	}
 
-	public enum PinkCreeperMissions implements IMissionProvider.TriggerableMission<PinkCreeperEntity> {
+	public enum PinkCreeperMissions implements IMissionProvider.TriggerableMission<PinkCreeperEntity>, IMissionStack {
 		MEET_FIRST_TIME("creeper2", MissionType.RECEIVE) {
 			@Override
 			public boolean tryTrigger(ServerLevel serverLevel, PinkCreeperEntity outer) {
@@ -299,7 +300,7 @@ public class PinkCreeperEntity extends PathfinderMob implements IMissionProvider
 						.filter(
 								player -> player.closerThan(outer, 6.0D) &&
 										player instanceof IMonsterHero hero &&
-										!IMonsterHero.completeMission(hero.getPlayerMissions(), this.missionId)
+										!IMonsterHero.completeMission(hero.rpm$getPlayerMissions(), this.missionId)
 						).findAny().map(player -> {
 							outer.setNoAi(false);
 							outer.setLikedPlayer(player.getUUID());
@@ -334,7 +335,7 @@ public class PinkCreeperEntity extends PathfinderMob implements IMissionProvider
 						.filter(player -> player.closerThan(outer, 8.0D) && player.getInventory().contains(CREEPER3_TRIGGER_ITEM))
 						.findAny().map(player -> {
 					if(player instanceof IMonsterHero hero &&
-							IMonsterHero.isAtMissionsBetween(hero.getPlayerMissions(), LEAD_ME_TO_TOWN.missionId, this.missionId)) {
+							IMonsterHero.isAtMissionsBetween(hero.rpm$getPlayerMissions(), LEAD_ME_TO_TOWN.missionId, this.missionId)) {
 						outer.setNoAi(false);
 						outer.setLikedPlayer(player.getUUID());
 						outer.clearRestriction();
@@ -380,5 +381,15 @@ public class PinkCreeperEntity extends PathfinderMob implements IMissionProvider
 
 		@Override
 		public abstract boolean tryTrigger(ServerLevel serverLevel, PinkCreeperEntity outer);
+
+		@Override
+		public ResourceLocation missionId() {
+			return missionId;
+		}
+
+		@Override
+		public MissionType type() {
+			return type;
+		}
 	}
 }

@@ -8,6 +8,7 @@ import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.FlameEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
+import com.hexagram2021.real_peaceful_mode.common.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.core.BlockPos;
@@ -152,7 +153,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		}
 		Entity entity = damageSource.getEntity();
 		if(entity instanceof IMonsterHero hero) {
-			if(!IMonsterHero.underMission(hero.getPlayerMissions(), HuskPharaohMissions.WAX_ME.missionId())) {
+			if(!IMonsterHero.underMission(hero.rpm$getPlayerMissions(), HuskPharaohMissions.WAX_ME.missionId())) {
 				this.heal(10.0F);
 				if(v > 0) {
 					this.totalDamage += v * 100.0F / (TRIGGER_MISSION_TOTAL_DAMAGE * 2.0F - this.totalDamage);
@@ -192,7 +193,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 	@Override
 	public void die(DamageSource damageSource) {
 		if (damageSource.getEntity() instanceof IMonsterHero hero &&
-				!IMonsterHero.underMission(hero.getPlayerMissions(), HuskPharaohMissions.KILL_ME.missionId()) &&
+				!IMonsterHero.underMission(hero.rpm$getPlayerMissions(), HuskPharaohMissions.KILL_ME.missionId()) &&
 				!this.isWeaken()) {
 			this.setHealth(100.0F);
 			return;
@@ -493,7 +494,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		}
 	}
 
-	public enum HuskPharaohMissions implements IMissionProvider.TriggerableMission<HuskPharaoh> {
+	public enum HuskPharaohMissions implements IMissionProvider.TriggerableMission<HuskPharaoh>, IMissionStack {
 		CONVERT_INTO_STONE("husk1", MissionType.FINISH) {
 			@Override
 			public boolean tryTrigger(ServerLevel serverLevel, HuskPharaoh outer) {
@@ -517,10 +518,12 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 			this.type = type;
 		}
 
+		@Override
 		public ResourceLocation missionId() {
 			return missionId;
 		}
 
+		@Override
 		public MissionType type() {
 			return type;
 		}

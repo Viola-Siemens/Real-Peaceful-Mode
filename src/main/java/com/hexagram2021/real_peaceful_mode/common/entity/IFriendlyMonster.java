@@ -22,7 +22,7 @@ public interface IFriendlyMonster {
 	static boolean preventAttack(Level level, EntityType<?> entityType, @Nullable LivingEntity target) {
 		return level.players().stream().anyMatch(player -> {
 			if(player instanceof IMonsterHero hero) {
-				return hero.isHero(entityType) && (target instanceof AbstractVillager || (target != null && hero.isHero(target.getType())));
+				return hero.rpm$isHero(entityType) && (target instanceof AbstractVillager || (target != null && hero.rpm$isHero(target.getType())));
 			}
 			return false;
 		});
@@ -54,7 +54,6 @@ public interface IFriendlyMonster {
 	final class Data {
 		public static EntityDataAccessor<Boolean> DATA_ZOMBIE_DANCE;
 		public static EntityDataAccessor<Boolean> DATA_SKELETON_DANCE;
-
 
 		public static EntityDataAccessor<Boolean> DATA_SKELETON_RIGHT_ARM_DETACHED;
 	}

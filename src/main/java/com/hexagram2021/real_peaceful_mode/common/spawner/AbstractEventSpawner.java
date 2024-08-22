@@ -44,13 +44,13 @@ public abstract class AbstractEventSpawner<T extends LivingEntity> implements Cu
 			return 0;
 		}
 		level.players().forEach(player -> {
-			if(player instanceof IMonsterHero hero && IMonsterHero.underMission(hero.getPlayerMissions(), this.getMissionId())) {
-				hero.getPlayerMissions().removeMission(this.getMissionId());
+			if(player instanceof IMonsterHero hero && IMonsterHero.underMission(hero.rpm$getPlayerMissions(), this.getMissionId())) {
+				hero.rpm$getPlayerMissions().removeMission(this.getMissionId());
 			}
 		});
 		if(level.getRandom().nextInt(100) < this.possibility) {
 			List<ServerPlayer> availablePlayers = level.players().stream()
-					.filter(player -> player instanceof IMonsterHero hero && hero.isHero(this.getMonsterType()) && this.checkSpawnConditions(level, player))
+					.filter(player -> player instanceof IMonsterHero hero && hero.rpm$isHero(this.getMonsterType()) && this.checkSpawnConditions(level, player))
 					.toList();
 			if(availablePlayers.isEmpty()) {
 				return 0;

@@ -8,13 +8,15 @@ import net.minecraft.world.entity.EntityType;
 import java.util.Map;
 
 public interface IMonsterHero {
-	boolean isHero(EntityType<?> monsterType);
+	String HELPED_MONSTERS = "helpedMonsters";
 
-	void setHero(EntityType<?> monsterType);
+	boolean rpm$isHero(EntityType<?> monsterType);
 
-	Map<ResourceLocation, Integer> getHelpedMonsters();
+	void rpm$setHero(EntityType<?> monsterType);
 
-	PlayerMissions getPlayerMissions();
+	Map<ResourceLocation, Integer> rpm$getHelpedMonsters();
+
+	PlayerMissions rpm$getPlayerMissions();
 
 	static boolean isAtMissionsBetween(PlayerMissions playerMissions, ResourceLocation finished, ResourceLocation toFinish) {
 		return completeMission(playerMissions, finished) && !completeMission(playerMissions, toFinish) && !underMission(playerMissions, toFinish);

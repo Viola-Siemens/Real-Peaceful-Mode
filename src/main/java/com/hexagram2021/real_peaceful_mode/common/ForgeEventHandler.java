@@ -48,7 +48,7 @@ public class ForgeEventHandler {
 				return;
 			}
 
-			if(event.getEntity() instanceof IMonsterHero hero && hero.isHero(event.getTarget().getType())) {
+			if(event.getEntity() instanceof IMonsterHero hero && hero.rpm$isHero(event.getTarget().getType())) {
 				//TODO Other interactions.
 				//event.setCancellationResult(InteractionResult.SUCCESS);
 				//event.setCanceled(true);

@@ -60,13 +60,13 @@ public class DarkZombieKnight extends Monster {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(2, new ZombieKnightAttackGoal(this));
-		this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, player -> player instanceof IMonsterHero hero && hero.isHero(EntityType.ZOMBIE) && !this.isBuster(), 12.0F, 1.0D, 1.2D, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test));
+		this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, player -> player instanceof IMonsterHero hero && hero.rpm$isHero(EntityType.ZOMBIE) && !this.isBuster(), 12.0F, 1.0D, 1.2D, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test));
 		this.goalSelector.addGoal(6, new MoveThroughVillageGoal(this, 1.0D, true, 4, () -> true));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true, player -> !(player instanceof IMonsterHero hero) || !hero.isHero(EntityType.ZOMBIE) || this.isBuster()));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true, player -> !(player instanceof IMonsterHero hero) || !hero.rpm$isHero(EntityType.ZOMBIE) || this.isBuster()));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 	}

@@ -7,6 +7,7 @@ import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.nbt.CompoundTag;
@@ -145,7 +146,7 @@ public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 	public boolean hurt(DamageSource damageSource, float v) {
 		Entity entity = damageSource.getEntity();
 		if(entity instanceof IMonsterHero hero) {
-			if(!IMonsterHero.underMission(hero.getPlayerMissions(), ZombieTyrantMissions.KILL_ME.missionId())) {
+			if(!IMonsterHero.underMission(hero.rpm$getPlayerMissions(), ZombieTyrantMissions.KILL_ME.missionId())) {
 				this.heal(10.0F);
 				return super.hurt(damageSource, (Mth.sqrt(v + 1.0F) - 1.0F) / 5.0F);
 			}
@@ -188,7 +189,7 @@ public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 	@Override
 	public void die(DamageSource damageSource) {
 		if(this.level() instanceof ServerLevel serverLevel) {
-			if(damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.underMission(hero.getPlayerMissions(), ZombieTyrantMissions.KILL_ME.missionId())) {
+			if(damageSource.getEntity() instanceof IMonsterHero hero && !IMonsterHero.underMission(hero.rpm$getPlayerMissions(), ZombieTyrantMissions.KILL_ME.missionId())) {
 				this.setHealth(100.0F);
 				return;
 			}
@@ -270,7 +271,7 @@ public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 		}
 	}
 
-	public enum ZombieTyrantMissions implements IMissionProvider.TriggerableMission<ZombieTyrant> {
+	public enum ZombieTyrantMissions implements IMissionProvider.TriggerableMission<ZombieTyrant>, IMissionStack {
 		KILL_ME("zombie3", MissionType.FINISH) {
 			@Override
 			public boolean tryTrigger(ServerLevel serverLevel, ZombieTyrant outer) {
@@ -297,10 +298,12 @@ public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 			this.type = type;
 		}
 
+		@Override
 		public ResourceLocation missionId() {
 			return missionId;
 		}
 
+		@Override
 		public MissionType type() {
 			return type;
 		}

@@ -35,7 +35,7 @@ public class LivingEntityMixin {
 			}
 		}
 		if(livingEntity instanceof ServerPlayer player) {
-			if(((IMonsterHero)player).isHero(((LivingEntity)(Object)this).getType())) {
+			if(((IMonsterHero)player).rpm$isHero(((LivingEntity)(Object)this).getType())) {
 				cir.setReturnValue(false);
 				cir.cancel();
 			}

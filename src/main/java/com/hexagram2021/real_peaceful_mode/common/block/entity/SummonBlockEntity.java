@@ -6,8 +6,9 @@ import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
-import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -56,7 +57,7 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 	}
 
 	public SummonBlockEntity(BlockPos blockPos, BlockState blockState,
-							 @Nullable CompoundTag summonTag, @Nullable MissionManager.Mission mission, MissionType type, int distance) {
+							 @Nullable CompoundTag summonTag, @Nullable Mission mission, MissionType type, int distance) {
 		this(blockPos, blockState);
 		this.summonTag = summonTag;
 		if(mission != null) {
@@ -163,14 +164,14 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 			this.summonTag = nbt.getCompound(TAG_SUMMON_ENTITY).copy();
 		}
 
-		MissionManager.Mission mission = null;
+		Mission mission = null;
 		if(nbt.contains(TAG_MISSION, Tag.TAG_STRING)) {
 			mission = ForgeEventHandler.getMissionManager().getMission(new ResourceLocation(nbt.getString(TAG_MISSION))).orElse(null);
 		}
 		if(mission != null) {
 			this.triggerableMission = new SummonBlockMission(
 					mission,
-					MissionType.TYPE_BY_NAME.getOrDefault(nbt.getString(TAG_MISSION_TYPE), MissionType.RECEIVE)
+					MissionType.BY_NAME.getOrDefault(nbt.getString(TAG_MISSION_TYPE), MissionType.RECEIVE)
 			);
 		}
 
@@ -187,11 +188,11 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 		return this.triggerableMission;
 	}
 
-	public static class SummonBlockMission implements IMissionProvider.TriggerableMission<SummonBlockEntity> {
-		final MissionManager.Mission mission;
+	public static class SummonBlockMission implements IMissionProvider.TriggerableMission<SummonBlockEntity>, IMissionStack {
+		final Mission mission;
 		final MissionType type;
 
-		SummonBlockMission(MissionManager.Mission mission, MissionType type) {
+		SummonBlockMission(Mission mission, MissionType type) {
 			this.mission = mission;
 			this.type = type;
 		}
@@ -204,6 +205,16 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 		@Override
 		public String getSerializedName() {
 			return this.mission.id() + "/" + this.type.getSerializedName();
+		}
+
+		@Override
+		public ResourceLocation missionId() {
+			return this.mission.id();
+		}
+
+		@Override
+		public MissionType type() {
+			return this.type;
 		}
 	}
 }

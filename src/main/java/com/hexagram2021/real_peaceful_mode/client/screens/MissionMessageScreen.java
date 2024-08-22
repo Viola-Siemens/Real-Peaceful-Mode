@@ -1,7 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.client.screens;
 
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
-import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -38,7 +38,7 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 	}
 
 	private void loadCachedText() {
-		List<MissionManager.Mission.Message> messages = this.menu.getMission().messages();
+		List<Mission.Message> messages = this.menu.getMission().messages();
 		if(messages.size() > this.messageIndex) {
 			this.cachedText = this.font.split(Component.translatable(messages.get(this.messageIndex).messageKey()), 140);
 		}
@@ -54,11 +54,11 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		transform.blit(BG_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
-		List<MissionManager.Mission.Message> messages = this.menu.getMission().messages();
+		List<Mission.Message> messages = this.menu.getMission().messages();
 		if(messages.size() <= 0) {
 			return;
 		}
-		MissionManager.Mission.Message message = messages.get(this.messageIndex);
+		Mission.Message message = messages.get(this.messageIndex);
 		LivingEntity currentSpeaker = this.menu.getSpeaker(message.speaker());
 		if(currentSpeaker != null) {
 			FormattedCharSequence name = currentSpeaker.getDisplayName().getVisualOrderText();

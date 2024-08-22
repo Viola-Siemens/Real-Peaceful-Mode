@@ -2,7 +2,8 @@ package com.hexagram2021.real_peaceful_mode.common.crafting;
 
 import com.google.common.collect.ImmutableList;
 import com.hexagram2021.real_peaceful_mode.client.ScreenManager;
-import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
+import com.hexagram2021.real_peaceful_mode.common.mission.Speaker;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -16,9 +17,9 @@ public class MessagedMissionInstance implements MessagedMission {
 	private final Player player;
 	@Nullable
 	private final LivingEntity npc;
-	private final List<MissionManager.Mission.Message> messages;
+	private final List<Mission.Message> messages;
 
-	public MessagedMissionInstance(Player player, @Nullable LivingEntity npc, List<MissionManager.Mission.Message> messages) {
+	public MessagedMissionInstance(Player player, @Nullable LivingEntity npc, List<Mission.Message> messages) {
 		this.player = player;
 		this.npc = npc;
 		this.messages = messages;
@@ -33,12 +34,12 @@ public class MessagedMissionInstance implements MessagedMission {
 		}
 		this.npc = npc;
 		ListTag list = nbt.getList(MESSAGE_LIST, Tag.TAG_COMPOUND);
-		ImmutableList.Builder<MissionManager.Mission.Message> builder = ImmutableList.builder();
+		ImmutableList.Builder<Mission.Message> builder = ImmutableList.builder();
 		list.forEach(tag -> {
 			CompoundTag compoundTag = (CompoundTag)tag;
 			String key = compoundTag.getString(MESSAGE_KEY);
-			MissionManager.Mission.Message.Speaker speaker = MissionManager.Mission.Message.Speaker.values()[compoundTag.getByte(MESSAGE_SPEAKER)];
-			builder.add(new MissionManager.Mission.Message(key, speaker));
+			Speaker speaker = Speaker.values()[compoundTag.getByte(MESSAGE_SPEAKER)];
+			builder.add(new Mission.Message(key, speaker));
 		});
 		this.messages = builder.build();
 	}
@@ -54,7 +55,7 @@ public class MessagedMissionInstance implements MessagedMission {
 	}
 
 	@Override
-	public List<MissionManager.Mission.Message> messages() {
+	public List<Mission.Message> messages() {
 		return this.messages;
 	}
 }

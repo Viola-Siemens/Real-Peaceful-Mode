@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -24,24 +25,26 @@ import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.get
 
 @Mixin(ServerPlayer.class)
 public class ServerPlayerMixin implements IMonsterHero {
-	private final Map<ResourceLocation, Integer> helpedMonsters = Maps.newHashMap();
+	@Unique
+	private final Map<ResourceLocation, Integer> rpm$helpedMonsters = Maps.newHashMap();
 
+	@Unique
 	@SuppressWarnings("NotNullFieldNotInitialized")
-	private PlayerMissions playerMissions;
+	private PlayerMissions rpm$playerMissions;
 
 	@Inject(method = "<init>", at = @At(value = "TAIL"))
-	public void createNewPlayer(MinecraftServer server, ServerLevel level, GameProfile gameProfile, CallbackInfo ci) {
-		this.playerMissions = ((IPlayerListWithMissions)server.getPlayerList()).rpm$getPlayerMissions((ServerPlayer)(Object)this);
+	public void rpm$createNewPlayer(MinecraftServer server, ServerLevel level, GameProfile gameProfile, CallbackInfo ci) {
+		this.rpm$playerMissions = ((IPlayerListWithMissions)server.getPlayerList()).rpm$getPlayerMissions((ServerPlayer)(Object)this);
 	}
 
 	@Override
-	public boolean isHero(EntityType<?> monsterType) {
-		return this.helpedMonsters.containsKey(getRegistryName(monsterType));
+	public boolean rpm$isHero(EntityType<?> monsterType) {
+		return this.rpm$helpedMonsters.containsKey(getRegistryName(monsterType));
 	}
 
 	@Override
-	public void setHero(EntityType<?> monsterType) {
-		this.helpedMonsters.compute(getRegistryName(monsterType), (type, count) -> {
+	public void rpm$setHero(EntityType<?> monsterType) {
+		this.rpm$helpedMonsters.compute(getRegistryName(monsterType), (type, count) -> {
 			if(count == null) {
 				return 1;
 			}
@@ -50,45 +53,44 @@ public class ServerPlayerMixin implements IMonsterHero {
 	}
 
 	@Override
-	public Map<ResourceLocation, Integer> getHelpedMonsters() {
-		return this.helpedMonsters;
+	public Map<ResourceLocation, Integer> rpm$getHelpedMonsters() {
+		return this.rpm$helpedMonsters;
 	}
 
 	@Override
-	public PlayerMissions getPlayerMissions() {
-		return this.playerMissions;
+	public PlayerMissions rpm$getPlayerMissions() {
+		return this.rpm$playerMissions;
 	}
 
-	private static final String HELPED_MONSTERS = "helpedMonsters";
 	@Inject(method = "readAdditionalSaveData", at = @At(value = "TAIL"))
-	public void readRPMData(CompoundTag nbt, CallbackInfo ci) {
+	public void rpm$readRPMData(CompoundTag nbt, CallbackInfo ci) {
 		if(nbt.contains(HELPED_MONSTERS, Tag.TAG_LIST)) {
 			ListTag list = nbt.getList(HELPED_MONSTERS, Tag.TAG_COMPOUND);
 			list.forEach(tag -> {
 				CompoundTag compound = (CompoundTag)tag;
-				this.helpedMonsters.compute(new ResourceLocation(compound.getString("type")), (type, count) -> compound.getInt("count"));
+				this.rpm$helpedMonsters.compute(new ResourceLocation(compound.getString("type")), (type, count) -> compound.getInt("count"));
 			});
 		}
-		this.playerMissions.readNBT(nbt);
+		this.rpm$playerMissions.readNBT(nbt);
 	}
 
 	@Inject(method = "addAdditionalSaveData", at = @At(value = "TAIL"))
-	public void addRPMData(CompoundTag nbt, CallbackInfo ci) {
+	public void rpm$addRPMData(CompoundTag nbt, CallbackInfo ci) {
 		ListTag tags = new ListTag();
-		this.helpedMonsters.forEach((type, count) -> {
+		this.rpm$helpedMonsters.forEach((type, count) -> {
 			CompoundTag tag = new CompoundTag();
 			tag.putString("type", type.toString());
 			tag.putInt("count", count);
 			tags.add(tag);
 		});
 		nbt.put(HELPED_MONSTERS, tags);
-		this.playerMissions.writeNBT(nbt);
+		this.rpm$playerMissions.writeNBT(nbt);
 	}
 
 	@Inject(method = "restoreFrom", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;setLastDeathLocation(Ljava/util/Optional;)V"))
-	public void restoreRPMDataFrom(ServerPlayer player, boolean won, CallbackInfo ci) {
+	public void rpm$restoreRPMDataFrom(ServerPlayer player, boolean won, CallbackInfo ci) {
 		if(player instanceof IMonsterHero hero) {
-			hero.getHelpedMonsters().forEach((type, count) -> this.helpedMonsters.compute(type, (type1, count1) -> count));
+			hero.rpm$getHelpedMonsters().forEach((type, count) -> this.rpm$helpedMonsters.compute(type, (type1, count1) -> count));
 		}
 	}
 }

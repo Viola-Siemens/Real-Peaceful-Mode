@@ -25,7 +25,7 @@ public class DebugWishItem extends Item {
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		if(hand == InteractionHand.MAIN_HAND && player.getAbilities().instabuild && player instanceof IMonsterHero hero) {
-			hero.setHero(this.entityType);
+			hero.rpm$setHero(this.entityType);
 			ResourceLocation current = getRegistryName(this);
 			player.sendSystemMessage(Component.translatable("message." + current.getNamespace() + "." + current.getPath() + ".success"));
 			return InteractionResultHolder.consume(itemstack);

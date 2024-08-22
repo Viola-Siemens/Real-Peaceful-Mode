@@ -42,13 +42,13 @@ public class MissionPredicate {
 		if(this.entityType != null && entityType != null && !getRegistryName(entityType).equals(this.entityType)) {
 			return false;
 		}
-		int count = hero.getPlayerMissions().getFinishedMissions().size();
-		int heroCount = hero.getHelpedMonsters().size();
+		int count = hero.rpm$getPlayerMissions().getFinishedMissions().size();
+		int heroCount = hero.rpm$getHelpedMonsters().size();
 		if(this.missionNamespace != null) {
-			count = (int) hero.getPlayerMissions().getFinishedMissions().stream().filter(id -> id.getNamespace().equals(this.missionNamespace)).count();
+			count = (int) hero.rpm$getPlayerMissions().getFinishedMissions().stream().filter(id -> id.getNamespace().equals(this.missionNamespace)).count();
 		}
 		if(this.entityNamespace != null) {
-			heroCount = (int) hero.getHelpedMonsters().entrySet().stream().filter(entry -> entry.getKey().getNamespace().equals(this.entityNamespace)).count();
+			heroCount = (int) hero.rpm$getHelpedMonsters().entrySet().stream().filter(entry -> entry.getKey().getNamespace().equals(this.entityNamespace)).count();
 		}
 		if(this.count != MinMaxBounds.Ints.ANY && !this.count.matches(count)) {
 			return false;
