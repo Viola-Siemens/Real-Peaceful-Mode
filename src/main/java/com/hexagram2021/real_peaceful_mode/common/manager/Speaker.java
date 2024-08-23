@@ -1,4 +1,4 @@
-package com.hexagram2021.real_peaceful_mode.common.mission;
+package com.hexagram2021.real_peaceful_mode.common.manager;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;

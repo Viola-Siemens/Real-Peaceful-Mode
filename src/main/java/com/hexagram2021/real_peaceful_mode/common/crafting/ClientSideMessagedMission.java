@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.crafting;
 
-import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.MissionMessage;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
@@ -13,7 +13,7 @@ public record ClientSideMessagedMission(Player player) implements MessagedMissio
 	}
 
 	@Override
-	public List<Mission.Message> messages() {
+	public List<MissionMessage> messages() {
 		return List.of();
 	}
 }

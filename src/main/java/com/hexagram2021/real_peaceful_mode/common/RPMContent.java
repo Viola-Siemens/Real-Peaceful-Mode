@@ -4,6 +4,8 @@ import com.hexagram2021.real_peaceful_mode.api.SummonBlockEntityHelper;
 import com.hexagram2021.real_peaceful_mode.common.crafting.compat.ModsCompatManager;
 import com.hexagram2021.real_peaceful_mode.common.entity.*;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.*;
+import com.hexagram2021.real_peaceful_mode.common.manager.chat.ChatMessageTypes;
+import com.hexagram2021.real_peaceful_mode.common.manager.chat.selection.SelectionConditionTypes;
 import com.hexagram2021.real_peaceful_mode.common.register.*;
 import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
 import com.hexagram2021.real_peaceful_mode.mixin.BlockEntityTypeAccess;
@@ -31,6 +33,9 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 public class RPMContent {
 	public static void modConstruction(IEventBus bus) {
 		ModsCompatManager.compatModLoaded();
+
+		ChatMessageTypes.init();
+		SelectionConditionTypes.init();
 
 		initTags();
 

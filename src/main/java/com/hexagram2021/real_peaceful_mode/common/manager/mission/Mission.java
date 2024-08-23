@@ -1,14 +1,12 @@
-package com.hexagram2021.real_peaceful_mode.common.mission;
+package com.hexagram2021.real_peaceful_mode.common.manager.mission;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.manager.Former;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMTriggers;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
-import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -25,26 +23,15 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
-import java.util.function.Function;
 
 public record Mission(ResourceLocation id,
-					  List<Message> messages, List<Message> messagesAfter,
+					  List<MissionMessage> messages, List<MissionMessage> messagesAfter,
 					  List<Former> formers,
 					  EntityType<?> reward, ResourceLocation rewardLootTable,
 					  boolean lootBefore, boolean isRandomEvent) {
-	public record Message(String messageKey, Speaker speaker) {
-		public static final Codec<Message> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-				Codec.STRING.fieldOf("key").forGetter(Message::messageKey),
-				Speaker.CODEC.optionalFieldOf("speaker", Speaker.PLAYER).forGetter(Message::speaker)
-		).apply(instance, Message::new));
-		public static final Codec<Message> CODEC = Codec.either(DIRECT_CODEC, Codec.STRING)
-				.xmap(either -> either.map(Function.identity(), key -> new Message(key, Speaker.PLAYER)), Either::left);
-		public static final Codec<List<Message>> LIST_CODEC = CODEC.listOf();
-	}
-
 	static Mission fromJson(ImmutableSet.Builder<EntityType<?>> friendlyMonstersBuilder, ResourceLocation id, JsonObject json) {
-		List<Message> messages = Message.LIST_CODEC.parse(JsonOps.INSTANCE, GsonHelper.getAsJsonArray(json, "messages")).getOrThrow(false, RPMLogger::error);
-		List<Message> messagesAfter = Message.LIST_CODEC.parse(JsonOps.INSTANCE, GsonHelper.getAsJsonArray(json, "messagesAfter")).getOrThrow(false, RPMLogger::error);
+		List<MissionMessage> messages = MissionMessage.LIST_CODEC.parse(JsonOps.INSTANCE, GsonHelper.getAsJsonArray(json, "messages")).getOrThrow(false, RPMLogger::error);
+		List<MissionMessage> messagesAfter = MissionMessage.LIST_CODEC.parse(JsonOps.INSTANCE, GsonHelper.getAsJsonArray(json, "messagesAfter")).getOrThrow(false, RPMLogger::error);
 		List<Former> formers = Former.LIST_CODEC.parse(JsonOps.INSTANCE, GsonHelper.getAsJsonArray(json, "requires")).getOrThrow(false, RPMLogger::error);
 		ResourceLocation reward = new ResourceLocation(GsonHelper.getAsString(json, "reward", "minecraft:player"));
 		EntityType<?> rewardEntityType = ForgeRegistries.ENTITY_TYPES.getValue(reward);

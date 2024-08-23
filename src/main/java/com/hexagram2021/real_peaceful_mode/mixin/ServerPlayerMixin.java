@@ -2,8 +2,8 @@ package com.hexagram2021.real_peaceful_mode.mixin;
 
 import com.google.common.collect.Maps;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
-import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
-import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.IPlayerListWithMissions;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.PlayerMissions;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

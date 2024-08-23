@@ -1,0 +1,124 @@
+{
+  "entity_type": "real_peaceful_mode:pink_creeper",
+  "requires": [
+    "real_peaceful_mode:creeper2"
+  ],
+  "message": {
+    "type": "real_peaceful_mode:selectable",
+    "key": "rpm.chat.real_peaceful_mode.pink_creeper.message1",
+    "speaker": "npc",
+    "selection": [
+      {
+        "condition": {
+          "type": "real_peaceful_mode:mission",
+          "requires": [
+            {
+              "id": "real_peaceful_mode:slime1",
+              "type": "receive"
+            }
+          ]
+        },
+        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.about_slime",
+        "next": {
+          "type": "real_peaceful_mode:plain",
+          "key": "rpm.chat.real_peaceful_mode.pink_creeper.about_slime.message1",
+          "speaker": "npc",
+          "next": {
+            "type": "real_peaceful_mode:plain",
+            "key": "rpm.chat.real_peaceful_mode.pink_creeper.about_slime.message2",
+            "speaker": "npc",
+            "next": {
+              "type": "real_peaceful_mode:end",
+              "key": "rpm.chat.real_peaceful_mode.pink_creeper.about_slime.message3",
+              "speaker": "npc"
+            }
+          }
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:mission",
+          "requires": [
+            "real_peaceful_mode:creeper3"
+          ]
+        },
+        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.about_town",
+        "next": {
+          "type": "real_peaceful_mode:plain",
+          "key": "rpm.chat.real_peaceful_mode.pink_creeper.about_town.message1",
+          "speaker": "npc",
+          "next": {
+            "type": "real_peaceful_mode:plain",
+            "key": "rpm.chat.real_peaceful_mode.pink_creeper.about_town.message2",
+            "speaker": "npc",
+            "next": {
+              "type": "real_peaceful_mode:end",
+              "key": "rpm.chat.real_peaceful_mode.pink_creeper.about_town.message3",
+              "speaker": "npc"
+            }
+          }
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:greeting_timed",
+          "time": "morning"
+        },
+        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.good_morning",
+        "next": {
+          "type": "real_peaceful_mode:end",
+          "key": "rpm.chat.real_peaceful_mode.pink_creeper.good_morning",
+          "speaker": "npc"
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:greeting_timed",
+          "time": "noon"
+        },
+        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.good_noon",
+        "next": {
+          "type": "real_peaceful_mode:end",
+          "key": "rpm.chat.real_peaceful_mode.pink_creeper.good_noon",
+          "speaker": "npc"
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:greeting_timed",
+          "time": "afternoon"
+        },
+        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.good_afternoon",
+        "next": {
+          "type": "real_peaceful_mode:end",
+          "key": "rpm.chat.real_peaceful_mode.pink_creeper.good_afternoon",
+          "speaker": "npc"
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:greeting_timed",
+          "time": "evening"
+        },
+        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.good_evening",
+        "next": {
+          "type": "real_peaceful_mode:end",
+          "key": "rpm.chat.real_peaceful_mode.pink_creeper.good_evening",
+          "speaker": "npc"
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:greeting_timed",
+          "time": "night"
+        },
+        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.good_night",
+        "next": {
+          "type": "real_peaceful_mode:end",
+          "key": "rpm.chat.real_peaceful_mode.pink_creeper.good_night",
+          "speaker": "npc"
+        }
+      }
+    ]
+  }
+}

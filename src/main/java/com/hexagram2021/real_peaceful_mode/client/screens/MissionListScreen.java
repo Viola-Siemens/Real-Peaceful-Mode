@@ -1,7 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.client.screens;
 
 import com.google.common.collect.ImmutableList;
-import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.Mission;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;

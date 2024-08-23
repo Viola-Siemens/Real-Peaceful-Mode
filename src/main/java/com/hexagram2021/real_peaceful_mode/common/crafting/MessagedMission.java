@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.crafting;
 
-import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.MissionMessage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,7 +15,7 @@ public interface MessagedMission {
 	@Nullable
 	LivingEntity npc();
 
-	List<Mission.Message> messages();
+	List<MissionMessage> messages();
 	
 	String NPC_ID = "npc";
 	String MESSAGE_LIST = "messages";

@@ -1,7 +1,9 @@
-package com.hexagram2021.real_peaceful_mode.common.mission;
+package com.hexagram2021.real_peaceful_mode.common.manager;
 
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.PlayerMissions;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

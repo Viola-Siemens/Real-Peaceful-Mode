@@ -4,7 +4,8 @@ import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.entity.capability.ConvertibleItemEntityHandler;
-import com.hexagram2021.real_peaceful_mode.common.mission.MissionManager;
+import com.hexagram2021.real_peaceful_mode.common.manager.chat.ChatManager;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.MissionManager;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMCapabilities;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -24,11 +25,15 @@ import java.util.function.Consumer;
 
 public class ForgeEventHandler {
 	@SuppressWarnings("NotNullFieldNotInitialized")
+	private static ChatManager chatManager;
+	@SuppressWarnings("NotNullFieldNotInitialized")
 	private static MissionManager missionManager;
 
 	@SubscribeEvent
 	public void onResourceReload(AddReloadListenerEvent event) {
+		chatManager = new ChatManager();
 		missionManager = new MissionManager();
+		event.addListener(chatManager);
 		event.addListener(missionManager);
 	}
 
@@ -73,6 +78,9 @@ public class ForgeEventHandler {
 		}
 	}
 
+	public static ChatManager getChatManager() {
+		return chatManager;
+	}
 	public static MissionManager getMissionManager() {
 		return missionManager;
 	}

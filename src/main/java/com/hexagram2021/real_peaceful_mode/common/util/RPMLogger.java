@@ -28,13 +28,22 @@ public class RPMLogger {
 	public static void error(String message, Object... params) {
 		logger.log(Level.ERROR, message, params);
 	}
+	public static void error(String message, Throwable t) {
+		logger.log(Level.ERROR, message, t);
+	}
 
 	public static void info(String message, Object... params) {
 		logger.log(Level.INFO, message, params);
 	}
+	public static void info(String message, Throwable t) {
+		logger.log(Level.INFO, message, t);
+	}
 
 	public static void warn(String message, Object... params) {
 		logger.log(Level.WARN, message, params);
+	}
+	public static void warn(String message, Throwable t) {
+		logger.log(Level.WARN, message, t);
 	}
 
 	public static void debug(Object object) {

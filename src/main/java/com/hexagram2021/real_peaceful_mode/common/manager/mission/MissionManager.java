@@ -1,8 +1,9 @@
-package com.hexagram2021.real_peaceful_mode.common.mission;
+package com.hexagram2021.real_peaceful_mode.common.manager.mission;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.*;
+import com.hexagram2021.real_peaceful_mode.common.manager.MissionLoadCondition;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -35,7 +36,7 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 			}
 
 			try {
-				if (entry.getValue().isJsonObject() && !processConditions(entry.getValue().getAsJsonObject())) {
+				if (entry.getValue().isJsonObject() && !MissionLoadCondition.processConditions(entry.getValue().getAsJsonObject())) {
 					RPMLogger.debug("Skipping loading mission %s as it's conditions were not met".formatted(id));
 					continue;
 				}
@@ -43,17 +44,12 @@ public class MissionManager extends SimpleJsonResourceReloadListener {
 				Mission mission = Mission.fromJson(friendlyMonstersBuilder, id, jsonObject);
 				builder.put(id, mission);
 			} catch (IllegalArgumentException | JsonParseException exception) {
-				RPMLogger.error("Parsing error loading mission %s.".formatted(id));
-				RPMLogger.error(exception);
+				RPMLogger.error("Parsing error loading mission %s.".formatted(id), exception);
 			}
 		}
 		this.missionsByName = builder.build();
 		this.friendlyMonsters = friendlyMonstersBuilder.build();
-	}
-
-	private static final String CONDITIONS_FIELD = "conditions";
-	private static boolean processConditions(JsonObject json) {
-		return !json.has(CONDITIONS_FIELD) || MissionLoadCondition.fromJson(json.get(CONDITIONS_FIELD)).test();
+		RPMLogger.info("Loaded %d missions of %d monsters.".formatted(this.missionsByName.size(), this.friendlyMonsters.size()));
 	}
 
 	public Optional<Mission> getMission(ResourceLocation id) {

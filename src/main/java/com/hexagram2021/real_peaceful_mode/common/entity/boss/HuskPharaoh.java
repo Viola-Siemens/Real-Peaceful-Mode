@@ -8,7 +8,7 @@ import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.FlameEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity;
-import com.hexagram2021.real_peaceful_mode.common.mission.IMissionStack;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMSounds;
 import net.minecraft.core.BlockPos;

@@ -2,8 +2,8 @@ package com.hexagram2021.real_peaceful_mode.common.block.entity;
 
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
-import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
-import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.Mission;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.PlayerMissions;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

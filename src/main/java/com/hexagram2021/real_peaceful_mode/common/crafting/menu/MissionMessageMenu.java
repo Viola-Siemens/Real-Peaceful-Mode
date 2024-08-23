@@ -2,7 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.crafting.menu;
 
 import com.hexagram2021.real_peaceful_mode.common.crafting.ClientSideMessagedMission;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMission;
-import com.hexagram2021.real_peaceful_mode.common.mission.Speaker;
+import com.hexagram2021.real_peaceful_mode.common.manager.Speaker;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMenuTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;

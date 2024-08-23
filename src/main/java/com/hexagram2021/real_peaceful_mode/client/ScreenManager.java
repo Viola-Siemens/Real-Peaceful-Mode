@@ -3,7 +3,7 @@ package com.hexagram2021.real_peaceful_mode.client;
 import com.hexagram2021.real_peaceful_mode.client.screens.MissionListScreen;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMission;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
-import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.Mission;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;

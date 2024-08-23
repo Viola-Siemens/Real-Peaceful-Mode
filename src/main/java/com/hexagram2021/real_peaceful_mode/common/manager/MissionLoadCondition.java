@@ -1,4 +1,4 @@
-package com.hexagram2021.real_peaceful_mode.common.mission;
+package com.hexagram2021.real_peaceful_mode.common.manager;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -10,12 +10,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 
-record MissionLoadCondition(ConditionType type, String value, boolean present) {
-	MissionLoadCondition(ConditionType type, String value) {
+public record MissionLoadCondition(ConditionType type, String value, boolean present) {
+	public MissionLoadCondition(ConditionType type, String value) {
 		this(type, value, true);
 	}
 
-	MissionLoadCondition(ConditionType type, String value, boolean present) {
+	public MissionLoadCondition(ConditionType type, String value, boolean present) {
 		this.type = type;
 		this.value = value;
 		this.present = present;
@@ -85,9 +85,14 @@ record MissionLoadCondition(ConditionType type, String value, boolean present) {
 		throw new IllegalArgumentException("Field \"value\" is not present!");
 	}
 
-	enum ConditionType {
+	public enum ConditionType {
 		MOD_LOAD,
 		ENTITY_REGISTERED,
 		BIOME_REGISTERED
+	}
+
+	private static final String CONDITIONS_FIELD = "conditions";
+	public static boolean processConditions(JsonObject json) {
+		return !json.has(CONDITIONS_FIELD) || MissionLoadCondition.fromJson(json.get(CONDITIONS_FIELD)).test();
 	}
 }

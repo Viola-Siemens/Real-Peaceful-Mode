@@ -3,10 +3,9 @@ package com.hexagram2021.real_peaceful_mode.api;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
-import com.hexagram2021.real_peaceful_mode.common.mission.Former;
-import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
-import com.hexagram2021.real_peaceful_mode.common.mission.Mission;
-import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.IPlayerListWithMissions;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.Mission;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.PlayerMissions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -119,12 +118,7 @@ public class MissionHelper {
 			if(IMonsterHero.underMission(playerMissions, missionId) || IMonsterHero.completeMission(playerMissions, missionId)) {
 				return false;
 			}
-			for(Former former: mission.formers()) {
-				if(!former.checkComplete(playerMissions)) {
-					return false;
-				}
-			}
-			return true;
+			return mission.formers().stream().allMatch(former -> former.checkComplete(playerMissions));
 		}
 		return IMonsterHero.underMission(playerMissions, missionId);
 	}
@@ -143,12 +137,7 @@ public class MissionHelper {
 			if(IMonsterHero.completeMission(playerMissions, missionId)) {
 				return false;
 			}
-			for(Former former: mission.formers()) {
-				if(!former.checkComplete(playerMissions)) {
-					return false;
-				}
-			}
-			return true;
+			return mission.formers().stream().allMatch(former -> former.checkComplete(playerMissions));
 		}
 		return IMonsterHero.underMission(playerMissions, missionId);
 	}

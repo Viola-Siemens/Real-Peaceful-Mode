@@ -3,7 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.entity;
 import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
-import com.hexagram2021.real_peaceful_mode.common.mission.IMissionStack;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureKeys;
 import net.minecraft.core.BlockPos;

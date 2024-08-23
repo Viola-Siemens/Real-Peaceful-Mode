@@ -1,15 +1,12 @@
 package com.hexagram2021.real_peaceful_mode.mixin;
 
 import com.google.common.collect.Maps;
-import com.hexagram2021.real_peaceful_mode.common.mission.IPlayerListWithMissions;
-import com.hexagram2021.real_peaceful_mode.common.mission.PlayerMissions;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.IPlayerListWithMissions;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.PlayerMissions;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 import java.util.Map;
