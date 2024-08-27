@@ -41,5 +41,5 @@ public interface IChatMessageType {
 		}
 	};
 
-	Codec<? extends AbstractMessage> codec();
+	Codec<? extends AbstractChatMessage> codec();
 }

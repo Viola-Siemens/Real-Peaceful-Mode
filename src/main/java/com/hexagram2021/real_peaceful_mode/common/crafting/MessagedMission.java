@@ -1,8 +1,10 @@
 package com.hexagram2021.real_peaceful_mode.common.crafting;
 
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.MissionMessage;
+import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
@@ -17,24 +19,15 @@ public interface MessagedMission {
 
 	List<MissionMessage> messages();
 	
-	String NPC_ID = "npc";
-	String MESSAGE_LIST = "messages";
-	String MESSAGE_KEY = "key";
-	String MESSAGE_SPEAKER = "speaker";
+	String TAG_NPC = "npc";
+	String TAG_MESSAGE_LIST = "messages";
 	default CompoundTag createTag() {
 		CompoundTag ret = new CompoundTag();
 		LivingEntity npc = this.npc();
 		if(npc != null) {
-			ret.putInt(NPC_ID, npc.getId());
+			ret.putInt(TAG_NPC, npc.getId());
 		}
-		ListTag list = new ListTag();
-		this.messages().forEach(message -> {
-			CompoundTag tag = new CompoundTag();
-			tag.putString(MESSAGE_KEY, message.messageKey());
-			tag.putByte(MESSAGE_SPEAKER, (byte)message.speaker().ordinal());
-			list.add(tag);
-		});
-		ret.put(MESSAGE_LIST, list);
+		ret.put(TAG_MESSAGE_LIST, MissionMessage.LIST_CODEC.encode(this.messages(), NbtOps.INSTANCE, new ListTag()).getOrThrow(false, RPMLogger::error));
 		return ret;
 	}
 }

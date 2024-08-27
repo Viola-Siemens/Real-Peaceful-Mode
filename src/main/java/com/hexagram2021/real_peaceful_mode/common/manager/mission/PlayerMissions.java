@@ -2,8 +2,12 @@ package com.hexagram2021.real_peaceful_mode.common.manager.mission;
 
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
+import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedChatInstance;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstance;
+import com.hexagram2021.real_peaceful_mode.common.crafting.menu.ChatMessageMenu;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
+import com.hexagram2021.real_peaceful_mode.common.manager.chat.Chat;
+import com.hexagram2021.real_peaceful_mode.network.ClientboundChatMessagePacket;
 import com.hexagram2021.real_peaceful_mode.network.ClientboundMissionMessagePacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -102,8 +106,7 @@ public class PlayerMissions {
 		MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messages());
 		OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
 				new MissionMessageMenu(counter, instance, () ->
-						this.afterReceiveMission(mission, toDoExtra)), Component.translatable("title.real_peaceful_mode.menu.mission")
-		));
+						this.afterReceiveMission(mission, toDoExtra)), Component.translatable("title.real_peaceful_mode.menu.mission")));
 		if(id.isPresent()) {
 			RealPeacefulMode.packetHandler.send(
 					PacketDistributor.PLAYER.with(() -> this.player),
@@ -111,7 +114,6 @@ public class PlayerMissions {
 			);
 		}
 	}
-
 	public void finishMission(Mission mission, @Nullable LivingEntity npc, Consumer<ServerPlayer> toDoExtra) {
 		if (this.player instanceof FakePlayer) {
 			return;
@@ -120,12 +122,26 @@ public class PlayerMissions {
 		MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messagesAfter());
 		OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
 				new MissionMessageMenu(counter, instance, () ->
-						this.afterFinishMission(mission, toDoExtra)), Component.translatable("title.real_peaceful_mode.menu.mission")
-		));
+						this.afterFinishMission(mission, toDoExtra)), Component.translatable("title.real_peaceful_mode.menu.mission")));
 		if(id.isPresent()) {
 			RealPeacefulMode.packetHandler.send(
 					PacketDistributor.PLAYER.with(() -> this.player),
 					new ClientboundMissionMessagePacket(instance, id.getAsInt())
+			);
+		}
+	}
+	public void triggerChat(Chat chat, LivingEntity npc) {
+		if (this.player instanceof FakePlayer) {
+			return;
+		}
+
+		MessagedChatInstance instance = new MessagedChatInstance(this.player, npc, chat.message());
+		OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
+				new ChatMessageMenu(counter, instance), Component.translatable("title.real_peaceful_mode.menu.chat")));
+		if(id.isPresent()) {
+			RealPeacefulMode.packetHandler.send(
+					PacketDistributor.PLAYER.with(() -> this.player),
+					new ClientboundChatMessagePacket(instance, id.getAsInt())
 			);
 		}
 	}

@@ -1,11 +1,11 @@
 package com.hexagram2021.real_peaceful_mode.common.crafting;
 
-import com.google.common.collect.ImmutableList;
 import com.hexagram2021.real_peaceful_mode.client.ScreenManager;
-import com.hexagram2021.real_peaceful_mode.common.manager.Speaker;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.MissionMessage;
+import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -28,20 +28,13 @@ public class MessagedMissionInstance implements MessagedMission {
 	public MessagedMissionInstance(CompoundTag nbt) {
 		this.player = ScreenManager.getLocalPlayer();
 		LivingEntity npc = null;
-		if(nbt.contains(NPC_ID, Tag.TAG_INT)) {
-			int npcId = nbt.getInt(NPC_ID);
+		if(nbt.contains(TAG_NPC, Tag.TAG_INT)) {
+			int npcId = nbt.getInt(TAG_NPC);
 			npc = (LivingEntity) this.player.level().getEntity(npcId);
 		}
 		this.npc = npc;
-		ListTag list = nbt.getList(MESSAGE_LIST, Tag.TAG_COMPOUND);
-		ImmutableList.Builder<MissionMessage> builder = ImmutableList.builder();
-		list.forEach(tag -> {
-			CompoundTag compoundTag = (CompoundTag)tag;
-			String key = compoundTag.getString(MESSAGE_KEY);
-			Speaker speaker = Speaker.values()[compoundTag.getByte(MESSAGE_SPEAKER)];
-			builder.add(new MissionMessage(key, speaker));
-		});
-		this.messages = builder.build();
+		ListTag list = nbt.getList(TAG_MESSAGE_LIST, Tag.TAG_COMPOUND);
+		this.messages = MissionMessage.LIST_CODEC.parse(NbtOps.INSTANCE, list).getOrThrow(false, RPMLogger::error);
 	}
 
 	@Override

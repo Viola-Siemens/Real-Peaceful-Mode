@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
 
-public class MissionMessageMenu extends AbstractContainerMenu {
+public class MissionMessageMenu extends AbstractContainerMenu implements IMessageMenu {
 	private MessagedMission mission;
 	private final Runnable onRemoved;
 

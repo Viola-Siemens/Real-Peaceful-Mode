@@ -14,9 +14,7 @@ import com.hexagram2021.real_peaceful_mode.common.spawner.SkeletonEventSpawner;
 import com.hexagram2021.real_peaceful_mode.common.spawner.ZombieEventSpawner;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
-import com.hexagram2021.real_peaceful_mode.network.ClientboundMissionMessagePacket;
-import com.hexagram2021.real_peaceful_mode.network.GetMissionsPacket;
-import com.hexagram2021.real_peaceful_mode.network.IRPMPacket;
+import com.hexagram2021.real_peaceful_mode.network.*;
 import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -102,6 +100,8 @@ public class RealPeacefulMode {
 		event.enqueueWork(RPMContent::init);
 		registerMessage(GetMissionsPacket.class, GetMissionsPacket::new);
 		registerMessage(ClientboundMissionMessagePacket.class, ClientboundMissionMessagePacket::new);
+		registerMessage(ClientboundChatMessagePacket.class, ClientboundChatMessagePacket::new);
+		registerMessage(ClientboundChatSelectionPacket.class, ClientboundChatSelectionPacket::new);
 	}
 
 	public void tagsUpdated(TagsUpdatedEvent event) {

@@ -1,8 +1,8 @@
 package com.hexagram2021.real_peaceful_mode.common;
 
 import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
+import com.hexagram2021.real_peaceful_mode.api.ChatHelper;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
-import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.entity.capability.ConvertibleItemEntityHandler;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.ChatManager;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.MissionManager;
@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -47,17 +48,18 @@ public class ForgeEventHandler {
 					event.setCanceled(true);
 					return;
 				}
-			} else if(event.getEntity().getItemInHand(event.getHand()).is(holder -> RealPeacefulMode.isInteractItem(holder, event.getTarget().getType()))) {
-				event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
+			} else if(event.getLevel().isClientSide && event.getEntity().getItemInHand(event.getHand()).is(holder -> RealPeacefulMode.isInteractItem(holder, event.getTarget().getType()))) {
+				event.setCancellationResult(InteractionResult.SUCCESS);
 				event.setCanceled(true);
 				return;
 			}
-
-			if(event.getEntity() instanceof IMonsterHero hero && hero.rpm$isHero(event.getTarget().getType())) {
-				//TODO Other interactions.
-				//event.setCancellationResult(InteractionResult.SUCCESS);
-				//event.setCanceled(true);
-			}
+		}
+		if (event.getEntity() instanceof ServerPlayer serverPlayer && event.getTarget() instanceof LivingEntity npc) {
+			chatManager.getChatFor(npc.getType()).ifPresent(chat -> {
+				ChatHelper.triggerChatForPlayer(chat, serverPlayer, npc);
+				event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
+				event.setCanceled(true);
+			});
 		}
 	}
 

@@ -200,6 +200,7 @@
   "message.real_peaceful_mode.reward_monster": "Congratulations to %s for completing the wishes of %s. They will never regard you as enemies from now on.",
 
   "title.real_peaceful_mode.menu.mission": "Mission Conversation",
+  "title.real_peaceful_mode.menu.chat": "Chat Conversation",
   "title.real_peaceful_mode.menu.mission_list": "Missions",
 
   "gui.real_peaceful_mode.menu.mission_list.no_mission": "You haven't received any missions.",
@@ -306,6 +307,8 @@
   "book.real_peaceful_mode.guardian.content1": "",
   "book.real_peaceful_mode.guardian.content2": "",
   "book.real_peaceful_mode.guardian.content3": "",
+
+  "rpm.chat.real_peaceful_mode.empty": "(null)",
 
   "rpm.mission.real_peaceful_mode.zombie1.message1": "What a magnificent fort! But there's an awful smell exuded from the deep of it. What could it be?",
   "rpm.mission.real_peaceful_mode.zombie1.message2": "Who the freak is bothering me when I'm sleeping?",

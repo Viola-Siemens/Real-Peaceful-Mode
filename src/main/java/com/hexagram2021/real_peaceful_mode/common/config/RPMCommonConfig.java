@@ -18,6 +18,8 @@ public final class RPMCommonConfig {
 
 	public static final ForgeConfigSpec.ConfigValue<List<? extends String>> DISABLE_MISSIONS;
 
+	public static final ForgeConfigSpec.ConfigValue<List<? extends String>> DISABLE_CHATS;
+
 	private RPMCommonConfig() {}
 
 	static {
@@ -37,6 +39,12 @@ public final class RPMCommonConfig {
 				RANDOM_EVENT_POSSIBILITY = BUILDER.comment("The possibility (in percentage) for spawning a random event during a try.").defineInRange("RANDOM_EVENT_POSSIBILITY", 25, 0, 100);
 				RANDOM_EVENT_POSSIBILITY_ADDER = BUILDER.comment("If last try failed to spawn a random event, how much will the possibility increase next time. If success, it will be back to RANDOM_EVENT_POSSIBILITY.").defineInRange("RANDOM_EVENT_POSSIBILITY_ADDER", 5, 0, 50);
 				RANDOM_EVENT_POSSIBILITY_MAX = BUILDER.comment("The max possibility (in percentage) for spawning a random event. It will never be more than this value.").defineInRange("RANDOM_EVENT_POSSIBILITY_MAX", 80, 0, 100);
+			BUILDER.pop();
+
+			BUILDER.comment("You can determine whether each chat will happen to a hero player or not.");
+			BUILDER.push("chats");
+				DISABLE_CHATS = BUILDER.comment("Entity Type ID of monsters to disable. For example, if you add \"real_peaceful_mode:pink_creeper\" to this list, no chats will trigger when you interact with pink creepers.")
+						.defineListAllowEmpty("DISABLE_CHATS", List.of(), o -> o instanceof String str && ResourceLocation.isValidResourceLocation(str));
 			BUILDER.pop();
 		BUILDER.pop();
 

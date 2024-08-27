@@ -4,7 +4,7 @@ import com.hexagram2021.real_peaceful_mode.common.manager.Speaker;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.selection.ChatSelection;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
+import java.util.List;
 
 //Tree structure, usually link structure without selection.
 public interface IChatMessage {
@@ -12,7 +12,7 @@ public interface IChatMessage {
 	Speaker speaker();
 
 	@Nullable
-	AbstractMessage getNext();
+	AbstractChatMessage getNext();
 	@Nullable
-	Collection<ChatSelection> getSelections();
+	List<ChatSelection> getSelections();
 }

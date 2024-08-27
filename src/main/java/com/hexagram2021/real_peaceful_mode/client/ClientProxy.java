@@ -6,6 +6,7 @@ import com.hexagram2021.real_peaceful_mode.client.models.SkeletonKingModel;
 import com.hexagram2021.real_peaceful_mode.client.models.ZombieTyrantModel;
 import com.hexagram2021.real_peaceful_mode.client.renderers.*;
 import com.hexagram2021.real_peaceful_mode.client.screens.CultureTableScreen;
+import com.hexagram2021.real_peaceful_mode.client.screens.ChatMessageScreen;
 import com.hexagram2021.real_peaceful_mode.client.screens.MissionMessageScreen;
 import com.hexagram2021.real_peaceful_mode.common.CommonProxy;
 import com.hexagram2021.real_peaceful_mode.common.block.skull.RPMSkullTypes;
@@ -43,6 +44,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     private static void registerContainersAndScreens() {
+        MenuScreens.register(RPMMenuTypes.CHAT_MESSAGE_MENU.get(), ChatMessageScreen::new);
         MenuScreens.register(RPMMenuTypes.MISSION_MESSAGE_MENU.get(), MissionMessageScreen::new);
         MenuScreens.register(RPMMenuTypes.CULTURE_TABLE_MENU.get(), CultureTableScreen::new);
     }

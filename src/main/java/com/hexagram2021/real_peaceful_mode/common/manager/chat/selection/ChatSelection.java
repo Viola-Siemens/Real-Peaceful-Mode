@@ -1,28 +1,29 @@
 package com.hexagram2021.real_peaceful_mode.common.manager.chat.selection;
 
 import com.hexagram2021.real_peaceful_mode.common.manager.Speaker;
-import com.hexagram2021.real_peaceful_mode.common.manager.chat.AbstractMessage;
+import com.hexagram2021.real_peaceful_mode.common.manager.chat.AbstractChatMessage;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.IChatMessage;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.server.level.ServerPlayer;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
+import java.util.List;
 
 public class ChatSelection implements IChatMessage {
 	public static final Codec<ChatSelection> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			Codec.STRING.fieldOf("key").forGetter(ChatSelection::messageKey),
-			AbstractMessage.REGISTRY_CODEC.fieldOf("next").forGetter(ChatSelection::getNext),
+			AbstractChatMessage.REGISTRY_CODEC.fieldOf("next").forGetter(ChatSelection::getNext),
 			ISelectionCondition.REGISTRY_CODEC.fieldOf("condition").forGetter(ChatSelection::condition)
 	).apply(instance, ChatSelection::new));
 
 	final String messageKey;
-	final AbstractMessage next;
+	final AbstractChatMessage next;
 
 	final ISelectionCondition condition;
 
-	protected ChatSelection(String messageKey, AbstractMessage next, ISelectionCondition condition) {
+	protected ChatSelection(String messageKey, AbstractChatMessage next, ISelectionCondition condition) {
 		this.messageKey = messageKey;
 		this.next = next;
 		this.condition = condition;
@@ -38,8 +39,8 @@ public class ChatSelection implements IChatMessage {
 		return Speaker.PLAYER;
 	}
 
-	@Override
-	public AbstractMessage getNext() {
+	@Override @Nonnull
+	public AbstractChatMessage getNext() {
 		return this.next;
 	}
 
@@ -48,7 +49,7 @@ public class ChatSelection implements IChatMessage {
 	}
 
 	@Override @Nullable
-	public Collection<ChatSelection> getSelections() {
+	public List<ChatSelection> getSelections() {
 		return null;
 	}
 

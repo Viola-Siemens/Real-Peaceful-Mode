@@ -3,8 +3,8 @@ package com.hexagram2021.real_peaceful_mode.common.manager.chat;
 import com.hexagram2021.real_peaceful_mode.common.manager.Speaker;
 import com.mojang.serialization.Codec;
 
-public abstract class AbstractMessage implements IChatMessage {
-	public static final Codec<AbstractMessage> REGISTRY_CODEC = IChatMessageType.REGISTRY_CODEC.dispatch(AbstractMessage::type, IChatMessageType::codec);
+public abstract class AbstractChatMessage implements IChatMessage {
+	public static final Codec<AbstractChatMessage> REGISTRY_CODEC = IChatMessageType.REGISTRY_CODEC.dispatch(AbstractChatMessage::type, IChatMessageType::codec);
 
 	final String messageKey;
 	final Speaker speaker;
@@ -21,7 +21,7 @@ public abstract class AbstractMessage implements IChatMessage {
 
 	public abstract IChatMessageType type();
 
-	protected AbstractMessage(String messageKey, Speaker speaker) {
+	protected AbstractChatMessage(String messageKey, Speaker speaker) {
 		this.messageKey = messageKey;
 		this.speaker = speaker;
 	}

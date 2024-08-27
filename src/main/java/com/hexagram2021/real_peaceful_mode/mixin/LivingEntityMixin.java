@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.mixin;
 
-import com.hexagram2021.real_peaceful_mode.common.crafting.menu.MissionMessageMenu;
+import com.hexagram2021.real_peaceful_mode.common.crafting.menu.IMessageMenu;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import net.minecraft.core.particles.ParticleTypes;
@@ -39,7 +39,7 @@ public class LivingEntityMixin {
 				cir.setReturnValue(false);
 				cir.cancel();
 			}
-			if(player.containerMenu instanceof MissionMessageMenu) {
+			if(player.containerMenu instanceof IMessageMenu) {
 				cir.setReturnValue(false);
 				cir.cancel();
 			}

@@ -200,6 +200,7 @@
   "message.real_peaceful_mode.reward_monster": "恭喜%s完成了%s的所有委托。从此这些怪物将不再将您视为敌人了！",
 
   "title.real_peaceful_mode.menu.mission": "任务对话",
+  "title.real_peaceful_mode.menu.chat": "交谈对话",
   "title.real_peaceful_mode.menu.mission_list": "任务列表",
 
   "gui.real_peaceful_mode.menu.mission_list.no_mission": "您还没有收到任何任务。",
@@ -306,6 +307,8 @@
   "book.real_peaceful_mode.guardian.content1": "",
   "book.real_peaceful_mode.guardian.content2": "",
   "book.real_peaceful_mode.guardian.content3": "",
+
+  "rpm.chat.real_peaceful_mode.empty": "(null)",
 
   "rpm.mission.real_peaceful_mode.zombie1.message1": "多么宏大的城堡啊！不过城堡深处散发着令人作呕的气味，里面会有什么呢？",
   "rpm.mission.real_peaceful_mode.zombie1.message2": "何等刁民胆敢在朕睡觉时打扰朕休息？",

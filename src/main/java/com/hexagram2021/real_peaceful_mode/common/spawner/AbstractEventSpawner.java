@@ -40,7 +40,7 @@ public abstract class AbstractEventSpawner<T extends LivingEntity> implements Cu
 			return 0;
 		}
 		this.tickDelay = RPMCommonConfig.RANDOM_EVENT_CHECKER_INTERVAL.get();
-		if(RPMCommonConfig.DISABLE_EVENTS.get().contains(getRegistryName(this.getMonsterType()).toString())) {
+		if(IMonsterHero.eventDisabledFor(getRegistryName(this.getMonsterType()))) {
 			return 0;
 		}
 		level.players().forEach(player -> {

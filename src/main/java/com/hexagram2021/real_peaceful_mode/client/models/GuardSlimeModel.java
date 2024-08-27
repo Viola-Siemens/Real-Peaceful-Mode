@@ -8,14 +8,21 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
+
 @OnlyIn(Dist.CLIENT)
 public class GuardSlimeModel<T extends GuardSlime> extends HierarchicalModel<T> {
 	private final ModelPart root;
+	@Nullable
 	private final ModelPart armor;
 
 	public GuardSlimeModel(ModelPart root) {
 		this.root = root;
-		this.armor = root.getChild("armor");
+		if(root.hasChild("armor")) {
+			this.armor = root.getChild("armor");
+		} else {
+			this.armor = null;
+		}
 	}
 
 	public static LayerDefinition createOuterBodyLayer() {
@@ -37,7 +44,9 @@ public class GuardSlimeModel<T extends GuardSlime> extends HierarchicalModel<T> 
 	}
 
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.armor.skipDraw = entity.hasArmor();
+		if (this.armor != null) {
+			this.armor.skipDraw = !entity.hasArmor();
+		}
 	}
 
 	public ModelPart root() {
