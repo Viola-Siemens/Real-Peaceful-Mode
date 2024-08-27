@@ -64,7 +64,7 @@
           "type": "real_peaceful_mode:greeting_timed",
           "time": "morning"
         },
-        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.good_morning",
+        "key": "rpm.chat.real_peaceful_mode.selection.good_morning",
         "next": {
           "type": "real_peaceful_mode:end",
           "key": "rpm.chat.real_peaceful_mode.pink_creeper.good_morning",
@@ -76,7 +76,7 @@
           "type": "real_peaceful_mode:greeting_timed",
           "time": "noon"
         },
-        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.good_noon",
+        "key": "rpm.chat.real_peaceful_mode.selection.good_noon",
         "next": {
           "type": "real_peaceful_mode:end",
           "key": "rpm.chat.real_peaceful_mode.pink_creeper.good_noon",
@@ -88,7 +88,7 @@
           "type": "real_peaceful_mode:greeting_timed",
           "time": "afternoon"
         },
-        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.good_afternoon",
+        "key": "rpm.chat.real_peaceful_mode.selection.good_afternoon",
         "next": {
           "type": "real_peaceful_mode:end",
           "key": "rpm.chat.real_peaceful_mode.pink_creeper.good_afternoon",
@@ -100,7 +100,7 @@
           "type": "real_peaceful_mode:greeting_timed",
           "time": "evening"
         },
-        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.good_evening",
+        "key": "rpm.chat.real_peaceful_mode.selection.good_evening",
         "next": {
           "type": "real_peaceful_mode:end",
           "key": "rpm.chat.real_peaceful_mode.pink_creeper.good_evening",
@@ -112,7 +112,7 @@
           "type": "real_peaceful_mode:greeting_timed",
           "time": "night"
         },
-        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.good_night",
+        "key": "rpm.chat.real_peaceful_mode.selection.good_night",
         "next": {
           "type": "real_peaceful_mode:end",
           "key": "rpm.chat.real_peaceful_mode.pink_creeper.good_night",
