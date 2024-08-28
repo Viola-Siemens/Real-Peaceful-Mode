@@ -1,7 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
-import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
-import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlime;
+import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnightEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlimeEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.HuskWorkmanEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
@@ -19,7 +19,7 @@ import net.minecraftforge.registries.RegisterEvent;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class RPMEntities {
-    public static final EntityType<DarkZombieKnight> DARK_ZOMBIE_KNIGHT = EntityType.Builder.of(DarkZombieKnight::new, MobCategory.MONSTER)
+    public static final EntityType<DarkZombieKnightEntity> DARK_ZOMBIE_KNIGHT = EntityType.Builder.of(DarkZombieKnightEntity::new, MobCategory.MONSTER)
             .sized(0.6F, 1.9F)
             .clientTrackingRange(8)
             .build(new ResourceLocation(MODID, "dark_zombie_knight").toString());
@@ -43,7 +43,7 @@ public class RPMEntities {
             .sized(0.6F, 1.95F)
             .clientTrackingRange(8)
             .build(new ResourceLocation(MODID, "husk_pharaoh").toString());
-    public static final EntityType<GuardSlime> GUARD_SLIME = EntityType.Builder.of(GuardSlime::new, MobCategory.MONSTER)
+    public static final EntityType<GuardSlimeEntity> GUARD_SLIME = EntityType.Builder.of(GuardSlimeEntity::new, MobCategory.MONSTER)
             .sized(2.04F, 2.04F)
             .clientTrackingRange(10)
             .build(new ResourceLocation(MODID, "guard_slime").toString());

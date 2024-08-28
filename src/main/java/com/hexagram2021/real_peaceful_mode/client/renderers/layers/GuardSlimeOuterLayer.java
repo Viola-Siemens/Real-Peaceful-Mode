@@ -2,7 +2,7 @@ package com.hexagram2021.real_peaceful_mode.client.renderers.layers;
 
 import com.hexagram2021.real_peaceful_mode.client.RPMModelLayers;
 import com.hexagram2021.real_peaceful_mode.client.models.GuardSlimeModel;
-import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlime;
+import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlimeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
-public class GuardSlimeOuterLayer<T extends GuardSlime> extends RenderLayer<T, GuardSlimeModel<T>> {
+public class GuardSlimeOuterLayer<T extends GuardSlimeEntity> extends RenderLayer<T, GuardSlimeModel<T>> {
 	private final GuardSlimeModel<T> model;
 
 	public GuardSlimeOuterLayer(RenderLayerParent<T, GuardSlimeModel<T>> parent, EntityModelSet modelSet) {

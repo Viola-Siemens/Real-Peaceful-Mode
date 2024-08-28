@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.mixin;
 
-import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnightEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.goal.MonsterDanceGoal;
 import net.minecraft.nbt.CompoundTag;
@@ -70,7 +70,7 @@ public abstract class ZombieEntityMixin extends Monster implements IFriendlyMons
 		this.rpm$fightForPlayer = nbt.contains(TAG_FIGHT_FOR_PLAYER, Tag.TAG_BYTE) && nbt.getBoolean(TAG_FIGHT_FOR_PLAYER);
 		if(this.rpm$fightForPlayer) {
 			if(this.rpm$attackDarkZombieKnightSelector == null) {
-				this.rpm$attackDarkZombieKnightSelector = new NearestAttackableTargetGoal<>(this, DarkZombieKnight.class, false);
+				this.rpm$attackDarkZombieKnightSelector = new NearestAttackableTargetGoal<>(this, DarkZombieKnightEntity.class, false);
 			}
 			this.targetSelector.addGoal(2, this.rpm$attackDarkZombieKnightSelector);
 		} else {

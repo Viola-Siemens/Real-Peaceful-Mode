@@ -94,20 +94,20 @@ public class RPMContent {
 
 	@SubscribeEvent
 	public static void onAttributeCreate(EntityAttributeCreationEvent event) {
-		event.put(RPMEntities.DARK_ZOMBIE_KNIGHT, DarkZombieKnight.createAttributes().build());
+		event.put(RPMEntities.DARK_ZOMBIE_KNIGHT, DarkZombieKnightEntity.createAttributes().build());
 		event.put(RPMEntities.PINK_CREEPER, PinkCreeperEntity.createAttributes().build());
 		event.put(RPMEntities.HUSK_WORKMAN, HuskWorkmanEntity.createAttributes().build());
 		event.put(RPMEntities.ZOMBIE_TYRANT, ZombieTyrant.createAttributes().build());
 		event.put(RPMEntities.SKELETON_KING, SkeletonKing.createAttributes().build());
 		event.put(RPMEntities.HUSK_PHARAOH, HuskPharaoh.createAttributes().build());
-		event.put(RPMEntities.GUARD_SLIME, GuardSlime.createAttributes().build());
+		event.put(RPMEntities.GUARD_SLIME, GuardSlimeEntity.createAttributes().build());
 	}
 
 
 	@SubscribeEvent
 	public static void registerEntitySpawnPlacement(SpawnPlacementRegisterEvent event) {
 		event.register(RPMEntities.DARK_ZOMBIE_KNIGHT, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkAnyLightMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(RPMEntities.GUARD_SLIME, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GuardSlime::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(RPMEntities.GUARD_SLIME, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GuardSlimeEntity::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 	}
 
 	public static void registerCommands(RegisterCommandsEvent event) {

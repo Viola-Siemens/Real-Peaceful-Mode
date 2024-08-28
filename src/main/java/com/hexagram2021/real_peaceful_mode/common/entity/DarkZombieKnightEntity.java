@@ -34,10 +34,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("deprecation")
-public class DarkZombieKnight extends Monster {
-	private static final EntityDataAccessor<Boolean> DATA_ATTACK_PLAYER_AFTER_TYRANT_DEATH = SynchedEntityData.defineId(DarkZombieKnight.class, EntityDataSerializers.BOOLEAN);
+public class DarkZombieKnightEntity extends Monster {
+	private static final EntityDataAccessor<Boolean> DATA_ATTACK_PLAYER_AFTER_TYRANT_DEATH = SynchedEntityData.defineId(DarkZombieKnightEntity.class, EntityDataSerializers.BOOLEAN);
 
-	public DarkZombieKnight(EntityType<? extends DarkZombieKnight> entityType, Level level) {
+	public DarkZombieKnightEntity(EntityType<? extends DarkZombieKnightEntity> entityType, Level level) {
 		super(entityType, level);
 		this.setBuster(this.getRandom().nextInt(3) != 0);
 		this.xpReward = XP_REWARD_LARGE;

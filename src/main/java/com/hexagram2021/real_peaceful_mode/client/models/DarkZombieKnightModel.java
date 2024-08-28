@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.client.models;
 
-import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnightEntity;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidArmorModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class DarkZombieKnightModel<T extends DarkZombieKnight> extends HumanoidModel<T> {
+public class DarkZombieKnightModel<T extends DarkZombieKnightEntity> extends HumanoidModel<T> {
 	public DarkZombieKnightModel(ModelPart root) {
 		super(root);
 	}

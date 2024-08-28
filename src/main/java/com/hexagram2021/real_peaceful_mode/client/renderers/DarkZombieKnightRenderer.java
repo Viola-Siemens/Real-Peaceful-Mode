@@ -2,7 +2,7 @@ package com.hexagram2021.real_peaceful_mode.client.renderers;
 
 import com.hexagram2021.real_peaceful_mode.client.RPMModelLayers;
 import com.hexagram2021.real_peaceful_mode.client.models.DarkZombieKnightModel;
-import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnightEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 @OnlyIn(Dist.CLIENT)
-public class DarkZombieKnightRenderer extends HumanoidMobRenderer<DarkZombieKnight, DarkZombieKnightModel<DarkZombieKnight>> {
+public class DarkZombieKnightRenderer extends HumanoidMobRenderer<DarkZombieKnightEntity, DarkZombieKnightModel<DarkZombieKnightEntity>> {
 	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(MODID, "textures/entity/dark_zombie_knight.png");
 
 	public DarkZombieKnightRenderer(EntityRendererProvider.Context context) {
@@ -25,14 +25,14 @@ public class DarkZombieKnightRenderer extends HumanoidMobRenderer<DarkZombieKnig
 		this(context, new DarkZombieKnightModel<>(context.bakeLayer(model)), new DarkZombieKnightModel<>(context.bakeLayer(inner)), new DarkZombieKnightModel<>(context.bakeLayer(outer)));
 	}
 
-	public DarkZombieKnightRenderer(EntityRendererProvider.Context context, DarkZombieKnightModel<DarkZombieKnight> model,
-									DarkZombieKnightModel<DarkZombieKnight> inner, DarkZombieKnightModel<DarkZombieKnight> outer) {
+	public DarkZombieKnightRenderer(EntityRendererProvider.Context context, DarkZombieKnightModel<DarkZombieKnightEntity> model,
+									DarkZombieKnightModel<DarkZombieKnightEntity> inner, DarkZombieKnightModel<DarkZombieKnightEntity> outer) {
 		super(context, model, 0.5F);
 		this.addLayer(new HumanoidArmorLayer<>(this, inner, outer, context.getModelManager()));
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(DarkZombieKnight entity) {
+	public ResourceLocation getTextureLocation(DarkZombieKnightEntity entity) {
 		return TEXTURE_LOCATION;
 	}
 }

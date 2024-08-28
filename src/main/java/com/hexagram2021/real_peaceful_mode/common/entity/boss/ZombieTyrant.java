@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
-import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnightEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
@@ -243,7 +243,7 @@ public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 					double dx = Math.cos(phi);
 					double dz = Math.sin(phi);
 					Vec3 position = ZombieTyrant.this.position().add(dx, 0.5, dz);
-					DarkZombieKnight knight = RPMEntities.DARK_ZOMBIE_KNIGHT.create(level);
+					DarkZombieKnightEntity knight = RPMEntities.DARK_ZOMBIE_KNIGHT.create(level);
 					if(knight != null) {
 						knight.moveTo(position);
 						knight.setTarget(ZombieTyrant.this.getTarget());
@@ -279,7 +279,7 @@ public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 						this.missionId, this.type, serverLevel,
 						player -> player.closerThan(outer, 32.0D), outer, player -> {}
 				);
-				outer.level().getEntitiesOfClass(DarkZombieKnight.class, outer.getBoundingBox().inflate(16.0D), EntitySelector.ENTITY_STILL_ALIVE).forEach(knight -> knight.setTarget(null));
+				outer.level().getEntitiesOfClass(DarkZombieKnightEntity.class, outer.getBoundingBox().inflate(16.0D), EntitySelector.ENTITY_STILL_ALIVE).forEach(knight -> knight.setTarget(null));
 				outer.level().getEntitiesOfClass(Zombie.class, outer.getBoundingBox().inflate(32.0D), EntitySelector.ENTITY_STILL_ALIVE)
 						.forEach(zombie -> {
 							if(zombie instanceof IFriendlyMonster monster) {

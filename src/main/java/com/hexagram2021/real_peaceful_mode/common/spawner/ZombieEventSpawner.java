@@ -3,7 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.spawner;
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
-import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnightEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.IFriendlyMonster;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
@@ -92,7 +92,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 				if(zombie == null) {
 					return false;
 				}
-				DarkZombieKnight darkZombieKnight = RPMEntities.DARK_ZOMBIE_KNIGHT.create(level);
+				DarkZombieKnightEntity darkZombieKnight = RPMEntities.DARK_ZOMBIE_KNIGHT.create(level);
 				if(darkZombieKnight == null) {
 					zombie.discard();
 					return false;

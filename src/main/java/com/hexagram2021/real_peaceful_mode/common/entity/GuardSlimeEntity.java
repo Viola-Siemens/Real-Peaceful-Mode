@@ -4,6 +4,7 @@ import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -24,6 +25,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -33,10 +35,10 @@ import java.util.Objects;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-public class GuardSlime extends Slime implements IMissionProvider {
-	private static final EntityDataAccessor<Boolean> HAS_ARMOR = SynchedEntityData.defineId(GuardSlime.class, EntityDataSerializers.BOOLEAN);
+public class GuardSlimeEntity extends Slime implements IMissionProvider {
+	private static final EntityDataAccessor<Boolean> HAS_ARMOR = SynchedEntityData.defineId(GuardSlimeEntity.class, EntityDataSerializers.BOOLEAN);
 
-	public GuardSlime(EntityType<? extends GuardSlime> entityType, Level level) {
+	public GuardSlimeEntity(EntityType<? extends GuardSlimeEntity> entityType, Level level) {
 		super(entityType, level);
 	}
 
@@ -98,7 +100,7 @@ public class GuardSlime extends Slime implements IMissionProvider {
 		return Monster.createMonsterAttributes().add(Attributes.ARMOR, 4.0D);
 	}
 
-	public static boolean checkSpawnRules(EntityType<? extends GuardSlime> entityType, ServerLevelAccessor level, MobSpawnType spawnType,
+	public static boolean checkSpawnRules(EntityType<? extends GuardSlimeEntity> entityType, ServerLevelAccessor level, MobSpawnType spawnType,
 										  BlockPos blockPos, RandomSource random) {
 		return level.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(level, blockPos, random) && checkMobSpawnRules(entityType, level, spawnType, blockPos, random);
 	}
@@ -111,10 +113,10 @@ public class GuardSlime extends Slime implements IMissionProvider {
 		return null;
 	}
 
-	public enum GuardSlimeMissions implements IMissionProvider.TriggerableMission<GuardSlime>, IMissionStack {
+	public enum GuardSlimeMissions implements IMissionProvider.TriggerableMission<GuardSlimeEntity>, IMissionStack {
 		SEEK_HELP("slime1", MissionType.RECEIVE) {
 			@Override
-			public boolean tryTrigger(ServerLevel serverLevel, GuardSlime outer) {
+			public boolean tryTrigger(ServerLevel serverLevel, GuardSlimeEntity outer) {
 				return serverLevel.players().stream()
 						.filter(
 								player -> player.closerThan(outer, 6.0D) &&
@@ -125,7 +127,13 @@ public class GuardSlime extends Slime implements IMissionProvider {
 							MissionHelper.triggerMissionForPlayer(
 									this.missionId, this.type,
 									player, outer, player1 -> {
-										ItemStack mapItem = MapItem.create(outer.level(), 0, 0, (byte)2, true, true);
+										BlockPos blockPos = serverLevel.findNearestMapStructure(RPMStructureTags.ON_SLIME_EXPLORER_MAPS, outer.blockPosition(), 100, true);
+										ItemStack mapItem;
+										if(blockPos == null) {
+											mapItem = new ItemStack(Items.MAP);
+										} else {
+											mapItem = MapItem.create(outer.level(), blockPos.getX(), blockPos.getZ(), (byte)2, true, true);
+										}
 										mapItem.setHoverName(Component.translatable("filled_map.real_peaceful_mode.slime_maze"));
 										outer.spawnAtLocation(mapItem);
 										outer.discard();
@@ -150,7 +158,7 @@ public class GuardSlime extends Slime implements IMissionProvider {
 		}
 
 		@Override
-		public abstract boolean tryTrigger(ServerLevel serverLevel, GuardSlime outer);
+		public abstract boolean tryTrigger(ServerLevel serverLevel, GuardSlimeEntity outer);
 
 		@Override
 		public ResourceLocation missionId() {

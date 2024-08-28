@@ -19,6 +19,7 @@ public final class RPMStructurePieceTypes {
 	public static final StructurePieceType SLIME_MAZE_ENTRANCE_TYPE = register("slime_maze_entrance", SlimeMazePieces.SlimeMazeEntrancePiece::new);
 	public static final StructurePieceType SLIME_MAZE_TUNNEL_TYPE = register("slime_maze_tunnel", SlimeMazePieces.SlimeMazeTunnelPiece::new);
 	public static final StructurePieceType SLIME_MAZE_MAIN_TYPE = register("slime_maze_main", SlimeMazePieces.SlimeMazeMainPiece::new);
+	public static final StructurePieceType HELPLESS_GUARD_SLIME_TYPE = register("helpless_guard_slime", HelplessGuardSlimePieces.HelplessGuardSlimePiece::new);
 
 	private RPMStructurePieceTypes() {
 	}

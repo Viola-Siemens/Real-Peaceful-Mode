@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.client.models;
 
-import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlime;
+import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlimeEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
-public class GuardSlimeModel<T extends GuardSlime> extends HierarchicalModel<T> {
+public class GuardSlimeModel<T extends GuardSlimeEntity> extends HierarchicalModel<T> {
 	private final ModelPart root;
 	@Nullable
 	private final ModelPart armor;

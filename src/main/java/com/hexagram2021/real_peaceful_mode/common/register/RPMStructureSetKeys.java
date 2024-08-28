@@ -18,6 +18,7 @@ public class RPMStructureSetKeys {
 	public static final ResourceKey<StructureSet> CREEPER_TOWNS = createKey("creeper_towns");
 	public static final ResourceKey<StructureSet> PHARAOH_ALTARS = createKey("pharaoh_altars");
 	public static final ResourceKey<StructureSet> SLIME_MAZES = createKey("slime_mazes");
+	public static final ResourceKey<StructureSet> HELPLESS_GUARD_SLIMES = createKey("helpless_guard_slimes");
 
 	private static ResourceKey<StructureSet> createKey(String name) {
 		return ResourceKey.create(Registries.STRUCTURE_SET, new ResourceLocation(MODID, name));

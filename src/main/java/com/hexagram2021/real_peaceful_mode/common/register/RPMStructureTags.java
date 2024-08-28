@@ -9,6 +9,7 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public final class RPMStructureTags {
 	public static final TagKey<Structure> ON_VOID_EXPLORER_MAPS = create("on_void_explorer_maps");
+	public static final TagKey<Structure> ON_SLIME_EXPLORER_MAPS = create("on_slime_explorer_maps");
 
 	@SuppressWarnings("SameParameterValue")
 	private static TagKey<Structure> create(String name) {

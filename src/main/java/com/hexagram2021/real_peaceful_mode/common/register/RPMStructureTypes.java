@@ -21,6 +21,7 @@ public final class RPMStructureTypes {
 	public static final RegistryObject<StructureType<SkeletonPalaceFeature>> SKELETON_PALACE = register("skeleton_palace", () -> SkeletonPalaceFeature.CODEC);
 	public static final RegistryObject<StructureType<PharaohAltarFeature>> PHARAOH_ALTAR = register("pharaoh_altar", () -> PharaohAltarFeature.CODEC);
 	public static final RegistryObject<StructureType<SlimeMazeFeature>> SLIME_MAZE = register("slime_maze", () -> SlimeMazeFeature.CODEC);
+	public static final RegistryObject<StructureType<HelplessGuardSlimeFeature>> HELPLESS_GUARD_SLIME = register("helpless_guard_slime", () -> HelplessGuardSlimeFeature.CODEC);
 
 	private RPMStructureTypes() {
 	}

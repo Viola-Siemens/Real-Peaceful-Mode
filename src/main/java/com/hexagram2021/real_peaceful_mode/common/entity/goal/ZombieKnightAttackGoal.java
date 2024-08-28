@@ -1,12 +1,12 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.goal;
 
-import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnight;
+import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnightEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
 public class ZombieKnightAttackGoal extends MeleeAttackGoal {
 	private int raiseArmTicks;
 
-	public ZombieKnightAttackGoal(DarkZombieKnight knight) {
+	public ZombieKnightAttackGoal(DarkZombieKnightEntity knight) {
 		super(knight, 1.25D, false);
 	}
 

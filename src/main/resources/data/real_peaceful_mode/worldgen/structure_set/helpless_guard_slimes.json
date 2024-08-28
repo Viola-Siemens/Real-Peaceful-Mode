@@ -1,0 +1,19 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 180683506,
+    "separation": 9,
+    "spacing": 30,
+    "spread_type": "triangular"
+  },
+  "structures": [
+    {
+      "structure": "real_peaceful_mode:helpless_guard_slime_mangrove",
+      "weight": 1
+    },
+    {
+      "structure": "real_peaceful_mode:helpless_guard_slime_swamp",
+      "weight": 1
+    }
+  ]
+}
