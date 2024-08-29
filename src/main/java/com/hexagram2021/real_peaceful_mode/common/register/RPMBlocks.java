@@ -2,8 +2,11 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.block.*;
 import com.hexagram2021.real_peaceful_mode.common.block.skull.RPMSkullTypes;
+import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -257,7 +260,19 @@ public class RPMBlocks {
 		public static final BlockEntry<WallBlock> CRACKED_STICKY_STONE_BRICK_WALL = registerWall(CRACKED_STICKY_STONE_BRICKS);
 		public static final BlockEntry<CrackyBlock> CRACKY_STICKY_STONE = new BlockEntry<>(
 				"cracky_sticky_stone", () -> BlockBehaviour.Properties.copy(Blocks.STONE).strength(0.4F).speedFactor(0.5F).jumpFactor(0.6F),
-				CrackyBlock::new
+				props -> new CrackyBlock(props) {
+					private static final ResourceLocation FORMER_MISSION = new ResourceLocation(MODID, "slime1");
+
+					@Override
+					protected boolean testStepOnEntity(Entity entity) {
+						return entity instanceof IMonsterHero hero &&
+								(IMonsterHero.underMission(hero.rpm$getPlayerMissions(), FORMER_MISSION) || IMonsterHero.completeMission(hero.rpm$getPlayerMissions(), FORMER_MISSION));
+					}
+					@Override
+					protected Class<? extends Entity> responsibleEntityType() {
+						return Player.class;
+					}
+				}
 		);
 
 		//misc

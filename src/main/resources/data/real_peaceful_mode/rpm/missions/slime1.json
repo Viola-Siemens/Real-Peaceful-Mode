@@ -1,0 +1,53 @@
+{
+  "requires": [],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message1",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message2",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message3",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message4",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message5",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message6",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message7",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message8",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message9",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message10",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime1.message11",
+      "speaker": "player"
+    }
+  ],
+  "loot_table": "real_peaceful_mode:missions/single_creeper_spirit",
+  "loot_before": true
+}

@@ -2,6 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -15,6 +16,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.entity.EntityTypeTest;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 public class CrackyBlock extends Block {
 	public static final IntegerProperty AGE_4 = BlockStateProperties.AGE_4;
@@ -26,18 +31,33 @@ public class CrackyBlock extends Block {
 
 	@Override
 	public void stepOn(Level level, BlockPos blockPos, BlockState blockState, Entity entity) {
-		if (!level.isClientSide() && entity instanceof Player && !level.getBlockTicks().willTickThisTick(blockPos, this)) {
+		if (!level.isClientSide() && this.testStepOnEntity(entity) && !level.getBlockTicks().willTickThisTick(blockPos, this)) {
 			level.scheduleTick(blockPos, this, 10);
 		}
 
 		super.stepOn(level, blockPos, blockState, entity);
 	}
 
+	protected boolean testStepOnEntity(Entity entity) {
+		return true;
+	}
+	protected Class<? extends Entity> responsibleEntityType() {
+		return Entity.class;
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void tick(BlockState blockState, ServerLevel level, BlockPos blockPos, RandomSource random) {
 		int age = blockState.getValue(AGE_4);
-		if(level.getPlayers(player -> player.onGround() && player.getOnPosLegacy().equals(blockPos)).isEmpty()) {
+		Class<? extends Entity> clazz = this.responsibleEntityType();
+		Predicate<Entity> entityPredicate = entity -> entity.onGround() && entity.getOnPosLegacy().equals(blockPos) && this.testStepOnEntity(entity);
+		List<? extends Entity> entitiesOnBlock;
+		if(clazz == Player.class || clazz == ServerPlayer.class) {
+			entitiesOnBlock = level.getPlayers(entityPredicate);
+		} else {
+			entitiesOnBlock = level.getEntities(EntityTypeTest.forClass(clazz), entityPredicate);
+		}
+		if(entitiesOnBlock.isEmpty()) {
 			if(age > 0) {
 				if(random.nextInt(100 / age / age) < 10) {
 					level.setBlock(blockPos, blockState.setValue(AGE_4, age - 1), Block.UPDATE_ALL);
