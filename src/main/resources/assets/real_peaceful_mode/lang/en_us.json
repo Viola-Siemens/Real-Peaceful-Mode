@@ -256,6 +256,13 @@
   "mission.real_peaceful_mode.husk3.description": "Defeat the husk pharaoh.",
   "mission.real_peaceful_mode.husk3.after": "Congratulations! You have already completed the missions given by the husks.",
 
+  "mission.real_peaceful_mode.slime1.name": "Where slimes live?",
+  "mission.real_peaceful_mode.slime1.description": "Follow the map and find where the slime lives.",
+  "mission.real_peaceful_mode.slime1.after": "Find your way out of the maze.",
+  "mission.real_peaceful_mode.slime2.name": "Slime Doctor",
+  "mission.real_peaceful_mode.slime2.description": "Rescue the sick slime. What is made of wheat and vine with culture table?",
+  "mission.real_peaceful_mode.slime2.after": "Go back and save the sick slime.",
+
   "advancements.real_peaceful_mode.root.title": "Real Peaceful Mode",
   "advancements.real_peaceful_mode.root.description": "This world is full of cruelty. We are blessed and cursed.",
   "advancements.real_peaceful_mode.patchouli.title": "Real Peaceful Mode",

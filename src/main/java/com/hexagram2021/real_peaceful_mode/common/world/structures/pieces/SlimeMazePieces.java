@@ -1,6 +1,10 @@
 package com.hexagram2021.real_peaceful_mode.common.world.structures.pieces;
 
 import com.google.common.collect.Lists;
+import com.hexagram2021.real_peaceful_mode.api.MissionType;
+import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
+import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlimeEntity;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructurePieceTypes;
 import com.hexagram2021.real_peaceful_mode.common.util.RandomMaze;
@@ -13,6 +17,7 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.WallTorchBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -36,15 +41,19 @@ public class SlimeMazePieces {
 		protected static final BlockState STONE = Blocks.STONE.defaultBlockState();
 		protected static final BlockState STICKY_STONE = RPMBlocks.Decoration.STICKY_STONE.defaultBlockState();
 
+		protected void placeStickyStone(WorldGenLevel level, BoundingBox bbox, int x, int y, int z, RandomSource random, float possibility) {
+			if(random.nextFloat() < possibility) {
+				this.placeBlock(level, STICKY_STONE, x, y, z, bbox);
+			} else {
+				this.placeBlock(level, STONE, x, y, z, bbox);
+			}
+		}
+
 		protected void generateStickyStoneBox(WorldGenLevel level, BoundingBox bbox, int x1, int y1, int z1, int x2, int y2, int z2, RandomSource random, float possibility) {
 			for(int y = y1; y <= y2; ++y) {
 				for(int x = x1; x <= x2; ++x) {
 					for(int z = z1; z <= z2; ++z) {
-						if(random.nextFloat() < possibility) {
-							this.placeBlock(level, STICKY_STONE, x, y, z, bbox);
-						} else {
-							this.placeBlock(level, STONE, x, y, z, bbox);
-						}
+						this.placeStickyStone(level, bbox, x, y, z, random, possibility);
 					}
 				}
 			}
@@ -166,20 +175,54 @@ public class SlimeMazePieces {
 		}
 
 		private static final BlockState CRACKY_STICKY_STONE = RPMBlocks.Decoration.CRACKY_STICKY_STONE.defaultBlockState();
+		private static final float POSSIBILITY = 0.375F;
 
 		@Override
 		public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource random,
 								BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
-			this.generateStickyStoneBox(level, boundingBox, 0, 0, 0, WIDTH - 1, 0, LENGTH - 1, random, 0.375F);
+			this.generateStickyStoneBox(level, boundingBox, 0, 0, 0, WIDTH - 1, 0, LENGTH - 1, random, POSSIBILITY);
 			this.generateBox(level, boundingBox, 3, 0, 3, 4, 0, 4, CRACKY_STICKY_STONE, CRACKY_STICKY_STONE, false);
-			this.generateStickyStoneBox(level, boundingBox, 2, 1, 0, 5, 3, 0, random, 0.375F);
-			this.generateStickyStoneBox(level, boundingBox, 1, 1, 1, 1, 3, 1, random, 0.375F);
-			this.generateStickyStoneBox(level, boundingBox, 0, 1, 2, 0, 3, 5, random, 0.375F);
-			this.generateStickyStoneBox(level, boundingBox, 1, 1, 6, 1, 3, 6, random, 0.375F);
-			this.generateStickyStoneBox(level, boundingBox, 2, 1, 7, 5, 3, 7, random, 0.375F);
-			this.generateStickyStoneBox(level, boundingBox, 6, 1, 6, 6, 3, 6, random, 0.375F);
-			this.generateStickyStoneBox(level, boundingBox, 7, 1, 2, 7, 3, 5, random, 0.375F);
-			this.generateStickyStoneBox(level, boundingBox, 6, 1, 1, 6, 3, 1, random, 0.375F);
+			this.generateStickyStoneBox(level, boundingBox, 2, 1, 0, 5, 3, 0, random, POSSIBILITY);
+			this.generateBox(level, boundingBox, 3, 1, 0, 4, 3, 0, CAVE_AIR, CAVE_AIR, false);
+			this.generateStickyStoneBox(level, boundingBox, 1, 1, 1, 1, 3, 1, random, POSSIBILITY);
+			this.generateStickyStoneBox(level, boundingBox, 0, 1, 2, 0, 3, 5, random, POSSIBILITY);
+			this.generateStickyStoneBox(level, boundingBox, 1, 1, 6, 1, 3, 6, random, POSSIBILITY);
+			this.generateStickyStoneBox(level, boundingBox, 2, 1, 7, 5, 3, 7, random, POSSIBILITY);
+			this.generateStickyStoneBox(level, boundingBox, 6, 1, 6, 6, 3, 6, random, POSSIBILITY);
+			this.generateStickyStoneBox(level, boundingBox, 7, 1, 2, 7, 3, 5, random, POSSIBILITY);
+			this.generateStickyStoneBox(level, boundingBox, 6, 1, 1, 6, 3, 1, random, POSSIBILITY);
+
+			this.placeStickyStone(level, boundingBox, 2, 4, 1, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 3, 4, 1, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 4, 4, 1, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 1, 4, 2, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 2, 4, 2, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 5, 4, 2, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 6, 4, 2, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 1, 4, 3, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 6, 4, 3, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 1, 4, 4, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 6, 4, 4, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 1, 4, 5, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 2, 4, 5, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 5, 4, 5, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 6, 4, 5, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 2, 4, 6, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 3, 4, 6, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 4, 4, 6, random, POSSIBILITY);
+
+			this.placeStickyStone(level, boundingBox, 2, 5, 3, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 2, 5, 4, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 3, 5, 2, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 3, 5, 3, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 3, 5, 4, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 3, 5, 5, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 4, 5, 2, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 4, 5, 3, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 4, 5, 4, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 4, 5, 5, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 5, 5, 3, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 5, 5, 4, random, POSSIBILITY);
 		}
 	}
 
@@ -288,6 +331,7 @@ public class SlimeMazePieces {
 		}
 
 		public static final BlockState WALL_TORCH = Blocks.WALL_TORCH.defaultBlockState();
+		public static final BlockState SUMMON_BLOCK = RPMBlocks.TechnicalBlocks.SUMMON_BLOCK.defaultBlockState();
 
 		@Override
 		public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource random,
@@ -351,7 +395,7 @@ public class SlimeMazePieces {
 				this.generateStickyStoneBox(level, boundingBox, WIDTH - 1, 1, LENGTH - 1, WIDTH - 1, 3, LENGTH - 1, random, 0.75F);
 			}
 
-			//torch;
+			//torch
 			for(int i = 0; i < MAZE_LENGTH; i += 4) {
 				for(int j = 0; j < MAZE_LENGTH; j += 4) {
 					if(!this.maze.isAir(2 * i + 1, 2 * j)) {
@@ -375,6 +419,17 @@ public class SlimeMazePieces {
 						this.placeBlock(level, wallTorch, 3 * i + 2, 2, 3 * j + 2, boundingBox);
 					}
 				}
+			}
+
+			BlockPos summonBlockPos = this.getWorldPos(1, 1, 1);
+			level.setBlock(summonBlockPos, SUMMON_BLOCK, WallTorchBlock.UPDATE_CLIENTS);
+			BlockEntity blockEntity = level.getBlockEntity(summonBlockPos);
+			if(blockEntity instanceof SummonBlockEntity summonBlockEntity) {
+				summonBlockEntity.setTriggerableMission(
+						ForgeEventHandler.getMissionManager().getMission(GuardSlimeEntity.GuardSlimeMissions.SEEK_HELP.missionId()).orElse(null),
+						MissionType.FINISH
+				);
+				summonBlockEntity.setDistance(6);
 			}
 		}
 

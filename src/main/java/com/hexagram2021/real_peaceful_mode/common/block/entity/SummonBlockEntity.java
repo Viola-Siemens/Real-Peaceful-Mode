@@ -188,6 +188,18 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 		return this.triggerableMission;
 	}
 
+	public void setTriggerableMission(@Nullable Mission mission, MissionType missionType) {
+		if(mission == null) {
+			this.triggerableMission = null;
+		} else {
+			this.triggerableMission = new SummonBlockMission(mission, missionType);
+		}
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+
 	public static class SummonBlockMission implements IMissionProvider.TriggerableMission<SummonBlockEntity>, IMissionStack {
 		final Mission mission;
 		final MissionType type;

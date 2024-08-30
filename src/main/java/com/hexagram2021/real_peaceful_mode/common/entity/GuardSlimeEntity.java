@@ -65,6 +65,23 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 		}
 	}
 
+	private int checkNearbyPlayers = 100;
+
+	@Override
+	public void tick() {
+		if(--this.checkNearbyPlayers <= 0) {
+			this.checkNearbyPlayers = 100;
+			if (this.level() instanceof ServerLevel serverLevel) {
+				GuardSlimeMissions mission = this.getTriggerableMission();
+				if(mission != null) {
+					mission.tryTrigger(serverLevel, this);
+				}
+			}
+		}
+
+		super.tick();
+	}
+
 	@Override
 	public void setSize(int size, boolean newSpawn) {
 		super.setSize(size, newSpawn);

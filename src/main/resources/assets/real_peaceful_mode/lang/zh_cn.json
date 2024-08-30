@@ -256,6 +256,13 @@
   "mission.real_peaceful_mode.husk3.description": "击败尸壳法老。",
   "mission.real_peaceful_mode.husk3.after": "恭喜！您已经完成了尸壳们给你的所有委托。",
 
+  "mission.real_peaceful_mode.slime1.name": "史莱姆们住在哪？",
+  "mission.real_peaceful_mode.slime1.description": "根据地图的指引，找到史莱姆的住所。",
+  "mission.real_peaceful_mode.slime1.after": "想办法走出迷宫。",
+  "mission.real_peaceful_mode.slime2.name": "史莱姆医生",
+  "mission.real_peaceful_mode.slime2.description": "救治生病的史莱姆。在组培台上用小麦和藤曼会培育出什么？",
+  "mission.real_peaceful_mode.slime2.after": "返回并救治生病的史莱姆。",
+
   "advancements.real_peaceful_mode.root.title": "真正的和平模式",
   "advancements.real_peaceful_mode.root.description": "这世界是残酷的，我们被祝福着，同时也被诅咒着。",
   "advancements.real_peaceful_mode.patchouli.title": "真正的和平模式",
