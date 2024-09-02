@@ -8,6 +8,8 @@ public final class ChatMessageTypes {
 	public static final IChatMessageType PLAIN = register("plain", () -> PlainChatMessage.CODEC);
 	public static final IChatMessageType SELECTABLE = register("selectable", () -> SelectableChatMessage.CODEC);
 	public static final IChatMessageType END = register("end", () -> EndChatMessage.CODEC);
+	public static final IChatMessageType MATERIAL_COLLECTION_START = register("material_collection_start", () -> MaterialCollectionStartChatMessage.CODEC);
+	public static final IChatMessageType MATERIAL_COLLECTION_END = register("material_collection_end", () -> MaterialCollectionEndChatMessage.CODEC);
 
 	public static void init() {
 	}

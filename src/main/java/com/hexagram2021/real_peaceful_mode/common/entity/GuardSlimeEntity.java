@@ -20,8 +20,10 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.item.ItemStack;
@@ -125,6 +127,9 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 	@Override @Nullable
 	public GuardSlimeMissions getTriggerableMission() {
 		if(this.isNoAi()) {
+			if(this.hasPose(Pose.SLEEPING)) {
+				return GuardSlimeMissions.SAVE_ME;
+			}
 			return GuardSlimeMissions.SEEK_HELP;
 		}
 		return null;
@@ -157,6 +162,33 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 									}
 							);
 							return true;
+						}).orElse(false);
+			}
+		},
+		SAVE_ME("slime2", MissionType.FINISH) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, GuardSlimeEntity outer) {
+				return serverLevel.players().stream()
+						.filter(
+								player -> player.closerThan(outer, 6.0D) &&
+										player instanceof IMonsterHero hero &&
+										IMonsterHero.underMission(hero.rpm$getPlayerMissions(), this.missionId)
+						).findAny().map(player -> {
+							Slime slime = EntityType.SLIME.create(outer.level());
+							if(slime != null) {
+								slime.targetSelector.removeAllGoals(goal -> goal instanceof NearestAttackableTargetGoal);
+								slime.setSize(1, true);
+								slime.moveTo(outer.position());
+								outer.discard();
+								outer.level().addFreshEntity(slime);
+								MissionHelper.triggerMissionForPlayer(
+										this.missionId, this.type,
+										player, outer, player1 -> {
+										}
+								);
+								return true;
+							}
+							return false;
 						}).orElse(false);
 			}
 		};

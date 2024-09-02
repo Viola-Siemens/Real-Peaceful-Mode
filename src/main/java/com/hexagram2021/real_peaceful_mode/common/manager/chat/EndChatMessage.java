@@ -11,17 +11,13 @@ import java.util.List;
 public class EndChatMessage extends AbstractChatMessage {
 	public static final Codec<EndChatMessage> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			Codec.STRING.fieldOf("key").forGetter(EndChatMessage::messageKey),
-			Speaker.CODEC.optionalFieldOf("speaker", Speaker.NPC).forGetter(EndChatMessage::speaker),
-			Codec.BOOL.optionalFieldOf("cancel", false).forGetter(EndChatMessage::shouldCancel)
+			Speaker.CODEC.optionalFieldOf("speaker", Speaker.NPC).forGetter(EndChatMessage::speaker)
 	).apply(instance, EndChatMessage::new));
 
-	public static final EndChatMessage EMPTY = new EndChatMessage("rpm.chat.real_peaceful_mode.empty", Speaker.NPC, false);
+	public static final EndChatMessage EMPTY = new EndChatMessage("rpm.chat.real_peaceful_mode.empty", Speaker.NPC);
 
-	final boolean cancel;
-
-	public EndChatMessage(String messageKey, Speaker speaker, boolean cancel) {
+	public EndChatMessage(String messageKey, Speaker speaker) {
 		super(messageKey, speaker);
-		this.cancel = cancel;
 	}
 
 	@Override @Nullable
@@ -37,9 +33,5 @@ public class EndChatMessage extends AbstractChatMessage {
 	@Override
 	public IChatMessageType type() {
 		return ChatMessageTypes.END;
-	}
-
-	public boolean shouldCancel() {
-		return this.cancel;
 	}
 }

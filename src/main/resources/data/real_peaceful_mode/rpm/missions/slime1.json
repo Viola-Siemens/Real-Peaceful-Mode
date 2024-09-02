@@ -48,6 +48,6 @@
       "speaker": "player"
     }
   ],
-  "loot_table": "real_peaceful_mode:missions/single_creeper_spirit",
+  "loot_table": "real_peaceful_mode:missions/single_slime_spirit",
   "loot_before": true
 }

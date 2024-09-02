@@ -61,6 +61,35 @@
       },
       {
         "condition": {
+          "type": "real_peaceful_mode:material_collection",
+          "loot_table": "real_peaceful_mode:gameplay/collection/pink_creeper",
+          "finish": false
+        },
+        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.material_collection.start",
+        "next": {
+          "type": "real_peaceful_mode:material_collection_start",
+          "key": "rpm.chat.real_peaceful_mode.pink_creeper.material_collection.start",
+          "speaker": "npc",
+          "loot_table": "real_peaceful_mode:gameplay/collection/pink_creeper",
+          "duration": 20000
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:material_collection",
+          "loot_table": "real_peaceful_mode:gameplay/collection/pink_creeper",
+          "finish": true
+        },
+        "key": "rpm.chat.real_peaceful_mode.pink_creeper.selection.material_collection.end",
+        "next": {
+          "type": "real_peaceful_mode:material_collection_end",
+          "key": "rpm.chat.real_peaceful_mode.pink_creeper.material_collection.end",
+          "speaker": "npc",
+          "loot_table": "real_peaceful_mode:gameplay/collection/pink_creeper"
+        }
+      },
+      {
+        "condition": {
           "type": "real_peaceful_mode:greeting_timed",
           "time": "morning"
         },

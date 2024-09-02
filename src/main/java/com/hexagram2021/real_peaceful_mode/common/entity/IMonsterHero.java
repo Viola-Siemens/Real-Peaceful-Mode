@@ -4,19 +4,27 @@ import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.PlayerMissions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Map;
 
 public interface IMonsterHero {
 	String HELPED_MONSTERS = "helpedMonsters";
+	String MATERIAL_COLLECTIONS = "materialCollections";
 
 	boolean rpm$isHero(EntityType<?> monsterType);
-
 	void rpm$setHero(EntityType<?> monsterType);
+
+	boolean rpm$canCollectMaterial(ResourceLocation lootTable);
+	boolean rpm$materialCollected(ResourceLocation lootTable, LivingEntity livingEntity);
+	void rpm$startCollectingMaterial(ResourceLocation lootTable, LivingEntity livingEntity, long duration);
+	boolean rpm$endCollectingMaterial(ResourceLocation lootTable);
 
 	Map<ResourceLocation, Integer> rpm$getHelpedMonsters();
 
 	PlayerMissions rpm$getPlayerMissions();
+
+	Map<ResourceLocation, MaterialCollection> rpm$getMaterialCollections();
 
 	static boolean isAtMissionsBetween(PlayerMissions playerMissions, ResourceLocation finished, ResourceLocation toFinish) {
 		return completeMission(playerMissions, finished) && !completeMission(playerMissions, toFinish) && !underMission(playerMissions, toFinish);

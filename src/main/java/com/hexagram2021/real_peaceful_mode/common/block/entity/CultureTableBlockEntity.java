@@ -1,9 +1,11 @@
 package com.hexagram2021.real_peaceful_mode.common.block.entity;
 
+import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.block.CultureTableBlock;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.CultureTableMenu;
+import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import net.minecraft.core.BlockPos;
@@ -39,7 +41,7 @@ import javax.annotation.Nullable;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-public class CultureTableBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, StackedContentsCompatible {
+public class CultureTableBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, StackedContentsCompatible, IMissionProvider {
 	public static final int SLOT_INPUT = 0;
 	public static final int SLOT_MIX1 = 1;
 	public static final int SLOT_MIX2 = 2;
@@ -127,6 +129,9 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 			Items.ORANGE_TULIP, Items.PINK_TULIP, Items.RED_TULIP, Items.WHITE_TULIP
 	);
 	private static final int MAX_FLOWER_TYPES = ACCEPTABLE_FLOWERS.getItems().length;
+	private static final Ingredient SLIME_CONDENSATE_INGREDIENT = Ingredient.of(
+			Items.WHEAT, Items.VINE
+	);
 
 	private boolean isLit() {
 		return this.analyzeTime > 0;
@@ -136,8 +141,14 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 		return itemStack.is(Items.GUNPOWDER);
 	}
 
-	public static boolean canAnalyze(ItemStack itemStack) {
+	public static boolean canAnalyzeCreeper(ItemStack itemStack) {
 		return ACCEPTABLE_FLOWERS.test(itemStack);
+	}
+	public static boolean canAnalyzeSlime(ItemStack itemStack) {
+		return SLIME_CONDENSATE_INGREDIENT.test(itemStack);
+	}
+	public static boolean canAnalyze(ItemStack itemStack) {
+		return canAnalyzeCreeper(itemStack) || canAnalyzeSlime(itemStack);
 	}
 
 	public static void serverTick(Level level, BlockPos pos, BlockState blockState, CultureTableBlockEntity blockEntity) {
@@ -170,49 +181,70 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 		}
 	}
 
-	private boolean canAnalyze() {
-		return isInput(this.items.get(SLOT_INPUT)) && this.items.get(SLOT_RESULT).isEmpty() &&
-				canAnalyze(this.items.get(SLOT_MIX1)) && canAnalyze(this.items.get(SLOT_MIX2)) &&
+	private boolean canAnalyzeCreeper() {
+		return canAnalyzeCreeper(this.items.get(SLOT_MIX1)) && canAnalyzeCreeper(this.items.get(SLOT_MIX2)) &&
 				!ItemStack.isSameItem(this.items.get(SLOT_MIX1), this.items.get(SLOT_MIX2));
+	}
+	private boolean canAnalyzeSlime() {
+		return canAnalyzeSlime(this.items.get(SLOT_MIX1)) && canAnalyzeSlime(this.items.get(SLOT_MIX2)) &&
+				!ItemStack.isSameItem(this.items.get(SLOT_MIX1), this.items.get(SLOT_MIX2));
+	}
+	private boolean isAnalyzableTable() {
+		return isInput(this.items.get(SLOT_INPUT)) && this.items.get(SLOT_RESULT).isEmpty();
+	}
+
+	private boolean canAnalyze() {
+		return this.isAnalyzableTable() && (this.canAnalyzeCreeper() || this.canAnalyzeSlime());
 	}
 
 	private void finishAnalyze() {
-		if(this.level instanceof ServerLevel serverLevel && this.canAnalyze()) {
-			long seed = (serverLevel.getSeed() ^ this.getBlockPos().asLong()) & 0x7fffffff;
-			int a = (int)(seed % MAX_FLOWER_TYPES);
-			int b = (int)((seed / MAX_FLOWER_TYPES) % (MAX_FLOWER_TYPES - 1));
-			if(b >= a) {
-				b += 1;
+		if(this.level instanceof ServerLevel serverLevel) {
+			CultureTableMissions mission = this.getTriggerableMission();
+			if (mission != null) {
+				switch (mission) {
+					case CREEPER -> {
+						long seed = (serverLevel.getSeed() ^ this.getBlockPos().asLong()) & 0x7fffffff;
+						int a = (int) (seed % MAX_FLOWER_TYPES);
+						int b = (int) ((seed / MAX_FLOWER_TYPES) % (MAX_FLOWER_TYPES - 1));
+						if (b >= a) {
+							b += 1;
+						}
+						this.items.get(SLOT_INPUT).shrink(1);
+						ItemStack[] items = ACCEPTABLE_FLOWERS.getItems();
+						int cnt = 0;
+						if (ItemStack.isSameItem(items[a], this.items.get(SLOT_MIX1))) {
+							++cnt;
+						}
+						if (ItemStack.isSameItem(items[a], this.items.get(SLOT_MIX2))) {
+							++cnt;
+						}
+						if (ItemStack.isSameItem(items[b], this.items.get(SLOT_MIX1))) {
+							++cnt;
+						}
+						if (ItemStack.isSameItem(items[b], this.items.get(SLOT_MIX2))) {
+							++cnt;
+						}
+						this.items.get(SLOT_MIX1).shrink(1);
+						this.items.get(SLOT_MIX2).shrink(1);
+						if (cnt >= 2) {
+							this.items.set(SLOT_RESULT, new ItemStack(RPMItems.Materials.EXPERIMENT_FLOWER));
+						} else {
+							if (cnt == 1) {
+								this.items.set(SLOT_RESULT, serverLevel.getRandom().nextBoolean() ? new ItemStack(Items.BONE_MEAL) : new ItemStack(Items.GRASS));
+							} else {
+								this.items.set(SLOT_RESULT, new ItemStack(Items.GRASS));
+							}
+							return;		//Don't trigger mission.
+						}
+					}
+					case SLIME -> {
+						this.items.set(SLOT_RESULT, new ItemStack(RPMItems.Materials.SLIME_CONDENSATE));
+						this.items.get(SLOT_MIX1).shrink(1);
+						this.items.get(SLOT_MIX2).shrink(1);
+					}
+				}
+				mission.tryTrigger(serverLevel, this);
 			}
-			this.items.get(SLOT_INPUT).shrink(1);
-			ItemStack[] items = ACCEPTABLE_FLOWERS.getItems();
-			int cnt = 0;
-			if(ItemStack.isSameItem(items[a], this.items.get(SLOT_MIX1))) {
-				++cnt;
-			}
-			if(ItemStack.isSameItem(items[a], this.items.get(SLOT_MIX2))) {
-				++cnt;
-			}
-			if(ItemStack.isSameItem(items[b], this.items.get(SLOT_MIX1))) {
-				++cnt;
-			}
-			if(ItemStack.isSameItem(items[b], this.items.get(SLOT_MIX2))) {
-				++cnt;
-			}
-			if(cnt >= 2) {
-				this.items.set(SLOT_RESULT, new ItemStack(RPMItems.Materials.EXPERIMENT_FLOWER));
-				MissionHelper.triggerMissionForPlayers(
-						new ResourceLocation(MODID, "creeper1"), MissionType.FINISH,
-						serverLevel, player -> player.position().closerThan(this.getBlockPos().getCenter(), 32.0D),
-						null, player -> {}
-				);
-			} else if(cnt == 1) {
-				this.items.set(SLOT_RESULT, serverLevel.getRandom().nextBoolean() ? new ItemStack(Items.BONE_MEAL) : new ItemStack(Items.GRASS));
-			} else {
-				this.items.set(SLOT_RESULT, new ItemStack(Items.GRASS));
-			}
-			this.items.get(SLOT_MIX1).shrink(1);
-			this.items.get(SLOT_MIX2).shrink(1);
 		}
 	}
 
@@ -282,7 +314,6 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 			this.analyzeTime = 0;
 			this.setChanged();
 		}
-
 	}
 
 	@Override
@@ -317,7 +348,19 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 		for(ItemStack itemstack : this.items) {
 			contents.accountStack(itemstack);
 		}
+	}
 
+	@Override @Nullable
+	public CultureTableMissions getTriggerableMission() {
+		if(this.isAnalyzableTable()) {
+			if(this.canAnalyzeCreeper()) {
+				return CultureTableMissions.CREEPER;
+			}
+			if(this.canAnalyzeSlime()) {
+				return CultureTableMissions.SLIME;
+			}
+		}
+		return null;
 	}
 
 	LazyOptional<? extends IItemHandler>[] handlers =
@@ -347,5 +390,44 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 	public void reviveCaps() {
 		super.reviveCaps();
 		this.handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
+	}
+
+	public enum CultureTableMissions implements TriggerableMission<CultureTableBlockEntity>, IMissionStack {
+		CREEPER("creeper1", MissionType.FINISH),
+		SLIME("slime2", MissionType.FINISH);
+
+		final ResourceLocation missionId;
+		final MissionType type;
+
+		CultureTableMissions(String mission, MissionType type) {
+			this.missionId = new ResourceLocation(MODID, mission);
+			this.type = type;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return this.missionId + "/" + this.type.getSerializedName();
+		}
+
+		@Override
+		public boolean tryTrigger(ServerLevel serverLevel, CultureTableBlockEntity outer) {
+			MissionHelper.triggerMissionForPlayers(
+					this.missionId(), this.type(),
+					serverLevel, player -> player.position().closerThan(outer.getBlockPos().getCenter(), 32.0D),
+					null, player -> {
+					}
+			);
+			return true;
+		}
+
+		@Override
+		public ResourceLocation missionId() {
+			return missionId;
+		}
+
+		@Override
+		public MissionType type() {
+			return type;
+		}
 	}
 }

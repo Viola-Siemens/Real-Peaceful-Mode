@@ -16,6 +16,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,7 +31,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class SlimeMazePieces {
-	private static abstract sealed class AbstractSlimeMazePiece extends StructurePiece permits SlimeMazeEntrancePiece, SlimeMazeTunnelPiece, SlimeMazeMainPiece {
+	private static abstract sealed class AbstractSlimeMazePiece extends StructurePiece permits SlimeMazeEntrancePiece, SlimeMazeHousingPiece, SlimeMazeMainPiece, SlimeMazeTunnelPiece {
 		protected AbstractSlimeMazePiece(StructurePieceType type, int depth, BoundingBox bbox) {
 			super(type, depth, bbox);
 		}
@@ -195,6 +196,7 @@ public class SlimeMazePieces {
 			this.placeStickyStone(level, boundingBox, 2, 4, 1, random, POSSIBILITY);
 			this.placeStickyStone(level, boundingBox, 3, 4, 1, random, POSSIBILITY);
 			this.placeStickyStone(level, boundingBox, 4, 4, 1, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 5, 4, 1, random, POSSIBILITY);
 			this.placeStickyStone(level, boundingBox, 1, 4, 2, random, POSSIBILITY);
 			this.placeStickyStone(level, boundingBox, 2, 4, 2, random, POSSIBILITY);
 			this.placeStickyStone(level, boundingBox, 5, 4, 2, random, POSSIBILITY);
@@ -210,6 +212,7 @@ public class SlimeMazePieces {
 			this.placeStickyStone(level, boundingBox, 2, 4, 6, random, POSSIBILITY);
 			this.placeStickyStone(level, boundingBox, 3, 4, 6, random, POSSIBILITY);
 			this.placeStickyStone(level, boundingBox, 4, 4, 6, random, POSSIBILITY);
+			this.placeStickyStone(level, boundingBox, 5, 4, 6, random, POSSIBILITY);
 
 			this.placeStickyStone(level, boundingBox, 2, 5, 3, random, POSSIBILITY);
 			this.placeStickyStone(level, boundingBox, 2, 5, 4, random, POSSIBILITY);
@@ -328,6 +331,14 @@ public class SlimeMazePieces {
 
 		@Override
 		public void addChildren(StructurePiece piece, StructurePieceAccessor pieces, RandomSource random) {
+			if(piece instanceof SlimeMazeEntrancePiece entrance) {
+				this.generateChildForward(entrance, pieces, random, 61, 1);
+			}
+		}
+
+		@Override @Nullable
+		protected SlimeMazeHousingPiece generateChildPiece(StructurePieceAccessor pieces, RandomSource random, int x, int y, int z, Direction direction) {
+			return SlimeMazeHousingPiece.createPiece(pieces, random, x, y, z, direction, this.getGenDepth());
 		}
 
 		public static final BlockState WALL_TORCH = Blocks.WALL_TORCH.defaultBlockState();
@@ -437,6 +448,80 @@ public class SlimeMazePieces {
 		static SlimeMazeMainPiece createPiece(StructurePieceAccessor pieces, RandomSource random, int x, int y, int z, Direction direction, int depth) {
 			BoundingBox boundingbox = BoundingBox.orientBox(x, y, z, -OFF_X, -OFF_Y, -OFF_Z, WIDTH, HEIGHT, LENGTH, direction);
 			return isOkBox(boundingbox) && pieces.findCollisionPiece(boundingbox) == null ? new SlimeMazeMainPiece(depth, random, boundingbox, direction) : null;
+		}
+	}
+
+	public static final class SlimeMazeHousingPiece extends AbstractSlimeMazePiece {
+		private static final int WIDTH = 10;
+		private static final int HEIGHT = 9;
+		private static final int LENGTH = 10;
+
+		private static final int OFF_X = 4;
+		private static final int OFF_Y = 5;
+		private static final int OFF_Z = 0;
+
+		public SlimeMazeHousingPiece(int depth, RandomSource random, BoundingBox bbox, Direction direction) {
+			this(RPMStructurePieceTypes.SLIME_MAZE_HOUSING_TYPE, depth, random, bbox, direction);
+
+		}
+		public SlimeMazeHousingPiece(StructurePieceSerializationContext context, CompoundTag nbt) {
+			this(RPMStructurePieceTypes.SLIME_MAZE_HOUSING_TYPE, context, nbt);
+		}
+
+		private SlimeMazeHousingPiece(StructurePieceType type, int depth, @SuppressWarnings("unused") RandomSource random, BoundingBox bbox, Direction direction) {
+			super(type, depth, bbox);
+			this.setOrientation(direction);
+		}
+		private SlimeMazeHousingPiece(StructurePieceType type, @SuppressWarnings("unused") StructurePieceSerializationContext context, CompoundTag nbt) {
+			super(type, nbt);
+		}
+
+		@Override
+		public void addChildren(StructurePiece piece, StructurePieceAccessor pieces, RandomSource random) {
+		}
+
+		private static final BlockState STONE_STAIRS = Blocks.STONE_STAIRS.defaultBlockState().setValue(StairBlock.FACING, Direction.SOUTH);
+		private static final BlockState STICKY_STONE_STAIRS = RPMBlocks.Decoration.STICKY_STONE_STAIRS.defaultBlockState().setValue(StairBlock.FACING, Direction.SOUTH);
+
+		private void placeStickyStoneStair(WorldGenLevel level, BoundingBox bbox, int x, int y, int z, RandomSource random, float possibility) {
+			if(random.nextFloat() < possibility) {
+				this.placeBlock(level, STICKY_STONE_STAIRS, x, y, z, bbox);
+			} else {
+				this.placeBlock(level, STONE_STAIRS, x, y, z, bbox);
+			}
+		}
+
+		@Override
+		public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource random,
+								BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
+			this.generateBox(level, boundingBox, 1, 1, 1, WIDTH - 2, HEIGHT - 2, LENGTH - 2, CAVE_AIR, CAVE_AIR, false);
+			this.generateStickyStoneBox(level, boundingBox, 0, 0, 0, WIDTH - 1, 0, LENGTH - 1, random, 0.9F);
+			this.generateStickyStoneBox(level, boundingBox, 0, HEIGHT - 1, 0, WIDTH - 1, HEIGHT - 1, LENGTH - 1, random, 0.75F);
+			this.generateStickyStoneBox(level, boundingBox, 0, 1, 0, 0, HEIGHT - 2, LENGTH - 1, random, 0.75F);
+			this.generateBox(level, boundingBox, 4, 5, 0, 5, 6, 0, CAVE_AIR, CAVE_AIR, false);
+			this.generateStickyStoneBox(level, boundingBox, WIDTH - 1, 1, 0, 0, HEIGHT - 2, LENGTH - 1, random, 0.75F);
+			this.generateStickyStoneBox(level, boundingBox, 1, 1, 0, WIDTH - 2, HEIGHT - 2, 0, random, 0.75F);
+			this.generateStickyStoneBox(level, boundingBox, 1, 1, LENGTH - 1, WIDTH - 2, HEIGHT - 2, LENGTH - 1, random, 0.75F);
+			this.placeStickyStoneStair(level, boundingBox, 4, 5, 1, random, 0.8F);
+			this.placeStickyStoneStair(level, boundingBox, 5, 5, 1, random, 0.8F);
+			this.generateStickyStoneBox(level, boundingBox, 4, 4, 1, 5, 1, 1, random, 0.75F);
+			this.placeStickyStoneStair(level, boundingBox, 4, 4, 2, random, 0.85F);
+			this.placeStickyStoneStair(level, boundingBox, 5, 4, 2, random, 0.85F);
+			this.generateStickyStoneBox(level, boundingBox, 4, 3, 1, 5, 1, 1, random, 0.75F);
+			this.placeStickyStoneStair(level, boundingBox, 4, 3, 3, random, 0.85F);
+			this.placeStickyStoneStair(level, boundingBox, 5, 3, 3, random, 0.85F);
+			this.generateStickyStoneBox(level, boundingBox, 4, 2, 1, 5, 1, 1, random, 0.75F);
+			this.placeStickyStoneStair(level, boundingBox, 4, 2, 4, random, 0.85F);
+			this.placeStickyStoneStair(level, boundingBox, 5, 2, 4, random, 0.85F);
+			this.generateStickyStoneBox(level, boundingBox, 4, 1, 1, 5, 1, 1, random, 0.75F);
+			this.placeStickyStoneStair(level, boundingBox, 4, 1, 5, random, 0.85F);
+			this.placeStickyStoneStair(level, boundingBox, 5, 1, 5, random, 0.85F);
+		}
+
+		@Nullable
+		static SlimeMazeHousingPiece createPiece(StructurePieceAccessor pieces, RandomSource random, int x, int y, int z, Direction direction, int depth) {
+			BoundingBox boundingbox = BoundingBox.orientBox(x, y, z, -OFF_X, -OFF_Y, -OFF_Z, WIDTH, HEIGHT, LENGTH, direction);
+			return isOkBox(boundingbox) && pieces.findCollisionPiece(boundingbox) == null ? new SlimeMazeHousingPiece(depth, random, boundingbox, direction) : null;
 		}
 	}
 }

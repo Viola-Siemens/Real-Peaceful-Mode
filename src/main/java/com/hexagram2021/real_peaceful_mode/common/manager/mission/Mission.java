@@ -10,7 +10,6 @@ import com.mojang.serialization.JsonOps;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.EntityType;
@@ -50,7 +49,7 @@ public record Mission(ResourceLocation id,
 		if (this.lootBefore != finished) {
 			if (!this.rewardLootTable.equals(BuiltInLootTables.EMPTY)) {
 				LootTable lootTable = lootTables.getLootTable(this.rewardLootTable);
-				lootTable.getRandomItems(new LootParams.Builder((ServerLevel) player.level()).create(LootContextParamSets.EMPTY), itemStack -> player.level().addFreshEntity(
+				lootTable.getRandomItems(new LootParams.Builder(player.serverLevel()).create(LootContextParamSets.EMPTY), itemStack -> player.level().addFreshEntity(
 						new ItemEntity(player.level(), player.getX(), player.getY() + 0.5D, player.getZ(), itemStack)
 				));
 			}

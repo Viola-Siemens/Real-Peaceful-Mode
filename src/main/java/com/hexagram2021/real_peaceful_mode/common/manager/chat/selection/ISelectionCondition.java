@@ -5,8 +5,10 @@ import com.hexagram2021.real_peaceful_mode.common.manager.Former;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.SharedConstants;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +20,7 @@ public interface ISelectionCondition {
 	Codec<ISelectionCondition> REGISTRY_CODEC = ISelectionConditionType.REGISTRY_CODEC.dispatch(ISelectionCondition::type, ISelectionConditionType::codec);
 
 	ISelectionConditionType type();
-	boolean check(ServerPlayer player);
+	boolean check(ServerPlayer player, LivingEntity npc);
 
 	record MissionSelectionCondition(List<Former> formers) implements ISelectionCondition {
 		public static final Codec<MissionSelectionCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -31,7 +33,7 @@ public interface ISelectionCondition {
 		}
 
 		@Override
-		public boolean check(ServerPlayer player) {
+		public boolean check(ServerPlayer player, LivingEntity npc) {
 			if(player instanceof IMonsterHero hero) {
 				return this.formers.stream().allMatch(former -> former.checkComplete(hero.rpm$getPlayerMissions()));
 			}
@@ -49,7 +51,7 @@ public interface ISelectionCondition {
 		}
 
 		@Override
-		public boolean check(ServerPlayer player) {
+		public boolean check(ServerPlayer player, LivingEntity npc) {
 			long tickOfDay = player.serverLevel().getDayTime() % SharedConstants.TICKS_PER_GAME_DAY;
 			return this.greetingTime.is(tickOfDay);
 		}
@@ -89,6 +91,25 @@ public interface ISelectionCondition {
 			public static GreetingTime byName(String name) {
 				return BY_NAME.get(name);
 			}
+		}
+	}
+	record MaterialCollectionSelectionCondition(ResourceLocation lootTable, boolean finish) implements ISelectionCondition {
+		public static final Codec<MaterialCollectionSelectionCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+				ResourceLocation.CODEC.fieldOf("loot_table").forGetter(MaterialCollectionSelectionCondition::lootTable),
+				Codec.BOOL.fieldOf("finish").forGetter(MaterialCollectionSelectionCondition::finish)
+		).apply(instance, MaterialCollectionSelectionCondition::new));
+
+		@Override
+		public ISelectionConditionType type() {
+			return SelectionConditionTypes.MATERIAL_COLLECTION;
+		}
+
+		@Override
+		public boolean check(ServerPlayer player, LivingEntity npc) {
+			if(player instanceof IMonsterHero hero) {
+				return this.finish ? hero.rpm$materialCollected(this.lootTable, npc) : hero.rpm$canCollectMaterial(this.lootTable);
+			}
+			return false;
 		}
 	}
 }

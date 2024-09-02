@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.crafting.menu;
 import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.common.crafting.ClientSideMessagedChat;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedChat;
+import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.manager.Speaker;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.AbstractChatMessage;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.selection.ChatSelection;
@@ -20,6 +21,7 @@ import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public class ChatMessageMenu extends AbstractContainerMenu implements IMessageMenu {
@@ -28,6 +30,9 @@ public class ChatMessageMenu extends AbstractContainerMenu implements IMessageMe
 
 	@Nullable
 	private List<ChatSelection> cachedSelections = null;
+
+	@Nullable
+	private BiConsumer<IMonsterHero, LivingEntity> onFinish = null;
 
 	public ChatMessageMenu(int counter, Inventory inventory) {
 		this(counter, new ClientSideMessagedChat(inventory.player));
@@ -66,7 +71,7 @@ public class ChatMessageMenu extends AbstractContainerMenu implements IMessageMe
 		}
 		List<ChatSelection> chatSelections = this.getCurrentChatSelections();
 		if(chatSelections != null && index < chatSelections.size()) {
-			this.current = chatSelections.get(index).getNext();
+			this.setCurrent(chatSelections.get(index).getNext());
 			this.cachedSelections = null;
 			return true;
 		}
@@ -80,7 +85,7 @@ public class ChatMessageMenu extends AbstractContainerMenu implements IMessageMe
 	@OnlyIn(Dist.CLIENT)
 	public void setChat(MessagedChat chat) {
 		this.chat = chat;
-		this.current = chat.message();
+		this.setCurrent(chat.message());
 	}
 
 	public String getCurrentChatMessageKey() {
@@ -98,7 +103,7 @@ public class ChatMessageMenu extends AbstractContainerMenu implements IMessageMe
 	public boolean goNext() {
 		AbstractChatMessage next = this.current.getNext();
 		if(next != null) {
-			this.current = next;
+			this.setCurrent(next);
 			return true;
 		}
 		return false;
@@ -107,7 +112,7 @@ public class ChatMessageMenu extends AbstractContainerMenu implements IMessageMe
 	public void doCacheSelections() {
 		if(this.chat.player() instanceof ServerPlayer serverPlayer) {
 			if (this.current.getSelections() != null) {
-				this.cachedSelections = this.current.getSelections().stream().filter(selection -> selection.canShowFor(serverPlayer)).collect(Collectors.toList());
+				this.cachedSelections = this.current.getSelections().stream().filter(selection -> selection.canShowFor(serverPlayer, this.chat.npc())).collect(Collectors.toList());
 			} else {
 				this.cachedSelections = null;
 			}
@@ -115,6 +120,14 @@ public class ChatMessageMenu extends AbstractContainerMenu implements IMessageMe
 					PacketDistributor.PLAYER.with(() -> serverPlayer),
 					new ClientboundChatSelectionPacket(this.cachedSelections)
 			);
+		}
+	}
+
+	private void setCurrent(AbstractChatMessage current) {
+		this.current = current;
+		BiConsumer<IMonsterHero, LivingEntity> onFinish = current.onFinish();
+		if(onFinish != null) {
+			this.onFinish = onFinish;
 		}
 	}
 
@@ -133,5 +146,8 @@ public class ChatMessageMenu extends AbstractContainerMenu implements IMessageMe
 	@Override
 	public void removed(Player player) {
 		super.removed(player);
+		if(this.onFinish != null && this.chat.player() instanceof IMonsterHero hero) {
+			this.onFinish.accept(hero, this.chat.npc());
+		}
 	}
 }

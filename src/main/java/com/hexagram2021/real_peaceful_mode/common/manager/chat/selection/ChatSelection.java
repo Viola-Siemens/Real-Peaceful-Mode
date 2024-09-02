@@ -6,6 +6,7 @@ import com.hexagram2021.real_peaceful_mode.common.manager.chat.IChatMessage;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -53,7 +54,7 @@ public class ChatSelection implements IChatMessage {
 		return null;
 	}
 
-	public boolean canShowFor(ServerPlayer player) {
-		return this.condition.check(player);
+	public boolean canShowFor(ServerPlayer player, LivingEntity npc) {
+		return this.condition.check(player, npc);
 	}
 }
