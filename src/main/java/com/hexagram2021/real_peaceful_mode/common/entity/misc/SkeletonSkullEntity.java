@@ -37,7 +37,7 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile implements IC
             return 3.5F;
         }if(targetHealth < 80.0F) {
             float diff = targetHealth - 60.0F;
-            return 0.0025F * diff * diff + 3.5F;
+            return 0.00125F * diff * diff + 3.5F;
         }
         if(targetHealth < 400.0F) {
             return targetHealth * 0.05F;
