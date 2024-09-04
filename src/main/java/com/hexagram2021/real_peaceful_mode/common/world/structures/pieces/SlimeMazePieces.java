@@ -515,9 +515,9 @@ public class SlimeMazePieces {
 			this.generateStickyStoneBox(level, boundingBox, 4, 1, 3, 5, 1, 3, random, 0.75F);
 			this.placeStickyStoneStair(level, boundingBox, 4, 1, 4, random, 0.85F);
 			this.placeStickyStoneStair(level, boundingBox, 5, 1, 4, random, 0.85F);
-			BlockState northWallTorch = WALL_TORCH.setValue(WallTorchBlock.FACING, Direction.NORTH);
-			this.placeBlock(level, northWallTorch, 4, 3, LENGTH - 2, boundingBox);
-			this.placeBlock(level, northWallTorch, 5, 3, LENGTH - 2, boundingBox);
+			BlockState southWallTorch = WALL_TORCH.setValue(WallTorchBlock.FACING, Direction.SOUTH);
+			this.placeBlock(level, southWallTorch, 4, 3, LENGTH - 2, boundingBox);
+			this.placeBlock(level, southWallTorch, 5, 3, LENGTH - 2, boundingBox);
 			BlockState eastWallTorch = WALL_TORCH.setValue(WallTorchBlock.FACING, Direction.EAST);
 			this.placeBlock(level, eastWallTorch, 1, 3, 4, boundingBox);
 			this.placeBlock(level, eastWallTorch, 1, 3, 5, boundingBox);

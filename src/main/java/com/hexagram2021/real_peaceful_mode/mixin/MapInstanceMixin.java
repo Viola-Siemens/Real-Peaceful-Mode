@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-@Mixin(targets = "net/minecraft/client/gui/MapRenderer/MapInstance")
+@Mixin(targets = "net.minecraft.client.gui.MapRenderer$MapInstance")
 public class MapInstanceMixin {
 	@Unique @Nullable
 	private RenderType rpm$bufferDecorationRenderType = null;

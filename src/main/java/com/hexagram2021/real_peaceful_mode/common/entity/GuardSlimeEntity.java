@@ -158,7 +158,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 										} else {
 											mapItem = MapItem.create(outer.level(), blockPos.getX(), blockPos.getZ(), (byte)2, true, true);
 											MapItem.renderBiomePreviewMap(serverLevel, mapItem);
-											MapItemSavedData.addTargetDecoration(mapItem, blockPos, "+", RPMMapDecorationTypes.SLIME_MAZE);
+											MapItemSavedData.addTargetDecoration(mapItem, blockPos.offset(10, 0, 14), "+", RPMMapDecorationTypes.SLIME_MAZE);
 										}
 										mapItem.setHoverName(Component.translatable("filled_map.real_peaceful_mode.slime_maze"));
 										outer.spawnAtLocation(mapItem);
