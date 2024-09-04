@@ -491,6 +491,8 @@ public class SlimeMazePieces {
 			}
 		}
 
+		public static final BlockState WALL_TORCH = Blocks.WALL_TORCH.defaultBlockState();
+
 		@Override
 		public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource random,
 								BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
@@ -498,24 +500,30 @@ public class SlimeMazePieces {
 			this.generateStickyStoneBox(level, boundingBox, 0, 0, 0, WIDTH - 1, 0, LENGTH - 1, random, 0.9F);
 			this.generateStickyStoneBox(level, boundingBox, 0, HEIGHT - 1, 0, WIDTH - 1, HEIGHT - 1, LENGTH - 1, random, 0.75F);
 			this.generateStickyStoneBox(level, boundingBox, 0, 1, 0, 0, HEIGHT - 2, LENGTH - 1, random, 0.75F);
-			this.generateBox(level, boundingBox, 4, 5, 0, 5, 6, 0, CAVE_AIR, CAVE_AIR, false);
-			this.generateStickyStoneBox(level, boundingBox, WIDTH - 1, 1, 0, 0, HEIGHT - 2, LENGTH - 1, random, 0.75F);
+			this.generateStickyStoneBox(level, boundingBox, WIDTH - 1, 1, 0, WIDTH - 1, HEIGHT - 2, LENGTH - 1, random, 0.75F);
 			this.generateStickyStoneBox(level, boundingBox, 1, 1, 0, WIDTH - 2, HEIGHT - 2, 0, random, 0.75F);
 			this.generateStickyStoneBox(level, boundingBox, 1, 1, LENGTH - 1, WIDTH - 2, HEIGHT - 2, LENGTH - 1, random, 0.75F);
-			this.placeStickyStoneStair(level, boundingBox, 4, 5, 1, random, 0.8F);
-			this.placeStickyStoneStair(level, boundingBox, 5, 5, 1, random, 0.8F);
-			this.generateStickyStoneBox(level, boundingBox, 4, 4, 1, 5, 1, 1, random, 0.75F);
-			this.placeStickyStoneStair(level, boundingBox, 4, 4, 2, random, 0.85F);
-			this.placeStickyStoneStair(level, boundingBox, 5, 4, 2, random, 0.85F);
-			this.generateStickyStoneBox(level, boundingBox, 4, 3, 1, 5, 1, 1, random, 0.75F);
-			this.placeStickyStoneStair(level, boundingBox, 4, 3, 3, random, 0.85F);
-			this.placeStickyStoneStair(level, boundingBox, 5, 3, 3, random, 0.85F);
-			this.generateStickyStoneBox(level, boundingBox, 4, 2, 1, 5, 1, 1, random, 0.75F);
-			this.placeStickyStoneStair(level, boundingBox, 4, 2, 4, random, 0.85F);
-			this.placeStickyStoneStair(level, boundingBox, 5, 2, 4, random, 0.85F);
-			this.generateStickyStoneBox(level, boundingBox, 4, 1, 1, 5, 1, 1, random, 0.75F);
-			this.placeStickyStoneStair(level, boundingBox, 4, 1, 5, random, 0.85F);
-			this.placeStickyStoneStair(level, boundingBox, 5, 1, 5, random, 0.85F);
+			this.generateBox(level, boundingBox, 4, 5, 0, 5, 6, 0, CAVE_AIR, CAVE_AIR, false);
+			this.placeStickyStoneStair(level, boundingBox, 4, 4, 1, random, 0.8F);
+			this.placeStickyStoneStair(level, boundingBox, 5, 4, 1, random, 0.8F);
+			this.generateStickyStoneBox(level, boundingBox, 4, 1, 1, 5, 3, 1, random, 0.75F);
+			this.placeStickyStoneStair(level, boundingBox, 4, 3, 2, random, 0.85F);
+			this.placeStickyStoneStair(level, boundingBox, 5, 3, 2, random, 0.85F);
+			this.generateStickyStoneBox(level, boundingBox, 4, 1, 2, 5, 2, 2, random, 0.75F);
+			this.placeStickyStoneStair(level, boundingBox, 4, 2, 3, random, 0.85F);
+			this.placeStickyStoneStair(level, boundingBox, 5, 2, 3, random, 0.85F);
+			this.generateStickyStoneBox(level, boundingBox, 4, 1, 3, 5, 1, 3, random, 0.75F);
+			this.placeStickyStoneStair(level, boundingBox, 4, 1, 4, random, 0.85F);
+			this.placeStickyStoneStair(level, boundingBox, 5, 1, 4, random, 0.85F);
+			BlockState northWallTorch = WALL_TORCH.setValue(WallTorchBlock.FACING, Direction.NORTH);
+			this.placeBlock(level, northWallTorch, 4, 3, LENGTH - 2, boundingBox);
+			this.placeBlock(level, northWallTorch, 5, 3, LENGTH - 2, boundingBox);
+			BlockState eastWallTorch = WALL_TORCH.setValue(WallTorchBlock.FACING, Direction.EAST);
+			this.placeBlock(level, eastWallTorch, 1, 3, 4, boundingBox);
+			this.placeBlock(level, eastWallTorch, 1, 3, 5, boundingBox);
+			BlockState westWallTorch = WALL_TORCH.setValue(WallTorchBlock.FACING, Direction.WEST);
+			this.placeBlock(level, westWallTorch, WIDTH - 2, 3, 4, boundingBox);
+			this.placeBlock(level, westWallTorch, WIDTH - 2, 3, 5, boundingBox);
 		}
 
 		@Nullable

@@ -4,6 +4,7 @@ import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMMapDecorationTypes;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -31,6 +32,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -126,7 +128,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 
 	@Override @Nullable
 	public GuardSlimeMissions getTriggerableMission() {
-		if(this.isNoAi()) {
+		if(this.isNoAi() && !this.hasArmor()) {
 			if(this.hasPose(Pose.SLEEPING)) {
 				return GuardSlimeMissions.SAVE_ME;
 			}
@@ -155,6 +157,8 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 											mapItem = new ItemStack(Items.MAP);
 										} else {
 											mapItem = MapItem.create(outer.level(), blockPos.getX(), blockPos.getZ(), (byte)2, true, true);
+											MapItem.renderBiomePreviewMap(serverLevel, mapItem);
+											MapItemSavedData.addTargetDecoration(mapItem, blockPos, "+", RPMMapDecorationTypes.SLIME_MAZE);
 										}
 										mapItem.setHoverName(Component.translatable("filled_map.real_peaceful_mode.slime_maze"));
 										outer.spawnAtLocation(mapItem);

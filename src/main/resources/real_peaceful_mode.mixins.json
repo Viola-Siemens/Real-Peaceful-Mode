@@ -10,6 +10,8 @@
     "DamageEnchantmentMixin",
     "HeroGiftsTaskAccess",
     "LivingEntityMixin",
+    "MapDecorationTypeMixin",
+    "MapItemSavedDataMixin",
     "MeleeAttackGoalMixin",
     "NoteBlockInstrumentMixin",
     "PlayerListMixin",
@@ -22,6 +24,7 @@
   "minVersion": "0.8",
   "client": [
     "AbstractZombieModelMixin",
+    "MapInstanceMixin",
     "SkeletonModelMixin"
   ]
 }
