@@ -155,17 +155,17 @@ public class RPMItems {
 		public static ItemEntry<SlimeScepterItem> SLIME_SCEPTER = ItemEntry.register(
 				"slime_scepter", () -> new SlimeScepterItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).durability(1280))
 		);
-		public static ItemEntry<SwordItem> IRON_PIKE = ItemEntry.register(
-				"iron_pike", () -> new SwordItem(Tiers.IRON, 4, -3.0F, new Item.Properties().stacksTo(1))
+		public static ItemEntry<PikeItem> IRON_PIKE = ItemEntry.register(
+				"iron_pike", () -> new PikeItem(Tiers.IRON, 4, -3.0F, new Item.Properties().stacksTo(1))
 		);
-		public static ItemEntry<SwordItem> GOLDEN_PIKE = ItemEntry.register(
-				"golden_pike", () -> new SwordItem(Tiers.GOLD, 4, -3.0F, new Item.Properties().stacksTo(1))
+		public static ItemEntry<PikeItem> GOLDEN_PIKE = ItemEntry.register(
+				"golden_pike", () -> new PikeItem(Tiers.GOLD, 4, -3.0F, new Item.Properties().stacksTo(1))
 		);
-		public static ItemEntry<SwordItem> DIAMOND_PIKE = ItemEntry.register(
-				"diamond_pike", () -> new SwordItem(Tiers.DIAMOND, 4, -3.0F, new Item.Properties().stacksTo(1))
+		public static ItemEntry<PikeItem> DIAMOND_PIKE = ItemEntry.register(
+				"diamond_pike", () -> new PikeItem(Tiers.DIAMOND, 4, -3.0F, new Item.Properties().stacksTo(1))
 		);
-		public static ItemEntry<SwordItem> NETHERITE_PIKE = ItemEntry.register(
-				"netherite_pike", () -> new SwordItem(Tiers.NETHERITE, 4, -3.0F, new Item.Properties().stacksTo(1))
+		public static ItemEntry<PikeItem> NETHERITE_PIKE = ItemEntry.register(
+				"netherite_pike", () -> new PikeItem(Tiers.NETHERITE, 4, -3.0F, new Item.Properties().stacksTo(1))
 		);
 
 		public static ItemEntry<FireChargeItem> TINY_FLAME = ItemEntry.register(
