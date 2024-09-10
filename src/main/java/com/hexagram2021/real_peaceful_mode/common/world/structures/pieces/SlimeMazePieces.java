@@ -5,19 +5,19 @@ import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlimeEntity;
-import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
-import com.hexagram2021.real_peaceful_mode.common.register.RPMStructurePieceTypes;
+import com.hexagram2021.real_peaceful_mode.common.register.*;
 import com.hexagram2021.real_peaceful_mode.common.util.RandomMaze;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.WallTorchBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -48,6 +48,42 @@ public class SlimeMazePieces {
 			} else {
 				this.placeBlock(level, STONE, x, y, z, bbox);
 			}
+		}
+
+		protected static final BlockState SUMMON_BLOCK = RPMBlocks.TechnicalBlocks.SUMMON_BLOCK.defaultBlockState();
+
+		@SuppressWarnings("SameParameterValue")
+		@Nullable
+		protected SummonBlockEntity placeSummonBlock(WorldGenLevel level, int x, int y, int z,
+										@Nullable ResourceLocation missionId, MissionType missionType,
+										@Nullable CompoundTag summonTag, int distance) {
+			BlockPos summonBlockPos = this.getWorldPos(x, y, z);
+			level.setBlock(summonBlockPos, SUMMON_BLOCK, WallTorchBlock.UPDATE_CLIENTS);
+			BlockEntity blockEntity = level.getBlockEntity(summonBlockPos);
+			if(blockEntity instanceof SummonBlockEntity summonBlockEntity) {
+				summonBlockEntity.setTriggerableMission(
+						missionId == null ? null : ForgeEventHandler.getMissionManager().getMission(missionId).orElse(null),
+						missionType
+				);
+				summonBlockEntity.setSummonTag(summonTag);
+				summonBlockEntity.setDistance(distance);
+
+				return summonBlockEntity;
+			}
+			return null;
+		}
+
+		@SuppressWarnings("SameParameterValue")
+		@Nullable
+		protected GuardSlimeEntity spawnGuardSlime(WorldGenLevel level, int x, int y, int z) {
+			GuardSlimeEntity guardSlime = RPMEntities.GUARD_SLIME.create(level.getLevel());
+			if(guardSlime != null) {
+				BlockPos spawnPos = this.getWorldPos(x, y, z);
+				guardSlime.moveTo(spawnPos, 0.0F, 0.0F);
+				guardSlime.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.STRUCTURE, null, null);
+				level.addFreshEntity(guardSlime);
+			}
+			return guardSlime;
 		}
 
 		protected void generateStickyStoneBox(WorldGenLevel level, BoundingBox bbox, int x1, int y1, int z1, int x2, int y2, int z2, RandomSource random, float possibility) {
@@ -342,7 +378,6 @@ public class SlimeMazePieces {
 		}
 
 		public static final BlockState WALL_TORCH = Blocks.WALL_TORCH.defaultBlockState();
-		public static final BlockState SUMMON_BLOCK = RPMBlocks.TechnicalBlocks.SUMMON_BLOCK.defaultBlockState();
 
 		@Override
 		public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource random,
@@ -361,6 +396,9 @@ public class SlimeMazePieces {
 					}
 					if(this.maze.isAir(2 * i + 1, 2 * j + 1)) {
 						this.generateBox(level, boundingBox, 3 * i + 1, 1, 3 * j + 1, 3 * i + 2, 3, 3 * j + 2, CAVE_AIR, CAVE_AIR, false);
+						if(random.nextInt(5) == 0) {
+							this.spawnGuardSlime(level, 3 * i + 1, 1, 3 * j + 1);
+						}
 					} else {
 						this.generateStickyStoneBox(level, boundingBox, 3 * i + 1, 1, 3 * j + 1, 3 * i + 2, 3, 3 * j + 2, random, 0.75F);
 					}
@@ -432,16 +470,7 @@ public class SlimeMazePieces {
 				}
 			}
 
-			BlockPos summonBlockPos = this.getWorldPos(1, 1, 1);
-			level.setBlock(summonBlockPos, SUMMON_BLOCK, WallTorchBlock.UPDATE_CLIENTS);
-			BlockEntity blockEntity = level.getBlockEntity(summonBlockPos);
-			if(blockEntity instanceof SummonBlockEntity summonBlockEntity) {
-				summonBlockEntity.setTriggerableMission(
-						ForgeEventHandler.getMissionManager().getMission(GuardSlimeEntity.GuardSlimeMissions.SEEK_HELP.missionId()).orElse(null),
-						MissionType.FINISH
-				);
-				summonBlockEntity.setDistance(6);
-			}
+			this.placeSummonBlock(level, 1, 1, 1, GuardSlimeEntity.GuardSlimeMissions.SEEK_HELP.missionId(), MissionType.FINISH, null, 6);
 		}
 
 		@Nullable
@@ -524,12 +553,78 @@ public class SlimeMazePieces {
 			BlockState westWallTorch = WALL_TORCH.setValue(WallTorchBlock.FACING, Direction.WEST);
 			this.placeBlock(level, westWallTorch, WIDTH - 2, 3, 4, boundingBox);
 			this.placeBlock(level, westWallTorch, WIDTH - 2, 3, 5, boundingBox);
+
+			CompoundTag summonTagSickSlime = new CompoundTag();
+			summonTagSickSlime.putString("id", RPMEntityKeys.GUARD_SLIME.location().toString());
+			summonTagSickSlime.putInt("Size", 1);
+			summonTagSickSlime.putBoolean("HasArmor", false);
+			summonTagSickSlime.putBoolean("IsSick", true);
+			summonTagSickSlime.putBoolean("PersistenceRequired", true);
+			SummonBlockEntity summonBlockEntity = this.placeSummonBlock(
+					level, 3, 1, 1,
+					GuardSlimeEntity.GuardSlimeMissions.SAVE_ME.missionId(), MissionType.RECEIVE,
+					summonTagSickSlime, 6
+			);
+			if(summonBlockEntity != null) {
+				summonBlockEntity.setExtraWork(RPMSummonBlockEvents.WORK_SLIME_LADDER.toString());
+			}
+
+			CompoundTag summonTagHelpSeeker = new CompoundTag();
+			summonTagHelpSeeker.putString("id", RPMEntityKeys.GUARD_SLIME.location().toString());
+			summonTagSickSlime.putBoolean("HasArmor", false);
+			this.placeSummonBlock(level, 4, 1, 1, GuardSlimeEntity.GuardSlimeMissions.QUARREL.missionId(), MissionType.RECEIVE, summonTagHelpSeeker, 6);
+
+			GuardSlimeEntity guardSlimeEntity;
+			guardSlimeEntity = this.spawnGuardSlime(level, 1, 1, 7);
+			if(guardSlimeEntity != null) {
+				guardSlimeEntity.setHasArmor(false);
+			}
+			guardSlimeEntity = this.spawnGuardSlime(level, WIDTH - 2, 1, 7);
+			if(guardSlimeEntity != null) {
+				guardSlimeEntity.setHasArmor(false);
+			}
 		}
 
 		@Nullable
 		static SlimeMazeHousingPiece createPiece(StructurePieceAccessor pieces, RandomSource random, int x, int y, int z, Direction direction, int depth) {
 			BoundingBox boundingbox = BoundingBox.orientBox(x, y, z, -OFF_X, -OFF_Y, -OFF_Z, WIDTH, HEIGHT, LENGTH, direction);
 			return isOkBox(boundingbox) && pieces.findCollisionPiece(boundingbox) == null ? new SlimeMazeHousingPiece(depth, random, boundingbox, direction) : null;
+		}
+
+		@SuppressWarnings("deprecation")
+		public static void extraWorkAfterTrigger(ServerLevel level, BlockPos pos) {
+			BlockState ladder = Blocks.LADDER.defaultBlockState();
+			if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.SOUTH), level, pos.north())) {
+				ladder = ladder.setValue(LadderBlock.FACING, Direction.SOUTH);
+			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.NORTH), level, pos.south())) {
+				ladder = ladder.setValue(LadderBlock.FACING, Direction.NORTH);
+			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.EAST), level, pos.west())) {
+				ladder = ladder.setValue(LadderBlock.FACING, Direction.EAST);
+			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.WEST), level, pos.east())) {
+				ladder = ladder.setValue(LadderBlock.FACING, Direction.WEST);
+			} else {
+				ladder = null;
+			}
+			int y = 0;
+			BlockPos blockPos = pos.offset(0, y, 0);
+			while(level.getBlockState(blockPos).isAir()) {
+				if(ladder != null) {
+					level.setBlock(blockPos, ladder, Block.UPDATE_ALL);
+				}
+				y += 1;
+				blockPos = pos.offset(0, y, 0);
+			}
+			if(ladder == null) {
+				ladder = Blocks.LADDER.defaultBlockState();
+			}
+			BlockState target = level.getBlockState(blockPos);
+			while(target.canOcclude()) {
+				level.setBlock(blockPos, ladder, Block.UPDATE_ALL);
+				y += 1;
+				blockPos = pos.offset(0, y, 0);
+				target = level.getBlockState(blockPos);
+			}
+			level.setBlock(blockPos.below(), Blocks.OAK_TRAPDOOR.defaultBlockState(), Block.UPDATE_ALL);
 		}
 	}
 }

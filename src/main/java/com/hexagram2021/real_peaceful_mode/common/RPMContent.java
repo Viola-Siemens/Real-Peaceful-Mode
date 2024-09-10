@@ -1,9 +1,13 @@
 package com.hexagram2021.real_peaceful_mode.common;
 
-import com.hexagram2021.real_peaceful_mode.api.SummonBlockEntityHelper;
 import com.hexagram2021.real_peaceful_mode.common.crafting.compat.ModsCompatManager;
-import com.hexagram2021.real_peaceful_mode.common.entity.*;
-import com.hexagram2021.real_peaceful_mode.common.entity.boss.*;
+import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnightEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlimeEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.HuskWorkmanEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity;
+import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
+import com.hexagram2021.real_peaceful_mode.common.entity.boss.SkeletonKing;
+import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.ChatMessageTypes;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.selection.SelectionConditionTypes;
 import com.hexagram2021.real_peaceful_mode.common.register.*;
@@ -11,7 +15,6 @@ import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
 import com.hexagram2021.real_peaceful_mode.mixin.BlockEntityTypeAccess;
 import com.hexagram2021.real_peaceful_mode.server.commands.RPMCommands;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Block;
@@ -66,7 +69,8 @@ public class RPMContent {
 		Villages.init();
 		ModVanillaCompat.setup();
 		appendBlocksToBlockEntities();
-		registerSummonBlockExtraConditions();
+		RPMSummonBlockEvents.registerSummonBlockExtraConditions();
+		RPMSummonBlockEvents.registerSummonBlockExtraWorks();
 
 		RPMItems.runLater();
 	}
@@ -79,10 +83,6 @@ public class RPMContent {
 		skullValidBlocks.add(RPMBlocks.Decoration.DARK_ZOMBIE_KNIGHT_WALL_SKULL.get());
 
 		skullBuilderAccess.rpm$setValidBlocks(skullValidBlocks);
-	}
-
-	private static void registerSummonBlockExtraConditions() {
-		SummonBlockEntityHelper.registerExtraCondition(new ResourceLocation(MODID, "pharaoh"), (level, pos) -> !HuskPharaoh.conditionToStone(level, pos));
 	}
 
 	@SubscribeEvent

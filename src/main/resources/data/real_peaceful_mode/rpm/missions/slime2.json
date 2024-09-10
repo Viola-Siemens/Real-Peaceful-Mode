@@ -1,0 +1,89 @@
+{
+  "requires": [
+    "real_peaceful_mode:slime1"
+  ],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message1",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message2",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message3",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message4",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message5",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message6",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message7",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message8",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message9",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message10",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message11",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message12",
+      "speaker": "player"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message13",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message14",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message15",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message16",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message17",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message18",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message19",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime2.message20",
+      "speaker": "player"
+    }
+  ]
+}

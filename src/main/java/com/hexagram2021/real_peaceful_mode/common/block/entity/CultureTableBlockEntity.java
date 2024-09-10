@@ -129,7 +129,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 			Items.ORANGE_TULIP, Items.PINK_TULIP, Items.RED_TULIP, Items.WHITE_TULIP
 	);
 	private static final int MAX_FLOWER_TYPES = ACCEPTABLE_FLOWERS.getItems().length;
-	private static final Ingredient SLIME_CONDENSATE_INGREDIENT = Ingredient.of(
+	private static final Ingredient SLIME_COLLOID_INGREDIENT = Ingredient.of(
 			Items.WHEAT, Items.VINE
 	);
 
@@ -145,7 +145,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 		return ACCEPTABLE_FLOWERS.test(itemStack);
 	}
 	public static boolean canAnalyzeSlime(ItemStack itemStack) {
-		return SLIME_CONDENSATE_INGREDIENT.test(itemStack);
+		return SLIME_COLLOID_INGREDIENT.test(itemStack);
 	}
 	public static boolean canAnalyze(ItemStack itemStack) {
 		return canAnalyzeCreeper(itemStack) || canAnalyzeSlime(itemStack);
@@ -238,7 +238,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 						}
 					}
 					case SLIME -> {
-						this.items.set(SLOT_RESULT, new ItemStack(RPMItems.Materials.SLIME_CONDENSATE));
+						this.items.set(SLOT_RESULT, new ItemStack(RPMItems.Materials.SLIME_COLLOID));
 						this.items.get(SLOT_MIX1).shrink(1);
 						this.items.get(SLOT_MIX2).shrink(1);
 					}

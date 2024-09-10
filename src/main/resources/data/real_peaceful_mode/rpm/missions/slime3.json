@@ -1,0 +1,79 @@
+{
+  "requires": [
+    "real_peaceful_mode:slime2"
+  ],
+  "messages": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message1",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message2",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message3",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message4",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message5",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message6",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message7",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message8",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message9",
+      "speaker": "npc"
+    }
+  ],
+  "messagesAfter": [
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message10",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message11",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message12",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message13",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message14",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message15",
+      "speaker": "player"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message16",
+      "speaker": "npc"
+    },
+    {
+      "key": "rpm.mission.real_peaceful_mode.slime3.message17",
+      "speaker": "npc"
+    }
+  ],
+  "loot_table": "real_peaceful_mode:missions/finish_slime",
+  "loot_before": false
+}

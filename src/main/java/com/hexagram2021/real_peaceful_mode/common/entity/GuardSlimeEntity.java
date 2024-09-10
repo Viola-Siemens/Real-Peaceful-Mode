@@ -24,7 +24,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.item.ItemStack;
@@ -41,6 +41,7 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class GuardSlimeEntity extends Slime implements IMissionProvider {
 	private static final EntityDataAccessor<Boolean> HAS_ARMOR = SynchedEntityData.defineId(GuardSlimeEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> IS_SICK = SynchedEntityData.defineId(GuardSlimeEntity.class, EntityDataSerializers.BOOLEAN);
 
 	public GuardSlimeEntity(EntityType<? extends GuardSlimeEntity> entityType, Level level) {
 		super(entityType, level);
@@ -50,13 +51,16 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 	public void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(HAS_ARMOR, true);
+		this.entityData.define(IS_SICK, false);
 	}
 
 	private static final String TAG_HAS_ARMOR = "HasArmor";
+	private static final String TAG_IS_SICK = "IsSick";
 	@Override
 	public void addAdditionalSaveData(CompoundTag nbt) {
 		super.addAdditionalSaveData(nbt);
 		nbt.putBoolean(TAG_HAS_ARMOR, this.hasArmor());
+		nbt.putBoolean(TAG_IS_SICK, this.isSick());
 	}
 
 	@Override
@@ -66,6 +70,11 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 			this.setHasArmor(nbt.getBoolean(TAG_HAS_ARMOR));
 		} else {
 			this.setHasArmor(true);
+		}
+		if(nbt.contains(TAG_IS_SICK, Tag.TAG_BYTE)) {
+			this.setSick(nbt.getBoolean(TAG_IS_SICK));
+		} else {
+			this.setSick(false);
 		}
 	}
 
@@ -117,6 +126,20 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 		Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(hasArmor ? 4.0D : 0.0D);
 	}
 
+	public boolean isSick() {
+		return this.getEntityData().get(IS_SICK);
+	}
+	public void setSick(boolean isSick) {
+		this.getEntityData().set(IS_SICK, isSick);
+		if(isSick) {
+			this.goalSelector.removeAllGoals(goal -> true);
+			this.targetSelector.removeAllGoals(goal -> true);
+			this.setPose(Pose.SLEEPING);
+		} else {
+			this.setPose(Pose.STANDING);
+		}
+	}
+
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes().add(Attributes.ARMOR, 4.0D);
 	}
@@ -128,8 +151,8 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 
 	@Override @Nullable
 	public GuardSlimeMissions getTriggerableMission() {
-		if(this.isNoAi() && !this.hasArmor()) {
-			if(this.hasPose(Pose.SLEEPING)) {
+		if(!this.hasArmor() && this.isNoAi()) {
+			if (this.hasPose(Pose.SLEEPING)) {
 				return GuardSlimeMissions.SAVE_ME;
 			}
 			return GuardSlimeMissions.SEEK_HELP;
@@ -180,8 +203,10 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 						).findAny().map(player -> {
 							Slime slime = EntityType.SLIME.create(outer.level());
 							if(slime != null) {
-								slime.targetSelector.removeAllGoals(goal -> goal instanceof NearestAttackableTargetGoal);
-								slime.setSize(1, true);
+								slime.goalSelector.removeAllGoals(goal -> true);
+								slime.targetSelector.removeAllGoals(goal -> true);
+								slime.goalSelector.addGoal(2, new SlimeMissionTriggerGoal(slime));
+								slime.setSize(2, true);
 								slime.moveTo(outer.position());
 								outer.discard();
 								outer.level().addFreshEntity(slime);
@@ -193,6 +218,29 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 								return true;
 							}
 							return false;
+						}).orElse(false);
+			}
+		},
+		QUARREL("slime3", MissionType.FINISH) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, GuardSlimeEntity outer) {
+				return this.tryTriggerSimple(serverLevel, outer);
+			}
+
+			@Override
+			boolean tryTriggerSimple(ServerLevel serverLevel, LivingEntity outer) {
+				return serverLevel.players().stream()
+						.filter(
+								player -> player.closerThan(outer, 6.0D) &&
+										player instanceof IMonsterHero hero &&
+										IMonsterHero.underMission(hero.rpm$getPlayerMissions(), this.missionId)
+						).findAny().map(player -> {
+							MissionHelper.triggerMissionForPlayer(
+									this.missionId, this.type,
+									player, outer, player1 -> {
+									}
+							);
+							return true;
 						}).orElse(false);
 			}
 		};
@@ -213,6 +261,10 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 		@Override
 		public abstract boolean tryTrigger(ServerLevel serverLevel, GuardSlimeEntity outer);
 
+		boolean tryTriggerSimple(ServerLevel serverLevel, LivingEntity outer) {
+			return false;
+		}
+
 		@Override
 		public ResourceLocation missionId() {
 			return missionId;
@@ -221,6 +273,28 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 		@Override
 		public MissionType type() {
 			return type;
+		}
+	}
+
+	static class SlimeMissionTriggerGoal extends Goal {
+		private final Slime slime;
+		private int nextTriggerTime = 100;
+
+		SlimeMissionTriggerGoal(Slime slime) {
+			this.slime = slime;
+		}
+
+		@Override
+		public boolean canUse() {
+			return true;
+		}
+
+		@Override
+		public void tick() {
+			if(this.slime.level() instanceof ServerLevel serverLevel && --this.nextTriggerTime <= 0) {
+				this.nextTriggerTime = this.adjustedTickDelay(100);
+				GuardSlimeMissions.QUARREL.tryTriggerSimple(serverLevel, this.slime);
+			}
 		}
 	}
 }

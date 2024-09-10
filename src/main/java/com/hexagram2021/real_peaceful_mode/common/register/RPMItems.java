@@ -110,8 +110,8 @@ public class RPMItems {
 		public static ItemEntry<Item> EXPLOSION_BLOCKER = ItemEntry.register(
 				"explosion_blocker", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1))
 		);
-		public static ItemEntry<Item> SLIME_CONDENSATE = ItemEntry.register(
-				"slime_condensate", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(16))
+		public static ItemEntry<Item> SLIME_COLLOID = ItemEntry.register(
+				"slime_colloid", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(16))
 		);
 
 		private Materials() {

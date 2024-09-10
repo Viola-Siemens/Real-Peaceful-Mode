@@ -26,6 +26,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 import static net.minecraft.world.level.block.Block.UPDATE_ALL;
@@ -34,6 +35,7 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 	public static final String TAG_SUMMON_ENTITY = "summon";
 	public static final String TAG_MISSION = "mission";
 	public static final String TAG_EXTRA_CONDITION = "extra_condition";
+	public static final String TAG_EXTRA_WORK = "extra_work";
 	public static final String TAG_MISSION_TYPE = "mission_type";
 	public static final String TAG_DISTANCE = "distance";
 
@@ -44,6 +46,8 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 
 	@Nullable
 	private String extraCondition;
+	@Nullable
+	private String extraWork;
 
 	@Nullable
 	private SummonBlockMission triggerableMission;
@@ -97,7 +101,7 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 				if(mission != null) {
 					MissionHelper.triggerMissionForPlayers(
 							mission.mission, mission.type, nearbyPlayers,
-							(IPlayerListWithMissions) serverLevel.getServer().getPlayerList(), npc, p -> {}
+							(IPlayerListWithMissions) serverLevel.getServer().getPlayerList(), npc, p -> blockEntity.applyExtraWork(serverLevel)
 					);
 				}
 			}
@@ -129,16 +133,24 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 	}
 
 	private static final Map<String, BiFunction<ServerLevel, BlockPos, Boolean>> EXTRA_CONDITIONS = Maps.newHashMap();
-
 	public static void registerExtraCondition(String conditionName, BiFunction<ServerLevel, BlockPos, Boolean> condition) {
 		EXTRA_CONDITIONS.put(conditionName, condition);
 	}
-
 	private boolean checkExtraCondition(ServerLevel level) {
 		if(this.extraCondition == null) {
 			return true;
 		}
 		return EXTRA_CONDITIONS.getOrDefault(this.extraCondition, (l, p) -> false).apply(level, this.worldPosition);
+	}
+
+	private static final Map<String, BiConsumer<ServerLevel, BlockPos>> EXTRA_WORKS = Maps.newHashMap();
+	public static void registerExtraWork(String conditionName, BiConsumer<ServerLevel, BlockPos> work) {
+		EXTRA_WORKS.put(conditionName, work);
+	}
+	private void applyExtraWork(ServerLevel level) {
+		if(this.extraWork != null) {
+			EXTRA_WORKS.getOrDefault(this.extraWork, (l, p) -> {}).accept(level, this.worldPosition);
+		}
 	}
 
 	@Override
@@ -153,6 +165,9 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 		}
 		if(this.extraCondition != null) {
 			nbt.putString(TAG_EXTRA_CONDITION, this.extraCondition);
+		}
+		if(this.extraWork != null) {
+			nbt.putString(TAG_EXTRA_WORK, this.extraWork);
 		}
 		nbt.putInt(TAG_DISTANCE, this.distance);
 	}
@@ -178,6 +193,9 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 		if(nbt.contains(TAG_EXTRA_CONDITION, Tag.TAG_STRING)) {
 			this.extraCondition = nbt.getString(TAG_EXTRA_CONDITION);
 		}
+		if(nbt.contains(TAG_EXTRA_WORK, Tag.TAG_STRING)) {
+			this.extraWork = nbt.getString(TAG_EXTRA_WORK);
+		}
 		if(nbt.contains(TAG_DISTANCE, Tag.TAG_INT)) {
 			this.distance = nbt.getInt(TAG_DISTANCE);
 		}
@@ -196,8 +214,35 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 		}
 	}
 
+	public int getDistance() {
+		return this.distance;
+	}
 	public void setDistance(int distance) {
 		this.distance = distance;
+	}
+
+	@Nullable
+	public CompoundTag getSummonTag() {
+		return this.summonTag;
+	}
+	public void setSummonTag(@Nullable CompoundTag tag) {
+		this.summonTag = tag;
+	}
+
+	@Nullable
+	public String getExtraCondition() {
+		return this.extraCondition;
+	}
+	public void setExtraCondition(@Nullable String extraCondition) {
+		this.extraCondition = extraCondition;
+	}
+
+	@Nullable
+	public String getExtraWork() {
+		return this.extraWork;
+	}
+	public void setExtraWork(@Nullable String extraWork) {
+		this.extraWork = extraWork;
 	}
 
 	public static class SummonBlockMission implements IMissionProvider.TriggerableMission<SummonBlockEntity>, IMissionStack {
