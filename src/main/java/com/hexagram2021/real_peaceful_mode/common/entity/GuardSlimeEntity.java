@@ -240,17 +240,18 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 		QUARREL("slime3", MissionType.FINISH) {
 			@Override
 			public boolean tryTrigger(ServerLevel serverLevel, GuardSlimeEntity outer) {
-				return this.tryTriggerSimple(serverLevel, outer);
+				return this.tryTriggerSimple(serverLevel, outer, () -> {});
 			}
 
 			@Override
-			boolean tryTriggerSimple(ServerLevel serverLevel, LivingEntity outer) {
+			boolean tryTriggerSimple(ServerLevel serverLevel, LivingEntity outer, Runnable extra) {
 				return serverLevel.players().stream()
 						.filter(
 								player -> player.closerThan(outer, 6.0D) &&
 										player instanceof IMonsterHero hero &&
 										IMonsterHero.underMission(hero.rpm$getPlayerMissions(), this.missionId)
 						).findAny().map(player -> {
+							extra.run();
 							MissionHelper.triggerMissionForPlayer(
 									this.missionId, this.type,
 									player, outer, player1 -> {
@@ -277,7 +278,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 		@Override
 		public abstract boolean tryTrigger(ServerLevel serverLevel, GuardSlimeEntity outer);
 
-		boolean tryTriggerSimple(ServerLevel serverLevel, LivingEntity outer) {
+		boolean tryTriggerSimple(ServerLevel serverLevel, LivingEntity outer, Runnable extra) {
 			return false;
 		}
 
@@ -309,7 +310,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 		public void tick() {
 			if(this.slime.level() instanceof ServerLevel serverLevel && --this.nextTriggerTime <= 0) {
 				this.nextTriggerTime = this.adjustedTickDelay(100);
-				GuardSlimeMissions.QUARREL.tryTriggerSimple(serverLevel, this.slime);
+				GuardSlimeMissions.QUARREL.tryTriggerSimple(serverLevel, this.slime, () -> this.slime.goalSelector.removeGoal(this));
 			}
 		}
 	}
