@@ -18,6 +18,7 @@
     "ServerLevelMixin",
     "ServerPlayerMixin",
     "SkeletonEntityMixin",
+    "SlimeEntityMixin",
     "StructureTemplatePoolAccess",
     "ZombieEntityMixin"
   ],

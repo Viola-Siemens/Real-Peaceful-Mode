@@ -2,6 +2,7 @@
   "requires": [
     "real_peaceful_mode:slime2"
   ],
+  "reward": "minecraft:slime",
   "messages": [
     {
       "key": "rpm.mission.real_peaceful_mode.slime3.message1",

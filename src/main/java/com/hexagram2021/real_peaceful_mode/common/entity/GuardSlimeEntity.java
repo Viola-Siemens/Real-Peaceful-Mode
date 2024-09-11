@@ -4,6 +4,7 @@ import com.hexagram2021.real_peaceful_mode.api.IMissionProvider;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMapDecorationTypes;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTags;
 import net.minecraft.core.BlockPos;
@@ -17,7 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -79,6 +79,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 	}
 
 	private int checkNearbyPlayers = 100;
+	private static final ItemStack SLIME2_TRIGGER_ITEM = new ItemStack(RPMItems.Materials.SLIME_COLLOID);
 
 	@Override
 	public void tick() {
@@ -114,8 +115,20 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 	}
 
 	@Override
-	public boolean canAttack(LivingEntity livingEntity) {
-		return this.hasArmor() && !(livingEntity instanceof IMonsterHero hero && hero.rpm$isHero(EntityType.SLIME)) && super.canAttack(livingEntity);
+	public boolean canAttack(LivingEntity target) {
+		return this.hasArmor() && !(target instanceof IMonsterHero hero && hero.rpm$isHero(EntityType.SLIME)) && super.canAttack(target);
+	}
+
+	@Override
+	protected void dealDamage(LivingEntity target) {
+		if(target instanceof IMonsterHero hero && hero.rpm$isHero(EntityType.SLIME)) {
+			return;
+		}
+		super.dealDamage(target);
+	}
+	@Override
+	protected boolean isDealsDamage() {
+		return this.hasArmor() && super.isDealsDamage();
 	}
 
 	public boolean hasArmor() {
@@ -146,16 +159,18 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 
 	public static boolean checkSpawnRules(EntityType<? extends GuardSlimeEntity> entityType, ServerLevelAccessor level, MobSpawnType spawnType,
 										  BlockPos blockPos, RandomSource random) {
-		return level.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(level, blockPos, random) && checkMobSpawnRules(entityType, level, spawnType, blockPos, random);
+		return Monster.isDarkEnoughToSpawn(level, blockPos, random) && checkMobSpawnRules(entityType, level, spawnType, blockPos, random);
 	}
 
 	@Override @Nullable
 	public GuardSlimeMissions getTriggerableMission() {
-		if(!this.hasArmor() && this.isNoAi()) {
+		if(!this.hasArmor()) {
 			if (this.hasPose(Pose.SLEEPING)) {
 				return GuardSlimeMissions.SAVE_ME;
 			}
-			return GuardSlimeMissions.SEEK_HELP;
+			if(this.isNoAi()) {
+				return GuardSlimeMissions.SEEK_HELP;
+			}
 		}
 		return null;
 	}
@@ -199,7 +214,8 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 						.filter(
 								player -> player.closerThan(outer, 6.0D) &&
 										player instanceof IMonsterHero hero &&
-										IMonsterHero.underMission(hero.rpm$getPlayerMissions(), this.missionId)
+										IMonsterHero.underMission(hero.rpm$getPlayerMissions(), this.missionId) &&
+										player.getInventory().contains(SLIME2_TRIGGER_ITEM)
 						).findAny().map(player -> {
 							Slime slime = EntityType.SLIME.create(outer.level());
 							if(slime != null) {

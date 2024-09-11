@@ -394,7 +394,12 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 
 	public enum CultureTableMissions implements TriggerableMission<CultureTableBlockEntity>, IMissionStack {
 		CREEPER("creeper1", MissionType.FINISH),
-		SLIME("slime2", MissionType.FINISH);
+		SLIME("slime2", MissionType.FINISH) {
+			@Override
+			public boolean tryTrigger(ServerLevel serverLevel, CultureTableBlockEntity outer) {
+				return false;
+			}
+		};
 
 		final ResourceLocation missionId;
 		final MissionType type;

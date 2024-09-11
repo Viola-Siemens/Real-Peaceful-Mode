@@ -396,7 +396,7 @@ public class SlimeMazePieces {
 					}
 					if(this.maze.isAir(2 * i + 1, 2 * j + 1)) {
 						this.generateBox(level, boundingBox, 3 * i + 1, 1, 3 * j + 1, 3 * i + 2, 3, 3 * j + 2, CAVE_AIR, CAVE_AIR, false);
-						if(random.nextInt(5) == 0) {
+						if(random.nextInt(100) == 0) {
 							this.spawnGuardSlime(level, 3 * i + 1, 1, 3 * j + 1);
 						}
 					} else {
@@ -561,7 +561,7 @@ public class SlimeMazePieces {
 			summonTagSickSlime.putBoolean("IsSick", true);
 			summonTagSickSlime.putBoolean("PersistenceRequired", true);
 			SummonBlockEntity summonBlockEntity = this.placeSummonBlock(
-					level, 3, 1, 1,
+					level, 2, 1, 1,
 					GuardSlimeEntity.GuardSlimeMissions.SAVE_ME.missionId(), MissionType.RECEIVE,
 					summonTagSickSlime, 6
 			);
@@ -571,15 +571,15 @@ public class SlimeMazePieces {
 
 			CompoundTag summonTagHelpSeeker = new CompoundTag();
 			summonTagHelpSeeker.putString("id", RPMEntityKeys.GUARD_SLIME.location().toString());
-			summonTagSickSlime.putBoolean("HasArmor", false);
-			this.placeSummonBlock(level, 4, 1, 1, GuardSlimeEntity.GuardSlimeMissions.QUARREL.missionId(), MissionType.RECEIVE, summonTagHelpSeeker, 6);
+			summonTagHelpSeeker.putBoolean("HasArmor", false);
+			this.placeSummonBlock(level, 1, 1, 4, GuardSlimeEntity.GuardSlimeMissions.QUARREL.missionId(), MissionType.RECEIVE, summonTagHelpSeeker, 6);
 
 			GuardSlimeEntity guardSlimeEntity;
-			guardSlimeEntity = this.spawnGuardSlime(level, 1, 1, 7);
+			guardSlimeEntity = this.spawnGuardSlime(level, 2, 2, 7);
 			if(guardSlimeEntity != null) {
 				guardSlimeEntity.setHasArmor(false);
 			}
-			guardSlimeEntity = this.spawnGuardSlime(level, WIDTH - 2, 1, 7);
+			guardSlimeEntity = this.spawnGuardSlime(level, WIDTH - 3, 2, 7);
 			if(guardSlimeEntity != null) {
 				guardSlimeEntity.setHasArmor(false);
 			}
