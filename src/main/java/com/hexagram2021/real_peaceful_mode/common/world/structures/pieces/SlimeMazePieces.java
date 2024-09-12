@@ -10,9 +10,12 @@ import com.hexagram2021.real_peaceful_mode.common.util.RandomMaze;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
@@ -79,7 +82,7 @@ public class SlimeMazePieces {
 			GuardSlimeEntity guardSlime = RPMEntities.GUARD_SLIME.create(level.getLevel());
 			if(guardSlime != null) {
 				BlockPos spawnPos = this.getWorldPos(x, y, z);
-				guardSlime.moveTo(spawnPos, 0.0F, 0.0F);
+				guardSlime.moveTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), 0.0F, 0.0F);
 				guardSlime.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.STRUCTURE, null, null);
 				level.addFreshEntity(guardSlime);
 			}
@@ -396,7 +399,7 @@ public class SlimeMazePieces {
 					}
 					if(this.maze.isAir(2 * i + 1, 2 * j + 1)) {
 						this.generateBox(level, boundingBox, 3 * i + 1, 1, 3 * j + 1, 3 * i + 2, 3, 3 * j + 2, CAVE_AIR, CAVE_AIR, false);
-						if(random.nextInt(100) == 0) {
+						if(random.nextInt(200) == 0) {
 							this.spawnGuardSlime(level, 3 * i + 1, 1, 3 * j + 1);
 						}
 					} else {
@@ -560,6 +563,9 @@ public class SlimeMazePieces {
 			summonTagSickSlime.putBoolean("HasArmor", false);
 			summonTagSickSlime.putBoolean("IsSick", true);
 			summonTagSickSlime.putBoolean("PersistenceRequired", true);
+			ListTag activeEffects = new ListTag();
+			activeEffects.add(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, -1, 2, false, false).save(new CompoundTag()));
+			summonTagSickSlime.put("ActiveEffects", activeEffects);
 			SummonBlockEntity summonBlockEntity = this.placeSummonBlock(
 					level, 2, 1, 1,
 					GuardSlimeEntity.GuardSlimeMissions.SAVE_ME.missionId(), MissionType.RECEIVE,
@@ -572,6 +578,7 @@ public class SlimeMazePieces {
 			CompoundTag summonTagHelpSeeker = new CompoundTag();
 			summonTagHelpSeeker.putString("id", RPMEntityKeys.GUARD_SLIME.location().toString());
 			summonTagHelpSeeker.putBoolean("HasArmor", false);
+			summonTagHelpSeeker.putBoolean("PersistenceRequired", true);
 			this.placeSummonBlock(level, 1, 1, 4, GuardSlimeEntity.GuardSlimeMissions.QUARREL.missionId(), MissionType.RECEIVE, summonTagHelpSeeker, 6);
 
 			GuardSlimeEntity guardSlimeEntity;
@@ -594,13 +601,13 @@ public class SlimeMazePieces {
 		@SuppressWarnings("deprecation")
 		public static void extraWorkAfterTrigger(ServerLevel level, BlockPos pos) {
 			BlockState ladder = Blocks.LADDER.defaultBlockState();
-			if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.SOUTH), level, pos.north())) {
+			if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.SOUTH), level, pos)) {
 				ladder = ladder.setValue(LadderBlock.FACING, Direction.SOUTH);
-			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.NORTH), level, pos.south())) {
+			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.NORTH), level, pos)) {
 				ladder = ladder.setValue(LadderBlock.FACING, Direction.NORTH);
-			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.EAST), level, pos.west())) {
+			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.EAST), level, pos)) {
 				ladder = ladder.setValue(LadderBlock.FACING, Direction.EAST);
-			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.WEST), level, pos.east())) {
+			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.WEST), level, pos)) {
 				ladder = ladder.setValue(LadderBlock.FACING, Direction.WEST);
 			} else {
 				ladder = null;

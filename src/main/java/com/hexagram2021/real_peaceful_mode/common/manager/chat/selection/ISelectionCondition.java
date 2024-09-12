@@ -5,10 +5,14 @@ import com.hexagram2021.real_peaceful_mode.common.manager.Former;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.SharedConstants;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.Arrays;
 import java.util.List;
@@ -110,6 +114,40 @@ public interface ISelectionCondition {
 				return this.finish ? hero.rpm$materialCollected(this.lootTable, npc) : hero.rpm$canCollectMaterial(this.lootTable);
 			}
 			return false;
+		}
+	}
+
+	record ItemInInventorySelectionCondition(ItemStack itemStack) implements ISelectionCondition {
+		public static final Codec<ItemInInventorySelectionCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+				ItemStack.CODEC.fieldOf("item").forGetter(ItemInInventorySelectionCondition::itemStack)
+		).apply(instance, ItemInInventorySelectionCondition::new));
+
+		@Override
+		public ISelectionConditionType type() {
+			return SelectionConditionTypes.ITEM_IN_INVENTORY;
+		}
+
+		@Override
+		public boolean check(ServerPlayer player, LivingEntity npc) {
+			return player.getInventory().contains(this.itemStack);
+		}
+	}
+
+	record InsideStructureSelectionCondition(ResourceKey<Structure> structure) implements ISelectionCondition {
+		public static final Codec<InsideStructureSelectionCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+				ResourceLocation.CODEC.fieldOf("structure")
+						.xmap(id -> ResourceKey.create(Registries.STRUCTURE, id), ResourceKey::location)
+						.forGetter(InsideStructureSelectionCondition::structure)
+		).apply(instance, InsideStructureSelectionCondition::new));
+
+		@Override
+		public ISelectionConditionType type() {
+			return SelectionConditionTypes.INSIDE_STRUCTURE;
+		}
+
+		@Override
+		public boolean check(ServerPlayer player, LivingEntity npc) {
+			return player.serverLevel().structureManager().getStructureWithPieceAt(player.blockPosition(), this.structure).isValid();
 		}
 	}
 }

@@ -150,8 +150,10 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 			this.goalSelector.removeAllGoals(goal -> true);
 			this.targetSelector.removeAllGoals(goal -> true);
 			this.setPose(Pose.SLEEPING);
+			Objects.requireNonNull(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(1.0D);
 		} else {
 			this.setPose(Pose.STANDING);
+			Objects.requireNonNull(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(0.0D);
 		}
 	}
 

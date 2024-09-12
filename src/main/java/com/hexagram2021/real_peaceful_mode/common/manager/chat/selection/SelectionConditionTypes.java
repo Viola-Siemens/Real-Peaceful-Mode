@@ -8,6 +8,10 @@ public final class SelectionConditionTypes {
 	public static final ISelectionConditionType MISSION = register("mission", () -> ISelectionCondition.MissionSelectionCondition.CODEC);
 	public static final ISelectionConditionType GREETING_TIME = register("greeting_timed", () -> ISelectionCondition.GreetingTimedSelectionCondition.CODEC);
 	public static final ISelectionConditionType MATERIAL_COLLECTION = register("material_collection", () -> ISelectionCondition.MaterialCollectionSelectionCondition.CODEC);
+	public static final ISelectionConditionType ITEM_IN_INVENTORY = register("item_in_inventory", () -> ISelectionCondition.ItemInInventorySelectionCondition.CODEC);
+	public static final ISelectionConditionType INSIDE_STRUCTURE = register("inside_structure", () -> ISelectionCondition.InsideStructureSelectionCondition.CODEC);
+
+	public static final ISelectionConditionType SAVED_SLIME = register("slime/saved", () -> SlimeChatSelectionConditions.SavedSlimeSelectionCondition.CODEC);
 
 	public static void init() {
 	}

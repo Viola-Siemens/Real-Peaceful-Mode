@@ -346,6 +346,23 @@
   "rpm.chat.real_peaceful_mode.pink_creeper.good_evening": "Good evening, my friend. It's getting dark now. Take care of yourself.",
   "rpm.chat.real_peaceful_mode.pink_creeper.good_night": "Good night, my friend. Don't stay up too late.",
 
+  "rpm.chat.real_peaceful_mode.slime.message1": "Hey, hero! What brings you?",
+  "rpm.chat.real_peaceful_mode.slime.selection.about_yourself": "About yourself...",
+  "rpm.chat.real_peaceful_mode.slime.selection.about_scepter": "About the scepter...",
+  "rpm.chat.real_peaceful_mode.slime.selection.about_guards": "About guards...",
+  "rpm.chat.real_peaceful_mode.slime.selection.material_collection.start": "Could you collect some slime balls?",
+  "rpm.chat.real_peaceful_mode.slime.selection.material_collection.end": "About the slime balls...",
+  "rpm.chat.real_peaceful_mode.slime.about_yourself.message1": "I'm the eldest slime in this maze, which means that I'm supposed to protect the maze and defend the foreigners.",
+  "rpm.chat.real_peaceful_mode.slime.about_yourself.message2": "That's why I was unfriendly to you at first. I'm sorry for that. As we are not decaying like leaves, you can keep the scepter as my apology gift.",
+  "rpm.chat.real_peaceful_mode.slime.about_yourself.message3": "Again, thanks a lot for helping us, my hero.",
+  "rpm.chat.real_peaceful_mode.slime.about_scepter.message1": "We all believed that the scepter can bless us with a long life, but we still kept decaying like leaves. How ridiculous we were.",
+  "rpm.chat.real_peaceful_mode.slime.about_scepter.message2": "Its only effect for us is to produce a trace of \"slime anti-aging hormone\". But there are a lot of slimes living here, so it's useless for us.",
+  "rpm.chat.real_peaceful_mode.slime.about_scepter.message3": "Since it's yours now, you can destroy sticky blocks faster, and freeze the enemies by attacking them with it.",
+  "rpm.chat.real_peaceful_mode.slime.about_guards.message1": "Some elder slimes volunteer themselves to protect the slime maze. Then they become guard slimes.",
+  "rpm.chat.real_peaceful_mode.slime.about_guards.message2": "I really admire their courage and dedication.",
+  "rpm.chat.real_peaceful_mode.slime.material_collection.start": "It's my pleasure, hero. I'll do my best to collect in a day.",
+  "rpm.chat.real_peaceful_mode.slime.material_collection.end": "Here's the slime balls I collected for you, hero.",
+
   "rpm.mission.real_peaceful_mode.zombie1.message1": "What a magnificent fort! But there's an awful smell exuded from the deep of it. What could it be?",
   "rpm.mission.real_peaceful_mode.zombie1.message2": "Who the freak is bothering me when I'm sleeping?",
   "rpm.mission.real_peaceful_mode.zombie1.message3": "Who's that?",
@@ -612,12 +629,12 @@
   "rpm.mission.real_peaceful_mode.slime2.message7": "I'm already two months old now... Maybe it's time... to go...",
   "rpm.mission.real_peaceful_mode.slime2.message8": "So... is slime such a short-lived creature living in the dark? Poor little guy, you deserve to see more beautiful scenery.",
   "rpm.mission.real_peaceful_mode.slime2.message9": "(Stroke the slime lightly)",
-  "rpm.mission.real_peaceful_mode.slime2.message10": "This poor slime feels like withered vines, and dried dough. Is there any way to bring vitality back to you?",
+  "rpm.mission.real_peaceful_mode.slime2.message10": "This poor slime feels like decayed vines, and dried dough. Is there any way to bring vitality back to you?",
   "rpm.mission.real_peaceful_mode.slime2.message11": "Leave me alone please... I don't want to die under the gaze of strangers...",
   "rpm.mission.real_peaceful_mode.slime2.message12": "Hold on, I'll come back to save you.",
 
   "rpm.mission.real_peaceful_mode.slime2.message13": "I made it! There's still a glimmer of hope. Let me daub the colloid on this slime.",
-  "rpm.mission.real_peaceful_mode.slime2.message14": "Just as I expected. Its skin's getting smooth and glossy. At this rate, few minutes later it will recover from withering.",
+  "rpm.mission.real_peaceful_mode.slime2.message14": "Just as I expected. Its skin's getting smooth and glossy. At this rate, few minutes later it will recover from decaying.",
   "rpm.mission.real_peaceful_mode.slime2.message15": "What? W... What have you done? I'm supposed to die in the dark... Who are you, stranger? Why you come to slime's housing?",
   "rpm.mission.real_peaceful_mode.slime2.message16": "Sorry to disturb you. I saw you painfully lay on the ground, so I made this to help you out.",
   "rpm.mission.real_peaceful_mode.slime2.message17": "That's amazing... I don't think you humans should break into our place. Where did you find here?",
@@ -631,7 +648,7 @@
   "rpm.mission.real_peaceful_mode.slime3.message4": "That's okay. But I wonder why you choose me?",
   "rpm.mission.real_peaceful_mode.slime3.message5": "You look friendly in the first place, and you said you came for peace.",
   "rpm.mission.real_peaceful_mode.slime3.message6": "Besides, I was so anxious that I could grasp at any straw. I really want to save my friend.",
-  "rpm.mission.real_peaceful_mode.slime3.message7": "I can make more colloid for you. It is made of wheat and vines, and it can stop slimes from withering and extend your lives.",
+  "rpm.mission.real_peaceful_mode.slime3.message7": "I can make more colloid for you. It is made of wheat and vines, and it can stop slimes from decaying and extend your lives.",
   "rpm.mission.real_peaceful_mode.slime3.message8": "I'm really glad you can do all of this for slimes. I'm sorry for what my friend said again. Thanks a lot.",
   "rpm.mission.real_peaceful_mode.slime3.message9": "What do you want to say, my friend? This player saved your life!",
 
@@ -639,8 +656,8 @@
   "rpm.mission.real_peaceful_mode.slime3.message11": "It's okay. I can understand that you don't want slimes to be disturb.",
   "rpm.mission.real_peaceful_mode.slime3.message12": "I never thought I would be saved by a human being. So... maybe we can talk more?",
   "rpm.mission.real_peaceful_mode.slime3.message13": "Sure if you want.",
-  "rpm.mission.real_peaceful_mode.slime3.message14": "Thanks, hero of slimes. By the way, could you make more colloid to heal other slimes from withering?",
+  "rpm.mission.real_peaceful_mode.slime3.message14": "Thanks, hero of slimes. By the way, could you make more colloid to heal other slimes from decaying?",
   "rpm.mission.real_peaceful_mode.slime3.message15": "It's not worth mentioning. Ask me for it whenever you want.",
   "rpm.mission.real_peaceful_mode.slime3.message16": "All slimes will appreciate what you did. Thanks again, hero. By the way, if anything I can do for you, just let me know.",
-  "rpm.mission.real_peaceful_mode.slime3.message17": "Here's a scepter, which is believed to bless the slimes to wither slower. Now it's yours, my hero, for the friendship between slimes and humans."
+  "rpm.mission.real_peaceful_mode.slime3.message17": "Here's a scepter, which is believed to bless the slimes to decay slower. Now it's yours, my hero, for the friendship between slimes and humans."
 }

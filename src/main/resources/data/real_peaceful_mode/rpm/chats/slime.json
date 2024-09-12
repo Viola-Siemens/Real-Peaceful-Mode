@@ -1,0 +1,105 @@
+{
+  "entity_type": "real_peaceful_mode:slime",
+  "requires": [
+    "real_peaceful_mode:slime3"
+  ],
+  "message": {
+    "type": "real_peaceful_mode:selectable",
+    "key": "rpm.chat.real_peaceful_mode.slime.message1",
+    "speaker": "npc",
+    "selection": [
+      {
+        "condition": {
+          "type": "real_peaceful_mode:slime/saved"
+        },
+        "key": "rpm.chat.real_peaceful_mode.slime.selection.about_yourself",
+        "next": {
+          "type": "real_peaceful_mode:plain",
+          "key": "rpm.chat.real_peaceful_mode.slime.about_yourself.message1",
+          "speaker": "npc",
+          "next": {
+            "type": "real_peaceful_mode:plain",
+            "key": "rpm.chat.real_peaceful_mode.slime.about_yourself.message2",
+            "speaker": "npc",
+            "next": {
+              "type": "real_peaceful_mode:end",
+              "key": "rpm.chat.real_peaceful_mode.slime.about_yourself.message3",
+              "speaker": "npc"
+            }
+          }
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:item_in_inventory",
+          "item": {
+            "id": "real_peaceful_mode:slime_scepter",
+            "Count": 1
+          }
+        },
+        "key": "rpm.chat.real_peaceful_mode.slime.selection.about_scepter",
+        "next": {
+          "type": "real_peaceful_mode:plain",
+          "key": "rpm.chat.real_peaceful_mode.slime.about_scepter.message1",
+          "speaker": "npc",
+          "next": {
+            "type": "real_peaceful_mode:plain",
+            "key": "rpm.chat.real_peaceful_mode.slime.about_scepter.message2",
+            "speaker": "npc",
+            "next": {
+              "type": "real_peaceful_mode:end",
+              "key": "rpm.chat.real_peaceful_mode.slime.about_scepter.message3",
+              "speaker": "npc"
+            }
+          }
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:inside_structure",
+          "structure": "real_peaceful_mode:slime_maze"
+        },
+        "key": "rpm.chat.real_peaceful_mode.slime.selection.about_guards",
+        "next": {
+          "type": "real_peaceful_mode:plain",
+          "key": "rpm.chat.real_peaceful_mode.slime.about_guards.message1",
+          "speaker": "npc",
+          "next": {
+            "type": "real_peaceful_mode:end",
+            "key": "rpm.chat.real_peaceful_mode.slime.about_guards.message2",
+            "speaker": "npc"
+          }
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:material_collection",
+          "loot_table": "real_peaceful_mode:gameplay/collection/slime",
+          "finish": false
+        },
+        "key": "rpm.chat.real_peaceful_mode.slime.selection.material_collection.start",
+        "next": {
+          "type": "real_peaceful_mode:material_collection_start",
+          "key": "rpm.chat.real_peaceful_mode.slime.material_collection.start",
+          "speaker": "npc",
+          "loot_table": "real_peaceful_mode:gameplay/collection/slime",
+          "duration": 20000
+        }
+      },
+      {
+        "condition": {
+          "type": "real_peaceful_mode:material_collection",
+          "loot_table": "real_peaceful_mode:gameplay/collection/slime",
+          "finish": true
+        },
+        "key": "rpm.chat.real_peaceful_mode.slime.selection.material_collection.end",
+        "next": {
+          "type": "real_peaceful_mode:material_collection_end",
+          "key": "rpm.chat.real_peaceful_mode.slime.material_collection.end",
+          "speaker": "npc",
+          "loot_table": "real_peaceful_mode:gameplay/collection/slime"
+        }
+      }
+    ]
+  }
+}

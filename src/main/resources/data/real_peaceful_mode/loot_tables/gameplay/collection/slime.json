@@ -13,7 +13,7 @@
               "chance": 0.0625
             }
           ],
-          "name": "real_peaceful_mode:creeper_spirit_bead"
+          "name": "real_peaceful_mode:slime_spirit_bead"
         }
       ]
     },
@@ -28,13 +28,13 @@
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "max": 32.0,
-                "min": 20.0
+                "max": 28.0,
+                "min": 16.0
               },
               "add": false
             }
           ],
-          "name": "minecraft:gunpowder"
+          "name": "minecraft:slime_ball"
         }
       ]
     }
