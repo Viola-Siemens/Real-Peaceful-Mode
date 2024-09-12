@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -27,6 +28,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
@@ -79,7 +81,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 	}
 
 	private int checkNearbyPlayers = 100;
-	private static final ItemStack SLIME2_TRIGGER_ITEM = new ItemStack(RPMItems.Materials.SLIME_COLLOID);
+	private static final Item SLIME2_TRIGGER_ITEM = RPMItems.Materials.SLIME_COLLOID.get();
 
 	@Override
 	public void tick() {
@@ -215,7 +217,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 								player -> player.closerThan(outer, 6.0D) &&
 										player instanceof IMonsterHero hero &&
 										IMonsterHero.underMission(hero.rpm$getPlayerMissions(), this.missionId) &&
-										player.getInventory().contains(SLIME2_TRIGGER_ITEM)
+										player.getItemInHand(InteractionHand.MAIN_HAND).is(SLIME2_TRIGGER_ITEM)
 						).findAny().map(player -> {
 							Slime slime = EntityType.SLIME.create(outer.level());
 							if(slime != null) {
