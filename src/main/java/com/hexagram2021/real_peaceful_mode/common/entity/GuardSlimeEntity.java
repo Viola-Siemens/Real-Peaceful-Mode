@@ -224,11 +224,11 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 								slime.goalSelector.addGoal(2, new SlimeMissionTriggerGoal(slime));
 								slime.setSize(2, true);
 								slime.moveTo(outer.position());
-								outer.discard();
 								outer.level().addFreshEntity(slime);
+								outer.discard();
 								MissionHelper.triggerMissionForPlayer(
 										this.missionId, this.type,
-										player, outer, player1 -> {
+										player, slime, player1 -> {
 										}
 								);
 								return true;
