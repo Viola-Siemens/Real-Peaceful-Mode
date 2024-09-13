@@ -269,12 +269,12 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 
 		@Override
 		public ResourceLocation missionId() {
-			return missionId;
+			return this.missionId;
 		}
 
 		@Override
 		public MissionType type() {
-			return type;
+			return this.type;
 		}
 
 		@Override
