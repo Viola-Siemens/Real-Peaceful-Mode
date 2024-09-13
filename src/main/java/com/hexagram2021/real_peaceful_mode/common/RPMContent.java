@@ -47,6 +47,8 @@ public class RPMContent {
 		RPMItems.init(bus);
 		RPMMobEffects.init(bus);
 		Villages.Registers.init(bus);
+		RPMRecipes.init(bus);
+		RPMRecipeSerializers.init(bus);
 		RPMBlockEntities.init(bus);
 		RPMCreativeTabs.init(bus);
 		RPMMenuTypes.init(bus);

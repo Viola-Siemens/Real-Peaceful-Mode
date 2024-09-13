@@ -124,12 +124,12 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 		ContainerHelper.saveAllItems(nbt, this.items);
 	}
 
-	private static final Ingredient ACCEPTABLE_FLOWERS = Ingredient.of(
+	public static final Ingredient ACCEPTABLE_FLOWERS = Ingredient.of(
 			Items.ALLIUM, Items.BLUE_ORCHID, Items.TORCHFLOWER,
 			Items.ORANGE_TULIP, Items.PINK_TULIP, Items.RED_TULIP, Items.WHITE_TULIP
 	);
 	private static final int MAX_FLOWER_TYPES = ACCEPTABLE_FLOWERS.getItems().length;
-	private static final Ingredient SLIME_COLLOID_INGREDIENT = Ingredient.of(
+	public static final Ingredient SLIME_COLLOID_INGREDIENT = Ingredient.of(
 			Items.WHEAT, Items.VINE
 	);
 

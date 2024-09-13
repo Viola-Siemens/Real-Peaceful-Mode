@@ -20,6 +20,8 @@ public final class RPMCommonConfig {
 
 	public static final ForgeConfigSpec.ConfigValue<List<? extends String>> DISABLE_CHATS;
 
+	public static final ForgeConfigSpec.BooleanValue ENABLE_JEI_SHADOW_RECIPE;
+
 	private RPMCommonConfig() {}
 
 	static {
@@ -45,6 +47,12 @@ public final class RPMCommonConfig {
 			BUILDER.push("chats");
 				DISABLE_CHATS = BUILDER.comment("Entity Type ID of monsters to disable. For example, if you add \"real_peaceful_mode:pink_creeper\" to this list, no chats will trigger when you interact with pink creepers.")
 						.defineListAllowEmpty("DISABLE_CHATS", List.of(), o -> o instanceof String str && ResourceLocation.isValidResourceLocation(str));
+			BUILDER.pop();
+
+			BUILDER.comment("Compatibilities with other mods.");
+			BUILDER.push("compatibilities");
+				ENABLE_JEI_SHADOW_RECIPE = BUILDER.comment("If disabled, players cannot use JEI to look over shadow recipes, but it might be faster for starting the server.")
+						.define("ENABLE_JEI_SHADOW_RECIPE", true);
 			BUILDER.pop();
 		BUILDER.pop();
 
