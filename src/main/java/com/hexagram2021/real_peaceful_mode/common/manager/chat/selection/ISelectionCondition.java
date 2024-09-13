@@ -117,9 +117,10 @@ public interface ISelectionCondition {
 		}
 	}
 
-	record ItemInInventorySelectionCondition(ItemStack itemStack) implements ISelectionCondition {
+	record ItemInInventorySelectionCondition(ItemStack itemStack, boolean compareTag) implements ISelectionCondition {
 		public static final Codec<ItemInInventorySelectionCondition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-				ItemStack.CODEC.fieldOf("item").forGetter(ItemInInventorySelectionCondition::itemStack)
+				ItemStack.CODEC.fieldOf("item").forGetter(ItemInInventorySelectionCondition::itemStack),
+				Codec.BOOL.optionalFieldOf("compare_tag", false).forGetter(ItemInInventorySelectionCondition::compareTag)
 		).apply(instance, ItemInInventorySelectionCondition::new));
 
 		@Override
@@ -129,7 +130,7 @@ public interface ISelectionCondition {
 
 		@Override
 		public boolean check(ServerPlayer player, LivingEntity npc) {
-			return player.getInventory().contains(this.itemStack);
+			return this.compareTag ? player.getInventory().contains(this.itemStack) : player.getInventory().countItem(this.itemStack.getItem()) > 0;
 		}
 	}
 

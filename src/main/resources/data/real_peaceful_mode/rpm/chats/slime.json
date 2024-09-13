@@ -1,5 +1,5 @@
 {
-  "entity_type": "real_peaceful_mode:slime",
+  "entity_type": "minecraft:slime",
   "requires": [
     "real_peaceful_mode:slime3"
   ],

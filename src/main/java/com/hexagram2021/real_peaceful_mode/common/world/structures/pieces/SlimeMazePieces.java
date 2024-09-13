@@ -223,7 +223,7 @@ public class SlimeMazePieces {
 			this.generateStickyStoneBox(level, boundingBox, 0, 0, 0, WIDTH - 1, 0, LENGTH - 1, random, POSSIBILITY);
 			this.generateBox(level, boundingBox, 3, 0, 3, 4, 0, 4, CRACKY_STICKY_STONE, CRACKY_STICKY_STONE, false);
 			this.generateStickyStoneBox(level, boundingBox, 2, 1, 0, 5, 3, 0, random, POSSIBILITY);
-			this.generateBox(level, boundingBox, 3, 1, 0, 4, 3, 0, CAVE_AIR, CAVE_AIR, false);
+			this.generateBox(level, boundingBox, 3, 1, 0, 4, 3, 5, CAVE_AIR, CAVE_AIR, false);
 			this.generateStickyStoneBox(level, boundingBox, 1, 1, 1, 1, 3, 1, random, POSSIBILITY);
 			this.generateStickyStoneBox(level, boundingBox, 0, 1, 2, 0, 3, 5, random, POSSIBILITY);
 			this.generateStickyStoneBox(level, boundingBox, 1, 1, 6, 1, 3, 6, random, POSSIBILITY);
@@ -569,7 +569,7 @@ public class SlimeMazePieces {
 			SummonBlockEntity summonBlockEntity = this.placeSummonBlock(
 					level, 2, 1, 1,
 					GuardSlimeEntity.GuardSlimeMissions.SAVE_ME.missionId(), MissionType.RECEIVE,
-					summonTagSickSlime, 6
+					summonTagSickSlime, 4
 			);
 			if(summonBlockEntity != null) {
 				summonBlockEntity.setExtraWork(RPMSummonBlockEvents.WORK_SLIME_LADDER.toString());
