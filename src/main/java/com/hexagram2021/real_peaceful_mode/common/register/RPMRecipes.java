@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
 import com.hexagram2021.real_peaceful_mode.common.crafting.recipe.CultureTableShadowRecipe;
+import com.hexagram2021.real_peaceful_mode.common.crafting.recipe.MonsterCollectionShadowRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -15,6 +16,7 @@ public final class RPMRecipes {
 	private static final DeferredRegister<RecipeType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, MODID);
 
 	public static final RegistryObject<RecipeType<CultureTableShadowRecipe>> CULTURE_TABLE_SHADOW_TYPE = register("shadow/culture_table");
+	public static final RegistryObject<RecipeType<MonsterCollectionShadowRecipe>> MONSTER_COLLECTION_SHADOW_TYPE = register("shadow/monster_collection");
 
 	private RPMRecipes() {
 	}

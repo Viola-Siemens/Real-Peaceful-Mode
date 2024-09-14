@@ -1,6 +1,7 @@
 package com.hexagram2021.real_peaceful_mode.common.crafting.compat.jei;
 
 import com.hexagram2021.real_peaceful_mode.common.crafting.recipe.CultureTableShadowRecipe;
+import com.hexagram2021.real_peaceful_mode.common.crafting.recipe.MonsterCollectionShadowRecipe;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlocks;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import mezz.jei.api.IModPlugin;
@@ -19,6 +20,7 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 public class JEIShadowPlugin implements IModPlugin {
 	public interface RPMJEIRecipeTypes {
 		RecipeType<CultureTableShadowRecipe> CULTURE_TABLE = new RecipeType<>(CultureTableShadowRecipeCategory.UID, CultureTableShadowRecipe.class);
+		RecipeType<MonsterCollectionShadowRecipe> MONSTER_COLLECTION = new RecipeType<>(MonsterCollectionShadowRecipeCategory.UID, MonsterCollectionShadowRecipe.class);
 	}
 
 	private static final ResourceLocation UID = new ResourceLocation(MODID, "shadow");
@@ -33,7 +35,8 @@ public class JEIShadowPlugin implements IModPlugin {
 		//Recipes
 		IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
 		registry.addRecipeCategories(
-				new CultureTableShadowRecipeCategory(guiHelper)
+				new CultureTableShadowRecipeCategory(guiHelper),
+				new MonsterCollectionShadowRecipeCategory(guiHelper)
 		);
 	}
 
@@ -41,6 +44,7 @@ public class JEIShadowPlugin implements IModPlugin {
 	public void registerRecipes(IRecipeRegistration registration) {
 		RPMLogger.info("Adding RPM recipes to JEI!!");
 		registration.addRecipes(RPMJEIRecipeTypes.CULTURE_TABLE, CultureTableShadowRecipe.getCultureTableRecipes());
+		registration.addRecipes(RPMJEIRecipeTypes.MONSTER_COLLECTION, MonsterCollectionShadowRecipe.getMonsterCollectionRecipes());
 	}
 
 	@Override

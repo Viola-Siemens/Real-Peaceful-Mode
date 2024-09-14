@@ -6,6 +6,7 @@ import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMapDecorationTypes;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMMobEffects;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +20,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -150,6 +152,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 			this.goalSelector.removeAllGoals(goal -> true);
 			this.targetSelector.removeAllGoals(goal -> true);
 			this.setPose(Pose.SLEEPING);
+			this.addEffect(new MobEffectInstance(RPMMobEffects.GLUE.get(), -1));
 			Objects.requireNonNull(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(1.0D);
 		} else {
 			this.setPose(Pose.STANDING);
@@ -169,7 +172,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 	@Override @Nullable
 	public GuardSlimeMissions getTriggerableMission() {
 		if(!this.hasArmor()) {
-			if (this.hasPose(Pose.SLEEPING)) {
+			if (this.isSick()) {
 				return GuardSlimeMissions.SAVE_ME;
 			}
 			if(this.isNoAi()) {
@@ -228,6 +231,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 								slime.goalSelector.addGoal(2, new SlimeMissionTriggerGoal(slime));
 								slime.setSize(2, true);
 								slime.moveTo(outer.position());
+								slime.addEffect(new MobEffectInstance(RPMMobEffects.GLUE.get(), 400));
 								outer.level().addFreshEntity(slime);
 								outer.discard();
 								MissionHelper.triggerMissionForPlayer(

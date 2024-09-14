@@ -47,10 +47,6 @@ public record CultureTableShadowRecipe(ResourceLocation id, Ingredient mix1, Ing
 		return cachedList = shadows;
 	}
 
-	public static void setCultureTableRecipes(List<CultureTableShadowRecipe> shadows) {
-		cachedList = shadows;
-	}
-
 	@Override
 	public boolean matches(CultureTableBlockEntity container, Level level) {
 		return this.mix1.test(container.getItem(CultureTableBlockEntity.SLOT_MIX1)) && this.mix2.test(container.getItem(CultureTableBlockEntity.SLOT_MIX2));

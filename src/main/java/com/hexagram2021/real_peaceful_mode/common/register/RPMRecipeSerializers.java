@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.register;
 
-import com.hexagram2021.real_peaceful_mode.common.crafting.recipe_serializer.CultureTableShadowRecipeSerializer;
+import com.hexagram2021.real_peaceful_mode.common.crafting.recipe_serializer.*;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -14,6 +14,9 @@ public final class RPMRecipeSerializers {
 
 	public static final RegistryObject<CultureTableShadowRecipeSerializer> CULTURE_TABLE_SHADOW_SERIALIZER = REGISTER.register(
 			"shadowed/culture_table", CultureTableShadowRecipeSerializer::new
+	);
+	public static final RegistryObject<MonsterCollectionShadowRecipeSerializer> MONSTER_COLLECTION_SHADOW_SERIALIZER = REGISTER.register(
+			"shadowed/monster_collection", MonsterCollectionShadowRecipeSerializer::new
 	);
 
 	private RPMRecipeSerializers() {

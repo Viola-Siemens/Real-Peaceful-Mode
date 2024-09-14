@@ -7,6 +7,7 @@ import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.RPMContent;
 import com.hexagram2021.real_peaceful_mode.common.RPMSaveData;
 import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
+import com.hexagram2021.real_peaceful_mode.common.crafting.recipe.MonsterCollectionShadowRecipe;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructures;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMTriggers;
 import com.hexagram2021.real_peaceful_mode.common.spawner.AbstractEventSpawner;
@@ -19,11 +20,13 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -37,6 +40,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 
@@ -78,6 +82,7 @@ public class RealPeacefulMode {
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
 		MinecraftForge.EVENT_BUS.addListener(this::registerRandomEventSpawners);
 		MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
+		MinecraftForge.EVENT_BUS.addListener(this::datapackSync);
 		RPMContent.modConstruction(bus);
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, bootstrapErrorToXCPInDev(() -> ClientProxy::modConstruction));
 
@@ -102,6 +107,7 @@ public class RealPeacefulMode {
 		registerMessage(ClientboundMissionMessagePacket.class, ClientboundMissionMessagePacket::new);
 		registerMessage(ClientboundChatMessagePacket.class, ClientboundChatMessagePacket::new);
 		registerMessage(ClientboundChatSelectionPacket.class, ClientboundChatSelectionPacket::new);
+		registerMessage(ClientboundShadowRecipeSyncPacket.class, ClientboundShadowRecipeSyncPacket::new);
 	}
 
 	public void tagsUpdated(TagsUpdatedEvent event) {
@@ -111,6 +117,16 @@ public class RealPeacefulMode {
 
 		RPMStructures.init(event.getRegistryAccess());
 		Villages.addAllStructuresToPool(event.getRegistryAccess());
+	}
+
+	public void datapackSync(OnDatapackSyncEvent event) {
+		ServerPlayer player = event.getPlayer();
+		IRPMPacket packet = new ClientboundShadowRecipeSyncPacket(MonsterCollectionShadowRecipe.getMonsterCollectionRecipes(event.getPlayerList().getServer().getLootData()));
+		if(player == null) {
+			packetHandler.send(PacketDistributor.ALL.noArg(), packet);
+		} else {
+			packetHandler.send(PacketDistributor.PLAYER.with(() -> player), packet);
+		}
 	}
 
 	public static boolean isInteractItem(Holder<Item> item, EntityType<?> entityType) {
