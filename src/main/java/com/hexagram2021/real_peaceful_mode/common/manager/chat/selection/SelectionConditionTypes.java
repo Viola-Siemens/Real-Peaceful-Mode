@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public final class SelectionConditionTypes {
+	public static final ISelectionConditionType DUMMY = register("dummy", () -> ISelectionCondition.DummySelectionCondition.CODEC);
 	public static final ISelectionConditionType MISSION = register("mission", () -> ISelectionCondition.MissionSelectionCondition.CODEC);
 	public static final ISelectionConditionType GREETING_TIME = register("greeting_timed", () -> ISelectionCondition.GreetingTimedSelectionCondition.CODEC);
 	public static final ISelectionConditionType MATERIAL_COLLECTION = register("material_collection", () -> ISelectionCondition.MaterialCollectionSelectionCondition.CODEC);
@@ -17,7 +18,7 @@ public final class SelectionConditionTypes {
 	}
 
 	private static ISelectionConditionType register(String name, ISelectionConditionType type) {
-		ResourceLocation id = new ResourceLocation(MODID, name);
+		ResourceLocation id = ResourceLocation.fromNamespaceAndPath(MODID, name);
 		ISelectionConditionType.registerConditionType(id, type);
 		return type;
 	}

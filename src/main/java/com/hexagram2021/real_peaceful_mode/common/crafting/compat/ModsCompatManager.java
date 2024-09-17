@@ -1,6 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.crafting.compat;
 
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
 
 public class ModsCompatManager {
 	public static boolean EMERALD_CRAFT = false;

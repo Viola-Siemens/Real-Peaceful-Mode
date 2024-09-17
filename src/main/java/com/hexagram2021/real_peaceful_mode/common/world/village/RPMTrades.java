@@ -1,21 +1,24 @@
 package com.hexagram2021.real_peaceful_mode.common.world.village;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.network.Filterable;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.WrittenBookItem;
+import net.minecraft.world.item.component.WrittenBookContent;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class RPMTrades {
 	public static final int DEFAULT_SUPPLY = 12;
@@ -54,8 +57,8 @@ public class RPMTrades {
 
 		@Override @Nullable
 		public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
-			ItemStack itemstack = new ItemStack(this.item, this.cost);
-			return new MerchantOffer(itemstack, new ItemStack(Items.EMERALD, numberOfEmerald), this.maxUses, this.Xp, this.priceMultiplier);
+			ItemCost cost = new ItemCost(this.item, this.cost);
+			return new MerchantOffer(cost, new ItemStack(Items.EMERALD, numberOfEmerald), this.maxUses, this.Xp, this.priceMultiplier);
 		}
 	}
 
@@ -82,7 +85,7 @@ public class RPMTrades {
 
 		@Override @Nullable
 		public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
-			return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCost), new ItemStack(this.itemStack.getItem(), this.numberOfItems), this.maxUses, this.Xp, this.priceMultiplier);
+			return new MerchantOffer(new ItemCost(Items.EMERALD, this.emeraldCost), new ItemStack(this.itemStack.getItem(), this.numberOfItems), this.maxUses, this.Xp, this.priceMultiplier);
 		}
 	}
 
@@ -111,16 +114,13 @@ public class RPMTrades {
 		@Override
 		public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
 			ItemStack itemstack = new ItemStack(Items.WRITTEN_BOOK);
-			CompoundTag compoundtag = new CompoundTag();
-			compoundtag.putString(WrittenBookItem.TAG_TITLE, this.title.getString());
-			compoundtag.putString(WrittenBookItem.TAG_AUTHOR, this.author.getString());
-			ListTag pages = new ListTag();
-			for (Component content : this.contents) {
-				pages.add(StringTag.valueOf("{\"text\":\"" + content.getString() + "\"}"));
-			}
-			compoundtag.put(WrittenBookItem.TAG_PAGES, pages);
-			itemstack.setTag(compoundtag);
-			return new MerchantOffer(new ItemStack(this.costItem, this.cost), new ItemStack(Items.EMERALD), itemstack, this.maxUses, this.Xp, this.priceMultiplier);
+			itemstack.set(DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(
+					Filterable.passThrough(this.title.getString()),
+					this.author.getString(), 0,
+					Arrays.stream(this.contents).map(Filterable::passThrough).collect(Collectors.toList()),
+					false
+			));
+			return new MerchantOffer(new ItemCost(this.costItem, this.cost), Optional.of(new ItemCost(Items.EMERALD, 1)), itemstack, this.maxUses, this.Xp, this.priceMultiplier);
 		}
 	}
 }

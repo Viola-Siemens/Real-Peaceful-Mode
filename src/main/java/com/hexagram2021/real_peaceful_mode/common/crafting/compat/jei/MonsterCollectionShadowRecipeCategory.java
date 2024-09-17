@@ -36,8 +36,8 @@ import java.util.List;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class MonsterCollectionShadowRecipeCategory implements IRecipeCategory<MonsterCollectionShadowRecipe> {
-	public static final ResourceLocation UID = new ResourceLocation(MODID, "shadow/monster_collection");
-	public static final ResourceLocation TEXTURE = new ResourceLocation(MODID, "textures/gui/jei/monster_collection.png");
+	public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(MODID, "shadow/monster_collection");
+	public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(MODID, "textures/gui/jei/monster_collection.png");
 
 	protected static final int ENTITY_X = 116;
 	protected static final int ENTITY_Y = 6;

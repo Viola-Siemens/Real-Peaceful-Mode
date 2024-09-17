@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.world.structures;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTypes;
 import com.hexagram2021.real_peaceful_mode.common.world.structures.pieces.HelplessGuardSlimePieces;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -18,9 +19,9 @@ import java.util.Optional;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class HelplessGuardSlimeFeature extends Structure {
-	public static final Codec<HelplessGuardSlimeFeature> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-			settingsCodec(builder), Variant.CODEC.fieldOf("variant").forGetter(structure -> structure.variant)
-	).apply(builder, HelplessGuardSlimeFeature::new));
+	public static final MapCodec<HelplessGuardSlimeFeature> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+			settingsCodec(instance), Variant.CODEC.fieldOf("variant").forGetter(structure -> structure.variant)
+	).apply(instance, HelplessGuardSlimeFeature::new));
 
 	private final Variant variant;
 
@@ -53,8 +54,8 @@ public class HelplessGuardSlimeFeature extends Structure {
 	}
 
 	public enum Variant implements StringRepresentable {
-		SWAMP("swamp", new ResourceLocation(MODID, "guard_slime/helpless_guard_slime_swamp")),
-		MANGROVE("mangrove", new ResourceLocation(MODID, "guard_slime/helpless_guard_slime_mangrove"));
+		SWAMP("swamp", ResourceLocation.fromNamespaceAndPath(MODID, "guard_slime/helpless_guard_slime_swamp")),
+		MANGROVE("mangrove", ResourceLocation.fromNamespaceAndPath(MODID, "guard_slime/helpless_guard_slime_mangrove"));
 
 		public static final Codec<Variant> CODEC = StringRepresentable.fromEnum(Variant::values);
 

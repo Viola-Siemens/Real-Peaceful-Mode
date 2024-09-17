@@ -6,7 +6,10 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class SkeletonKingModel<T extends SkeletonKing> extends HumanoidModel<T> {
 	public SkeletonKingModel(ModelPart root) {
 		super(root);

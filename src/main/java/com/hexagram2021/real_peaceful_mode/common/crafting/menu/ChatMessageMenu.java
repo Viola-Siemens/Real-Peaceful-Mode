@@ -1,6 +1,5 @@
 package com.hexagram2021.real_peaceful_mode.common.crafting.menu;
 
-import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.common.crafting.ClientSideMessagedChat;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedChat;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
@@ -15,9 +14,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -116,10 +115,7 @@ public class ChatMessageMenu extends AbstractContainerMenu implements IMessageMe
 			} else {
 				this.cachedSelections = null;
 			}
-			RealPeacefulMode.packetHandler.send(
-					PacketDistributor.PLAYER.with(() -> serverPlayer),
-					new ClientboundChatSelectionPacket(this.cachedSelections)
-			);
+			PacketDistributor.sendToPlayer(serverPlayer, new ClientboundChatSelectionPacket(this.cachedSelections));
 		}
 	}
 

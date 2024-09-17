@@ -1,6 +1,5 @@
 package com.hexagram2021.real_peaceful_mode.client;
 
-import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.api.RandomEventSpawnerHelper;
 import com.hexagram2021.real_peaceful_mode.api.event.RegisterRandomEventSpawnerEvent;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMKeys;
@@ -11,22 +10,23 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.ViewportEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.ViewportEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientEventHandler {
 	@SubscribeEvent
 	public static void onClientPlayerLogging(ClientPlayerNetworkEvent.LoggingIn event) {
 		RandomEventSpawnerHelper.clearRandomEventSpawners();
-		MinecraftForge.EVENT_BUS.post(new RegisterRandomEventSpawnerEvent(Dist.CLIENT));
+		NeoForge.EVENT_BUS.post(new RegisterRandomEventSpawnerEvent(Dist.CLIENT));
 	}
 
 	@SubscribeEvent
@@ -36,7 +36,7 @@ public class ClientEventHandler {
 			return;
 		}
 		if (RPMKeys.MISSION_SCREEN.isDown()) {
-			RealPeacefulMode.packetHandler.sendToServer(new GetMissionsPacket());
+			PacketDistributor.sendToServer(new GetMissionsPacket());
 		}
 	}
 
@@ -47,7 +47,7 @@ public class ClientEventHandler {
 		Player player = mc.player;
 		if (!mc.isPaused() && player != null) {
 			if(hasEffect) {
-				if(!player.hasEffect(RPMMobEffects.TRANCE.get())) {
+				if(!player.hasEffect(RPMMobEffects.TRANCE)) {
 					mc.gameRenderer.checkEntityPostEffect(player);
 					hasEffect = false;
 				}
@@ -56,8 +56,8 @@ public class ClientEventHandler {
 				event.setYaw(event.getYaw() + deltaYaw);
 				event.setPitch(event.getPitch() + deltaPitch);
 			} else {
-				if(player.hasEffect(RPMMobEffects.TRANCE.get())) {
-					mc.gameRenderer.loadEffect(new ResourceLocation(MODID, "shaders/post/trance.json"));
+				if(player.hasEffect(RPMMobEffects.TRANCE)) {
+					mc.gameRenderer.loadEffect(ResourceLocation.fromNamespaceAndPath(MODID, "shaders/post/trance.json"));
 					hasEffect = true;
 				}
 			}

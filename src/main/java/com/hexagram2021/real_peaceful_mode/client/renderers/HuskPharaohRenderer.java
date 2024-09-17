@@ -11,8 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class HuskPharaohRenderer extends HumanoidMobRenderer<HuskPharaoh, HuskPharaohModel<HuskPharaoh>> {
-	private static final ResourceLocation STONE_TEXTURE_LOCATION = new ResourceLocation(MODID, "textures/entity/stone_husk_pharaoh.png");
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(MODID, "textures/entity/husk_pharaoh.png");
+	private static final ResourceLocation STONE_TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/stone_husk_pharaoh.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/husk_pharaoh.png");
 
 	public HuskPharaohRenderer(EntityRendererProvider.Context context) {
 		this(context, RPMModelLayers.HUSK_PHARAOH);

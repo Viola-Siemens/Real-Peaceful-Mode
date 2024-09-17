@@ -3,11 +3,11 @@ package com.hexagram2021.real_peaceful_mode.common.crafting.recipe;
 import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.common.block.entity.CultureTableBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.config.RPMCommonConfig;
+import com.hexagram2021.real_peaceful_mode.common.crafting.input.CultureTableRecipeInput;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMRecipeSerializers;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMRecipes;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -19,9 +19,7 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
-
-public record CultureTableShadowRecipe(ResourceLocation id, Ingredient mix1, Ingredient mix2, Ingredient result) implements Recipe<CultureTableBlockEntity> {
+public record CultureTableShadowRecipe(Ingredient mix1, Ingredient mix2, Ingredient result) implements Recipe<CultureTableRecipeInput> {
 	@Nullable
 	private static List<CultureTableShadowRecipe> cachedList = null;
 
@@ -33,12 +31,10 @@ public record CultureTableShadowRecipe(ResourceLocation id, Ingredient mix1, Ing
 		List<CultureTableShadowRecipe> shadows = Lists.newArrayList();
 		if(RPMCommonConfig.ENABLE_JEI_SHADOW_RECIPE.get()) {
 			shadows.add(new CultureTableShadowRecipe(
-					new ResourceLocation(MODID, "shadowed/culture_table/experiment_flower"),
 					CultureTableBlockEntity.ACCEPTABLE_FLOWERS, CultureTableBlockEntity.ACCEPTABLE_FLOWERS,
-					Ingredient.of(Items.GRASS, Items.BONE_MEAL, RPMItems.Materials.EXPERIMENT_FLOWER)
+					Ingredient.of(Items.SHORT_GRASS, Items.BONE_MEAL, RPMItems.Materials.EXPERIMENT_FLOWER)
 			));
 			shadows.add(new CultureTableShadowRecipe(
-					new ResourceLocation(MODID, "shadowed/culture_table/slime_colloid"),
 					Ingredient.of(Items.WHEAT), Ingredient.of(Items.VINE),
 					Ingredient.of(RPMItems.Materials.SLIME_COLLOID)
 			));
@@ -48,12 +44,12 @@ public record CultureTableShadowRecipe(ResourceLocation id, Ingredient mix1, Ing
 	}
 
 	@Override
-	public boolean matches(CultureTableBlockEntity container, Level level) {
-		return this.mix1.test(container.getItem(CultureTableBlockEntity.SLOT_MIX1)) && this.mix2.test(container.getItem(CultureTableBlockEntity.SLOT_MIX2));
+	public boolean matches(CultureTableRecipeInput container, Level level) {
+		return this.mix1.test(container.getItem(CultureTableRecipeInput.SLOT_MIX1)) && this.mix2.test(container.getItem(CultureTableRecipeInput.SLOT_MIX2));
 	}
 
 	@Override
-	public ItemStack assemble(CultureTableBlockEntity container, RegistryAccess registryAccess) {
+	public ItemStack assemble(CultureTableRecipeInput container, HolderLookup.Provider registries) {
 		return ItemStack.EMPTY;
 	}
 
@@ -63,13 +59,8 @@ public record CultureTableShadowRecipe(ResourceLocation id, Ingredient mix1, Ing
 	}
 
 	@Override
-	public ItemStack getResultItem(RegistryAccess registryAccess) {
+	public ItemStack getResultItem(HolderLookup.Provider registries) {
 		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public ResourceLocation getId() {
-		return this.id;
 	}
 
 	@Override

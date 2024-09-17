@@ -36,7 +36,7 @@ public class GuardSlimeOuterLayer<T extends GuardSlimeEntity> extends RenderLaye
 			this.getParentModel().copyPropertiesTo(this.model);
 			this.model.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTick);
 			this.model.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			this.model.renderToBuffer(transform, vertexconsumer, color, LivingEntityRenderer.getOverlayCoords(entity, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+			this.model.renderToBuffer(transform, vertexconsumer, color, LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
 		}
 	}
 }

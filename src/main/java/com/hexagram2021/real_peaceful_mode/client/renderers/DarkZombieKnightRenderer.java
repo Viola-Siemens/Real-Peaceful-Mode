@@ -8,14 +8,14 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 @OnlyIn(Dist.CLIENT)
 public class DarkZombieKnightRenderer extends HumanoidMobRenderer<DarkZombieKnightEntity, DarkZombieKnightModel<DarkZombieKnightEntity>> {
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(MODID, "textures/entity/dark_zombie_knight.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/dark_zombie_knight.png");
 
 	public DarkZombieKnightRenderer(EntityRendererProvider.Context context) {
 		this(context, RPMModelLayers.DARK_ZOMBIE_KNIGHT, RPMModelLayers.DARK_ZOMBIE_KNIGHT_INNER_ARMOR, RPMModelLayers.DARK_ZOMBIE_KNIGHT_OUTER_ARMOR);

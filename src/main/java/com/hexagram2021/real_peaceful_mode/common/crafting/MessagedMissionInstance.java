@@ -2,39 +2,29 @@ package com.hexagram2021.real_peaceful_mode.common.crafting;
 
 import com.hexagram2021.real_peaceful_mode.client.ScreenManager;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.MissionMessage;
-import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
 
-public class MessagedMissionInstance implements MessagedMission {
-	private final Player player;
-	@Nullable
-	private final LivingEntity npc;
-	private final List<MissionMessage> messages;
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+public record MessagedMissionInstance(Player player, @Nullable LivingEntity npc, List<MissionMessage> messages) implements MessagedMission {
+	public static final StreamCodec<ByteBuf, MessagedMissionInstance> STREAM_CODEC = StreamCodec.composite(
+			ByteBufCodecs.optional(ByteBufCodecs.INT), instance -> Optional.ofNullable(instance.npc).map(LivingEntity::getId),
+			MissionMessage.LIST_STREAM_CODEC, MessagedMissionInstance::messages,
+			MessagedMissionInstance::new
+	);
 
-	public MessagedMissionInstance(Player player, @Nullable LivingEntity npc, List<MissionMessage> messages) {
-		this.player = player;
-		this.npc = npc;
-		this.messages = messages;
+	public MessagedMissionInstance(Optional<Integer> npcId, List<MissionMessage> messages) {
+		this(ScreenManager.getLocalPlayer(), npcId, messages);
 	}
-
-	public MessagedMissionInstance(CompoundTag nbt) {
-		this.player = ScreenManager.getLocalPlayer();
-		LivingEntity npc = null;
-		if(nbt.contains(TAG_NPC, Tag.TAG_INT)) {
-			int npcId = nbt.getInt(TAG_NPC);
-			npc = (LivingEntity) this.player.level().getEntity(npcId);
-		}
-		this.npc = npc;
-		ListTag list = nbt.getList(TAG_MESSAGE_LIST, Tag.TAG_COMPOUND);
-		this.messages = MissionMessage.LIST_CODEC.parse(NbtOps.INSTANCE, list).getOrThrow(false, RPMLogger::error);
+	public MessagedMissionInstance(Player player, Optional<Integer> npcId, List<MissionMessage> messages) {
+		this(player, npcId.map(id -> (LivingEntity) player.level().getEntity(id)).orElse(null), messages);
 	}
 
 	@Override

@@ -8,8 +8,8 @@ import net.minecraft.resources.ResourceLocation;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public final class RPMSummonBlockEvents {
-	public static final ResourceLocation CONDITION_PHARAOH = new ResourceLocation(MODID, "pharaoh");
-	public static final ResourceLocation WORK_SLIME_LADDER = new ResourceLocation(MODID, "slime_place_ladder");
+	public static final ResourceLocation CONDITION_PHARAOH = ResourceLocation.fromNamespaceAndPath(MODID, "pharaoh");
+	public static final ResourceLocation WORK_SLIME_LADDER = ResourceLocation.fromNamespaceAndPath(MODID, "slime_place_ladder");
 
 	public static void registerSummonBlockExtraConditions() {
 		SummonBlockEntityHelper.registerExtraCondition(CONDITION_PHARAOH, (level, pos) -> !HuskPharaoh.conditionToStone(level, pos));

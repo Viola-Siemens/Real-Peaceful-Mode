@@ -18,8 +18,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -30,7 +30,7 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 @OnlyIn(Dist.CLIENT)
 public class ChatMessageScreen extends AbstractContainerScreen<ChatMessageMenu> {
-	private static final ResourceLocation BG_LOCATION = new ResourceLocation(MODID, "textures/gui/mission_message.png");
+	private static final ResourceLocation BG_LOCATION = ResourceLocation.fromNamespaceAndPath(MODID, "textures/gui/mission_message.png");
 
 	private final List<MissionMessage> cachedMessages = Lists.newArrayList();
 	@Nullable
@@ -105,7 +105,7 @@ public class ChatMessageScreen extends AbstractContainerScreen<ChatMessageMenu> 
 	private void drawSpeaker(GuiGraphics transform, LivingEntity currentSpeaker, int x, int y) {
 		FormattedCharSequence name = currentSpeaker.getDisplayName().getVisualOrderText();
 		transform.drawString(this.font, name, this.leftPos + 116 - this.font.width(name), this.topPos + 100, 0xa0a0a0);
-		InventoryScreen.renderEntityInInventoryFollowsMouse(transform, this.leftPos + 143, this.topPos + 151, 24, this.leftPos + 143 - x, this.topPos + 120 - y, currentSpeaker);
+		InventoryScreen.renderEntityInInventoryFollowsMouse(transform, this.leftPos + 120, this.topPos + 88, this.leftPos + 167, this.topPos + 159, 24, 0.0625F, this.leftPos + 143 - x, this.topPos + 120 - y, currentSpeaker);
 	}
 
 	private void drawSelectionButton(GuiGraphics transform, int x, int y, int index) {

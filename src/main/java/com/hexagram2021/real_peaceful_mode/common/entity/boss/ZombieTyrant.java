@@ -41,7 +41,7 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -79,9 +79,9 @@ public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_SPELL_COUNTER, 0);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_SPELL_COUNTER, 0);
 	}
 
 	public int getSpelling() {
@@ -167,7 +167,7 @@ public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 	}
 
 	@Override
-	public boolean canChangeDimensions() {
+	public boolean canUsePortal(boolean allowPassengers) {
 		return false;
 	}
 
@@ -247,7 +247,7 @@ public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 					if(knight != null) {
 						knight.moveTo(position);
 						knight.setTarget(ZombieTyrant.this.getTarget());
-						ForgeEventFactory.onFinalizeSpawn(knight, level, level.getCurrentDifficultyAt(ZombieTyrant.this.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
+						EventHooks.finalizeMobSpawn(knight, level, level.getCurrentDifficultyAt(ZombieTyrant.this.blockPosition()), MobSpawnType.MOB_SUMMONED, null);
 						level.addFreshEntityWithPassengers(knight);
 					}
 				}
@@ -294,7 +294,7 @@ public class ZombieTyrant extends Mob implements Enemy, IMissionProvider {
 		final MissionType type;
 
 		ZombieTyrantMissions(String mission, MissionType type) {
-			this.missionId = new ResourceLocation(MODID, mission);
+			this.missionId = ResourceLocation.fromNamespaceAndPath(MODID, mission);
 			this.type = type;
 		}
 

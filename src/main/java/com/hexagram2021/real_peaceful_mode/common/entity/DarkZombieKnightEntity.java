@@ -10,6 +10,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -44,9 +45,9 @@ public class DarkZombieKnightEntity extends Monster {
 	}
 
 	@Override
-	public void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_ATTACK_PLAYER_AFTER_TYRANT_DEATH, false);
+	public void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_ATTACK_PLAYER_AFTER_TYRANT_DEATH, false);
 	}
 
 	public void setBuster(boolean buster) {
@@ -75,6 +76,7 @@ public class DarkZombieKnightEntity extends Monster {
 		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MOVEMENT_SPEED, 0.3D).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 3.0D).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
 	}
 
+	@Override
 	public void aiStep() {
 		if (this.isAlive()) {
 			boolean flag = this.isSunBurnTick();
@@ -84,7 +86,7 @@ public class DarkZombieKnightEntity extends Monster {
 					if (itemstack.isDamageableItem()) {
 						itemstack.setDamageValue(itemstack.getDamageValue() + this.random.nextInt(2));
 						if (itemstack.getDamageValue() >= itemstack.getMaxDamage()) {
-							this.broadcastBreakEvent(EquipmentSlot.HEAD);
+							this.onEquippedItemBroken(itemstack.getItem(), EquipmentSlot.HEAD);
 							this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
 						}
 					}
@@ -93,17 +95,12 @@ public class DarkZombieKnightEntity extends Monster {
 				}
 
 				if (flag) {
-					this.setSecondsOnFire(8);
+					this.igniteForSeconds(8.0F);
 				}
 			}
 		}
 
 		super.aiStep();
-	}
-	
-	@Override
-	public double getMyRidingOffset() {
-		return -0.45D;
 	}
 
 	@Override
@@ -131,11 +128,6 @@ public class DarkZombieKnightEntity extends Monster {
 	}
 
 	@Override
-	public MobType getMobType() {
-		return MobType.UNDEAD;
-	}
-
-	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficultyInstance) {
 		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.Weapons.IRON_PIKE));
 	}
@@ -156,22 +148,21 @@ public class DarkZombieKnightEntity extends Monster {
 			this.setBuster(this.getRandom().nextInt(3) != 0);
 		}
 	}
-	
-	@SuppressWarnings("OverrideOnly")
+
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyInstance,
-										MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag tag) {
-		spawnGroupData = super.finalizeSpawn(level, difficultyInstance, spawnType, spawnGroupData, tag);
+										MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
+		spawnGroupData = super.finalizeSpawn(level, difficultyInstance, spawnType, spawnGroupData);
 		this.setCanPickUpLoot(true);
 		RandomSource randomsource = level.getRandom();
 		this.populateDefaultEquipmentSlots(randomsource, difficultyInstance);
-		this.populateDefaultEquipmentEnchantments(randomsource, difficultyInstance);
+		this.populateDefaultEquipmentEnchantments(level, randomsource, difficultyInstance);
 		return spawnGroupData;
 	}
 
 	@Override
-	protected void dropCustomDeathLoot(DamageSource damageSource, int looting, boolean hitByPlayer) {
-		super.dropCustomDeathLoot(damageSource, looting, hitByPlayer);
+	protected void dropCustomDeathLoot(ServerLevel serverLevel, DamageSource damageSource, boolean hitByPlayer) {
+		super.dropCustomDeathLoot(serverLevel, damageSource, hitByPlayer);
 		Entity entity = damageSource.getEntity();
 		if (entity instanceof Creeper creeper) {
 			if (creeper.canDropMobsSkull()) {

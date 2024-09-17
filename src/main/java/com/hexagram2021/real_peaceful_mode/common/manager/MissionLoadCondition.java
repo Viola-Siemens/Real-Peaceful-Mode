@@ -3,14 +3,16 @@ package com.hexagram2021.real_peaceful_mode.common.manager;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.fml.ModList;
 
 import java.util.Objects;
 
 public record MissionLoadCondition(ConditionType type, String value, boolean present) {
+	private static final String REGISTRY_NAME_MATCHER = "([a-z0-9_.-]+:[a-z0-9_/.-]+)";
+
 	public MissionLoadCondition(ConditionType type, String value) {
 		this(type, value, true);
 	}
@@ -25,7 +27,7 @@ public record MissionLoadCondition(ConditionType type, String value, boolean pre
 				throw new IllegalArgumentException("Not a valid modid for condition value: \"%s\"!".formatted(this.value));
 			}
 		} else {
-			if(!ResourceLocation.isValidResourceLocation(this.value)) {
+			if(!this.value.matches(REGISTRY_NAME_MATCHER)) {
 				throw new IllegalArgumentException("Not a valid resource location for condition value: \"%s\"!".formatted(this.value));
 			}
 		}
@@ -34,8 +36,7 @@ public record MissionLoadCondition(ConditionType type, String value, boolean pre
 	public boolean test() {
 		return switch (this.type) {
 			case MOD_LOAD -> ModList.get().isLoaded(this.value);
-			case ENTITY_REGISTERED -> ForgeRegistries.ENTITY_TYPES.containsKey(new ResourceLocation(this.value));
-			case BIOME_REGISTERED -> ForgeRegistries.BIOMES.containsKey(new ResourceLocation(this.value));
+			case ENTITY_REGISTERED -> BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.parse(this.value));
 		};
 	}
 
@@ -71,7 +72,6 @@ public record MissionLoadCondition(ConditionType type, String value, boolean pre
 		return switch (type) {
 			case "mod", "mod_load" -> ConditionType.MOD_LOAD;
 			case "entity", "entity_registered" -> ConditionType.ENTITY_REGISTERED;
-			case "biome", "biome_registered" -> ConditionType.BIOME_REGISTERED;
 			default -> throw new IllegalArgumentException("Unknown condition type value: %s!".formatted(type));
 		};
 	}
@@ -87,11 +87,11 @@ public record MissionLoadCondition(ConditionType type, String value, boolean pre
 
 	public enum ConditionType {
 		MOD_LOAD,
-		ENTITY_REGISTERED,
-		BIOME_REGISTERED
+		ENTITY_REGISTERED
 	}
 
 	private static final String CONDITIONS_FIELD = "conditions";
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean processConditions(JsonObject json) {
 		return !json.has(CONDITIONS_FIELD) || MissionLoadCondition.fromJson(json.get(CONDITIONS_FIELD)).test();
 	}

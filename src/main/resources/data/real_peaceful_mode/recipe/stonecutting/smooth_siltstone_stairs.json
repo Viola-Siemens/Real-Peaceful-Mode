@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "real_peaceful_mode:smooth_siltstone"
+  },
+  "result": {
+    "id": "real_peaceful_mode:smooth_siltstone_stairs",
+    "count": 1
+  }
+}

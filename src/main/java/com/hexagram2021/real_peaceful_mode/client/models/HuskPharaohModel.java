@@ -5,7 +5,10 @@ import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class HuskPharaohModel<T extends HuskPharaoh> extends HumanoidModel<T> {
 	public HuskPharaohModel(ModelPart root) {
 		super(root);

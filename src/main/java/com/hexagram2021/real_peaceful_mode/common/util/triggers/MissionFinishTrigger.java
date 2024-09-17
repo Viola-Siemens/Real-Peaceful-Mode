@@ -1,33 +1,28 @@
 package com.hexagram2021.real_peaceful_mode.common.util.triggers;
 
-import com.google.gson.JsonObject;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.util.triggers.predicates.MissionPredicate;
-import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.EntityType;
 
 import javax.annotation.Nullable;
 
+import java.util.Optional;
+
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class MissionFinishTrigger extends SimpleCriterionTrigger<MissionFinishTrigger.TriggerInstance> {
-	static final ResourceLocation ID = new ResourceLocation(MODID, "mission_finish");
+	public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(MODID, "mission_finish");
 
 	@Override
-	protected TriggerInstance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext context) {
-		MissionPredicate missionPredicate = MissionPredicate.fromJson(GsonHelper.getAsJsonObject(json, "mission"));
-		return new MissionFinishTrigger.TriggerInstance(predicate, missionPredicate);
-	}
-
-	@Override
-	public ResourceLocation getId() {
-		return ID;
+	public Codec<MissionFinishTrigger.TriggerInstance> codec() {
+		return MissionFinishTrigger.TriggerInstance.CODEC;
 	}
 
 	public void trigger(ServerPlayer player, @Nullable EntityType<?> entityType) {
@@ -39,13 +34,11 @@ public class MissionFinishTrigger extends SimpleCriterionTrigger<MissionFinishTr
 		});
 	}
 
-	public static class TriggerInstance extends AbstractCriterionTriggerInstance {
-		private final MissionPredicate missionPredicate;
-
-		public TriggerInstance(ContextAwarePredicate predicate, MissionPredicate missionPredicate) {
-			super(MissionFinishTrigger.ID, predicate);
-			this.missionPredicate = missionPredicate;
-		}
+	public record TriggerInstance(Optional<ContextAwarePredicate> player, MissionPredicate missionPredicate) implements SimpleCriterionTrigger.SimpleInstance {
+		public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+				EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(MissionFinishTrigger.TriggerInstance::player),
+				MissionPredicate.CODEC.fieldOf("mission").forGetter(MissionFinishTrigger.TriggerInstance::missionPredicate)
+		).apply(instance, TriggerInstance::new));
 
 		public boolean matches(@Nullable EntityType<?> entityType, IMonsterHero hero) {
 			return this.missionPredicate.matches(entityType, hero);

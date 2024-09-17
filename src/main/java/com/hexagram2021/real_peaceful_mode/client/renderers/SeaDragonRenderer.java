@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class SeaDragonRenderer extends MobRenderer<SeaDragonEntity, SeaDragonModel<SeaDragonEntity>> {
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(MODID, "textures/entity/sea_dragon.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/sea_dragon.png");
 
 	public SeaDragonRenderer(EntityRendererProvider.Context context) {
 		super(context, new SeaDragonModel<>(context.bakeLayer(RPMModelLayers.SEA_DRAGON)), 0.5F);

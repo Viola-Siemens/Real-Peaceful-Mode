@@ -3,6 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.block;
 import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.common.entity.HuskWorkmanEntity;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -25,12 +26,18 @@ import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-@SuppressWarnings("deprecation")
 public class DirtyWaterBlock extends Block {
+	public static final MapCodec<DirtyWaterBlock> CODEC = simpleCodec(DirtyWaterBlock::new);
+
 	private static final VoxelShape FALLING_COLLISION_SHAPE = Shapes.box(0.0D, 0.0D, 0.0D, 1.0D, 0.9D, 1.0D);
 
 	public DirtyWaterBlock(BlockBehaviour.Properties props) {
 		super(props);
+	}
+
+	@Override
+	protected MapCodec<? extends DirtyWaterBlock> codec() {
+		return CODEC;
 	}
 
 	@Override
@@ -118,7 +125,7 @@ public class DirtyWaterBlock extends Block {
 	}
 
 	@Override
-	public boolean isPathfindable(BlockState blockState, BlockGetter level, BlockPos blockPos, PathComputationType context) {
+	public boolean isPathfindable(BlockState blockState, PathComputationType context) {
 		return false;
 	}
 }

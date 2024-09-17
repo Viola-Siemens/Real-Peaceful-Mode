@@ -38,7 +38,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.server.command.EnumArgument;
+import net.neoforged.neoforge.server.command.EnumArgument;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;
@@ -46,7 +46,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.getRegistryName;
 
-@SuppressWarnings("WrongTypeInTranslationArgs")
 public class RPMCommands {
 	private static final String MISSION_ID_ARGUMENT = "mission_id";
 	private static final String SHOW_DIALOG_ARGUMENT = "show_dialog";

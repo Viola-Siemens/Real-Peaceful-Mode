@@ -2,7 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.world.structures;
 
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTypes;
 import com.hexagram2021.real_peaceful_mode.common.world.structures.pieces.SlimeMazePieces;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class SlimeMazeFeature extends Structure {
-	public static final Codec<SlimeMazeFeature> CODEC = simpleCodec(SlimeMazeFeature::new);
+	public static final MapCodec<SlimeMazeFeature> CODEC = simpleCodec(SlimeMazeFeature::new);
 
 	public SlimeMazeFeature(StructureSettings settings) {
 		super(settings);

@@ -49,9 +49,9 @@ public abstract class SkeletonEntityMixin extends Monster implements IFriendlyMo
 	}
 
 	@Inject(method = "defineSynchedData", at = @At(value = "TAIL"))
-	public void defineDanceData(CallbackInfo ci) {
-		this.entityData.define(Data.DATA_SKELETON_DANCE, false);
-		this.entityData.define(Data.DATA_SKELETON_RIGHT_ARM_DETACHED, false);
+	public void defineDanceData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+		builder.define(Data.DATA_SKELETON_DANCE, false);
+		builder.define(Data.DATA_SKELETON_RIGHT_ARM_DETACHED, false);
 	}
 
 	@SuppressWarnings("ConstantConditions")
@@ -65,13 +65,13 @@ public abstract class SkeletonEntityMixin extends Monster implements IFriendlyMo
 	@Inject(method = "readAdditionalSaveData", at = @At(value = "TAIL"))
 	public void getRPMSkeletonAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
 		this.rpm$setDance(nbt.contains(TAG_DANCING, Tag.TAG_BYTE) && nbt.getBoolean(TAG_DANCING));
-		this.setRightArmDetached(nbt.contains(TAG_MISSING_ARM, Tag.TAG_BYTE) && nbt.getBoolean(TAG_MISSING_ARM));
+		this.rpm$setRightArmDetached(nbt.contains(TAG_MISSING_ARM, Tag.TAG_BYTE) && nbt.getBoolean(TAG_MISSING_ARM));
 	}
 
 	@Inject(method = "addAdditionalSaveData", at = @At(value = "TAIL"))
 	public void addRPMSkeletonAdditionalSaveData(CompoundTag nbt, CallbackInfo ci) {
 		nbt.putBoolean(TAG_DANCING, this.rpm$isDancing());
-		nbt.putBoolean(TAG_MISSING_ARM, this.isRightArmDetached());
+		nbt.putBoolean(TAG_MISSING_ARM, this.rpm$isRightArmDetached());
 	}
 
 	@Override
@@ -80,12 +80,12 @@ public abstract class SkeletonEntityMixin extends Monster implements IFriendlyMo
 	}
 
 	@Override
-	public boolean isRightArmDetached() {
+	public boolean rpm$isRightArmDetached() {
 		return this.entityData.get(Data.DATA_SKELETON_RIGHT_ARM_DETACHED);
 	}
 
 	@Override
-	public void setRightArmDetached(boolean detached) {
+	public void rpm$setRightArmDetached(boolean detached) {
 		this.entityData.set(Data.DATA_SKELETON_RIGHT_ARM_DETACHED, detached);
 	}
 

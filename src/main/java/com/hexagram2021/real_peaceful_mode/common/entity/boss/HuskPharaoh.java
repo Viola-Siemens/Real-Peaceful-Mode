@@ -81,10 +81,10 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 	}
 	
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_STONE, false);
-		this.entityData.define(DATA_WEAKEN, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_STONE, false);
+		builder.define(DATA_WEAKEN, false);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -223,7 +223,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 	}
 
 	@Override
-	public boolean canChangeDimensions() {
+	public boolean canUsePortal(boolean allowPassengers) {
 		return false;
 	}
 
@@ -514,7 +514,7 @@ public class HuskPharaoh extends PathfinderMob implements RangedAttackMob, Enemy
 		final MissionType type;
 
 		HuskPharaohMissions(String mission, MissionType type) {
-			this.missionId = new ResourceLocation(MODID, mission);
+			this.missionId = ResourceLocation.fromNamespaceAndPath(MODID, mission);
 			this.type = type;
 		}
 

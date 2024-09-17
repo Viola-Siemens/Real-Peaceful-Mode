@@ -24,7 +24,7 @@ public final class RPMEntityKeys {
 	}
 
 	private static ResourceKey<EntityType<?>> createKey(String name) {
-		return ResourceKey.create(Registries.ENTITY_TYPE, new ResourceLocation(MODID, name));
+		return ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MODID, name));
 	}
 
 	public static void init() {

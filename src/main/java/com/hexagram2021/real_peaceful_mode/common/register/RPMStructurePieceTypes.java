@@ -26,7 +26,7 @@ public final class RPMStructurePieceTypes {
 	}
 
 	private static StructurePieceType register(String name, StructurePieceType type) {
-		return Registry.register(BuiltInRegistries.STRUCTURE_PIECE, new ResourceLocation(MODID, name), type);
+		return Registry.register(BuiltInRegistries.STRUCTURE_PIECE, ResourceLocation.fromNamespaceAndPath(MODID, name), type);
 	}
 
 	public static void init() {

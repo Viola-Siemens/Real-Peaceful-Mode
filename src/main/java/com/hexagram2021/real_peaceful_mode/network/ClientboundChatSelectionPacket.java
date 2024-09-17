@@ -1,43 +1,38 @@
 package com.hexagram2021.real_peaceful_mode.network;
 
-import com.google.common.collect.Lists;
 import com.hexagram2021.real_peaceful_mode.client.ScreenManager;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.selection.ChatSelection;
-import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class ClientboundChatSelectionPacket implements IRPMPacket {
-	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-	private final Optional<List<ChatSelection>> chatSelections;
+import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
+
+public record ClientboundChatSelectionPacket(Optional<List<ChatSelection>> chatSelections) implements CustomPacketPayload, IRPMPacket {
+	public static final Type<ClientboundChatSelectionPacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "chat_selection"));
+	public static final StreamCodec<ByteBuf, ClientboundChatSelectionPacket> STREAM_CODEC = StreamCodec.composite(
+			ByteBufCodecs.optional(ChatSelection.STREAM_CODEC.apply(ByteBufCodecs.list())), ClientboundChatSelectionPacket::chatSelections,
+			ClientboundChatSelectionPacket::new
+	);
 
 	public ClientboundChatSelectionPacket(@Nullable List<ChatSelection> chatSelections) {
-		this.chatSelections = Optional.ofNullable(chatSelections);
-	}
-
-	public ClientboundChatSelectionPacket(FriendlyByteBuf buf) {
-		this.chatSelections = buf.readOptional(buf1 -> buf1.readCollection(
-				Lists::newArrayListWithCapacity,
-				buf2 -> ChatSelection.CODEC.parse(NbtOps.INSTANCE, buf2.readNbt()).getOrThrow(false, RPMLogger::error)
-		));
+		this(Optional.ofNullable(chatSelections));
 	}
 
 	@Override
-	public void write(FriendlyByteBuf buf) {
-		buf.writeOptional(this.chatSelections, (buf1, selections) -> buf1.writeCollection(
-				selections,
-				(buf2, selection) -> buf2.writeNbt((CompoundTag) ChatSelection.CODEC.encode(selection, NbtOps.INSTANCE, new CompoundTag()).getOrThrow(false, RPMLogger::error))
-		));
-	}
-
-	@Override
-	public void handle(NetworkEvent.Context context) {
+	public void handle(IPayloadContext context) {
 		ScreenManager.updateChatSelections(this.chatSelections.orElse(null));
+	}
+
+	@Override
+	public Type<ClientboundChatSelectionPacket> type() {
+		return TYPE;
 	}
 }

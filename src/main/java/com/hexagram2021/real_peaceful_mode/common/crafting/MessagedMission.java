@@ -1,7 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.crafting;
 
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.MissionMessage;
-import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
@@ -27,7 +26,7 @@ public interface MessagedMission {
 		if(npc != null) {
 			ret.putInt(TAG_NPC, npc.getId());
 		}
-		ret.put(TAG_MESSAGE_LIST, MissionMessage.LIST_CODEC.encode(this.messages(), NbtOps.INSTANCE, new ListTag()).getOrThrow(false, RPMLogger::error));
+		ret.put(TAG_MESSAGE_LIST, MissionMessage.LIST_CODEC.encode(this.messages(), NbtOps.INSTANCE, new ListTag()).getOrThrow(IllegalStateException::new));
 		return ret;
 	}
 }

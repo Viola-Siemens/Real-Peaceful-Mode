@@ -6,7 +6,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -21,8 +20,13 @@ public class SpiritBeadItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-		super.appendHoverText(itemStack, level, components, flag);
+	public void appendHoverText(ItemStack itemStack, TooltipContext context, List<Component> components, TooltipFlag flag) {
+		super.appendHoverText(itemStack, context, components, flag);
 		components.add(Component.translatable(this.getDescriptionId() + ".description").withStyle(ChatFormatting.GRAY));
+	}
+
+	@Nullable
+	public EntityType<?> getEntityType() {
+		return this.entityType;
 	}
 }

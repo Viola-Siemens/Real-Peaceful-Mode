@@ -2,8 +2,8 @@ package com.hexagram2021.real_peaceful_mode.api.event;
 
 import com.hexagram2021.real_peaceful_mode.api.RandomEventSpawnerHelper;
 import com.hexagram2021.real_peaceful_mode.common.spawner.AbstractEventSpawner;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.Event;
 import org.jetbrains.annotations.ApiStatus;
 
 public class RegisterRandomEventSpawnerEvent extends Event {

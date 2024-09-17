@@ -25,7 +25,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class PharaohAltarPieces {
-	private static final ResourceLocation PHARAOH_ALTAR = new ResourceLocation(MODID, "mission/pharaoh_altar");
+	private static final ResourceLocation PHARAOH_ALTAR = ResourceLocation.fromNamespaceAndPath(MODID, "mission/pharaoh_altar");
 
 	public static void addPieces(StructureTemplateManager structureManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieces) {
 		pieces.addPiece(new PharaohAltarPiece(structureManager, PHARAOH_ALTAR, pos, rotation));

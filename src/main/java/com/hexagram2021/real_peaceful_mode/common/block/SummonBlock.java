@@ -2,6 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.block;
 
 import com.hexagram2021.real_peaceful_mode.common.block.entity.SummonBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -20,8 +21,15 @@ import javax.annotation.Nullable;
 
 @SuppressWarnings("deprecation")
 public class SummonBlock extends BaseEntityBlock {
+	public static final MapCodec<SummonBlock> CODEC = simpleCodec(SummonBlock::new);
+
 	public SummonBlock(Properties properties) {
 		super(properties);
+	}
+
+	@Override
+	protected MapCodec<? extends SummonBlock> codec() {
+		return CODEC;
 	}
 
 	@Override

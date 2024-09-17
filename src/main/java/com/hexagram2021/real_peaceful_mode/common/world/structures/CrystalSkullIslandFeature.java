@@ -2,7 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.world.structures;
 
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTypes;
 import com.hexagram2021.real_peaceful_mode.common.world.structures.pieces.CrystalSkullIslandPieces;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 import java.util.Optional;
 
 public class CrystalSkullIslandFeature extends Structure {
-	public static final Codec<CrystalSkullIslandFeature> CODEC = simpleCodec(CrystalSkullIslandFeature::new);
+	public static final MapCodec<CrystalSkullIslandFeature> CODEC = simpleCodec(CrystalSkullIslandFeature::new);
 
 	public CrystalSkullIslandFeature(Structure.StructureSettings settings) {
 		super(settings);

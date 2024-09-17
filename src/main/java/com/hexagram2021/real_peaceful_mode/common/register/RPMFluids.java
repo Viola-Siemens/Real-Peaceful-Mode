@@ -4,7 +4,7 @@ import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.fluid.MagicPoolWaterFluid;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -23,34 +23,28 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.common.SoundActions;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.SoundActions;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.apache.commons.lang3.mutable.Mutable;
 import org.apache.commons.lang3.mutable.MutableObject;
 
-import javax.annotation.Nullable;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-@SuppressWarnings("deprecation")
 public class RPMFluids {
-	public static final DeferredRegister<Fluid> REGISTER = DeferredRegister.create(ForgeRegistries.FLUIDS, MODID);
-	public static final DeferredRegister<FluidType> TYPE_REGISTER = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, MODID);
+	public static final DeferredRegister<Fluid> REGISTER = DeferredRegister.create(Registries.FLUID, MODID);
+	public static final DeferredRegister<FluidType> TYPE_REGISTER = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, MODID);
 
 	public static final FluidEntry<MagicPoolWaterFluid> MAGIC_POOL_WATER_FLUID = FluidEntry.register(
 			"magic_pool_water",
-			new ResourceLocation(MODID, "block/fluid/magic_pool_water_still"), new ResourceLocation(MODID, "block/fluid/magic_pool_water_flowing"),
+			ResourceLocation.fromNamespaceAndPath(MODID, "block/fluid/magic_pool_water_still"), ResourceLocation.fromNamespaceAndPath(MODID, "block/fluid/magic_pool_water_flowing"),
 			RPMFluidTags.MAGIC_POOL_WATER, MagicPoolWaterFluid.Source::new, MagicPoolWaterFluid.Flowing::new,
-			(entry, props) -> new LiquidBlock(entry::getStill, props) {
+			(entry, props) -> new LiquidBlock(entry.getStill(), props) {
 				@Override
 				public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
 					if(entity instanceof ItemEntity itemEntity) {
@@ -76,9 +70,9 @@ public class RPMFluids {
 	);
 	public static final FluidEntry<MagicPoolWaterFluid> DARK_MAGIC_POOL_WATER_FLUID = FluidEntry.register(
 			"dark_magic_pool_water",
-			new ResourceLocation(MODID, "block/fluid/dark_magic_pool_water_still"), new ResourceLocation(MODID, "block/fluid/dark_magic_pool_water_flowing"),
+			ResourceLocation.fromNamespaceAndPath(MODID, "block/fluid/dark_magic_pool_water_still"), ResourceLocation.fromNamespaceAndPath(MODID, "block/fluid/dark_magic_pool_water_flowing"),
 			RPMFluidTags.DARK_MAGIC_POOL_WATER, MagicPoolWaterFluid.Source::new, MagicPoolWaterFluid.Flowing::new,
-			(entry, props) -> new LiquidBlock(entry::getStill, props) {
+			(entry, props) -> new LiquidBlock(entry.getStill(), props) {
 				@Override
 				public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
 					if(entity instanceof ItemEntity itemEntity && level instanceof ServerLevel serverLevel) {
@@ -99,7 +93,7 @@ public class RPMFluids {
 							int distance = 16;
 							serverLevel.getPlayers(player -> player.closerThan(itemEntity, distance)).forEach(player -> player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 160)));
 							MissionHelper.triggerMissionForPlayers(
-									new ResourceLocation(MODID, "zombie2"), MissionType.FINISH, serverLevel,
+									ResourceLocation.fromNamespaceAndPath(MODID, "zombie2"), MissionType.FINISH, serverLevel,
 									player -> player.closerThan(itemEntity, distance), null, player -> {}
 							);
 							itemEntity.discard();
@@ -110,9 +104,9 @@ public class RPMFluids {
 			}
 	);
 
-	public record FluidEntry<T extends Fluid>(RegistryObject<T> still, RegistryObject<T> flowing,
+	public record FluidEntry<T extends Fluid>(DeferredHolder<Fluid, T> still, DeferredHolder<Fluid, T> flowing,
 											  RPMBlocks.BlockEntry<LiquidBlock> fluidBlock, RPMItems.ItemEntry<BucketItem> bucket,
-											  RegistryObject<FluidType> type) {
+											  DeferredHolder<FluidType, FluidType> type, ResourceLocation stillTex, ResourceLocation flowingTex) {
 		public T getFlowing() {
 			return this.flowing.get();
 		}
@@ -129,6 +123,10 @@ public class RPMFluids {
 			return this.bucket.get();
 		}
 
+		public FluidType getType() {
+			return this.type.get();
+		}
+
 		public static <T extends Fluid> FluidEntry<T> register(String name, ResourceLocation stillTex, ResourceLocation flowingTex,
 															   TagKey<Fluid> fluidTag, BiFunction<FluidEntry<T>, TagKey<Fluid>, T> stillMaker, BiFunction<FluidEntry<T>, TagKey<Fluid>, T> flowingMaker,
 															   BiFunction<FluidEntry<T>, BlockBehaviour.Properties, ? extends LiquidBlock> blockMaker) {
@@ -139,54 +137,31 @@ public class RPMFluids {
 					.sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
 					.sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
 					.sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH);
-			RegistryObject<FluidType> type = TYPE_REGISTER.register(name, () -> buildFluidTypeWithTextures(builder, stillTex, flowingTex));
+			DeferredHolder<FluidType, FluidType> type = TYPE_REGISTER.register(name, () -> new FluidType(builder));
 			Mutable<FluidEntry<T>> thisMutable = new MutableObject<>();
-			RegistryObject<T> still = REGISTER.register(name, () -> makeFluid(
+			DeferredHolder<Fluid, T> still = REGISTER.register(name, () -> makeFluid(
 					stillMaker, thisMutable.getValue(), fluidTag
 			));
-			RegistryObject<T> flowing = REGISTER.register("flowing_" + name, () -> makeFluid(
+			DeferredHolder<Fluid, T> flowing = REGISTER.register("flowing_" + name, () -> makeFluid(
 					flowingMaker, thisMutable.getValue(), fluidTag
 			));
 			RPMBlocks.BlockEntry<LiquidBlock> block = new RPMBlocks.BlockEntry<>(
 					name,
-					() -> BlockBehaviour.Properties.copy(Blocks.WATER),
+					() -> BlockBehaviour.Properties.ofFullCopy(Blocks.WATER),
 					p -> blockMaker.apply(thisMutable.getValue(), p)
 			);
 			RPMItems.ItemEntry<BucketItem> bucket = RPMItems.ItemEntry.register(name+"_bucket", () -> makeBucket(still));
-			FluidEntry<T> entry = new FluidEntry<>(still, flowing, block, bucket, type);
+			FluidEntry<T> entry = new FluidEntry<>(still, flowing, block, bucket, type, stillTex, flowingTex);
 			thisMutable.setValue(entry);
 			return entry;
-		}
-
-		private static FluidType buildFluidTypeWithTextures(FluidType.Properties builder, ResourceLocation stillTex, ResourceLocation flowingTex) {
-			return new FluidType(builder) {
-				@Override
-				public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
-					consumer.accept(new IClientFluidTypeExtensions() {
-						@Override
-						public ResourceLocation getStillTexture() {
-							return stillTex;
-						}
-						@Override
-						public ResourceLocation getFlowingTexture() {
-							return flowingTex;
-						}
-					});
-				}
-			};
 		}
 
 		private static <T extends Fluid> T makeFluid(BiFunction<FluidEntry<T>, TagKey<Fluid>, T> maker, FluidEntry<T> entry, TagKey<Fluid> fluidTag) {
 			return maker.apply(entry, fluidTag);
 		}
 
-		private static <T extends Fluid> BucketItem makeBucket(RegistryObject<T> still) {
-			return new BucketItem(still, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)) {
-				@Override
-				public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-					return new FluidBucketWrapper(stack);
-				}
-			};
+		private static <T extends Fluid> BucketItem makeBucket(DeferredHolder<Fluid, T> still) {
+			return new BucketItem(still.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET));
 		}
 	}
 

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "SS",
+    "SS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:calcite"
+    }
+  },
+  "result": {
+    "id": "real_peaceful_mode:polished_calcite",
+    "count": 4
+  }
+}

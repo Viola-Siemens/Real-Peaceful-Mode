@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "real_peaceful_mode:sticky_stone"
+    }
+  },
+  "result": {
+    "id": "real_peaceful_mode:sticky_stone_bricks",
+    "count": 4
+  }
+}

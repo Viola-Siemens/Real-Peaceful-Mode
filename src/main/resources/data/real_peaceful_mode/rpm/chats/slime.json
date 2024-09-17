@@ -57,7 +57,9 @@
       {
         "condition": {
           "type": "real_peaceful_mode:inside_structure",
-          "structure": "real_peaceful_mode:slime_maze"
+          "structures": [
+            "real_peaceful_mode:slime_maze"
+          ]
         },
         "key": "rpm.chat.real_peaceful_mode.slime.selection.about_guards",
         "next": {

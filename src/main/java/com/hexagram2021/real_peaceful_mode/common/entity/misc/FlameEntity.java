@@ -60,10 +60,10 @@ public class FlameEntity extends Entity {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		this.getEntityData().define(DATA_BEAM_TARGET, Optional.empty());
-		this.getEntityData().define(DATA_YAW, 0.0F);
-		this.getEntityData().define(DATA_DIST_CENTER, 0.0F);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		builder.define(DATA_BEAM_TARGET, Optional.empty());
+		builder.define(DATA_YAW, 0.0F);
+		builder.define(DATA_DIST_CENTER, 0.0F);
 	}
 
 	@Override
@@ -77,9 +77,7 @@ public class FlameEntity extends Entity {
 		if(nbt.contains("DistCenter", Tag.TAG_FLOAT)) {
 			this.setDistCenter(nbt.getFloat("DistCenter"));
 		}
-		if (nbt.contains("BeamTarget", Tag.TAG_COMPOUND)) {
-			this.setBeamTarget(NbtUtils.readBlockPos(nbt.getCompound("BeamTarget")));
-		}
+		NbtUtils.readBlockPos(nbt, "BeamTarget").ifPresent(this::setBeamTarget);
 	}
 
 	@Override
@@ -103,7 +101,7 @@ public class FlameEntity extends Entity {
 			return false;
 		}
 		if (damageSource.getDirectEntity() instanceof TinyFireballEntity) {
-			this.power += (this.power > MAX_POWER - 2.0D) ? (MAX_POWER - this.power) / 2.0D : 1.0D;
+			this.power += (this.power > MAX_POWER - 2.0F) ? (MAX_POWER - this.power) / 2.0F : 1.0F;
 			return false;
 		}
 		if (!this.isRemoved() && !this.level().isClientSide) {
@@ -151,7 +149,7 @@ public class FlameEntity extends Entity {
 			}
 			if(this.tickCount % 20 == 0) {
 				if(!serverLevel.getLevelData().isRaining() && this.level().getBrightness(LightLayer.SKY, this.blockPosition()) > 4) {
-					this.power += (this.power > MAX_POWER - 0.5D) ? (MAX_POWER - this.power) / 8.0D : 0.0625D;
+					this.power += (this.power > MAX_POWER - 0.5F) ? (MAX_POWER - this.power) / 8.0F : 0.0625F;
 				}
 				serverLevel.getPlayers(serverPlayer -> serverPlayer.closerThan(this, 32.0D) && serverPlayer.canBeSeenAsEnemy()).forEach(serverPlayer -> {
 					Vec3 diff = this.position().subtract(serverPlayer.position());

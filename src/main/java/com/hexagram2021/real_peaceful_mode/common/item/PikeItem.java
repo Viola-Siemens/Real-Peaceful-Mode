@@ -1,22 +1,29 @@
 package com.hexagram2021.real_peaceful_mode.common.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
-import net.minecraftforge.common.ForgeMod;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 
-import java.util.UUID;
+import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class PikeItem extends SwordItem {
-	protected static final UUID BASE_ENTITY_REACH_UUID = UUID.fromString("1AF44E47-2E2A-4B6F-AB8E-517DEC01AFD1");
+	protected static final ResourceLocation BASE_ENTITY_REACH_ID = ResourceLocation.fromNamespaceAndPath(MODID, "base_entity_reach");
 
-	public PikeItem(Tier tier, int damage, float speed, Properties props) {
-		super(tier, damage, speed, props);
-		this.defaultModifiers = ImmutableMultimap.<Attribute, AttributeModifier>builder()
-				.putAll(this.defaultModifiers)
-				.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(BASE_ENTITY_REACH_UUID, "Weapon modifier", 1.5D, AttributeModifier.Operation.ADDITION))
-				.build();
+	public PikeItem(Tier tier, Properties props) {
+		super(tier, props);
+	}
+
+	public static ItemAttributeModifiers createAttributes(Tier pTier, float attackDamage, float attackSpeed) {
+		ItemAttributeModifiers swordModifiers = SwordItem.createAttributes(pTier, attackDamage, attackSpeed);
+		ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+		for(ItemAttributeModifiers.Entry entry: swordModifiers.modifiers()) {
+			builder.add(entry.attribute(), entry.modifier(), entry.slot());
+		}
+		builder.add(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(BASE_ENTITY_REACH_ID, 1.5D, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+		return builder.build();
 	}
 }

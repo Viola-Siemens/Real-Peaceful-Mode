@@ -26,7 +26,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class SkeletonPalacePieces {
-	private static final ResourceLocation SKELETON_PALACE = new ResourceLocation(MODID, "mission/skeleton_palace");
+	private static final ResourceLocation SKELETON_PALACE = ResourceLocation.fromNamespaceAndPath(MODID, "mission/skeleton_palace");
 
 	public static void addPieces(StructureTemplateManager structureManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieces) {
 		pieces.addPiece(new SkeletonPalacePiece(structureManager, SKELETON_PALACE, pos, rotation));

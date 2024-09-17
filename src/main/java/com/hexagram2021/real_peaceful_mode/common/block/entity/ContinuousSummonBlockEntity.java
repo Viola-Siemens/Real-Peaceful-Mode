@@ -6,6 +6,8 @@ import com.hexagram2021.real_peaceful_mode.common.manager.mission.Mission;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.PlayerMissions;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
@@ -17,8 +19,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -80,8 +81,8 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 		if(!this.summonTag.contains("id", Tag.TAG_STRING)) {
 			return;
 		}
-		EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(this.summonTag.getString("id")));
-		if(entityType == null || level.getEntities(entityType, entity -> entity.position().closerThan(this.getBlockPos().getCenter(), 16.0D)).size() > 16) {
+		EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(this.summonTag.getString("id")));
+		if(level.getEntities(entityType, entity -> entity.position().closerThan(this.getBlockPos().getCenter(), 16.0D)).size() > 16) {
 			return;
 		}
 		Entity ret = EntityType.loadEntityRecursive(compoundtag, level, entity -> {
@@ -90,7 +91,7 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 		});
 		if(ret instanceof LivingEntity livingEntity) {
 			if(livingEntity instanceof Mob mob) {
-				ForgeEventFactory.onFinalizeSpawn(mob, level, level.getCurrentDifficultyAt(this.getBlockPos()), MobSpawnType.MOB_SUMMONED, null, null);
+				EventHooks.finalizeMobSpawn(mob, level, level.getCurrentDifficultyAt(this.getBlockPos()), MobSpawnType.MOB_SUMMONED, null);
 			}
 			if(level.tryAddFreshEntityWithPassengers(ret)) {
 				return;
@@ -102,8 +103,8 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag nbt) {
-		super.saveAdditional(nbt);
+	protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+		super.saveAdditional(nbt, registries);
 		if(this.summonTag != null) {
 			nbt.put(TAG_SUMMON_ENTITY, this.summonTag.copy());
 		}
@@ -115,13 +116,13 @@ public class ContinuousSummonBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+		super.loadAdditional(nbt, registries);
 		if(nbt.contains(TAG_SUMMON_ENTITY, Tag.TAG_COMPOUND)) {
 			this.summonTag = nbt.getCompound(TAG_SUMMON_ENTITY).copy();
 		}
 		if(nbt.contains(TAG_ACTIVE_MISSION, Tag.TAG_STRING)) {
-			this.mission = ForgeEventHandler.getMissionManager().getMission(new ResourceLocation(nbt.getString(TAG_ACTIVE_MISSION))).orElse(null);
+			this.mission = ForgeEventHandler.getMissionManager().getMission(ResourceLocation.parse(nbt.getString(TAG_ACTIVE_MISSION))).orElse(null);
 		}
 		if(nbt.contains(TAG_DISTANCE, Tag.TAG_INT)) {
 			this.distance = nbt.getInt(TAG_DISTANCE);

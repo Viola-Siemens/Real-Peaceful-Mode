@@ -11,10 +11,12 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Function3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
@@ -22,12 +24,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -36,7 +38,7 @@ import java.util.Optional;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class SkeletonEventSpawner extends AbstractEventSpawner<Skeleton> {
-	private static final ResourceLocation SKELETON_ARM_MISSION = new ResourceLocation(MODID, "events/skeleton_arm");
+	private static final ResourceLocation SKELETON_ARM_MISSION = ResourceLocation.fromNamespaceAndPath(MODID, "events/skeleton_arm");
 
 	private static final List<Tuple<ResourceLocation, Function3<ServerLevel, BlockPos, Float, Boolean>>> MISSIONS = Lists.newArrayList(
 			new Tuple<>(SKELETON_ARM_MISSION, (level, blockPos, yRot) -> {
@@ -52,7 +54,7 @@ public class SkeletonEventSpawner extends AbstractEventSpawner<Skeleton> {
 				skeleton.setYRot(yRot);
 				skeleton.moveTo(blockPos.getCenter());
 				if(skeleton instanceof IRightArmDetachable rightArmDetachable) {
-					rightArmDetachable.setRightArmDetached(true);
+					rightArmDetachable.rpm$setRightArmDetached(true);
 				}
 				if(level.getBiome(blockPos).is(Tags.Biomes.IS_SNOWY)) {
 					fox.setVariant(Fox.Type.SNOW);
@@ -83,7 +85,7 @@ public class SkeletonEventSpawner extends AbstractEventSpawner<Skeleton> {
 									SKELETON_ARM_MISSION, MissionType.FINISH, player,
 									skeleton, player1 -> {
 										if(skeleton instanceof IRightArmDetachable rightArmDetachable) {
-											rightArmDetachable.setRightArmDetached(false);
+											rightArmDetachable.rpm$setRightArmDetached(false);
 										}
 										itemStack.shrink(1);
 										monster.rpm$setRandomEventNpcAction(null);
@@ -98,8 +100,8 @@ public class SkeletonEventSpawner extends AbstractEventSpawner<Skeleton> {
 					monster.rpm$setNpcExtraTickAction(MOB_SWEAT);
 				}
 				ItemStack helmet = new ItemStack(Items.LEATHER_HELMET);
-				if(helmet.getItem() instanceof DyeableLeatherItem dyeable) {
-					dyeable.setColor(helmet, 0x4b4a4a);
+				if(helmet.is(ItemTags.DYEABLE)) {
+					helmet.set(DataComponents.DYED_COLOR, new DyedItemColor(0x4b4a4a, true));
 				}
 				skeleton.setItemSlot(EquipmentSlot.HEAD, helmet);
 				level.addFreshEntity(skeleton);

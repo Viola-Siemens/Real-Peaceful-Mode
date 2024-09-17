@@ -1,6 +1,9 @@
 package com.hexagram2021.real_peaceful_mode.common.manager;
 
+import com.hexagram2021.real_peaceful_mode.api.codec.EnumStreamCodec;
 import com.mojang.serialization.Codec;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 
 import java.util.Arrays;
@@ -13,6 +16,8 @@ public enum Speaker implements StringRepresentable {
 	NPC("npc");
 
 	public static final Codec<Speaker> CODEC = StringRepresentable.fromEnum(Speaker::values);
+	public static final StreamCodec<ByteBuf, Speaker> STREAM_CODEC = new EnumStreamCodec<>(Speaker::byName);
+
 	private static final Map<String, Speaker> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(Speaker::getSerializedName, Function.identity()));
 
 	private final String name;

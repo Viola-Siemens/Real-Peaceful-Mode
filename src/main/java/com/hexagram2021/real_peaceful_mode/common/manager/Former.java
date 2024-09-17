@@ -7,6 +7,9 @@ import com.hexagram2021.real_peaceful_mode.common.manager.mission.PlayerMissions
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
@@ -20,6 +23,12 @@ public record Former(ResourceLocation missionId, MissionType type) implements IM
 	public static final Codec<Former> CODEC = Codec.either(DIRECT_CODEC, ResourceLocation.CODEC)
 			.xmap(either -> either.map(Function.identity(), missionId -> new Former(missionId, MissionType.FINISH)), Either::left);
 	public static final Codec<List<Former>> LIST_CODEC = CODEC.listOf();
+	public static final StreamCodec<ByteBuf, Former> STREAM_CODEC = StreamCodec.composite(
+			ResourceLocation.STREAM_CODEC, Former::missionId,
+			MissionType.STREAM_CODEC, Former::type,
+			Former::new
+	);
+	public static final StreamCodec<ByteBuf, List<Former>> LIST_STREAM_CODEC = STREAM_CODEC.apply(ByteBufCodecs.list());
 
 	public boolean checkComplete(PlayerMissions playerMissions) {
 		if(IMonsterHero.missionDisabled(this.missionId)) {

@@ -147,7 +147,7 @@ public class HuskWorkmanEntity extends PathfinderMob implements IMissionProvider
 		final MissionType type;
 
 		HuskWorkmanMissions(String mission, MissionType type) {
-			this.missionId = new ResourceLocation(MODID, mission);
+			this.missionId = ResourceLocation.fromNamespaceAndPath(MODID, mission);
 			this.type = type;
 		}
 

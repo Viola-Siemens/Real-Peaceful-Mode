@@ -1,107 +1,66 @@
 package com.hexagram2021.real_peaceful_mode.network;
 
-import com.google.common.collect.Lists;
-import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.client.ScreenManager;
 import com.hexagram2021.real_peaceful_mode.common.ForgeEventHandler;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.IPlayerListWithMissions;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.Mission;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.PlayerMissions;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.neoforged.neoforge.network.handling.ServerPayloadContext;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.getRegistryName;
+import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-public class GetMissionsPacket implements IRPMPacket {
-	private final PacketType type;
-	private final List<Mission> activeMissions;
-	private final List<Mission> finishedMissions;
+public record GetMissionsPacket(List<Mission> activeMissions, List<Mission> finishedMissions) implements CustomPacketPayload, IRPMBidirectionalPacket {
+	public static final CustomPacketPayload.Type<GetMissionsPacket> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "get_missions"));
+	public static final StreamCodec<RegistryFriendlyByteBuf, GetMissionsPacket> STREAM_CODEC = StreamCodec.composite(
+			Mission.STREAM_CODEC.apply(ByteBufCodecs.list()), GetMissionsPacket::activeMissions,
+			Mission.STREAM_CODEC.apply(ByteBufCodecs.list()), GetMissionsPacket::finishedMissions,
+			GetMissionsPacket::new
+	);
+	public static final DirectionalPayloadHandler<GetMissionsPacket> HANDLER = IRPMBidirectionalPacket.getDirectionalPayloadHandler();
 
 	public GetMissionsPacket() {
-		this.type = PacketType.REQUEST;
-		this.activeMissions = List.of();
-		this.finishedMissions = List.of();
-	}
-	public GetMissionsPacket(List<Mission> activeMissions, List<Mission> finishedMissions) {
-		this.type = PacketType.RESPONSE;
-		this.activeMissions = activeMissions;
-		this.finishedMissions = finishedMissions;
-	}
-
-	public GetMissionsPacket(FriendlyByteBuf buf) {
-		this.type = buf.readEnum(PacketType.class);
-		this.activeMissions = buf.readCollection(Lists::newArrayListWithCapacity, readerBuf -> {
-			ResourceLocation id = readerBuf.readResourceLocation();
-			EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(readerBuf.readResourceLocation());
-			if(entityType == null) {
-				entityType = EntityType.PLAYER;
-			}
-			ResourceLocation loot = readerBuf.readResourceLocation();
-			boolean lootBefore = readerBuf.readBoolean();
-			boolean isRandomEvent = readerBuf.readBoolean();
-			return new Mission(id, List.of(), List.of(), List.of(), entityType, loot, lootBefore, isRandomEvent);
-		});
-		this.finishedMissions = buf.readCollection(Lists::newArrayListWithCapacity, readerBuf -> {
-			ResourceLocation id = readerBuf.readResourceLocation();
-			EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(readerBuf.readResourceLocation());
-			if(entityType == null) {
-				entityType = EntityType.PLAYER;
-			}
-			ResourceLocation loot = readerBuf.readResourceLocation();
-			boolean lootBefore = readerBuf.readBoolean();
-			boolean isRandomEvent = readerBuf.readBoolean();
-			return new Mission(id, List.of(), List.of(), List.of(), entityType, loot, lootBefore, isRandomEvent);
-		});
+		this(List.of(), List.of());
 	}
 
 	@Override
-	public void write(FriendlyByteBuf buf) {
-		buf.writeEnum(this.type);
-		buf.writeCollection(this.activeMissions, (writerBuf, mission) -> {
-			writerBuf.writeResourceLocation(mission.id());
-			writerBuf.writeResourceLocation(getRegistryName(mission.reward()));
-			writerBuf.writeResourceLocation(mission.rewardLootTable());
-			writerBuf.writeBoolean(mission.lootBefore());
-			writerBuf.writeBoolean(mission.isRandomEvent());
-		});
-		buf.writeCollection(this.finishedMissions, (writerBuf, mission) -> {
-			writerBuf.writeResourceLocation(mission.id());
-			writerBuf.writeResourceLocation(getRegistryName(mission.reward()));
-			writerBuf.writeResourceLocation(mission.rewardLootTable());
-			writerBuf.writeBoolean(mission.lootBefore());
-			writerBuf.writeBoolean(mission.isRandomEvent());
-		});
+	public void handleClient(IPayloadContext context) {
+		ScreenManager.openMissionListScreen(this.activeMissions, this.finishedMissions);
+	}
+
+	@SuppressWarnings("UnstableApiUsage")
+	@Override
+	public void handleServer(IPayloadContext context) {
+		if(context instanceof ServerPayloadContext serverPayloadContext) {
+			ServerPlayer sender = serverPayloadContext.player();
+			PlayerMissions playerMissions = ((IPlayerListWithMissions) Objects.requireNonNull(sender.getServer()).getPlayerList()).rpm$getPlayerMissions(sender);
+			List<Mission> activeMissions = playerMissions.getActiveMissions()
+					.stream().map(id -> ForgeEventHandler.getMissionManager().getMission(id))
+					.filter(Optional::isPresent).map(Optional::get)
+					.toList();
+			List<Mission> finishedMissions = playerMissions.getFinishedMissions()
+					.stream().map(id -> ForgeEventHandler.getMissionManager().getMission(id))
+					.filter(Optional::isPresent).map(Optional::get)
+					.toList();
+			GetMissionsPacket packet = new GetMissionsPacket(activeMissions, finishedMissions);
+			PacketDistributor.sendToPlayer(sender, packet);
+		}
 	}
 
 	@Override
-	public void handle(NetworkEvent.Context context) {
-		ServerPlayer sender = context.getSender();
-		assert (sender == null) ^ (this.type == PacketType.REQUEST);
-		context.enqueueWork(() -> {
-			if(sender == null) {
-				ScreenManager.openMissionListScreen(this.activeMissions, this.finishedMissions);
-			} else {
-				PlayerMissions playerMissions = ((IPlayerListWithMissions) Objects.requireNonNull(sender.getServer()).getPlayerList()).rpm$getPlayerMissions(sender);
-				List<Mission> activeMissions = playerMissions.getActiveMissions()
-						.stream().map(id -> ForgeEventHandler.getMissionManager().getMission(id))
-						.filter(Optional::isPresent).map(Optional::get)
-						.toList();
-				List<Mission> finishedMissions = playerMissions.getFinishedMissions()
-						.stream().map(id -> ForgeEventHandler.getMissionManager().getMission(id))
-						.filter(Optional::isPresent).map(Optional::get)
-						.toList();
-				GetMissionsPacket packet = new GetMissionsPacket(activeMissions, finishedMissions);
-				RealPeacefulMode.packetHandler.send(PacketDistributor.PLAYER.with(() -> sender), packet);
-			}
-		});
+	public Type<GetMissionsPacket> type() {
+		return TYPE;
 	}
 }

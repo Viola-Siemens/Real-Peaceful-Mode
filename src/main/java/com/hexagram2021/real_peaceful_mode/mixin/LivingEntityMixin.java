@@ -7,14 +7,18 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.function.Consumer;
+
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
+	@SuppressWarnings("DataFlowIssue")
 	@Inject(method = "handleEntityEvent", at = @At(value = "HEAD"), cancellable = true)
 	public void rpm$addFriendlyMonsterEventHandler(byte event, CallbackInfo ci) {
 		if(this instanceof IFriendlyMonster) {
@@ -42,6 +46,17 @@ public class LivingEntityMixin {
 			if(player.containerMenu instanceof IMessageMenu) {
 				cir.setReturnValue(false);
 				cir.cancel();
+			}
+		}
+	}
+
+	@SuppressWarnings("ConstantValue")
+	@Inject(method = "tick", at = @At(value = "HEAD"))
+	public void rpm$tickExtra(CallbackInfo ci) {
+		if ((Object)this instanceof Mob mob && (Object)this instanceof IFriendlyMonster monster) {
+			Consumer<Mob> tickAction = monster.rpm$getNpcExtraTickAction();
+			if(tickAction != null) {
+				tickAction.accept(mob);
 			}
 		}
 	}

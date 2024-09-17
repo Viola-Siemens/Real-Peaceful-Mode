@@ -11,6 +11,7 @@ import com.hexagram2021.real_peaceful_mode.common.manager.mission.IPlayerListWit
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.Mission;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -120,7 +121,7 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 		});
 		if(ret instanceof LivingEntity livingEntity) {
 			if(livingEntity instanceof Mob mob && compoundtag.size() <= 1) {
-				ForgeEventFactory.onFinalizeSpawn(mob, level, level.getCurrentDifficultyAt(this.getBlockPos()), MobSpawnType.MOB_SUMMONED, null, null);
+				EventHooks.finalizeMobSpawn(mob, level, level.getCurrentDifficultyAt(this.getBlockPos()), MobSpawnType.MOB_SUMMONED, null);
 			}
 			if(level.tryAddFreshEntityWithPassengers(ret)) {
 				return livingEntity;
@@ -154,8 +155,8 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag nbt) {
-		super.saveAdditional(nbt);
+	protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+		super.saveAdditional(nbt, registries);
 		if(this.summonTag != null) {
 			nbt.put(TAG_SUMMON_ENTITY, this.summonTag.copy());
 		}
@@ -173,15 +174,15 @@ public class SummonBlockEntity extends BlockEntity implements IMissionProvider {
 	}
 
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+		super.loadAdditional(nbt, registries);
 		if(nbt.contains(TAG_SUMMON_ENTITY, Tag.TAG_COMPOUND)) {
 			this.summonTag = nbt.getCompound(TAG_SUMMON_ENTITY).copy();
 		}
 
 		Mission mission = null;
 		if(nbt.contains(TAG_MISSION, Tag.TAG_STRING)) {
-			mission = ForgeEventHandler.getMissionManager().getMission(new ResourceLocation(nbt.getString(TAG_MISSION))).orElse(null);
+			mission = ForgeEventHandler.getMissionManager().getMission(ResourceLocation.parse(nbt.getString(TAG_MISSION))).orElse(null);
 		}
 		if(mission != null) {
 			this.triggerableMission = new SummonBlockMission(

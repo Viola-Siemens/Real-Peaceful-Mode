@@ -21,7 +21,7 @@ public class RPMStructureSetKeys {
 	public static final ResourceKey<StructureSet> HELPLESS_GUARD_SLIMES = createKey("helpless_guard_slimes");
 
 	private static ResourceKey<StructureSet> createKey(String name) {
-		return ResourceKey.create(Registries.STRUCTURE_SET, new ResourceLocation(MODID, name));
+		return ResourceKey.create(Registries.STRUCTURE_SET, ResourceLocation.fromNamespaceAndPath(MODID, name));
 	}
 
 	public static void init() {

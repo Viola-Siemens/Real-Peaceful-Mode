@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "emeraldcraft"
+    }
+  ],
+  "type": "emeraldcraft:glass_kiln",
+  "category": "clay",
+  "ingredient": {
+    "item": "minecraft:tuff"
+  },
+  "result": {
+    "id": "real_peaceful_mode:tuff_brick",
+    "count": 1
+  },
+  "experience": 0.3,
+  "cookingtime": 100
+}

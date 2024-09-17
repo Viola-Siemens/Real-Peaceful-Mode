@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -11,10 +12,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-@SuppressWarnings("deprecation")
 public class ChippingsBlock extends Block {
+	public static final MapCodec<ChippingsBlock> CODEC = simpleCodec(ChippingsBlock::new);
+
 	public ChippingsBlock(Properties props) {
 		super(props);
+	}
+
+	@Override
+	protected MapCodec<? extends ChippingsBlock> codec() {
+		return CODEC;
 	}
 
 	@Override

@@ -15,6 +15,6 @@ public final class RPMFluidTags {
 	}
 
 	private static TagKey<Fluid> create(String name) {
-		return TagKey.create(Registries.FLUID, new ResourceLocation(MODID, name));
+		return TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath(MODID, name));
 	}
 }

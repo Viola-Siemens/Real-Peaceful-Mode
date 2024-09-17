@@ -4,6 +4,7 @@ import com.hexagram2021.real_peaceful_mode.common.block.*;
 import com.hexagram2021.real_peaceful_mode.common.block.skull.RPMSkullTypes;
 import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -19,10 +20,9 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import javax.annotation.Nonnull;
 import java.util.function.Function;
@@ -32,7 +32,7 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.getRegistryName;
 
 public class RPMBlocks {
-	public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+	public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(Registries.BLOCK, MODID);
 
 	@SuppressWarnings("unused")
 	public static final class TechnicalBlocks {
@@ -40,13 +40,13 @@ public class RPMBlocks {
 				"summon_block", () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
 				.noCollission().noLootTable()
 				.isValidSpawn((blockState, level, blockPos, entityType) -> false)
-				.noParticlesOnBreak().pushReaction(PushReaction.BLOCK), SummonBlock::new
+				.noTerrainParticles().pushReaction(PushReaction.BLOCK), SummonBlock::new
 		);
 		public static final BlockEntry<ContinuousSummonBlock> CONTINUOUS_SUMMON_BLOCK = new BlockEntry<>(
 				"continuous_summon_block", () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F)
 				.noCollission().noLootTable()
 				.isValidSpawn((blockState, level, blockPos, entityType) -> false)
-				.noParticlesOnBreak().pushReaction(PushReaction.BLOCK), ContinuousSummonBlock::new
+				.noTerrainParticles().pushReaction(PushReaction.BLOCK), ContinuousSummonBlock::new
 		);
 
 		public static final BlockEntry<DirtyWaterBlock> DIRTY_WATER = new BlockEntry<>(
@@ -91,10 +91,10 @@ public class RPMBlocks {
 
 	public static final class Ore {
 		public static final BlockEntry<Block> ALUNITE_ORE = new BlockEntry<>(
-				"alunite_ore", () -> BlockBehaviour.Properties.copy(Blocks.GOLD_ORE), Block::new
+				"alunite_ore", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_ORE), Block::new
 		);
 		public static final BlockEntry<Block> ALUNITE_BLOCK = new BlockEntry<>(
-				"alunite_block", () -> BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK), Block::new
+				"alunite_block", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK), Block::new
 		);
 
 		private Ore() {}
@@ -121,11 +121,11 @@ public class RPMBlocks {
 		}
 		private static <T extends Block> BlockEntry<StairBlock> registerStairs(BlockEntry<T> fullBlock) {
 			String name = changeNameTo(fullBlock.getId().getPath(), "_stairs");
-			return new BlockEntry<>(name, fullBlock::getProperties, p -> new StairBlock(fullBlock::defaultBlockState, p));
+			return new BlockEntry<>(name, fullBlock::getProperties, p -> new StairBlock(fullBlock.defaultBlockState(), p));
 		}
 		private static BlockEntry<StairBlock> registerStairs(Block fullBlock) {
 			String name = changeNameTo(getRegistryName(fullBlock).getPath(), "_stairs");
-			return new BlockEntry<>(name, () -> BlockBehaviour.Properties.copy(fullBlock), p -> new StairBlock(fullBlock::defaultBlockState, p));
+			return new BlockEntry<>(name, () -> BlockBehaviour.Properties.ofFullCopy(fullBlock), p -> new StairBlock(fullBlock.defaultBlockState(), p));
 		}
 
 		private static <T extends Block> BlockEntry<SlabBlock> registerSlab(BlockEntry<T> fullBlock) {
@@ -145,7 +145,7 @@ public class RPMBlocks {
 			String name = changeNameTo(getRegistryName(fullBlock).getPath(), "_slab");
 			return new BlockEntry<>(
 					name,
-					() -> BlockBehaviour.Properties.copy(fullBlock),
+					() -> BlockBehaviour.Properties.ofFullCopy(fullBlock),
 					p -> new SlabBlock(
 							p.isSuffocating(
 									(state, world, pos) -> fullBlock.defaultBlockState().isSuffocating(world, pos) && state.getValue(SlabBlock.TYPE) == SlabType.DOUBLE
@@ -162,7 +162,7 @@ public class RPMBlocks {
 		}
 		private static BlockEntry<WallBlock> registerWall(Block fullBlock) {
 			String name = changeNameTo(getRegistryName(fullBlock).getPath(), "_wall");
-			return new BlockEntry<>(name, () -> BlockBehaviour.Properties.copy(fullBlock), WallBlock::new);
+			return new BlockEntry<>(name, () -> BlockBehaviour.Properties.ofFullCopy(fullBlock), WallBlock::new);
 		}
 
 		public static final BlockEntry<SkullBlock> DARK_ZOMBIE_KNIGHT_SKULL = new BlockEntry<>(
@@ -201,17 +201,17 @@ public class RPMBlocks {
 		public static final BlockEntry<WallBlock> CALCITE_WALL = registerWall(Blocks.CALCITE);
 		
 		public static final BlockEntry<Block> POLISHED_CALCITE = new BlockEntry<>(
-				"polished_calcite", () -> BlockBehaviour.Properties.copy(Blocks.CALCITE),
+				"polished_calcite", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CALCITE),
 				Block::new
 		);
 		public static final BlockEntry<Block> CUT_CALCITE = new BlockEntry<>(
-				"cut_calcite", () -> BlockBehaviour.Properties.copy(Blocks.CALCITE),
+				"cut_calcite", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CALCITE),
 				Block::new
 		);
 
 		//siltstone
 		public static final BlockEntry<Block> SILTSTONE = new BlockEntry<>(
-				"siltstone", () -> BlockBehaviour.Properties.copy(Blocks.SANDSTONE).mapColor(MapColor.DIRT),
+				"siltstone", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SANDSTONE).mapColor(MapColor.DIRT),
 				Block::new
 		);
 		public static final BlockEntry<StairBlock> SILTSTONE_STAIRS = registerStairs(SILTSTONE);
@@ -219,7 +219,7 @@ public class RPMBlocks {
 		public static final BlockEntry<WallBlock> SILTSTONE_WALL = registerWall(SILTSTONE);
 
 		public static final BlockEntry<Block> SMOOTH_SILTSTONE = new BlockEntry<>(
-				"smooth_siltstone", () -> BlockBehaviour.Properties.copy(Blocks.SANDSTONE).mapColor(MapColor.DIRT),
+				"smooth_siltstone", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SANDSTONE).mapColor(MapColor.DIRT),
 				Block::new
 		);
 		public static final BlockEntry<StairBlock> SMOOTH_SILTSTONE_STAIRS = registerStairs(SMOOTH_SILTSTONE);
@@ -227,23 +227,23 @@ public class RPMBlocks {
 
 		//sticky stone
 		public static final BlockEntry<Block> STICKY_STONE = new BlockEntry<>(
-				"sticky_stone", () -> BlockBehaviour.Properties.copy(Blocks.STONE).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
+				"sticky_stone", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
 				Block::new
 		);
 		public static final BlockEntry<Block> COBBLED_STICKY_STONE = new BlockEntry<>(
-				"cobbled_sticky_stone", () -> BlockBehaviour.Properties.copy(Blocks.COBBLESTONE).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
+				"cobbled_sticky_stone", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
 				Block::new
 		);
 		public static final BlockEntry<Block> SMOOTH_STICKY_STONE = new BlockEntry<>(
-				"smooth_sticky_stone", () -> BlockBehaviour.Properties.copy(Blocks.SMOOTH_STONE).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
+				"smooth_sticky_stone", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
 				Block::new
 		);
 		public static final BlockEntry<Block> STICKY_STONE_BRICKS = new BlockEntry<>(
-				"sticky_stone_bricks", () -> BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
+				"sticky_stone_bricks", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
 				Block::new
 		);
 		public static final BlockEntry<Block> CRACKED_STICKY_STONE_BRICKS = new BlockEntry<>(
-				"cracked_sticky_stone_bricks", () -> BlockBehaviour.Properties.copy(Blocks.CRACKED_STONE_BRICKS).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
+				"cracked_sticky_stone_bricks", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.CRACKED_STONE_BRICKS).strength(50.0F, 10.0F).speedFactor(0.75F).jumpFactor(0.9F),
 				Block::new
 		);
 		public static final BlockEntry<StairBlock> STICKY_STONE_STAIRS = registerStairs(STICKY_STONE);
@@ -259,9 +259,9 @@ public class RPMBlocks {
 		public static final BlockEntry<SlabBlock> CRACKED_STICKY_STONE_BRICK_SLAB = registerSlab(CRACKED_STICKY_STONE_BRICKS);
 		public static final BlockEntry<WallBlock> CRACKED_STICKY_STONE_BRICK_WALL = registerWall(CRACKED_STICKY_STONE_BRICKS);
 		public static final BlockEntry<CrackyBlock> CRACKY_STICKY_STONE = new BlockEntry<>(
-				"cracky_sticky_stone", () -> BlockBehaviour.Properties.copy(Blocks.STONE).strength(0.4F).speedFactor(0.5F).jumpFactor(0.6F),
+				"cracky_sticky_stone", () -> BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(0.4F).speedFactor(0.5F).jumpFactor(0.6F),
 				props -> new CrackyBlock(props) {
-					private static final ResourceLocation FORMER_MISSION = new ResourceLocation(MODID, "slime1");
+					private static final ResourceLocation FORMER_MISSION = ResourceLocation.fromNamespaceAndPath(MODID, "slime1");
 
 					@Override
 					protected boolean testStepOnEntity(Entity entity) {
@@ -349,7 +349,7 @@ public class RPMBlocks {
 	}
 
 	public static final class BlockEntry<T extends Block> implements Supplier<T>, ItemLike {
-		private final RegistryObject<T> regObject;
+		private final DeferredHolder<Block, T> regObject;
 		private final Supplier<BlockBehaviour.Properties> properties;
 
 		public BlockEntry(String name, Supplier<BlockBehaviour.Properties> properties, Function<BlockBehaviour.Properties, T> make) {

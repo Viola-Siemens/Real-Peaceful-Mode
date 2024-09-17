@@ -11,7 +11,7 @@ public final class RPMItemTags {
 	public static final TagKey<Item> CONVERTIBLE = create("beads/convertible");
 
 	private static TagKey<Item> create(String name) {
-		return TagKey.create(Registries.ITEM, new ResourceLocation(MODID, name));
+		return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MODID, name));
 	}
 
 	private RPMItemTags() {

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "real_peaceful_mode:sticky_stone"
+  },
+  "result": {
+    "id": "real_peaceful_mode:smooth_sticky_stone",
+    "count": 1
+  },
+  "experience": 0.3,
+  "cookingtime": 200
+}

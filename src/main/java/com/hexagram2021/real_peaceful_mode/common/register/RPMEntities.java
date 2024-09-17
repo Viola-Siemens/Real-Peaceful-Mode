@@ -13,12 +13,13 @@ import com.hexagram2021.real_peaceful_mode.common.entity.misc.TinyFireballEntity
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.registries.RegisterEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
 public class RPMEntities {
     public static final EntityType<DarkZombieKnightEntity> DARK_ZOMBIE_KNIGHT = EntityType.Builder.of(DarkZombieKnightEntity::new, MobCategory.MONSTER)
             .sized(0.6F, 1.9F)
             .clientTrackingRange(8)
+            .ridingOffset(-0.45F)
             .build(RPMEntityKeys.DARK_ZOMBIE_KNIGHT.location().toString());
     public static final EntityType<PinkCreeperEntity> PINK_CREEPER = EntityType.Builder.of(PinkCreeperEntity::new, MobCategory.MONSTER)
             .sized(0.6F, 1.7F)

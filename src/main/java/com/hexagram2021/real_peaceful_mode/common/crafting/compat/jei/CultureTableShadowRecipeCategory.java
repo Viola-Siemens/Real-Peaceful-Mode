@@ -18,8 +18,8 @@ import net.minecraft.world.item.Items;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class CultureTableShadowRecipeCategory implements IRecipeCategory<CultureTableShadowRecipe> {
-	public static final ResourceLocation UID = new ResourceLocation(MODID, "shadow/culture_table");
-	public static final ResourceLocation TEXTURE = new ResourceLocation(MODID, "textures/gui/jei/culture_table.png");
+	public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(MODID, "shadow/culture_table");
+	public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(MODID, "textures/gui/jei/culture_table.png");
 
 	private final IDrawable background;
 	private final IDrawable icon;

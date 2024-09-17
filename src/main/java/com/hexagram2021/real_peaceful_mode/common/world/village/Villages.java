@@ -28,13 +28,12 @@ import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -47,28 +46,28 @@ import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.get
 import static com.hexagram2021.real_peaceful_mode.common.world.village.RPMTrades.*;
 
 public class Villages {
-	public static final ResourceLocation SENIOR = new ResourceLocation(MODID, "senior");
-	public static final ResourceLocation BOTANIST = new ResourceLocation(MODID, "botanist");
-	public static final ResourceLocation PLUMBER = new ResourceLocation(MODID, "plumber");
+	public static final ResourceLocation SENIOR = ResourceLocation.fromNamespaceAndPath(MODID, "senior");
+	public static final ResourceLocation BOTANIST = ResourceLocation.fromNamespaceAndPath(MODID, "botanist");
+	public static final ResourceLocation PLUMBER = ResourceLocation.fromNamespaceAndPath(MODID, "plumber");
 
 	public static void init() {
-		HeroGiftsTaskAccess.rpm$getGifts().put(Registers.PROF_SENIOR.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/senior_gift"));
-		HeroGiftsTaskAccess.rpm$getGifts().put(Registers.PROF_BOTANIST.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/botanist_gift"));
-		HeroGiftsTaskAccess.rpm$getGifts().put(Registers.PROF_PLUMBER.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/plumber_gift"));
+		HeroGiftsTaskAccess.rpm$getGifts().put(Registers.PROF_SENIOR.get(), ResourceLocation.fromNamespaceAndPath(MODID, "gameplay/hero_of_the_village/senior_gift"));
+		HeroGiftsTaskAccess.rpm$getGifts().put(Registers.PROF_BOTANIST.get(), ResourceLocation.fromNamespaceAndPath(MODID, "gameplay/hero_of_the_village/botanist_gift"));
+		HeroGiftsTaskAccess.rpm$getGifts().put(Registers.PROF_PLUMBER.get(), ResourceLocation.fromNamespaceAndPath(MODID, "gameplay/hero_of_the_village/plumber_gift"));
 	}
 
 	public static void addAllStructuresToPool(RegistryAccess registryAccess) {
-		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_refinery_1"), 3, null, registryAccess);
-		addToPool(new ResourceLocation("village/plains/houses"), new ResourceLocation(MODID, "village/plains/houses/plains_refinery_1"), 4, ProcessorLists.MOSSIFY_10_PERCENT, registryAccess);
-		addToPool(new ResourceLocation("village/savanna/houses"), new ResourceLocation(MODID, "village/savanna/houses/savanna_refinery_1"), 4, null, registryAccess);
-		addToPool(new ResourceLocation("village/snowy/houses"), new ResourceLocation(MODID, "village/snowy/houses/snowy_refinery_1"), 4, null, registryAccess);
-		addToPool(new ResourceLocation("village/taiga/houses"), new ResourceLocation(MODID, "village/taiga/houses/taiga_refinery_1"), 4, null, registryAccess);
-		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_botanist_1"), 3, null, registryAccess);
-		addToPool(new ResourceLocation("village/plains/houses"), new ResourceLocation(MODID, "village/plains/houses/plains_botanist_1"), 4, null, registryAccess);
-		addToPool(new ResourceLocation("village/savanna/houses"), new ResourceLocation(MODID, "village/savanna/houses/savanna_botanist_1"), 4, null, registryAccess);
-		addToPool(new ResourceLocation("village/snowy/houses"), new ResourceLocation(MODID, "village/snowy/houses/snowy_botanist_1"), 4, null, registryAccess);
-		addToPool(new ResourceLocation("village/taiga/houses"), new ResourceLocation(MODID, "village/taiga/houses/taiga_botanist_1"), 4, null, registryAccess);
-		addToPool(new ResourceLocation("village/desert/houses"), new ResourceLocation(MODID, "village/desert/houses/desert_plumber_1"), 4, null, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/desert/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/desert/houses/desert_refinery_1"), 3, null, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/plains/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/plains/houses/plains_refinery_1"), 4, ProcessorLists.MOSSIFY_10_PERCENT, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/savanna/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/savanna/houses/savanna_refinery_1"), 4, null, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/snowy/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/snowy/houses/snowy_refinery_1"), 4, null, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/taiga/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/taiga/houses/taiga_refinery_1"), 4, null, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/desert/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/desert/houses/desert_botanist_1"), 3, null, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/plains/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/plains/houses/plains_botanist_1"), 4, null, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/savanna/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/savanna/houses/savanna_botanist_1"), 4, null, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/snowy/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/snowy/houses/snowy_botanist_1"), 4, null, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/taiga/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/taiga/houses/taiga_botanist_1"), 4, null, registryAccess);
+		addToPool(ResourceLocation.withDefaultNamespace("village/desert/houses"), ResourceLocation.fromNamespaceAndPath(MODID, "village/desert/houses/desert_plumber_1"), 4, null, registryAccess);
 	}
 
 	@SuppressWarnings("SameParameterValue")
@@ -97,26 +96,26 @@ public class Villages {
 	}
 
 	public static class Registers {
-		public static final DeferredRegister<PoiType> POINTS_OF_INTEREST = DeferredRegister.create(ForgeRegistries.POI_TYPES, MODID);
-		public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, MODID);
+		public static final DeferredRegister<PoiType> POINTS_OF_INTEREST = DeferredRegister.create(Registries.POINT_OF_INTEREST_TYPE, MODID);
+		public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(Registries.VILLAGER_PROFESSION, MODID);
 
-		public static final RegistryObject<PoiType> POI_REFINEMENT_TABLE = POINTS_OF_INTEREST.register(
+		public static final DeferredHolder<PoiType, PoiType> POI_REFINEMENT_TABLE = POINTS_OF_INTEREST.register(
 				"refinement_table", () -> createPOI(assembleStates(RPMBlocks.WorkStation.REFINEMENT_TABLE.get()))
 		);
-		public static final RegistryObject<PoiType> POI_CULTURE_TABLE = POINTS_OF_INTEREST.register(
+		public static final DeferredHolder<PoiType, PoiType> POI_CULTURE_TABLE = POINTS_OF_INTEREST.register(
 				"culture_table", () -> createPOI(assembleStates(RPMBlocks.WorkStation.CULTURE_TABLE.get()))
 		);
-		public static final RegistryObject<PoiType> POI_PURIFIER = POINTS_OF_INTEREST.register(
+		public static final DeferredHolder<PoiType, PoiType> POI_PURIFIER = POINTS_OF_INTEREST.register(
 				"purifier", () -> createPOI(assembleStates(RPMBlocks.WorkStation.PURIFIER.get()))
 		);
 
-		public static final RegistryObject<VillagerProfession> PROF_SENIOR = PROFESSIONS.register(
+		public static final DeferredHolder<VillagerProfession, VillagerProfession> PROF_SENIOR = PROFESSIONS.register(
 				"senior", () -> createProf(SENIOR, POI_REFINEMENT_TABLE::getKey, RPMSounds.VILLAGER_WORK_SENIOR)
 		);
-		public static final RegistryObject<VillagerProfession> PROF_BOTANIST = PROFESSIONS.register(
+		public static final DeferredHolder<VillagerProfession, VillagerProfession> PROF_BOTANIST = PROFESSIONS.register(
 				"botanist", () -> createProf(BOTANIST, POI_CULTURE_TABLE::getKey, RPMSounds.VILLAGER_WORK_BOTANIST)
 		);
-		public static final RegistryObject<VillagerProfession> PROF_PLUMBER = PROFESSIONS.register(
+		public static final DeferredHolder<VillagerProfession, VillagerProfession> PROF_PLUMBER = PROFESSIONS.register(
 				"plumber", () -> createProf(PLUMBER, POI_PURIFIER::getKey, RPMSounds.VILLAGER_WORK_PLUMBER)
 		);
 
@@ -147,7 +146,7 @@ public class Villages {
 		);
 	}
 
-	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+	@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.GAME)
 	public static class Events {
 		@SubscribeEvent
 		public static void registerTrades(VillagerTradesEvent event) {

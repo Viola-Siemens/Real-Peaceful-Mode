@@ -25,7 +25,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class AbandonedMagicPoolPieces {
-	private static final ResourceLocation ABANDONED_MAGIC_POOL = new ResourceLocation(MODID, "abandoned_magic_pool/abandoned_magic_pool");
+	private static final ResourceLocation ABANDONED_MAGIC_POOL = ResourceLocation.fromNamespaceAndPath(MODID, "abandoned_magic_pool/abandoned_magic_pool");
 
 	public static void addPieces(StructureTemplateManager structureManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieces) {
 		pieces.addPiece(new AbandonedMagicPoolPiece(structureManager, ABANDONED_MAGIC_POOL, pos, rotation));

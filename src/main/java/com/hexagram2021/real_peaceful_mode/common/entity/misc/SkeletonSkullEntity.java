@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class SkeletonSkullEntity extends AbstractHurtingProjectile implements ICrackable {
     private boolean crackable;
@@ -24,7 +25,7 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile implements IC
     }
 
     public SkeletonSkullEntity(Level level, LivingEntity owner, double vecX, double vecY, double vecZ) {
-        super(RPMEntities.SKELETON_SKULL, owner, vecX, vecY, vecZ, level);
+        super(RPMEntities.SKELETON_SKULL, owner, new Vec3(vecX, vecY, vecZ), level);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class SkeletonSkullEntity extends AbstractHurtingProjectile implements IC
             float damage = getHurtDamage(targetHealth);
             if(this.isOnFire()) {
                 damage += 1.0F;
-                attackTarget.setSecondsOnFire(10);
+                attackTarget.igniteForSeconds(10.0F);
             }
             attackTarget.hurt(damageSource, damage);
             this.level().playSound(null, attackTarget.blockPosition(), SoundEvents.SKELETON_AMBIENT, SoundSource.HOSTILE);

@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
@@ -32,11 +33,11 @@ public class TinyFireballEntity extends Fireball implements ICrackable {
 	}
 
 	public TinyFireballEntity(Level level, double posX, double posY, double posZ, double vecX, double vecY, double vecZ) {
-		super(RPMEntities.TINY_FIREBALL, posX, posY, posZ, vecX, vecY, vecZ, level);
+		super(RPMEntities.TINY_FIREBALL, posX, posY, posZ, new Vec3(vecX, vecY, vecZ), level);
 	}
 
 	public TinyFireballEntity(Level level, LivingEntity owner, double vecX, double vecY, double vecZ) {
-		super(RPMEntities.TINY_FIREBALL, owner, vecX, vecY, vecZ, level);
+		super(RPMEntities.TINY_FIREBALL, owner, new Vec3(vecX, vecY, vecZ), level);
 	}
 
 	@Override
@@ -56,11 +57,11 @@ public class TinyFireballEntity extends Fireball implements ICrackable {
 			float damage = 3.0F;
 			if(this.isOnFire()) {
 				damage += 1.0F;
-				attackTarget.setSecondsOnFire(10);
+				attackTarget.igniteForSeconds(10);
 			}
 			attackTarget.hurt(damageSource, damage);
 			if(attackTarget instanceof LivingEntity livingEntity) {
-				livingEntity.addEffect(new MobEffectInstance(RPMMobEffects.TRANCE.get(), 600));
+				livingEntity.addEffect(new MobEffectInstance(RPMMobEffects.TRANCE, 600));
 				if(livingEntity.isOnFire()) {
 					livingEntity.setRemainingFireTicks(livingEntity.getRemainingFireTicks() + 20);
 				}
@@ -125,8 +126,7 @@ public class TinyFireballEntity extends Fireball implements ICrackable {
 
 	@Override
 	public ItemStack getItem() {
-		ItemStack itemstack = this.getItemRaw();
-		return itemstack.isEmpty() ? getItem(this.isOnFire()) : itemstack;
+		return getItem(this.isOnFire());
 	}
 
 	private static ItemStack getItem(boolean onFire) {

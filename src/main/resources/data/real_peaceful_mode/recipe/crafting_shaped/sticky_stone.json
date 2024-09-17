@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#B#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stone"
+    },
+    "B": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "result": {
+    "id": "real_peaceful_mode:sticky_stone",
+    "count": 2
+  }
+}

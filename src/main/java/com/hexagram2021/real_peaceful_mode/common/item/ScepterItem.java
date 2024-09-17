@@ -2,6 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.item;
 
 import com.hexagram2021.real_peaceful_mode.common.entity.ICrackable;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEnchantments;
+import com.hexagram2021.real_peaceful_mode.common.util.EnchantmentUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -12,10 +13,10 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -23,7 +24,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
-public abstract class ScepterItem<T extends AbstractHurtingProjectile & ICrackable> extends ProjectileWeaponItem implements Vanishable {
+public abstract class ScepterItem<T extends AbstractHurtingProjectile & ICrackable> extends ProjectileWeaponItem {
 	public ScepterItem(Properties props) {
 		super(props);
 	}
@@ -46,7 +47,7 @@ public abstract class ScepterItem<T extends AbstractHurtingProjectile & ICrackab
 			if(scepter.getMaxDamage() - scepter.getDamageValue() >= 10) {
 				T projectile = this.createProjectile(level, player, vec.x(), vec.y(), vec.z());
 				this.applyEnchantmentsOnProjectile(projectile, player, scepter);
-				scepter.hurtAndBreak(1, player, player1 -> player1.broadcastBreakEvent(player.getUsedItemHand()));
+				scepter.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
 				level.addFreshEntity(projectile);
 				player.getCooldowns().addCooldown(this, 10);
 			}
@@ -58,16 +59,21 @@ public abstract class ScepterItem<T extends AbstractHurtingProjectile & ICrackab
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-		super.appendHoverText(itemStack, level, components, flag);
+	public void appendHoverText(ItemStack itemStack, TooltipContext context, List<Component> components, TooltipFlag flag) {
+		super.appendHoverText(itemStack, context, components, flag);
 		components.add(Component.translatable(this.getDescriptionId() + ".description").withStyle(ChatFormatting.GRAY));
 	}
 
 	protected abstract T createProjectile(Level level, LivingEntity owner, double directionX, double directionY, double directionZ);
+
+	@Deprecated
+	@Override
+	protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index, float velocity, float inaccuracy, float angle, @Nullable LivingEntity target) {
+	}
 	
 	protected void applyEnchantmentsOnProjectile(T projectile, LivingEntity user, ItemStack itemStack) {
-		this.applyCrackable(projectile, user, itemStack.getEnchantmentLevel(RPMEnchantments.CRACKING.get()));
-        this.applyFlame(projectile, user, itemStack.getEnchantmentLevel(RPMEnchantments.UNDEAD_FLAME.get()));
+		this.applyCrackable(projectile, user, EnchantmentUtils.getEnchantmentLevel(itemStack, user.registryAccess(), RPMEnchantments.CRACKING));
+        this.applyFlame(projectile, user, EnchantmentUtils.getEnchantmentLevel(itemStack, user.registryAccess(), RPMEnchantments.UNDEAD_FLAME));
 	}
 	
 	protected void applyCrackable(T projectile, LivingEntity user, int crackingLevel) {
@@ -78,7 +84,7 @@ public abstract class ScepterItem<T extends AbstractHurtingProjectile & ICrackab
 
     protected void applyFlame(T projectile, LivingEntity user, int flameLevel) {
         if(flameLevel > 0) {
-            projectile.setSecondsOnFire(100);
+            projectile.igniteForSeconds(100);
         }
     }
 }

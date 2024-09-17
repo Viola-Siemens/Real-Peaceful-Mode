@@ -19,7 +19,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class PinkCreeperPieces {
-	private static final ResourceLocation PINK_CREEPER = new ResourceLocation(MODID, "pink_creeper/pink_creeper");
+	private static final ResourceLocation PINK_CREEPER = ResourceLocation.fromNamespaceAndPath(MODID, "pink_creeper/pink_creeper");
 
 	public static void addPieces(StructureTemplateManager structureManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieces) {
 		pieces.addPiece(new PinkCreeperPiece(structureManager, PINK_CREEPER, pos, rotation));

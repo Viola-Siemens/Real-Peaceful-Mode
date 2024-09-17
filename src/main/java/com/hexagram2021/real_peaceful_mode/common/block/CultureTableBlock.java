@@ -2,13 +2,12 @@ package com.hexagram2021.real_peaceful_mode.common.block;
 
 import com.hexagram2021.real_peaceful_mode.common.block.entity.CultureTableBlockEntity;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
@@ -23,10 +22,16 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
-@SuppressWarnings("deprecation")
 public class CultureTableBlock extends AbstractFurnaceBlock {
+	public static final MapCodec<CultureTableBlock> CODEC = simpleCodec(CultureTableBlock::new);
+
 	public CultureTableBlock(Properties props) {
 		super(props);
+	}
+
+	@Override
+	protected MapCodec<? extends CultureTableBlock> codec() {
+		return CODEC;
 	}
 
 	@Override
@@ -48,21 +53,6 @@ public class CultureTableBlock extends AbstractFurnaceBlock {
 	}
 
 	@Override
-	public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos blockPos, PathComputationType type) {
-		return false;
-	}
-
-	@Override
-	public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, LivingEntity livingEntity, ItemStack itemStack) {
-		if (itemStack.hasCustomHoverName()) {
-			BlockEntity blockentity = level.getBlockEntity(blockPos);
-			if (blockentity instanceof CultureTableBlockEntity cultureTableBlockEntity) {
-				cultureTableBlockEntity.setCustomName(itemStack.getHoverName());
-			}
-		}
-	}
-
-	@Override
 	public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState newBlockState, boolean b) {
 		if (!blockState.is(newBlockState.getBlock())) {
 			BlockEntity blockentity = level.getBlockEntity(blockPos);
@@ -81,5 +71,10 @@ public class CultureTableBlock extends AbstractFurnaceBlock {
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+	}
+
+	@Override
+	public boolean isPathfindable(BlockState blockState, PathComputationType context) {
+		return false;
 	}
 }

@@ -23,7 +23,7 @@ public class JEIShadowPlugin implements IModPlugin {
 		RecipeType<MonsterCollectionShadowRecipe> MONSTER_COLLECTION = new RecipeType<>(MonsterCollectionShadowRecipeCategory.UID, MonsterCollectionShadowRecipe.class);
 	}
 
-	private static final ResourceLocation UID = new ResourceLocation(MODID, "shadow");
+	private static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(MODID, "shadow");
 
 	@Override
 	public ResourceLocation getPluginUid() {

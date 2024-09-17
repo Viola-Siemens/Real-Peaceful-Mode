@@ -14,7 +14,7 @@ import net.minecraft.util.Mth;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class GuardSlimeRenderer extends MobRenderer<GuardSlimeEntity, GuardSlimeModel<GuardSlimeEntity>> {
-	private static final ResourceLocation GUARD_SLIME_LOCATION = new ResourceLocation(MODID, "textures/entity/guard_slime.png");
+	private static final ResourceLocation GUARD_SLIME_LOCATION = ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/guard_slime.png");
 
 	public GuardSlimeRenderer(EntityRendererProvider.Context context) {
 		super(context, new GuardSlimeModel<>(context.bakeLayer(RPMModelLayers.GUARD_SLIME)), 0.25F);

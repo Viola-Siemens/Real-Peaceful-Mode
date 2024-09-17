@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common;
 
+import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.common.crafting.compat.ModsCompatManager;
 import com.hexagram2021.real_peaceful_mode.common.entity.DarkZombieKnightEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.GuardSlimeEntity;
@@ -8,31 +9,37 @@ import com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.SkeletonKing;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
+import com.hexagram2021.real_peaceful_mode.common.entity.capability.ItemEntityConvertible;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.ChatMessageTypes;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.selection.SelectionConditionTypes;
 import com.hexagram2021.real_peaceful_mode.common.register.*;
 import com.hexagram2021.real_peaceful_mode.common.world.village.Villages;
 import com.hexagram2021.real_peaceful_mode.mixin.BlockEntityTypeAccess;
+import com.hexagram2021.real_peaceful_mode.network.*;
 import com.hexagram2021.real_peaceful_mode.server.commands.RPMCommands;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.RegisterEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
 import java.util.Set;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
 public class RPMContent {
 	public static void modConstruction(IEventBus bus) {
 		ModsCompatManager.compatModLoaded();
@@ -42,6 +49,8 @@ public class RPMContent {
 
 		initTags();
 
+		RPMJukeboxSongs.init(bus);
+		RPMMapDecorationTypes.init(bus);
 		RPMFluids.init(bus);
 		RPMBlocks.init(bus);
 		RPMItems.init(bus);
@@ -53,18 +62,15 @@ public class RPMContent {
 		RPMCreativeTabs.init(bus);
 		RPMMenuTypes.init(bus);
 		RPMStructureTypes.init(bus);
-		RPMEnchantments.init(bus);
+		RPMTriggers.init(bus);
 	}
 
 	private static void initTags() {
 		RPMBlockTags.init();
 		RPMItemTags.init();
-		RPMBiomeTags.init();
 		RPMStructureTags.init();
 		RPMStructureKeys.init();
 		RPMStructureSetKeys.init();
-
-		RPMEnchantmentCategories.init();
 	}
 
 	public static void init() {
@@ -107,12 +113,28 @@ public class RPMContent {
 
 
 	@SubscribeEvent
-	public static void registerEntitySpawnPlacement(SpawnPlacementRegisterEvent event) {
-		event.register(RPMEntities.DARK_ZOMBIE_KNIGHT, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkAnyLightMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
-		event.register(RPMEntities.GUARD_SLIME, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GuardSlimeEntity::checkSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
+	public static void registerEntitySpawnPlacement(RegisterSpawnPlacementsEvent event) {
+		event.register(RPMEntities.DARK_ZOMBIE_KNIGHT, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkAnyLightMonsterSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+		event.register(RPMEntities.GUARD_SLIME, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GuardSlimeEntity::checkSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
 	}
 
 	public static void registerCommands(RegisterCommandsEvent event) {
 		event.getDispatcher().register(RPMCommands.register(event.getBuildContext()));
+	}
+
+	@SubscribeEvent
+	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+		event.registerEntity(RPMCapabilities.ITEM_ENTITY_CONVERTIBLE, EntityType.ITEM, (entity, context) -> new ItemEntityConvertible(1200));
+	}
+
+	@SubscribeEvent
+	public static void networkRegistry(RegisterPayloadHandlersEvent event) {
+		final PayloadRegistrar registrar = event.registrar(RealPeacefulMode.VERSION);
+		registrar
+				.playToClient(ClientboundChatMessagePacket.TYPE, ClientboundChatMessagePacket.STREAM_CODEC, ClientboundChatMessagePacket::handle)
+				.playToClient(ClientboundChatSelectionPacket.TYPE, ClientboundChatSelectionPacket.STREAM_CODEC, ClientboundChatSelectionPacket::handle)
+				.playToClient(ClientboundMissionMessagePacket.TYPE, ClientboundMissionMessagePacket.STREAM_CODEC, ClientboundMissionMessagePacket::handle)
+				.playToClient(ClientboundShadowRecipeSyncPacket.TYPE, ClientboundShadowRecipeSyncPacket.STREAM_CODEC, ClientboundShadowRecipeSyncPacket::handle)
+				.playBidirectional(GetMissionsPacket.TYPE, GetMissionsPacket.STREAM_CODEC, GetMissionsPacket.HANDLER);
 	}
 }

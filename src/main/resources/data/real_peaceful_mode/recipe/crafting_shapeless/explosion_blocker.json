@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "real_peaceful_mode:experiment_flower"
+    },
+    {
+      "item": "real_peaceful_mode:creeper_spirit_bead"
+    },
+    {
+      "item": "real_peaceful_mode:creeper_spirit_bead"
+    }
+  ],
+  "result": {
+    "id": "real_peaceful_mode:explosion_blocker",
+    "count": 1
+  }
+}

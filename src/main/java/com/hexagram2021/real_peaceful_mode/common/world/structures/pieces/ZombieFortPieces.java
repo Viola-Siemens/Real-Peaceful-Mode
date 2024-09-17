@@ -26,7 +26,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class ZombieFortPieces {
-	private static final ResourceLocation ZOMBIE_FORT = new ResourceLocation(MODID, "mission/zombie_fort");
+	private static final ResourceLocation ZOMBIE_FORT = ResourceLocation.fromNamespaceAndPath(MODID, "mission/zombie_fort");
 
 	public static void addPieces(StructureTemplateManager structureManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieces) {
 		pieces.addPiece(new ZombieFortPiece(structureManager, ZOMBIE_FORT, pos, rotation));

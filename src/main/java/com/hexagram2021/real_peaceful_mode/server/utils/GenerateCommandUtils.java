@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.Nullable;
 
-@SuppressWarnings("WrongTypeInTranslationArgs")
 public final class GenerateCommandUtils {
 	private GenerateCommandUtils() {
 	}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "real_peaceful_mode:cracked_sticky_stone_bricks"
+  },
+  "result": {
+    "id": "real_peaceful_mode:cracked_sticky_stone_brick_wall",
+    "count": 1
+  }
+}

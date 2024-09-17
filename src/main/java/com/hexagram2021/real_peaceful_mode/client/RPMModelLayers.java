@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
+@SuppressWarnings("SameParameterValue")
 public class RPMModelLayers {
 	public static final ModelLayerLocation DARK_ZOMBIE_KNIGHT = register("dark_zombie_knight");
 	public static final ModelLayerLocation PINK_CREEPER = register("pink_creeper");
@@ -22,15 +23,15 @@ public class RPMModelLayers {
 	public static final ModelLayerLocation FLAME_CRYSTAL = register("flame_crystal");
 
 	private static ModelLayerLocation register(String name) {
-		return register(new ResourceLocation(MODID, name), "main");
+		return register(ResourceLocation.fromNamespaceAndPath(MODID, name), "main");
 	}
 
 	private static ModelLayerLocation registerInnerArmor(String name) {
-		return register(new ResourceLocation(MODID, name), "inner_armor");
+		return register(ResourceLocation.fromNamespaceAndPath(MODID, name), "inner_armor");
 	}
 
 	private static ModelLayerLocation registerOuterArmor(String name) {
-		return register(new ResourceLocation(MODID, name), "outer_armor");
+		return register(ResourceLocation.fromNamespaceAndPath(MODID, name), "outer_armor");
 	}
 
 	private static ModelLayerLocation register(ResourceLocation id, String description) {

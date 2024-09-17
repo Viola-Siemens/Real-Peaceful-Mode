@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "real_peaceful_mode:cracked_tuff_bricks"
+    }
+  },
+  "result": {
+    "id": "real_peaceful_mode:cracked_tuff_brick_slab",
+    "count": 6
+  }
+}

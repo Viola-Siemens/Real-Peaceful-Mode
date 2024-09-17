@@ -1,35 +1,31 @@
 package com.hexagram2021.real_peaceful_mode.network;
 
 import com.hexagram2021.real_peaceful_mode.client.ScreenManager;
-import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMission;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstance;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-import java.util.Objects;
+import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-public class ClientboundMissionMessagePacket implements IRPMPacket {
-	private final MessagedMission mission;
-	private final int containerId;
-
-	public ClientboundMissionMessagePacket(MessagedMission mission, int containerId) {
-		this.mission = mission;
-		this.containerId = containerId;
-	}
-
-	public ClientboundMissionMessagePacket(FriendlyByteBuf buf) {
-		this.mission = new MessagedMissionInstance(Objects.requireNonNull(buf.readNbt()));
-		this.containerId = buf.readInt();
-	}
+public record ClientboundMissionMessagePacket(MessagedMissionInstance mission, int containerId) implements CustomPacketPayload, IRPMPacket {
+	public static final CustomPacketPayload.Type<ClientboundMissionMessagePacket> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "mission_message"));
+	public static final StreamCodec<ByteBuf, ClientboundMissionMessagePacket> STREAM_CODEC = StreamCodec.composite(
+			MessagedMissionInstance.STREAM_CODEC, ClientboundMissionMessagePacket::mission,
+			ByteBufCodecs.INT, ClientboundMissionMessagePacket::containerId,
+			ClientboundMissionMessagePacket::new
+	);
 
 	@Override
-	public void write(FriendlyByteBuf buf) {
-		buf.writeNbt(this.mission.createTag());
-		buf.writeInt(this.containerId);
-	}
-
-	@Override
-	public void handle(NetworkEvent.Context context) {
+	public void handle(IPayloadContext context) {
 		ScreenManager.openMissionMessageScreen(this.mission, this.containerId);
+	}
+
+	@Override
+	public Type<ClientboundMissionMessagePacket> type() {
+		return TYPE;
 	}
 }

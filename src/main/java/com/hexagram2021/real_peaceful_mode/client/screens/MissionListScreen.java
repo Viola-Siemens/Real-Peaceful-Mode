@@ -12,8 +12,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -37,7 +37,7 @@ public class MissionListScreen extends Screen {
 	private boolean showFinished = false;
 	private boolean scrolling = false;
 
-	public static final ResourceLocation BG_LOCATION = new ResourceLocation(MODID, "textures/gui/mission_list.png");
+	public static final ResourceLocation BG_LOCATION = ResourceLocation.fromNamespaceAndPath(MODID, "textures/gui/mission_list.png");
 
 	private final List<Mission> activeMissions;
 	private final List<Mission> finishedMissions;
@@ -167,10 +167,10 @@ public class MissionListScreen extends Screen {
 	}
 
 	@Override
-	public boolean mouseScrolled(double x, double y, double delta) {
+	public boolean mouseScrolled(double x, double y, double deltaX, double deltaY) {
 		if (this.isScrollBarActive()) {
 			int totalRows = this.getScreenTotalScrollRows();
-			float f = (float)delta / totalRows;
+			float f = (float)deltaY / totalRows;
 			this.scrollOffs = Mth.clamp(this.scrollOffs - f, 0.0F, 1.0F);
 			this.beginIndex = (int)(this.scrollOffs * totalRows);
 		}

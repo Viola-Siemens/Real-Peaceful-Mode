@@ -11,9 +11,9 @@ import com.hexagram2021.real_peaceful_mode.client.screens.MissionMessageScreen;
 import com.hexagram2021.real_peaceful_mode.common.CommonProxy;
 import com.hexagram2021.real_peaceful_mode.common.block.skull.RPMSkullTypes;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMEntities;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMFluids;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMKeys;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMenuTypes;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.CreeperModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.SkullModel;
@@ -21,32 +21,35 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(value = Dist.CLIENT, modid = MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ClientProxy extends CommonProxy {
-    public static void modConstruction() {
-    }
-
     @SubscribeEvent
     public static void setup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            ClientProxy.registerContainersAndScreens();
-            SkullBlockRenderer.SKIN_BY_TYPE.put(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, new ResourceLocation(MODID, "textures/entity/dark_zombie_knight.png"));
+            SkullBlockRenderer.SKIN_BY_TYPE.put(RPMSkullTypes.DARK_ZOMBIE_KNIGHT, ResourceLocation.fromNamespaceAndPath(MODID, "textures/entity/dark_zombie_knight.png"));
         });
     }
 
-    private static void registerContainersAndScreens() {
-        MenuScreens.register(RPMMenuTypes.CHAT_MESSAGE_MENU.get(), ChatMessageScreen::new);
-        MenuScreens.register(RPMMenuTypes.MISSION_MESSAGE_MENU.get(), MissionMessageScreen::new);
-        MenuScreens.register(RPMMenuTypes.CULTURE_TABLE_MENU.get(), CultureTableScreen::new);
+    @SubscribeEvent
+    public static void registerContainersAndScreens(RegisterMenuScreensEvent event) {
+        event.register(RPMMenuTypes.CHAT_MESSAGE_MENU.get(), ChatMessageScreen::new);
+        event.register(RPMMenuTypes.MISSION_MESSAGE_MENU.get(), MissionMessageScreen::new);
+        event.register(RPMMenuTypes.CULTURE_TABLE_MENU.get(), CultureTableScreen::new);
     }
 
     @SubscribeEvent
@@ -89,5 +92,23 @@ public class ClientProxy extends CommonProxy {
         event.registerEntityRenderer(RPMEntities.SKELETON_SKULL, SkeletonSkullRenderer::new);
         event.registerEntityRenderer(RPMEntities.TINY_FIREBALL, TinyFireballRenderer::new);
         event.registerEntityRenderer(RPMEntities.FLAME_CRYSTAL, FlameCrystalRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
+        Function<RPMFluids.FluidEntry<?>, IClientFluidTypeExtensions> fluidTypeExtensionBuilder = entry -> new IClientFluidTypeExtensions() {
+            @Override
+            public ResourceLocation getStillTexture() {
+                return entry.stillTex();
+            }
+            @Override
+            public ResourceLocation getFlowingTexture() {
+                return entry.flowingTex();
+            }
+        };
+        Consumer<RPMFluids.FluidEntry<?>> register = entry -> event.registerFluidType(fluidTypeExtensionBuilder.apply(entry), entry.getType());
+
+        register.accept(RPMFluids.DARK_MAGIC_POOL_WATER_FLUID);
+        register.accept(RPMFluids.MAGIC_POOL_WATER_FLUID);
     }
 }

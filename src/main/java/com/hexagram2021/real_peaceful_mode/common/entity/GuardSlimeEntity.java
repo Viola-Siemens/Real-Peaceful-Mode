@@ -9,6 +9,7 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMMapDecorationTypes
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMobEffects;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -52,10 +53,10 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 	}
 
 	@Override
-	public void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(HAS_ARMOR, true);
-		this.entityData.define(IS_SICK, false);
+	public void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(HAS_ARMOR, true);
+		builder.define(IS_SICK, false);
 	}
 
 	private static final String TAG_HAS_ARMOR = "HasArmor";
@@ -152,7 +153,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 			this.goalSelector.removeAllGoals(goal -> true);
 			this.targetSelector.removeAllGoals(goal -> true);
 			this.setPose(Pose.SLEEPING);
-			this.addEffect(new MobEffectInstance(RPMMobEffects.GLUE.get(), -1));
+			this.addEffect(new MobEffectInstance(RPMMobEffects.GLUE, -1));
 			Objects.requireNonNull(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(1.0D);
 		} else {
 			this.setPose(Pose.STANDING);
@@ -205,7 +206,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 											MapItem.renderBiomePreviewMap(serverLevel, mapItem);
 											MapItemSavedData.addTargetDecoration(mapItem, blockPos.offset(10, 0, 14), "+", RPMMapDecorationTypes.SLIME_MAZE);
 										}
-										mapItem.setHoverName(Component.translatable("filled_map.real_peaceful_mode.slime_maze"));
+										mapItem.set(DataComponents.ITEM_NAME, Component.translatable("filled_map.real_peaceful_mode.slime_maze"));
 										outer.spawnAtLocation(mapItem);
 										outer.discard();
 									}
@@ -231,7 +232,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 								slime.goalSelector.addGoal(2, new SlimeMissionTriggerGoal(slime));
 								slime.setSize(2, true);
 								slime.moveTo(outer.position());
-								slime.addEffect(new MobEffectInstance(RPMMobEffects.GLUE.get(), 400));
+								slime.addEffect(new MobEffectInstance(RPMMobEffects.GLUE, 400));
 								outer.level().addFreshEntity(slime);
 								outer.discard();
 								MissionHelper.triggerMissionForPlayer(
@@ -274,7 +275,7 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 		final MissionType type;
 
 		GuardSlimeMissions(String mission, MissionType type) {
-			this.missionId = new ResourceLocation(MODID, mission);
+			this.missionId = ResourceLocation.fromNamespaceAndPath(MODID, mission);
 			this.type = type;
 		}
 

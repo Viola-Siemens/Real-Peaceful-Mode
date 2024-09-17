@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "real_peaceful_mode:sticky_stone_bricks"
-  },
-  "result": "real_peaceful_mode:sticky_stone_brick_slab",
-  "count": 2
-}

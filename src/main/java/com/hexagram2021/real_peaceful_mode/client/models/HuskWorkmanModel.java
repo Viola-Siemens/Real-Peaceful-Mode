@@ -4,7 +4,10 @@ import com.hexagram2021.real_peaceful_mode.common.entity.HuskWorkmanEntity;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class HuskWorkmanModel<T extends HuskWorkmanEntity> extends HumanoidModel<T> {
 	public HuskWorkmanModel(ModelPart root) {
 		super(root);

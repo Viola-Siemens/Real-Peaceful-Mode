@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "real_peaceful_mode:sticky_stone"
+  },
+  "result": {
+    "id": "real_peaceful_mode:sticky_stone_slab",
+    "count": 2
+  }
+}

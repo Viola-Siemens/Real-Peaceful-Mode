@@ -5,6 +5,9 @@ import com.hexagram2021.real_peaceful_mode.common.manager.chat.AbstractChatMessa
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.IChatMessage;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -18,6 +21,12 @@ public class ChatSelection implements IChatMessage {
 			AbstractChatMessage.REGISTRY_CODEC.fieldOf("next").forGetter(ChatSelection::getNext),
 			ISelectionCondition.REGISTRY_CODEC.fieldOf("condition").forGetter(ChatSelection::condition)
 	).apply(instance, ChatSelection::new));
+	public static final StreamCodec<ByteBuf, ChatSelection> STREAM_CODEC = StreamCodec.composite(
+			ByteBufCodecs.STRING_UTF8, ChatSelection::messageKey,
+			AbstractChatMessage.REGISTRY_STREAM_CODEC, ChatSelection::getNext,
+			ISelectionCondition.DummySelectionCondition.STREAM_CODEC, ChatSelection::condition,
+			ChatSelection::new
+	);
 
 	final String messageKey;
 	final AbstractChatMessage next;

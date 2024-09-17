@@ -10,6 +10,7 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMBlockEntities;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -30,17 +31,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
+@SuppressWarnings("SequencedCollectionMethodCanBeUsed")
 public class CultureTableBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, StackedContentsCompatible, IMissionProvider {
 	public static final int SLOT_INPUT = 0;
 	public static final int SLOT_MIX1 = 1;
@@ -101,27 +97,36 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 	}
 
 	@Override
+	protected NonNullList<ItemStack> getItems() {
+		return this.items;
+	}
+	@Override
+	protected void setItems(NonNullList<ItemStack> items) {
+		this.items = items;
+	}
+
+	@Override
 	protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
 		return new CultureTableMenu(id, inventory, this, this.dataAccess);
 	}
 
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+		super.loadAdditional(nbt, registries);
 		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(nbt, this.items);
+		ContainerHelper.loadAllItems(nbt, this.items, registries);
 		this.analyzeTime = nbt.getInt("AnalyzeTime");
 		this.analyzeDuration = nbt.getInt("Duration");
 		this.boneMeal = nbt.getInt("BoneMeal");
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag nbt) {
-		super.saveAdditional(nbt);
+	protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+		super.saveAdditional(nbt, registries);
 		nbt.putInt("AnalyzeTime", this.analyzeTime);
 		nbt.putInt("Duration", this.analyzeDuration);
 		nbt.putInt("BoneMeal", this.boneMeal);
-		ContainerHelper.saveAllItems(nbt, this.items);
+		ContainerHelper.saveAllItems(nbt, this.items, registries);
 	}
 
 	public static final Ingredient ACCEPTABLE_FLOWERS = Ingredient.of(
@@ -230,9 +235,9 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 							this.items.set(SLOT_RESULT, new ItemStack(RPMItems.Materials.EXPERIMENT_FLOWER));
 						} else {
 							if (cnt == 1) {
-								this.items.set(SLOT_RESULT, serverLevel.getRandom().nextBoolean() ? new ItemStack(Items.BONE_MEAL) : new ItemStack(Items.GRASS));
+								this.items.set(SLOT_RESULT, serverLevel.getRandom().nextBoolean() ? new ItemStack(Items.BONE_MEAL) : new ItemStack(Items.SHORT_GRASS));
 							} else {
-								this.items.set(SLOT_RESULT, new ItemStack(Items.GRASS));
+								this.items.set(SLOT_RESULT, new ItemStack(Items.SHORT_GRASS));
 							}
 							return;		//Don't trigger mission.
 						}
@@ -303,7 +308,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 	@Override
 	public void setItem(int index, ItemStack itemStack) {
 		ItemStack slot = this.items.get(index);
-		boolean flag = !itemStack.isEmpty() && ItemStack.isSameItemSameTags(itemStack, slot);
+		boolean flag = !itemStack.isEmpty() && ItemStack.isSameItemSameComponents(itemStack, slot);
 		this.items.set(index, itemStack);
 		if (itemStack.getCount() > this.getMaxStackSize()) {
 			itemStack.setCount(this.getMaxStackSize());
@@ -363,35 +368,6 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 		return null;
 	}
 
-	LazyOptional<? extends IItemHandler>[] handlers =
-			SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
-
-	@Override @NotNull
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER) {
-			if (facing == Direction.UP)
-				return this.handlers[0].cast();
-			else if (facing == Direction.DOWN)
-				return this.handlers[1].cast();
-			else
-				return this.handlers[2].cast();
-		}
-		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public void invalidateCaps() {
-		super.invalidateCaps();
-		for (LazyOptional<? extends IItemHandler> handler : this.handlers)
-			handler.invalidate();
-	}
-
-	@Override
-	public void reviveCaps() {
-		super.reviveCaps();
-		this.handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
-	}
-
 	public enum CultureTableMissions implements TriggerableMission<CultureTableBlockEntity>, IMissionStack {
 		CREEPER("creeper1", MissionType.FINISH),
 		SLIME("slime2", MissionType.FINISH) {
@@ -405,7 +381,7 @@ public class CultureTableBlockEntity extends BaseContainerBlockEntity implements
 		final MissionType type;
 
 		CultureTableMissions(String mission, MissionType type) {
-			this.missionId = new ResourceLocation(MODID, mission);
+			this.missionId = ResourceLocation.fromNamespaceAndPath(MODID, mission);
 			this.type = type;
 		}
 

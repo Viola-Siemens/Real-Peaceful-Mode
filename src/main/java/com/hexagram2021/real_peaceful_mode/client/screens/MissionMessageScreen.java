@@ -13,8 +13,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -23,7 +23,7 @@ import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 @OnlyIn(Dist.CLIENT)
 public class MissionMessageScreen extends AbstractContainerScreen<MissionMessageMenu> {
-	private static final ResourceLocation BG_LOCATION = new ResourceLocation(MODID, "textures/gui/mission_message.png");
+	private static final ResourceLocation BG_LOCATION = ResourceLocation.fromNamespaceAndPath(MODID, "textures/gui/mission_message.png");
 
 	private int messageIndex = 0;
 	private int deltaIndex = 0;
@@ -62,7 +62,7 @@ public class MissionMessageScreen extends AbstractContainerScreen<MissionMessage
 		if(currentSpeaker != null) {
 			FormattedCharSequence name = currentSpeaker.getDisplayName().getVisualOrderText();
 			transform.drawString(this.font, name, i + 116 - this.font.width(name), j + 100, 0xa0a0a0);
-			InventoryScreen.renderEntityInInventoryFollowsMouse(transform, i + 143, j + 151, 24, i + 143 - x, j + 120 - y, currentSpeaker);
+			InventoryScreen.renderEntityInInventoryFollowsMouse(transform, this.leftPos + 120, this.topPos + 88, this.leftPos + 167, this.topPos + 159, 24, 0.0625F, this.leftPos + 143 - x, this.topPos + 120 - y, currentSpeaker);
 		}
 		if(this.cachedText == null || this.cachedText.size() <= 0) {
 			this.loadCachedText();

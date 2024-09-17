@@ -19,7 +19,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class CrystalSkullIslandPieces {
-	private static final ResourceLocation CRYSTAL_SKULL_ISLAND = new ResourceLocation(MODID, "crystal_skull_island/crystal_skull_island");
+	private static final ResourceLocation CRYSTAL_SKULL_ISLAND = ResourceLocation.fromNamespaceAndPath(MODID, "crystal_skull_island/crystal_skull_island");
 
 	public static void addPieces(StructureTemplateManager structureManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieces) {
 		pieces.addPiece(new CrystalSkullIslandPiece(structureManager, CRYSTAL_SKULL_ISLAND, pos, rotation));

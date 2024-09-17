@@ -2,7 +2,7 @@ package com.hexagram2021.real_peaceful_mode.common.world.structures;
 
 import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTypes;
 import com.hexagram2021.real_peaceful_mode.common.world.structures.pieces.ZombieFortPieces;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 import java.util.Optional;
 
 public class ZombieFortFeature extends Structure {
-	public static final Codec<ZombieFortFeature> CODEC = simpleCodec(ZombieFortFeature::new);
+	public static final MapCodec<ZombieFortFeature> CODEC = simpleCodec(ZombieFortFeature::new);
 
 	public ZombieFortFeature(Structure.StructureSettings settings) {
 		super(settings);

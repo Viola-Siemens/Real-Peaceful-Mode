@@ -5,7 +5,6 @@ import com.hexagram2021.real_peaceful_mode.common.entity.IMonsterHero;
 import com.hexagram2021.real_peaceful_mode.common.entity.MaterialCollection;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.IPlayerListWithMissions;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.PlayerMissions;
-import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -13,6 +12,7 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
@@ -41,7 +41,7 @@ public class ServerPlayerMixin implements IMonsterHero {
 	private PlayerMissions rpm$playerMissions;
 
 	@Inject(method = "<init>", at = @At(value = "TAIL"))
-	public void rpm$createNewPlayer(MinecraftServer server, ServerLevel level, GameProfile gameProfile, CallbackInfo ci) {
+	public void rpm$createNewPlayer(MinecraftServer server, ServerLevel level, GameProfile gameProfile, ClientInformation clientInformation, CallbackInfo ci) {
 		this.rpm$playerMissions = ((IPlayerListWithMissions)server.getPlayerList()).rpm$getPlayerMissions((ServerPlayer)(Object)this);
 		this.rpm$helpedMonsters = Maps.newHashMap();
 		this.rpm$materialCollections = Maps.newHashMap();
@@ -100,14 +100,14 @@ public class ServerPlayerMixin implements IMonsterHero {
 			ListTag list = nbt.getList(HELPED_MONSTERS, Tag.TAG_COMPOUND);
 			list.forEach(tag -> {
 				CompoundTag compound = (CompoundTag)tag;
-				this.rpm$helpedMonsters.compute(new ResourceLocation(compound.getString("type")), (type, count) -> compound.getInt("count"));
+				this.rpm$helpedMonsters.compute(ResourceLocation.parse(compound.getString("type")), (type, count) -> compound.getInt("count"));
 			});
 		}
 		if(nbt.contains(MATERIAL_COLLECTIONS, Tag.TAG_LIST)) {
 			ListTag list = nbt.getList(MATERIAL_COLLECTIONS, Tag.TAG_COMPOUND);
 			list.forEach(tag -> {
 				CompoundTag compound = (CompoundTag)tag;
-				this.rpm$materialCollections.compute(new ResourceLocation(compound.getString("lootTable")), (lootTable, materialCollection) -> MaterialCollection.CODEC.parse(NbtOps.INSTANCE, compound).getOrThrow(false, RPMLogger::error));
+				this.rpm$materialCollections.compute(ResourceLocation.parse(compound.getString("lootTable")), (lootTable, materialCollection) -> MaterialCollection.CODEC.parse(NbtOps.INSTANCE, compound).getOrThrow(IllegalStateException::new));
 			});
 		}
 		this.rpm$playerMissions.readNBT(nbt);
@@ -125,7 +125,7 @@ public class ServerPlayerMixin implements IMonsterHero {
 		nbt.put(HELPED_MONSTERS, helpedMonsters);
 		ListTag materialCollections = new ListTag();
 		this.rpm$materialCollections.forEach((lootTable, materialCollection) -> {
-			CompoundTag tag = (CompoundTag)MaterialCollection.CODEC.encode(materialCollection, NbtOps.INSTANCE, new CompoundTag()).getOrThrow(false, RPMLogger::error);
+			CompoundTag tag = (CompoundTag)MaterialCollection.CODEC.encode(materialCollection, NbtOps.INSTANCE, new CompoundTag()).getOrThrow(IllegalStateException::new);
 			tag.putString("lootTable", lootTable.toString());
 			materialCollections.add(tag);
 		});

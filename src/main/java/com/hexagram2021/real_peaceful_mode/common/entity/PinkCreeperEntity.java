@@ -5,7 +5,7 @@ import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
-import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureKeys;
+import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -13,8 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -105,11 +103,6 @@ public class PinkCreeperEntity extends PathfinderMob implements IMissionProvider
 		if(nbt.contains("LikedPlayer", Tag.TAG_INT_ARRAY)) {
 			this.likedPlayer = nbt.getUUID("LikedPlayer");
 		}
-	}
-
-	@Override
-	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-		return InteractionResult.PASS;
 	}
 
 	@Override @Nullable
@@ -317,7 +310,7 @@ public class PinkCreeperEntity extends PathfinderMob implements IMissionProvider
 			@Override
 			public boolean tryTrigger(ServerLevel serverLevel, PinkCreeperEntity outer) {
 				BlockPos blockPos = outer.blockPosition();
-				if(serverLevel.structureManager().getStructureWithPieceAt(blockPos, RPMStructureKeys.CREEPER_TOWN).isValid()) {
+				if(serverLevel.structureManager().getStructureWithPieceAt(blockPos, RPMStructureTags.PINK_CREEPERS_TOWN).isValid()) {
 					MissionHelper.triggerMissionForPlayers(
 							this.missionId, this.type,
 							serverLevel, player -> player.closerThan(outer, 32.0D), outer, player -> outer.setLikedPlayer(null)
@@ -370,7 +363,7 @@ public class PinkCreeperEntity extends PathfinderMob implements IMissionProvider
 		final MissionType type;
 
 		PinkCreeperMissions(String mission, MissionType type) {
-			this.missionId = new ResourceLocation(MODID, mission);
+			this.missionId = ResourceLocation.fromNamespaceAndPath(MODID, mission);
 			this.type = type;
 		}
 

@@ -22,7 +22,7 @@ import java.util.function.Predicate;
  * 	There's two approaches to trigger missions. One is to use MissionHelper.triggerMissionForPlayers, the other one is
  * to use Summon Block. For datapack developers, the second choice seems to be the only choice.
  *
- * @see SummonBlockEntity#load
+ * @see SummonBlockEntity#loadAdditional
  */
 public class MissionHelper {
 	/**

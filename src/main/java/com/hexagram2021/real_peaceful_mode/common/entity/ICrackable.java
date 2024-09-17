@@ -24,7 +24,7 @@ public interface ICrackable {
 		if(projectile.level() instanceof ServerLevel serverLevel && projectile.rpm$getCrackable() && target.is(RPMBlockTags.CRACKABLE)) {
 			if(target.is(RPMBlocks.Decoration.INFESTED_GLOWING_CRYSTAL.get())) {
 				MissionHelper.triggerMissionForPlayers(
-						new ResourceLocation(MODID, "skeleton1"), MissionType.FINISH,
+						ResourceLocation.fromNamespaceAndPath(MODID, "skeleton1"), MissionType.FINISH,
 						serverLevel, player -> player.closerThan(projectile, 32.0D), null, player -> {}
 				);
 				ExperienceOrb.award(serverLevel, blockHitResult.getBlockPos().getCenter(), 80);

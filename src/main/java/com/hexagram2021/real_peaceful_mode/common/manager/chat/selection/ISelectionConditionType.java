@@ -5,13 +5,13 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;
 
 @FunctionalInterface
-public
-interface ISelectionConditionType {
+public interface ISelectionConditionType {
 	Map<ResourceLocation, ISelectionConditionType> SELECTION_CONDITION_TYPES = Maps.newHashMap();
 	Map<ISelectionConditionType, ResourceLocation> SELECTION_CONDITION_IDS = Maps.newIdentityHashMap();
 	static void registerConditionType(ResourceLocation id, ISelectionConditionType conditionType) {
@@ -41,5 +41,5 @@ interface ISelectionConditionType {
 		}
 	};
 
-	Codec<? extends ISelectionCondition> codec();
+	MapCodec<? extends ISelectionCondition> codec();
 }

@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.item;
 
+import com.hexagram2021.real_peaceful_mode.common.entity.capability.IItemEntityConvertible;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMCapabilities;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -21,7 +22,10 @@ public class ConvertibleSpiritBeadItem extends SpiritBeadItem implements Convert
 	@Override
 	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
 		if(!entity.level().isClientSide) {
-			entity.getCapability(RPMCapabilities.ITEM_ENTITY_CONVERTIBLE).ifPresent(c -> c.tick(entity));
+			IItemEntityConvertible convertible = entity.getCapability(RPMCapabilities.ITEM_ENTITY_CONVERTIBLE);
+			if(convertible != null) {
+				convertible.tick(entity);
+			}
 		}
 		return false;
 	}

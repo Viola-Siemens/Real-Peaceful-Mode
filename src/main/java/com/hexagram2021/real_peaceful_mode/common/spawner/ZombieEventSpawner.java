@@ -12,13 +12,12 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Function3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.EntityType;
@@ -26,12 +25,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.BundleContents;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -41,8 +40,8 @@ import java.util.Optional;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
-	private static final ResourceLocation ZOMBIE_ROBBERY_MISSION = new ResourceLocation(MODID, "events/zombie_robbery");
-	private static final ResourceLocation ZOMBIE_HELMET_MISSION = new ResourceLocation(MODID, "events/zombie_helmet");
+	private static final ResourceLocation ZOMBIE_ROBBERY_MISSION = ResourceLocation.fromNamespaceAndPath(MODID, "events/zombie_robbery");
+	private static final ResourceLocation ZOMBIE_HELMET_MISSION = ResourceLocation.fromNamespaceAndPath(MODID, "events/zombie_helmet");
 
 	private static final List<Tuple<ResourceLocation, Function3<ServerLevel, BlockPos, Float, Boolean>>> MISSIONS = Lists.newArrayList(
 			new Tuple<>(ZOMBIE_HELMET_MISSION, (level, blockPos, yRot) -> {
@@ -63,7 +62,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 							return true;
 						}
 						ItemStack currentHelmet = zombie.getItemBySlot(EquipmentSlot.HEAD);
-						if(itemStack.is(Tags.Items.ARMORS_HELMETS) && itemStack.getMaxDamage() - itemStack.getDamageValue() > currentHelmet.getMaxDamage() - currentHelmet.getDamageValue()) {
+						if(itemStack.is(ItemTags.HEAD_ARMOR) && itemStack.getMaxDamage() - itemStack.getDamageValue() > currentHelmet.getMaxDamage() - currentHelmet.getDamageValue()) {
 							zombie.clearFire();
 							zombie.setItemSlot(EquipmentSlot.HEAD, itemStack.copy());
 							itemStack.shrink(1);
@@ -116,22 +115,12 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 				darkZombieKnight.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RPMItems.Weapons.GOLDEN_PIKE));
 
 				ItemStack money = new ItemStack(Items.BUNDLE);
-				CompoundTag nbt = money.getOrCreateTag();
-				if(!nbt.contains("Items", Tag.TAG_LIST)) {
-					nbt.put("Items", new ListTag());
-				}
-				ListTag listTag = nbt.getList("Items", Tag.TAG_COMPOUND);
-				CompoundTag gold = new CompoundTag();
-				CompoundTag iron = new CompoundTag();
-				CompoundTag rottenFlesh = new CompoundTag();
-				new ItemStack(Items.GOLD_INGOT, level.getRandom().nextInt(7, 11)).save(gold);
-				new ItemStack(Items.IRON_INGOT, level.getRandom().nextInt(1, 5)).save(iron);
-				new ItemStack(Items.ROTTEN_FLESH, level.getRandom().nextInt(2, 12)).save(rottenFlesh);
-				listTag.add(gold);
-				listTag.add(iron);
-				listTag.add(rottenFlesh);
-				nbt.put("Items", listTag);
-				money.setTag(nbt);
+				BundleContents contents = new BundleContents(List.of(
+						new ItemStack(Items.GOLD_INGOT, level.getRandom().nextInt(7, 11)),
+						new ItemStack(Items.IRON_INGOT, level.getRandom().nextInt(1, 5)),
+						new ItemStack(Items.ROTTEN_FLESH, level.getRandom().nextInt(2, 12))
+				));
+				money.set(DataComponents.BUNDLE_CONTENTS, contents);
 				darkZombieKnight.setItemSlot(EquipmentSlot.OFFHAND, money.copy());
 				darkZombieKnight.setDropChance(EquipmentSlot.OFFHAND, 2.0F);
 
@@ -144,7 +133,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 							);
 							return true;
 						}
-						if(ItemStack.isSameItemSameTags(itemStack, money)) {
+						if(ItemStack.isSameItemSameComponents(itemStack, money)) {
 							MissionHelper.triggerMissionForPlayer(
 									ZOMBIE_ROBBERY_MISSION, MissionType.FINISH, player,
 									zombie, player1 -> {
@@ -163,8 +152,8 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 				}
 
 				ItemStack helmet = new ItemStack(Items.LEATHER_HELMET);
-				if(helmet.getItem() instanceof DyeableLeatherItem dyeable) {
-					dyeable.setColor(helmet, 0x4b4a4a);
+				if(helmet.is(ItemTags.DYEABLE)) {
+					helmet.set(DataComponents.DYED_COLOR, new DyedItemColor(0x4b4a4a, true));
 				}
 				zombie.setItemSlot(EquipmentSlot.HEAD, helmet);
 				darkZombieKnight.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.CHAINMAIL_HELMET));
@@ -178,7 +167,7 @@ public class ZombieEventSpawner extends AbstractEventSpawner<Zombie> {
 
 	private static final List<Either<Item, TagKey<Item>>> INTERACT_ITEMS = Lists.newArrayList(
 			Either.left(Items.AIR),
-			Either.right(Tags.Items.ARMORS_HELMETS),
+			Either.right(ItemTags.HEAD_ARMOR),
 			Either.left(Items.BUNDLE)
 	);
 

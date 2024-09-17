@@ -4,11 +4,9 @@ import com.hexagram2021.real_peaceful_mode.common.item.ConvertibleItem;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
 import javax.annotation.Nullable;
 
-@AutoRegisterCapability
 public interface IItemEntityConvertible {
 	int getRemainingTicks();
 	int maxRemainingTicks();

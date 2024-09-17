@@ -5,11 +5,13 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.MapCodec;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;
 
-@FunctionalInterface
 public interface IChatMessageType {
 	Map<ResourceLocation, IChatMessageType> CHAT_MESSAGE_TYPES = Maps.newHashMap();
 	Map<IChatMessageType, ResourceLocation> CHAT_MESSAGE_IDS = Maps.newIdentityHashMap();
@@ -40,6 +42,27 @@ public interface IChatMessageType {
 			return ops.mergeToPrimitive(prefix, key);
 		}
 	};
+	StreamCodec<ByteBuf, IChatMessageType> STREAM_CODEC = new StreamCodec<>() {
+		@Override
+		public IChatMessageType decode(ByteBuf buf) {
+			ResourceLocation typeId = ResourceLocation.STREAM_CODEC.decode(buf);
+			IChatMessageType type = CHAT_MESSAGE_TYPES.get(typeId);
+			if (type == null) {
+				throw new IllegalArgumentException("Unexpected chat message type: %s".formatted(typeId));
+			}
+			return type;
+		}
 
-	Codec<? extends AbstractChatMessage> codec();
+		@Override
+		public void encode(ByteBuf buf, IChatMessageType input) {
+			ResourceLocation typeId = CHAT_MESSAGE_IDS.get(input);
+			if (typeId == null) {
+				throw new IllegalArgumentException("Unknown chat message type: %s".formatted(input));
+			}
+			ResourceLocation.STREAM_CODEC.encode(buf, typeId);
+		}
+	};
+
+	MapCodec<? extends AbstractChatMessage> codec();
+	StreamCodec<ByteBuf, ? extends AbstractChatMessage> streamCodec();
 }

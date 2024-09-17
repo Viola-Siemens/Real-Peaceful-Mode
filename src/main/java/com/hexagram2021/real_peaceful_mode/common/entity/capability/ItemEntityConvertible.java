@@ -1,11 +1,12 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.capability;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 
 import javax.annotation.Nullable;
 
@@ -50,7 +51,7 @@ public class ItemEntityConvertible implements IItemEntityConvertible, INBTSerial
 	}
 
 	@Override
-	public Tag serializeNBT() {
+	public Tag serializeNBT(HolderLookup.Provider registries) {
 		CompoundTag ret = new CompoundTag();
 		ret.putInt("remainingTicks", this.remainingTicks);
 		if(this.toConvert != null) {
@@ -60,7 +61,7 @@ public class ItemEntityConvertible implements IItemEntityConvertible, INBTSerial
 	}
 
 	@Override
-	public void deserializeNBT(Tag nbt) {
+	public void deserializeNBT(HolderLookup.Provider registries, Tag nbt) {
 		if(nbt instanceof CompoundTag compoundTag) {
 			if(compoundTag.contains("remainingTicks", Tag.TAG_INT)) {
 				this.remainingTicks = compoundTag.getInt("remainingTicks");
@@ -69,9 +70,7 @@ public class ItemEntityConvertible implements IItemEntityConvertible, INBTSerial
 			}
 			if(compoundTag.contains("toConvert", Tag.TAG_STRING)) {
 				String id = compoundTag.getString("toConvert");
-				if(ResourceLocation.isValidResourceLocation(id)) {
-					this.toConvert = ForgeRegistries.ITEMS.getValue(new ResourceLocation(id));
-				}
+				this.toConvert = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
 			}
 		}
 	}

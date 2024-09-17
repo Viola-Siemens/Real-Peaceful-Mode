@@ -3,7 +3,7 @@ package com.hexagram2021.real_peaceful_mode.common.register;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.registries.RegisterEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class RPMSounds {
 	public static final SoundEvent MUSIC_DISC_CREEPER = registerSound("music_disc.rpm.creeper");
 
 	private static SoundEvent registerSound(String name) {
-		ResourceLocation location = new ResourceLocation(MODID, name);
+		ResourceLocation location = ResourceLocation.fromNamespaceAndPath(MODID, name);
 		SoundEvent event = SoundEvent.createVariableRangeEvent(location);
 		registeredEvents.put(location, event);
 		return event;

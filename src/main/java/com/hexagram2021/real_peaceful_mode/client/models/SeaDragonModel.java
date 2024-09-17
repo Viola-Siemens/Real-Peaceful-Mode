@@ -7,7 +7,10 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class SeaDragonModel<T extends SeaDragonEntity> extends EntityModel<T> {
 
 	private final ModelPart neck;
@@ -194,13 +197,14 @@ public class SeaDragonModel<T extends SeaDragonEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack transform, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float r, float g, float b, float a) {
-		this.neck.render(transform, vertexConsumer, packedLight, packedOverlay, r, g, b, a);
-		this.body.render(transform, vertexConsumer, packedLight, packedOverlay, r, g, b, a);
-		this.rearLegRight.render(transform, vertexConsumer, packedLight, packedOverlay, r, g, b, a);
-		this.rearLegLeft.render(transform, vertexConsumer, packedLight, packedOverlay, r, g, b, a);
-		this.frontLegRight.render(transform, vertexConsumer, packedLight, packedOverlay, r, g, b, a);
-		this.frontLegLeft.render(transform, vertexConsumer, packedLight, packedOverlay, r, g, b, a);
-		this.tail.render(transform, vertexConsumer, packedLight, packedOverlay, r, g, b, a);
+	public void renderToBuffer(PoseStack transform, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
+		this.neck.render(transform, vertexConsumer, packedLight, packedOverlay, color);
+		this.body.render(transform, vertexConsumer, packedLight, packedOverlay, color);
+		this.rearLegRight.render(transform, vertexConsumer, packedLight, packedOverlay, color);
+		this.rearLegLeft.render(transform, vertexConsumer, packedLight, packedOverlay, color);
+		this.frontLegRight.render(transform, vertexConsumer, packedLight, packedOverlay, color);
+		this.frontLegLeft.render(transform, vertexConsumer, packedLight, packedOverlay, color);
+		this.tail.render(transform, vertexConsumer, packedLight, packedOverlay, color);
+
 	}
 }

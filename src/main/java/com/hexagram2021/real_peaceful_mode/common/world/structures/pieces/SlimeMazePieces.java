@@ -83,7 +83,7 @@ public class SlimeMazePieces {
 			if(guardSlime != null) {
 				BlockPos spawnPos = this.getWorldPos(x, y, z);
 				guardSlime.moveTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), 0.0F, 0.0F);
-				guardSlime.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.STRUCTURE, null, null);
+				guardSlime.finalizeSpawn(level, level.getCurrentDifficultyAt(spawnPos), MobSpawnType.STRUCTURE, null);
 				level.addFreshEntity(guardSlime);
 			}
 			return guardSlime;
@@ -564,7 +564,7 @@ public class SlimeMazePieces {
 			summonTagSickSlime.putBoolean("IsSick", true);
 			summonTagSickSlime.putBoolean("PersistenceRequired", true);
 			ListTag activeEffects = new ListTag();
-			activeEffects.add(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, -1, 2, false, false).save(new CompoundTag()));
+			activeEffects.add(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, -1, 2, false, false).save());
 			summonTagSickSlime.put("ActiveEffects", activeEffects);
 			SummonBlockEntity summonBlockEntity = this.placeSummonBlock(
 					level, 2, 1, 1,
@@ -598,16 +598,15 @@ public class SlimeMazePieces {
 			return isOkBox(boundingbox) && pieces.findCollisionPiece(boundingbox) == null ? new SlimeMazeHousingPiece(depth, random, boundingbox, direction) : null;
 		}
 
-		@SuppressWarnings("deprecation")
 		public static void extraWorkAfterTrigger(ServerLevel level, BlockPos pos) {
 			BlockState ladder = Blocks.LADDER.defaultBlockState();
-			if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.SOUTH), level, pos)) {
+			if(ladder.setValue(LadderBlock.FACING, Direction.SOUTH).canSurvive(level, pos)) {
 				ladder = ladder.setValue(LadderBlock.FACING, Direction.SOUTH);
-			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.NORTH), level, pos)) {
+			} else if(ladder.setValue(LadderBlock.FACING, Direction.NORTH).canSurvive(level, pos)) {
 				ladder = ladder.setValue(LadderBlock.FACING, Direction.NORTH);
-			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.EAST), level, pos)) {
+			} else if(ladder.setValue(LadderBlock.FACING, Direction.EAST).canSurvive(level, pos)) {
 				ladder = ladder.setValue(LadderBlock.FACING, Direction.EAST);
-			} else if(Blocks.LADDER.canSurvive(ladder.setValue(LadderBlock.FACING, Direction.WEST), level, pos)) {
+			} else if(ladder.setValue(LadderBlock.FACING, Direction.WEST).canSurvive(level, pos)) {
 				ladder = ladder.setValue(LadderBlock.FACING, Direction.WEST);
 			} else {
 				ladder = null;

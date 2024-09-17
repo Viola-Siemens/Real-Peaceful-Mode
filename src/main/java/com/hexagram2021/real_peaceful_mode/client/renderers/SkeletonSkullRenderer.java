@@ -27,7 +27,7 @@ import net.minecraft.world.entity.Entity;
 
 @SuppressWarnings("deprecation")
 public class SkeletonSkullRenderer extends EntityRenderer<SkeletonSkullEntity> {
-    private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation("textures/entity/skeleton/skeleton.png");
+    private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/skeleton/skeleton.png");
     private final SkullModel model;
 
     public SkeletonSkullRenderer(EntityRendererProvider.Context context) {
@@ -55,7 +55,7 @@ public class SkeletonSkullRenderer extends EntityRenderer<SkeletonSkullEntity> {
         float xRot = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
         VertexConsumer vertexconsumer = multiBufferSource.getBuffer(this.model.renderType(this.getTextureLocation(entity)));
         this.model.setupAnim(0.0F, yRot, xRot);
-        this.model.renderToBuffer(transform, vertexconsumer, uv2, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.model.renderToBuffer(transform, vertexconsumer, uv2, OverlayTexture.NO_OVERLAY);
         transform.popPose();
         super.render(entity, f, partialTick, transform, multiBufferSource, uv2);
         if(entity.isOnFire()) {
@@ -68,8 +68,8 @@ public class SkeletonSkullRenderer extends EntityRenderer<SkeletonSkullEntity> {
         return TEXTURE_LOCATION;
     }
 
-    private static final Material SOUL_FIRE_0 = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation("block/soul_fire_0"));
-    private static final Material SOUL_FIRE_1 = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation("block/soul_fire_1"));
+    private static final Material SOUL_FIRE_0 = new Material(TextureAtlas.LOCATION_BLOCKS, ResourceLocation.withDefaultNamespace("block/soul_fire_0"));
+    private static final Material SOUL_FIRE_1 = new Material(TextureAtlas.LOCATION_BLOCKS, ResourceLocation.withDefaultNamespace("block/soul_fire_1"));
     private static void renderSoulFlame(EntityRenderDispatcher dispatcher, PoseStack transform, MultiBufferSource bufferSource, Entity entity) {
         TextureAtlasSprite sprite1 = SOUL_FIRE_0.sprite();
         TextureAtlasSprite sprite2 = SOUL_FIRE_1.sprite();
@@ -111,6 +111,10 @@ public class SkeletonSkullRenderer extends EntityRenderer<SkeletonSkullEntity> {
     }
 
     private static void fireVertex(PoseStack.Pose pose, VertexConsumer vertexConsumer, float x, float y, float z, float u, float v) {
-        vertexConsumer.vertex(pose.pose(), x, y, z).color(255, 255, 255, 255).uv(u, v).overlayCoords(0, 10).uv2(240).normal(pose.normal(), 0.0F, 1.0F, 0.0F).endVertex();
+        vertexConsumer.addVertex(pose.pose(), x, y, z)
+                .setColor(0xffffffff)
+                .setUv(u, v).setUv1(0, 10)
+                .setLight(240)
+                .setNormal(pose, 0.0F, 1.0F, 0.0F);
     }
 }

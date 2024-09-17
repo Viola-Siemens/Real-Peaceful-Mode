@@ -1,7 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.manager.mission;
 
 import com.google.common.collect.Lists;
-import com.hexagram2021.real_peaceful_mode.RealPeacefulMode;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedChatInstance;
 import com.hexagram2021.real_peaceful_mode.common.crafting.MessagedMissionInstance;
 import com.hexagram2021.real_peaceful_mode.common.crafting.menu.ChatMessageMenu;
@@ -21,8 +20,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -62,10 +61,10 @@ public class PlayerMissions {
 			ListTag activeMissions = missions.getList(ACTIVE_MISSIONS, Tag.TAG_STRING);
 			ListTag finishedMissions = missions.getList(FINISHED_MISSIONS, Tag.TAG_STRING);
 			for(Tag tag: activeMissions) {
-				this.activeMissions.add(new ResourceLocation(tag.getAsString()));
+				this.activeMissions.add(ResourceLocation.parse(tag.getAsString()));
 			}
 			for(Tag tag: finishedMissions) {
-				this.finishedMissions.add(new ResourceLocation(tag.getAsString()));
+				this.finishedMissions.add(ResourceLocation.parse(tag.getAsString()));
 			}
 		}
 	}
@@ -108,10 +107,7 @@ public class PlayerMissions {
 				new MissionMessageMenu(counter, instance, () ->
 						this.afterReceiveMission(mission, toDoExtra)), Component.translatable("title.real_peaceful_mode.menu.mission")));
 		if(id.isPresent()) {
-			RealPeacefulMode.packetHandler.send(
-					PacketDistributor.PLAYER.with(() -> this.player),
-					new ClientboundMissionMessagePacket(instance, id.getAsInt())
-			);
+			PacketDistributor.sendToPlayer(this.player, new ClientboundMissionMessagePacket(instance, id.getAsInt()));
 		}
 	}
 	public void finishMission(Mission mission, @Nullable LivingEntity npc, Consumer<ServerPlayer> toDoExtra) {
@@ -124,10 +120,7 @@ public class PlayerMissions {
 				new MissionMessageMenu(counter, instance, () ->
 						this.afterFinishMission(mission, toDoExtra)), Component.translatable("title.real_peaceful_mode.menu.mission")));
 		if(id.isPresent()) {
-			RealPeacefulMode.packetHandler.send(
-					PacketDistributor.PLAYER.with(() -> this.player),
-					new ClientboundMissionMessagePacket(instance, id.getAsInt())
-			);
+			PacketDistributor.sendToPlayer(this.player, new ClientboundMissionMessagePacket(instance, id.getAsInt()));
 		}
 	}
 	public void triggerChat(Chat chat, LivingEntity npc) {
@@ -139,10 +132,7 @@ public class PlayerMissions {
 		OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
 				new ChatMessageMenu(counter, instance), Component.translatable("title.real_peaceful_mode.menu.chat")));
 		if(id.isPresent()) {
-			RealPeacefulMode.packetHandler.send(
-					PacketDistributor.PLAYER.with(() -> this.player),
-					new ClientboundChatMessagePacket(instance, id.getAsInt())
-			);
+			PacketDistributor.sendToPlayer(this.player, new ClientboundChatMessagePacket(instance, id.getAsInt()));
 		}
 	}
 
@@ -166,7 +156,7 @@ public class PlayerMissions {
 				)
 		));
 		this.activeMissions.add(mission.id());
-		mission.tryGetLoot(this.player, Objects.requireNonNull(this.player.getServer()).getLootData(), false);
+		mission.tryGetLoot(this.player, Objects.requireNonNull(this.player.getServer()).reloadableRegistries()::getLootTable, false);
 		toDoExtra.accept(this.player);
 	}
 
@@ -185,7 +175,7 @@ public class PlayerMissions {
 		if(!mission.isRandomEvent()) {
 			this.finishedMissions.add(mission.id());
 		}
-		mission.finish(this.player, Objects.requireNonNull(this.player.getServer()).getLootData());
+		mission.finish(this.player, Objects.requireNonNull(this.player.getServer()).reloadableRegistries()::getLootTable);
 		toDoExtra.accept(this.player);
 	}
 

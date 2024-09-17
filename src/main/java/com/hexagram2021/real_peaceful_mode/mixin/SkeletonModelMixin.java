@@ -27,7 +27,7 @@ public abstract class SkeletonModelMixin<T extends Mob & RangedAttackMob> {
 			current.rightArm.yRot = -yRot;
 		}
 		if(entity instanceof IRightArmDetachable rightArmDetachable) {
-			current.rightArm.skipDraw = rightArmDetachable.isRightArmDetached();
+			current.rightArm.skipDraw = rightArmDetachable.rpm$isRightArmDetached();
 		}
 	}
 }

@@ -81,7 +81,7 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 	}
 
 	@Override
-	public boolean canChangeDimensions() {
+	public boolean canUsePortal(boolean allowPassengers) {
 		return false;
 	}
 
@@ -263,7 +263,7 @@ public class SkeletonKing extends PathfinderMob implements NeutralMob, RangedAtt
 		final MissionType type;
 
 		SkeletonKingMissions(String mission, MissionType type) {
-			this.missionId = new ResourceLocation(MODID, mission);
+			this.missionId = ResourceLocation.fromNamespaceAndPath(MODID, mission);
 			this.type = type;
 		}
 

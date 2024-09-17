@@ -11,9 +11,11 @@ public final class RPMStructureTags {
 	public static final TagKey<Structure> ON_VOID_EXPLORER_MAPS = create("on_void_explorer_maps");
 	public static final TagKey<Structure> ON_SLIME_EXPLORER_MAPS = create("on_slime_explorer_maps");
 
+	public static final TagKey<Structure> PINK_CREEPERS_TOWN = create("pink_creepers_town");
+
 	@SuppressWarnings("SameParameterValue")
 	private static TagKey<Structure> create(String name) {
-		return TagKey.create(Registries.STRUCTURE, new ResourceLocation(MODID, name));
+		return TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(MODID, name));
 	}
 
 	public static void init() {

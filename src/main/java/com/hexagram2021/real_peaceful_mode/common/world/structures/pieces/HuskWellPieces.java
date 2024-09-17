@@ -27,7 +27,7 @@ import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class HuskWellPieces {
-	private static final ResourceLocation HUSK_WELL = new ResourceLocation(MODID, "husk_well/husk_well");
+	private static final ResourceLocation HUSK_WELL = ResourceLocation.fromNamespaceAndPath(MODID, "husk_well/husk_well");
 
 	public static void addPieces(StructureTemplateManager structureManager, BlockPos pos, Rotation rotation, StructurePieceAccessor pieces) {
 		pieces.addPiece(new HuskWellPiece(structureManager, HUSK_WELL, pos, rotation));

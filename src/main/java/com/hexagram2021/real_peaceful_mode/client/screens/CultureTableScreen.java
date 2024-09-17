@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 import static com.hexagram2021.real_peaceful_mode.RealPeacefulMode.MODID;
 
 public class CultureTableScreen extends AbstractContainerScreen<CultureTableMenu> {
-	private static final ResourceLocation CULTURE_TABLE_LOCATION = new ResourceLocation(MODID, "textures/gui/culture_table.png");
+	private static final ResourceLocation CULTURE_TABLE_LOCATION = ResourceLocation.fromNamespaceAndPath(MODID, "textures/gui/culture_table.png");
 
 	public CultureTableScreen(CultureTableMenu menu, Inventory inventory, Component component) {
 		super(menu, inventory, component);
@@ -18,7 +18,7 @@ public class CultureTableScreen extends AbstractContainerScreen<CultureTableMenu
 
 	@Override
 	public void render(GuiGraphics transform, int x, int y, float partialTicks) {
-		this.renderBackground(transform);
+		this.renderBackground(transform, x, y, partialTicks);
 		super.render(transform, x, y, partialTicks);
 		this.renderTooltip(transform, x, y);
 	}

@@ -4,7 +4,7 @@ import com.hexagram2021.real_peaceful_mode.common.register.RPMFluids;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
 import com.hexagram2021.real_peaceful_mode.common.util.RPMDamageSources;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
@@ -30,8 +30,8 @@ public class ModVanillaCompat {
 		@Override
 		public ItemStack execute(BlockSource blockSource, ItemStack itemStack) {
 			BucketItem bucketitem = (BucketItem)itemStack.getItem();
-			BlockPos blockpos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
-			Level level = blockSource.getLevel();
+			BlockPos blockpos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
+			Level level = blockSource.level();
 			if(bucketitem.emptyContents(null, level, blockpos, null)) {
 				bucketitem.checkExtraContent(null, level, itemStack, blockpos);
 				return new ItemStack(Items.BUCKET);
@@ -42,17 +42,17 @@ public class ModVanillaCompat {
 
 	private static final DispenseItemBehavior PIKE_ENTITY_BEHAVIOR = new OptionalDispenseItemBehavior() {
 		protected ItemStack execute(BlockSource blockSource, ItemStack itemStack) {
-			BlockPos blockpos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
+			BlockPos blockpos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
 
 			boolean success = false;
-			for(LivingEntity entity : blockSource.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(blockpos), LivingEntity::isAlive)) {
+			for(LivingEntity entity : blockSource.level().getEntitiesOfClass(LivingEntity.class, new AABB(blockpos), LivingEntity::isAlive)) {
+				if(itemStack.isEmpty()) {
+					break;
+				}
 				boolean flag = entity.hurt(RPMDamageSources.pike(entity), 3.0F);
 				if(flag) {
 					success = true;
-					if(itemStack.hurt(1, blockSource.getLevel().random, null)) {
-						itemStack.setCount(0);
-						break;
-					}
+					itemStack.hurtAndBreak(1, blockSource.level(), null, item -> {});
 				}
 			}
 			this.setSuccess(success);

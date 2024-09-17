@@ -1,7 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.crafting;
 
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.AbstractChatMessage;
-import com.hexagram2021.real_peaceful_mode.common.util.RPMLogger;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,7 +18,7 @@ public interface MessagedChat {
 	default CompoundTag createTag() {
 		CompoundTag ret = new CompoundTag();
 		ret.putInt(TAG_NPC, this.npc().getId());
-		ret.put(TAG_MESSAGE, AbstractChatMessage.REGISTRY_CODEC.encode(this.message(), NbtOps.INSTANCE, new CompoundTag()).getOrThrow(false, RPMLogger::error));
+		ret.put(TAG_MESSAGE, AbstractChatMessage.REGISTRY_CODEC.encode(this.message(), NbtOps.INSTANCE, new CompoundTag()).getOrThrow(IllegalStateException::new));
 		return ret;
 	}
 }

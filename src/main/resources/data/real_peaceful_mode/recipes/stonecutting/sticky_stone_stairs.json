@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "real_peaceful_mode:sticky_stone"
-  },
-  "result": "real_peaceful_mode:sticky_stone_stairs",
-  "count": 1
-}

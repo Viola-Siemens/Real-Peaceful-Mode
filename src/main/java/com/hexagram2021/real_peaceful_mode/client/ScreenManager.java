@@ -23,7 +23,6 @@ public final class ScreenManager {
 
 	public static void openMissionMessageScreen(MessagedMission mission, int containerId) {
 		LocalPlayer player = Minecraft.getInstance().player;
-		//com.hexagram2021.real_peaceful_mode.common.util.RPMLogger.debug(mission.createTag());
 		if(player != null) {
 			AbstractContainerMenu menu = player.containerMenu;
 			if(menu.containerId == containerId && menu instanceof MissionMessageMenu missionMessageMenu) {
@@ -33,7 +32,6 @@ public final class ScreenManager {
 	}
 	public static void openChatMessageScreen(MessagedChat chat, int containerId) {
 		LocalPlayer player = Minecraft.getInstance().player;
-		//com.hexagram2021.real_peaceful_mode.common.util.RPMLogger.debug(chat.createTag());
 		if(player != null) {
 			AbstractContainerMenu menu = player.containerMenu;
 			if(menu.containerId == containerId && menu instanceof ChatMessageMenu chatMessageMenu) {
@@ -43,9 +41,6 @@ public final class ScreenManager {
 	}
 	public static void updateChatSelections(@Nullable List<ChatSelection> chatSelections) {
 		LocalPlayer player = Minecraft.getInstance().player;
-		//if (chatSelections != null) {
-		//	chatSelections.forEach(chatSelection -> com.hexagram2021.real_peaceful_mode.common.util.RPMLogger.debug(ChatSelection.CODEC.encode(chatSelection, com.mojang.serialization.JsonOps.INSTANCE, new com.google.gson.JsonObject()).getOrThrow(false, com.hexagram2021.real_peaceful_mode.common.util.RPMLogger::error)));
-		//}
 		if(player != null && player.containerMenu instanceof ChatMessageMenu chatMessageMenu) {
 			chatMessageMenu.setCachedSelections(chatSelections);
 		}

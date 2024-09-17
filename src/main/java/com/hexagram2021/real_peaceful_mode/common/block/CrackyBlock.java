@@ -1,5 +1,6 @@
 package com.hexagram2021.real_peaceful_mode.common.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,11 +23,17 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class CrackyBlock extends Block {
+	public static final MapCodec<CrackyBlock> CODEC = simpleCodec(CrackyBlock::new);
 	public static final IntegerProperty AGE_4 = BlockStateProperties.AGE_4;
 
 	public CrackyBlock(BlockBehaviour.Properties props) {
 		super(props);
 		this.registerDefaultState(this.stateDefinition.any().setValue(AGE_4, 0));
+	}
+
+	@Override
+	protected MapCodec<? extends CrackyBlock> codec() {
+		return CODEC;
 	}
 
 	@Override

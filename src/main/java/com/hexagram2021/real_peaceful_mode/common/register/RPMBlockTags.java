@@ -11,7 +11,7 @@ public final class RPMBlockTags {
 	public static final TagKey<Block> CRACKABLE = create("crackable");
 
 	private static TagKey<Block> create(String name) {
-		return TagKey.create(Registries.BLOCK, new ResourceLocation(MODID, name));
+		return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, name));
 	}
 
 	private RPMBlockTags() {
