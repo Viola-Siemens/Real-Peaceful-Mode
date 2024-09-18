@@ -9,8 +9,8 @@
           "name": "patchouli:guide_book",
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"patchouli:book\": \"real_peaceful_mode:start\"}"
+              "function": "minecraft:set_components",
+              "components": {"patchouli:book": "real_peaceful_mode:start"}
             }
           ]
         }

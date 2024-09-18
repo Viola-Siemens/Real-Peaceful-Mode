@@ -26,6 +26,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.function.Consumer;
 
@@ -102,7 +103,8 @@ public class PlayerMissions {
 			return;
 		}
 
-		MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messages());
+		Optional<Integer> npcId = npc == null ? Optional.empty() : Optional.of(npc.getId());
+		MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, npcId, mission.messages());
 		OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
 				new MissionMessageMenu(counter, instance, () ->
 						this.afterReceiveMission(mission, toDoExtra)), Component.translatable("title.real_peaceful_mode.menu.mission")));
@@ -115,7 +117,8 @@ public class PlayerMissions {
 			return;
 		}
 
-		MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, mission.messagesAfter());
+		Optional<Integer> npcId = npc == null ? Optional.empty() : Optional.of(npc.getId());
+		MessagedMissionInstance instance = new MessagedMissionInstance(this.player, npc, npcId, mission.messagesAfter());
 		OptionalInt id = this.player.openMenu(new SimpleMenuProvider((counter, inventory, player) ->
 				new MissionMessageMenu(counter, instance, () ->
 						this.afterFinishMission(mission, toDoExtra)), Component.translatable("title.real_peaceful_mode.menu.mission")));

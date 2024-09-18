@@ -13,7 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-public record MessagedMissionInstance(Player player, @Nullable LivingEntity npc, List<MissionMessage> messages) implements MessagedMission {
+public class MessagedMissionInstance implements MessagedMission {
+	final Player player;
+	@Nullable LivingEntity npc;
+	final Optional<Integer> npcId;
+	final List<MissionMessage> messages;
+
 	public static final StreamCodec<ByteBuf, MessagedMissionInstance> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.optional(ByteBufCodecs.INT), instance -> Optional.ofNullable(instance.npc).map(LivingEntity::getId),
 			MissionMessage.LIST_STREAM_CODEC, MessagedMissionInstance::messages,
@@ -24,7 +29,13 @@ public record MessagedMissionInstance(Player player, @Nullable LivingEntity npc,
 		this(ScreenManager.getLocalPlayer(), npcId, messages);
 	}
 	public MessagedMissionInstance(Player player, Optional<Integer> npcId, List<MissionMessage> messages) {
-		this(player, npcId.map(id -> (LivingEntity) player.level().getEntity(id)).orElse(null), messages);
+		this(player, npcId.map(id -> (LivingEntity) player.level().getEntity(id)).orElse(null), npcId, messages);
+	}
+	public MessagedMissionInstance(Player player, @Nullable LivingEntity npc, Optional<Integer> npcId, List<MissionMessage> messages) {
+		this.player = player;
+		this.npc = npc;
+		this.npcId = npcId;
+		this.messages = messages;
 	}
 
 	@Override
@@ -34,6 +45,9 @@ public record MessagedMissionInstance(Player player, @Nullable LivingEntity npc,
 
 	@Override @Nullable
 	public LivingEntity npc() {
+		if(this.npc == null) {
+			this.npc = this.npcId.map(id -> (LivingEntity) this.player.level().getEntity(id)).orElse(null);
+		}
 		return this.npc;
 	}
 

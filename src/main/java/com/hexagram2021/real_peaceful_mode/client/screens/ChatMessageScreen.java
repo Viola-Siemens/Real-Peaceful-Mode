@@ -105,7 +105,7 @@ public class ChatMessageScreen extends AbstractContainerScreen<ChatMessageMenu> 
 	private void drawSpeaker(GuiGraphics transform, LivingEntity currentSpeaker, int x, int y) {
 		FormattedCharSequence name = currentSpeaker.getDisplayName().getVisualOrderText();
 		transform.drawString(this.font, name, this.leftPos + 116 - this.font.width(name), this.topPos + 100, 0xa0a0a0);
-		InventoryScreen.renderEntityInInventoryFollowsMouse(transform, this.leftPos + 120, this.topPos + 88, this.leftPos + 167, this.topPos + 159, 24, 0.0625F, this.leftPos + 143 - x, this.topPos + 120 - y, currentSpeaker);
+		InventoryScreen.renderEntityInInventoryFollowsMouse(transform, this.leftPos + 120, this.topPos + 88, this.leftPos + 167, this.topPos + 159, 24, 0.0625F, x, y, currentSpeaker);
 	}
 
 	private void drawSelectionButton(GuiGraphics transform, int x, int y, int index) {
