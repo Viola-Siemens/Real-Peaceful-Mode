@@ -36,7 +36,16 @@ public interface ISelectionCondition {
 		public static final DummySelectionCondition INSTANCE = new DummySelectionCondition();
 
 		public static final MapCodec<DummySelectionCondition> CODEC = MapCodec.unit(INSTANCE);
-		public static final StreamCodec<ByteBuf, ISelectionCondition> STREAM_CODEC = StreamCodec.unit(INSTANCE);
+		public static final StreamCodec<ByteBuf, ISelectionCondition> STREAM_CODEC = new StreamCodec<>() {
+			@Override
+			public ISelectionCondition decode(ByteBuf buffer) {
+				return INSTANCE;
+			}
+
+			@Override
+			public void encode(ByteBuf buf, ISelectionCondition selectionCondition) {
+			}
+		};
 
 		@Override
 		public ISelectionConditionType type() {

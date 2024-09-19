@@ -62,8 +62,13 @@ public class MissionListScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics transform, int x, int y, float ticks) {
-		transform.drawString(this.font, this.title, this.leftPos + this.titleLabelX, this.topPos + this.titleLabelY, 0x404040);
 		super.render(transform, x, y, ticks);
+		transform.drawString(this.font, this.title, this.leftPos + this.titleLabelX, this.topPos + this.titleLabelY, 0x404040, false);
+	}
+
+	@Override
+	public void renderBackground(GuiGraphics transform, int x, int y, float ticks) {
+		this.renderTransparentBackground(transform);
 		this.renderBg(transform, x, y);
 	}
 

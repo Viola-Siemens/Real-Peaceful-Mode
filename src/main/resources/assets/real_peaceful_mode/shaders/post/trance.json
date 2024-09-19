@@ -6,12 +6,12 @@
     ],
     "passes": [
         {
-            "name": "minecraft:blobs",
+            "name": "real_peaceful_mode:blobs",
             "intarget": "minecraft:main",
             "outtarget": "temp"
         },
         {
-            "name": "minecraft:deconverge",
+            "name": "real_peaceful_mode:deconverge",
             "intarget": "temp",
             "outtarget": "swap",
             "uniforms": [

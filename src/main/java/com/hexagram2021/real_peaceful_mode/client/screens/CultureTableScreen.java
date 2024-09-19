@@ -18,7 +18,6 @@ public class CultureTableScreen extends AbstractContainerScreen<CultureTableMenu
 
 	@Override
 	public void render(GuiGraphics transform, int x, int y, float partialTicks) {
-		this.renderBackground(transform, x, y, partialTicks);
 		super.render(transform, x, y, partialTicks);
 		this.renderTooltip(transform, x, y);
 	}
