@@ -1,0 +1,13 @@
+{
+  "name": "structure.real_peaceful_mode.slime_maze",
+  "category": "real_peaceful_mode:structure",
+  "icon": "real_peaceful_mode:slimes_wish",
+  "sortnum": 1,
+  "pages": [
+    "structure.real_peaceful_mode.slime_maze",
+    {
+      "type": "patchouli:text",
+      "text": "book.real_peaceful_mode.start.slime_maze"
+    }
+  ]
+}
