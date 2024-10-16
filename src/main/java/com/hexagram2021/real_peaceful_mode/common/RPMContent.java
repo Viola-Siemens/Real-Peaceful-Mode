@@ -9,7 +9,6 @@ import com.hexagram2021.real_peaceful_mode.common.entity.PinkCreeperEntity;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.HuskPharaoh;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.SkeletonKing;
 import com.hexagram2021.real_peaceful_mode.common.entity.boss.ZombieTyrant;
-import com.hexagram2021.real_peaceful_mode.common.entity.capability.ItemEntityConvertible;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.ChatMessageTypes;
 import com.hexagram2021.real_peaceful_mode.common.manager.chat.selection.SelectionConditionTypes;
 import com.hexagram2021.real_peaceful_mode.common.register.*;
@@ -18,7 +17,6 @@ import com.hexagram2021.real_peaceful_mode.mixin.BlockEntityTypeAccess;
 import com.hexagram2021.real_peaceful_mode.network.*;
 import com.hexagram2021.real_peaceful_mode.server.commands.RPMCommands;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Block;
@@ -27,7 +25,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
@@ -50,6 +47,7 @@ public class RPMContent {
 		initTags();
 
 		RPMJukeboxSongs.init(bus);
+		RPMAttachmentTypes.init(bus);
 		RPMMapDecorationTypes.init(bus);
 		RPMFluids.init(bus);
 		RPMBlocks.init(bus);
@@ -120,11 +118,6 @@ public class RPMContent {
 
 	public static void registerCommands(RegisterCommandsEvent event) {
 		event.getDispatcher().register(RPMCommands.register(event.getBuildContext()));
-	}
-
-	@SubscribeEvent
-	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.registerEntity(RPMCapabilities.ITEM_ENTITY_CONVERTIBLE, EntityType.ITEM, (entity, context) -> new ItemEntityConvertible(1200));
 	}
 
 	@SubscribeEvent

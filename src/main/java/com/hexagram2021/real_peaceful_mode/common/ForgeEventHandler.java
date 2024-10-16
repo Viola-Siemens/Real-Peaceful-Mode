@@ -10,6 +10,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -30,7 +31,7 @@ public class ForgeEventHandler {
 		event.addListener(missionManager);
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onMobInteract(PlayerInteractEvent.EntityInteract event) {
 		if (event.getTarget() instanceof IFriendlyMonster monster) {
 			BiFunction<ServerPlayer, ItemStack, Boolean> action = monster.rpm$getRandomEventNpcAction();
@@ -48,9 +49,10 @@ public class ForgeEventHandler {
 		}
 		if (event.getEntity() instanceof ServerPlayer serverPlayer && event.getTarget() instanceof LivingEntity npc) {
 			chatManager.getChatFor(npc.getType()).ifPresent(chat -> {
-				ChatHelper.triggerChatForPlayer(chat, serverPlayer, npc);
-				event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
-				event.setCanceled(true);
+				if(ChatHelper.triggerChatForPlayer(chat, serverPlayer, npc)) {
+					event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
+					event.setCanceled(true);
+				}
 			});
 		}
 	}

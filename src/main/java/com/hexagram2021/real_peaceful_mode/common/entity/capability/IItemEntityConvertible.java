@@ -6,15 +6,16 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public interface IItemEntityConvertible {
 	int getRemainingTicks();
 	int maxRemainingTicks();
 	void setRemainingTicks(int newTicks);
 
-	@Nullable
-	Item getToConvert();
-	void setToConvert(Item toConvert);
+	Optional<Item> getToConvert();
+	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+	void setToConvert(Optional<Item> toConvert);
 
 	@Nullable
 	default Item checkCondition(ItemEntity entity) {
@@ -25,23 +26,24 @@ public interface IItemEntityConvertible {
 	}
 
 	default void convert(ItemEntity entity) {
-		if(this.getToConvert() != null) {
-			entity.setItem(new ItemStack(this.getToConvert(), entity.getItem().getCount()));
+		this.getToConvert().ifPresent(item -> {
+			entity.setItem(new ItemStack(item, entity.getItem().getCount()));
 			this.setRemainingTicks(this.maxRemainingTicks());
-		}
+		});
 	}
 
 	default void tick(ItemEntity entity) {
 		Item toConvert = this.checkCondition(entity);
 		if(toConvert != null) {
-			if(toConvert.equals(this.getToConvert())) {
+			Item previous = this.getToConvert().orElse(null);
+			if(toConvert.equals(previous)) {
 				this.setRemainingTicks(this.getRemainingTicks() - 1);
 				if (this.getRemainingTicks() <= 0) {
 					this.convert(entity);
 				}
 			} else {
 				this.setRemainingTicks(this.maxRemainingTicks());
-				this.setToConvert(toConvert);
+				this.setToConvert(Optional.of(toConvert));
 			}
 		} else if(this.getRemainingTicks() < this.maxRemainingTicks()) {
 			this.setRemainingTicks(this.getRemainingTicks() + 1);

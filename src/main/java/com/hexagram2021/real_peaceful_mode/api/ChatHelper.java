@@ -11,18 +11,23 @@ import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.get
 
 public class ChatHelper {
 	@ApiStatus.Internal
-	public static void triggerChatForPlayer(Chat chat, ServerPlayer player, LivingEntity npc) {
-		if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && checkChat(hero, chat)) {
+	public static boolean triggerChatForPlayer(Chat chat, ServerPlayer player, LivingEntity npc) {
+		if (player instanceof IMonsterHero hero && !player.getAbilities().instabuild && checkChat(hero, player, npc, chat)) {
 			hero.rpm$getPlayerMissions().triggerChat(chat, npc);
+			return true;
 		}
+		return false;
 	}
 
 	@ApiStatus.Internal
-	public static boolean checkChat(IMonsterHero hero, Chat chat) {
+	public static boolean checkChat(IMonsterHero hero, ServerPlayer player, LivingEntity npc, Chat chat) {
 		PlayerMissions playerMissions = hero.rpm$getPlayerMissions();
 		if(IMonsterHero.chatDisabledFor(getRegistryName(chat.entityType()))) {
 			return false;
 		}
-		return chat.formers().stream().allMatch(former -> former.checkComplete(playerMissions));
+		if(!chat.formers().stream().allMatch(former -> former.checkComplete(playerMissions))) {
+			return false;
+		}
+		return chat.triggerAnyway() || chat.hasAvailableSelections(player, npc);
 	}
 }

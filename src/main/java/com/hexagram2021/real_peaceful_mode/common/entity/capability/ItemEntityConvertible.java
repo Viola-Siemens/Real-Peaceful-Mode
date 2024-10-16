@@ -1,28 +1,35 @@
 package com.hexagram2021.real_peaceful_mode.common.entity.capability;
 
-import net.minecraft.core.HolderLookup;
+import com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.common.util.INBTSerializable;
 
-import javax.annotation.Nullable;
+import java.util.Optional;
 
-import static com.hexagram2021.real_peaceful_mode.common.util.RegistryHelper.getRegistryName;
+public class ItemEntityConvertible implements IItemEntityConvertible {
+	public static final Codec<ItemEntityConvertible> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+			Codec.INT.fieldOf("MaxRemainingTicks").forGetter(ItemEntityConvertible::maxRemainingTicks),
+			Codec.INT.fieldOf("RemainingTicks").forGetter(ItemEntityConvertible::getRemainingTicks),
+			ResourceLocation.CODEC.optionalFieldOf("ToConvert").xmap(id -> id.map(BuiltInRegistries.ITEM::get), item -> item.map(RegistryHelper::getRegistryName)).forGetter(ItemEntityConvertible::getToConvert)
+	).apply(instance, ItemEntityConvertible::new));
 
-public class ItemEntityConvertible implements IItemEntityConvertible, INBTSerializable<Tag> {
 	protected final int maxRemainingTicks;
 	protected int remainingTicks;
 
-	@Nullable
-	protected Item toConvert;
+	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+	protected Optional<Item> toConvert;
 
 	public ItemEntityConvertible(int maxRemainingTicks) {
+		this(maxRemainingTicks, maxRemainingTicks, Optional.empty());
+	}
+	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+	public ItemEntityConvertible(int maxRemainingTicks, int remainingTicks, Optional<Item> toConvert) {
 		this.maxRemainingTicks = maxRemainingTicks;
-		this.remainingTicks = maxRemainingTicks;
-		this.toConvert = null;
+		this.remainingTicks = remainingTicks;
+		this.toConvert = toConvert;
 	}
 
 	@Override
@@ -40,38 +47,13 @@ public class ItemEntityConvertible implements IItemEntityConvertible, INBTSerial
 		this.remainingTicks = newTicks;
 	}
 
-	@Override @Nullable
-	public Item getToConvert() {
+	@Override
+	public Optional<Item> getToConvert() {
 		return this.toConvert;
 	}
 
 	@Override
-	public void setToConvert(Item toConvert) {
+	public void setToConvert(Optional<Item> toConvert) {
 		this.toConvert = toConvert;
-	}
-
-	@Override
-	public Tag serializeNBT(HolderLookup.Provider registries) {
-		CompoundTag ret = new CompoundTag();
-		ret.putInt("remainingTicks", this.remainingTicks);
-		if(this.toConvert != null) {
-			ret.putString("toConvert", getRegistryName(this.toConvert).toString());
-		}
-		return ret;
-	}
-
-	@Override
-	public void deserializeNBT(HolderLookup.Provider registries, Tag nbt) {
-		if(nbt instanceof CompoundTag compoundTag) {
-			if(compoundTag.contains("remainingTicks", Tag.TAG_INT)) {
-				this.remainingTicks = compoundTag.getInt("remainingTicks");
-			} else {
-				this.remainingTicks = this.maxRemainingTicks;
-			}
-			if(compoundTag.contains("toConvert", Tag.TAG_STRING)) {
-				String id = compoundTag.getString("toConvert");
-				this.toConvert = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
-			}
-		}
 	}
 }

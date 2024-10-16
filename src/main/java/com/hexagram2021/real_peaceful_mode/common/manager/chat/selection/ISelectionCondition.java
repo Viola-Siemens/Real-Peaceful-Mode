@@ -11,6 +11,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -184,6 +185,23 @@ public interface ISelectionCondition {
 			Registry<Structure> registry = player.registryAccess().registryOrThrow(Registries.STRUCTURE);
 			HolderSet<Structure> structures = HolderSet.direct(this.structure.stream().map(registry::getHolderOrThrow).toArray(Holder[]::new));
 			return player.serverLevel().structureManager().getStructureWithPieceAt(player.blockPosition(), structures).isValid();
+		}
+	}
+
+	record NameSelectionCondition(String name) implements ISelectionCondition {
+		public static final MapCodec<NameSelectionCondition> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+				Codec.STRING.fieldOf("name").forGetter(NameSelectionCondition::name)
+		).apply(instance, NameSelectionCondition::new));
+
+		@Override
+		public ISelectionConditionType type() {
+			return SelectionConditionTypes.NAME;
+		}
+
+		@Override
+		public boolean check(ServerPlayer player, LivingEntity npc) {
+			Component component = npc.getCustomName();
+			return component != null && component.getString().equals(this.name);
 		}
 	}
 }
