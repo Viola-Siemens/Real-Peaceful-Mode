@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "decoration": "real_peaceful_mode:slime_maze",
+              "destination": "real_peaceful_mode:on_slime_explorer_maps",
+              "function": "minecraft:exploration_map",
+              "search_radius": 100,
+              "skip_existing_chunks": false,
+              "zoom": 2
+            },
+            {
+              "function": "real_peaceful_mode:shift_map_decoration",
+              "key": "+",
+              "x": 10,
+              "z": 14
+            },
+            {
+              "function": "minecraft:set_name",
+              "name": {
+                "translate": "filled_map.real_peaceful_mode.slime_maze"
+              },
+              "target": "item_name"
+            }
+          ],
+          "name": "minecraft:map"
+        }
+      ]
+    }
+  ]
+}

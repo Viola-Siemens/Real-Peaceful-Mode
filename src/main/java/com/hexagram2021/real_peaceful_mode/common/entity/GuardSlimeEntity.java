@@ -5,17 +5,15 @@ import com.hexagram2021.real_peaceful_mode.api.MissionHelper;
 import com.hexagram2021.real_peaceful_mode.api.MissionType;
 import com.hexagram2021.real_peaceful_mode.common.manager.mission.IMissionStack;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMItems;
-import com.hexagram2021.real_peaceful_mode.common.register.RPMMapDecorationTypes;
 import com.hexagram2021.real_peaceful_mode.common.register.RPMMobEffects;
-import com.hexagram2021.real_peaceful_mode.common.register.RPMStructureTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -32,12 +30,12 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -197,17 +195,12 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 							MissionHelper.triggerMissionForPlayer(
 									this.missionId, this.type,
 									player, outer, player1 -> {
-										BlockPos blockPos = serverLevel.findNearestMapStructure(RPMStructureTags.ON_SLIME_EXPLORER_MAPS, outer.blockPosition(), 100, true);
-										ItemStack mapItem;
-										if(blockPos == null) {
-											mapItem = new ItemStack(Items.MAP);
-										} else {
-											mapItem = MapItem.create(outer.level(), blockPos.getX(), blockPos.getZ(), (byte)2, true, true);
-											MapItem.renderBiomePreviewMap(serverLevel, mapItem);
-											MapItemSavedData.addTargetDecoration(mapItem, blockPos.offset(10, 0, 14), "+", RPMMapDecorationTypes.SLIME_MAZE);
-										}
-										mapItem.set(DataComponents.ITEM_NAME, Component.translatable("filled_map.real_peaceful_mode.slime_maze"));
-										outer.spawnAtLocation(mapItem);
+										LootTable lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(ANXIOUS_SLIME_GIFT);
+										LootParams lootparams = new LootParams.Builder(serverLevel)
+												.withParameter(LootContextParams.ORIGIN, outer.position())
+												.withParameter(LootContextParams.THIS_ENTITY, outer)
+												.create(LootContextParamSets.GIFT);
+										lootTable.getRandomItems(lootparams).forEach(outer::spawnAtLocation);
 										outer.discard();
 									}
 							);
@@ -270,6 +263,8 @@ public class GuardSlimeEntity extends Slime implements IMissionProvider {
 						}).orElse(false);
 			}
 		};
+
+		private static final ResourceKey<LootTable> ANXIOUS_SLIME_GIFT = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(MODID, "gameplay/anxious_slime_gift"));
 
 		final ResourceLocation missionId;
 		final MissionType type;

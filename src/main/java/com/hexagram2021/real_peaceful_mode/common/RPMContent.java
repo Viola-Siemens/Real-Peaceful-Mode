@@ -61,6 +61,7 @@ public class RPMContent {
 		RPMMenuTypes.init(bus);
 		RPMStructureTypes.init(bus);
 		RPMTriggers.init(bus);
+		RPMLootFunctionTypes.init(bus);
 	}
 
 	private static void initTags() {
